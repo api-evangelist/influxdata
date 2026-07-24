@@ -1,0 +1,867 @@
+openapi: 3.0.0
+info:
+  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Checks API
+  version: 2.0.1
+  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
+
+    '
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: /api/v2
+security:
+- TokenAuthentication: []
+tags:
+- name: Checks
+paths:
+  /checks:
+    get:
+      operationId: GetChecks
+      tags:
+      - Checks
+      summary: List all checks
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Limit'
+      - in: query
+        name: orgID
+        required: true
+        description: Only show checks that belong to a specific organization ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of checks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checks'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: CreateCheck
+      tags:
+      - Checks
+      summary: Add new check
+      requestBody:
+        description: Check to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCheck'
+      responses:
+        '201':
+          description: Check created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /checks/{checkID}:
+    get:
+      operationId: GetChecksID
+      tags:
+      - Checks
+      summary: Retrieve a check
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      responses:
+        '200':
+          description: The check requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      operationId: PutChecksID
+      tags:
+      - Checks
+      summary: Update a check
+      requestBody:
+        description: Check update to apply
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Check'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      responses:
+        '200':
+          description: An updated check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+        '404':
+          description: The check was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: PatchChecksID
+      tags:
+      - Checks
+      summary: Update a check
+      requestBody:
+        description: Check update to apply
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckPatch'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      responses:
+        '200':
+          description: An updated check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+        '404':
+          description: The check was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: DeleteChecksID
+      tags:
+      - Checks
+      summary: Delete a check
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      responses:
+        '204':
+          description: Delete has been accepted
+        '404':
+          description: The check was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /checks/{checkID}/labels:
+    get:
+      operationId: GetChecksIDLabels
+      tags:
+      - Checks
+      summary: List all labels for a check
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      responses:
+        '200':
+          description: A list of all labels for a check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelsResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: PostChecksIDLabels
+      tags:
+      - Checks
+      summary: Add a label to a check
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      requestBody:
+        description: Label to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelMapping'
+      responses:
+        '201':
+          description: The label was added to the check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /checks/{checkID}/labels/{labelID}:
+    delete:
+      operationId: DeleteChecksIDLabelsID
+      tags:
+      - Checks
+      summary: Delete label from a check
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      - in: path
+        name: labelID
+        schema:
+          type: string
+        required: true
+        description: The ID of the label to delete.
+      responses:
+        '204':
+          description: Delete has been accepted
+        '404':
+          description: Check or label not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /checks/{checkID}/query:
+    get:
+      operationId: GetChecksIDQuery
+      tags:
+      - Checks
+      summary: Retrieve a check query
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: checkID
+        schema:
+          type: string
+        required: true
+        description: The check ID.
+      responses:
+        '200':
+          description: The check query requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FluxResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Check not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    CustomCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - custom
+        required:
+        - type
+    BuilderTagsType:
+      type: object
+      properties:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        aggregateFunctionType:
+          $ref: '#/components/schemas/BuilderAggregateFunctionType'
+    RangeThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - min
+        - max
+        - within
+        properties:
+          type:
+            type: string
+            enum:
+            - range
+          min:
+            type: number
+            format: float
+          max:
+            type: number
+            format: float
+          within:
+            type: boolean
+    CheckBase:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        orgID:
+          description: The ID of the organization that owns this check.
+          type: string
+        taskID:
+          description: The ID of the task associated with this check.
+          type: string
+        ownerID:
+          description: The ID of creator used to create this check.
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        query:
+          $ref: '#/components/schemas/DashboardQuery'
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        description:
+          description: An optional description of the check.
+          type: string
+        latestCompleted:
+          type: string
+          description: A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)) of the latest scheduled and completed run.
+          format: date-time
+          readOnly: true
+        lastRunStatus:
+          readOnly: true
+          type: string
+          enum:
+          - failed
+          - success
+          - canceled
+        lastRunError:
+          readOnly: true
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/checks/1
+            labels: /api/v2/checks/1/labels
+            members: /api/v2/checks/1/members
+            owners: /api/v2/checks/1/owners
+            query: /api/v2/checks/1/query
+          properties:
+            self:
+              description: The URL for this check.
+              $ref: '#/components/schemas/Link'
+            labels:
+              description: The URL to retrieve labels for this check.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members for this check.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners for this check.
+              $ref: '#/components/schemas/Link'
+            query:
+              description: The URL to retrieve the Flux script for this check.
+              $ref: '#/components/schemas/Link'
+      required:
+      - name
+      - orgID
+      - query
+    CheckStatusLevel:
+      description: The state to record if check matches a criteria.
+      type: string
+      enum:
+      - UNKNOWN
+      - OK
+      - INFO
+      - CRIT
+      - WARN
+    PostCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
+    FluxResponse:
+      description: Rendered flux that backs the check or notification.
+      properties:
+        flux:
+          type: string
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    CheckDiscriminator:
+      oneOf:
+      - $ref: '#/components/schemas/DeadmanCheck'
+      - $ref: '#/components/schemas/ThresholdCheck'
+      - $ref: '#/components/schemas/CustomCheck'
+      discriminator:
+        propertyName: type
+        mapping:
+          deadman: '#/components/schemas/DeadmanCheck'
+          threshold: '#/components/schemas/ThresholdCheck'
+          custom: '#/components/schemas/CustomCheck'
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    DashboardQuery:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text of the Flux query.
+        editMode:
+          $ref: '#/components/schemas/QueryEditMode'
+        name:
+          type: string
+        builderConfig:
+          $ref: '#/components/schemas/BuilderConfig'
+    QueryEditMode:
+      type: string
+      enum:
+      - builder
+      - advanced
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    ThresholdCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - threshold
+          thresholds:
+            type: array
+            items:
+              $ref: '#/components/schemas/Threshold'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    BuilderAggregateFunctionType:
+      type: string
+      enum:
+      - filter
+      - group
+    CheckPatch:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+    Checks:
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Check'
+        links:
+          $ref: '#/components/schemas/Links'
+    BuilderFunctionsType:
+      type: object
+      properties:
+        name:
+          type: string
+    BuilderConfig:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderTagsType'
+        functions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderFunctionsType'
+        aggregateWindow:
+          type: object
+          properties:
+            period:
+              type: string
+            fillValues:
+              type: boolean
+    Check:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
+    Threshold:
+      oneOf:
+      - $ref: '#/components/schemas/GreaterThreshold'
+      - $ref: '#/components/schemas/LesserThreshold'
+      - $ref: '#/components/schemas/RangeThreshold'
+      discriminator:
+        propertyName: type
+        mapping:
+          greater: '#/components/schemas/GreaterThreshold'
+          lesser: '#/components/schemas/LesserThreshold'
+          range: '#/components/schemas/RangeThreshold'
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    DeadmanCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - deadman
+          timeSince:
+            description: String duration before deadman triggers.
+            type: string
+          staleTime:
+            description: String duration for time that a series is considered stale and should not trigger deadman.
+            type: string
+          reportZero:
+            description: If only zero values reported since time, trigger an alert
+            type: boolean
+          level:
+            $ref: '#/components/schemas/CheckStatusLevel'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    ThresholdBase:
+      properties:
+        level:
+          $ref: '#/components/schemas/CheckStatusLevel'
+        allValues:
+          description: If true, only alert if all values meet threshold.
+          type: boolean
+    LesserThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - lesser
+          value:
+            type: number
+            format: float
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    GreaterThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - greater
+          value:
+            type: number
+            format: float
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+  parameters:
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Offset:
+      in: query
+      name: offset
+      required: false
+      description: 'The offset for pagination.
+
+        The number of records to skip.
+
+
+        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    TokenAuthentication:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: "Use the [Token authentication](#section/Authentication/TokenAuthentication)\nscheme to authenticate to the InfluxDB API.\n\nIn your API requests, send an `Authorization` header.\nFor the header value, provide the word `Token` followed by a space and an InfluxDB API token.\nThe word `Token` is case-sensitive.\n\n### Syntax\n\n`Authorization: Token INFLUX_API_TOKEN`\n\n### Example\n\n#### Use Token authentication with cURL\n\nThe following example shows how to use cURL to send an API request that uses Token authentication:\n\n```sh\ncurl --request GET \"INFLUX_URL/api/v2/buckets\" \\\n     --header \"Authorization: Token INFLUX_API_TOKEN\"\n```\n\nReplace the following:\n\n  - *`INFLUX_URL`*: your InfluxDB Cloud URL\n  - *`INFLUX_API_TOKEN`*: your [InfluxDB API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n\n### Related endpoints\n\n- [`/authorizations` endpoints](#tag/Authorizations-(API-tokens))\n\n### Related guides\n\n- [Authorize API requests](https://docs.influxdata.com/influxdb/cloud/api-guide/api_intro/#authentication)\n- [Manage API tokens](https://docs.influxdata.com/influxdb/cloud/security/tokens/)\n"
+    BasicAuthentication:
+      type: http
+      scheme: basic
+      description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-tagGroups:
+- name: Overview
+  tags:
+  - Quick start
+  - Authentication
+  - Supported operations
+  - Headers
+  - Pagination
+  - Response codes
+- name: Popular endpoints
+  tags:
+  - Data I/O endpoints
+  - Security and access endpoints
+  - System information endpoints
+- name: All endpoints
+  tags: []

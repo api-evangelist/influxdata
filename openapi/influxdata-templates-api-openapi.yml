@@ -1,0 +1,3676 @@
+openapi: 3.0.0
+info:
+  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Templates API
+  version: 2.0.1
+  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
+
+    '
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: /api/v2
+security:
+- TokenAuthentication: []
+tags:
+- name: Templates
+  description: 'Export and apply InfluxDB **templates**.
+
+    Manage **stacks** of templated InfluxDB resources.
+
+
+    InfluxDB templates are prepackaged configurations for resources.
+
+    Use InfluxDB templates to configure a fresh instance of InfluxDB,
+
+    back up your dashboard configuration, or share your configuration.
+
+
+    Use the `/api/v2/templates` endpoints to export templates and apply templates.
+
+
+    **InfluxDB stacks** are stateful InfluxDB templates that let you
+
+    add, update, and remove installed template resources over time, avoid duplicating
+
+    resources when applying the same or similar templates more than once, and
+
+    apply changes to distributed instances of InfluxDB OSS or InfluxDB Cloud.
+
+
+    Use the `/api/v2/stacks` endpoints to manage installed template resources.
+
+
+    ### Related guides
+
+
+    - [InfluxDB stacks](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/)
+
+    - [InfluxDB templates](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/)
+
+    '
+paths:
+  /stacks:
+    get:
+      operationId: ListStacks
+      tags:
+      - Templates
+      summary: List installed stacks
+      description: 'Lists installed InfluxDB stacks.
+
+
+        To limit stacks in the response, pass query parameters in your request.
+
+        If no query parameters are passed, InfluxDB returns all installed stacks
+
+        for the organization.
+
+
+        #### Related guides
+
+
+        - [View InfluxDB stacks](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/).
+
+        '
+      parameters:
+      - in: query
+        name: orgID
+        required: true
+        schema:
+          type: string
+        description: "An organization ID.\nOnly returns stacks owned by the specified [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization).\n\n#### InfluxDB Cloud\n\n- Doesn't require this parameter;\n  InfluxDB only returns resources allowed by the API token.\n"
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: 'A stack name.
+
+          Finds stack `events` with this name and returns the stacks.
+
+
+          Repeatable.
+
+          To filter for more than one stack name,
+
+          repeat this parameter with each name--for example:
+
+
+          - `INFLUX_URL/api/v2/stacks?&orgID=INFLUX_ORG_ID&name=project-stack-0&name=project-stack-1`
+
+          '
+        examples:
+          findStackByName:
+            summary: Find stacks with the event name
+            value: project-stack-0
+      - in: query
+        name: stackID
+        schema:
+          type: string
+        description: 'A stack ID.
+
+          Only returns the specified stack.
+
+
+          Repeatable.
+
+          To filter for more than one stack ID,
+
+          repeat this parameter with each ID--for example:
+
+
+          - `INFLUX_URL/api/v2/stacks?&orgID=INFLUX_ORG_ID&stackID=09bd87cd33be3000&stackID=09bef35081fe3000`
+
+          '
+        examples:
+          findStackByID:
+            summary: Find a stack with the ID
+            value: 09bd87cd33be3000
+      responses:
+        '200':
+          description: Success. The response body contains the list of stacks.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stacks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Stack'
+        '400':
+          description: 'Bad request.
+
+            The response body contains detail about the error.
+
+
+            #### InfluxDB OSS
+
+
+            - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                orgIdMissing:
+                  summary: The orgID query parameter is missing
+                  value:
+                    code: invalid
+                    message: 'organization id[""] is invalid: id must have a length of 16 bytes'
+                orgProvidedNotFound:
+                  summary: The org or orgID passed doesn't own the token passed in the header
+                  value:
+                    code: invalid
+                    message: 'failed to decode request body: organization not found'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: CreateStack
+      tags:
+      - Templates
+      summary: Create a stack
+      description: "Creates or initializes a stack.\n\nUse this endpoint to _manually_ initialize a new stack with the following\noptional information:\n\n  - Stack name\n  - Stack description\n  - URLs for template manifest files\n\nTo automatically create a stack when applying templates,\nuse the [/api/v2/templates/apply endpoint](#operation/ApplyTemplate).\n\n#### Required permissions\n\n- `write` permission for the organization\n\n#### Related guides\n\n- [Initialize an InfluxDB stack](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/init/).\n- [Use InfluxDB templates](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/use/#apply-templates-to-an-influxdb-instance).\n"
+      requestBody:
+        description: The stack to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: PostStackRequest
+              properties:
+                orgID:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                urls:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Success. Returns the newly created stack.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '422':
+          description: 'Unprocessable entity.
+
+
+            The error may indicate one of the following problems:
+
+
+            - The request body isn''t valid--the request is well-formed, but InfluxDB can''t process it due to semantic errors.
+
+            - You passed a parameter combination that InfluxDB doesn''t support.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /stacks/{stack_id}:
+    get:
+      operationId: ReadStack
+      tags:
+      - Templates
+      summary: Retrieve a stack
+      parameters:
+      - in: path
+        name: stack_id
+        required: true
+        schema:
+          type: string
+        description: The identifier of the stack.
+      responses:
+        '200':
+          description: Returns the stack.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: UpdateStack
+      tags:
+      - Templates
+      summary: Update a stack
+      parameters:
+      - in: path
+        name: stack_id
+        required: true
+        schema:
+          type: string
+        description: The identifier of the stack.
+      requestBody:
+        description: The stack to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: PatchStackRequest
+              properties:
+                name:
+                  type: string
+                  nullable: true
+                description:
+                  type: string
+                  nullable: true
+                templateURLs:
+                  type: array
+                  items:
+                    type: string
+                  nullable: true
+                additionalResources:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      resourceID:
+                        type: string
+                      kind:
+                        type: string
+                      templateMetaName:
+                        type: string
+                    required:
+                    - kind
+                    - resourceID
+      responses:
+        '200':
+          description: Returns the updated stack.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: DeleteStack
+      tags:
+      - Templates
+      summary: Delete a stack and associated resources
+      parameters:
+      - in: path
+        name: stack_id
+        required: true
+        schema:
+          type: string
+        description: The identifier of the stack.
+      - in: query
+        name: orgID
+        required: true
+        schema:
+          type: string
+        description: The identifier of the organization.
+      responses:
+        '204':
+          description: The stack and its associated resources were deleted.
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /stacks/{stack_id}/uninstall:
+    post:
+      operationId: UninstallStack
+      tags:
+      - Templates
+      summary: Uninstall a stack
+      parameters:
+      - in: path
+        name: stack_id
+        required: true
+        schema:
+          type: string
+        description: The identifier of the stack.
+      responses:
+        '200':
+          description: Returns the uninstalled stack.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /templates/apply:
+    post:
+      operationId: ApplyTemplate
+      tags:
+      - Templates
+      summary: Apply or dry-run a template
+      description: "Applies a template to\ncreate or update a [stack](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/) of InfluxDB\n[resources](https://docs.influxdata.com/influxdb/cloud/reference/cli/influx/export/all/#resources).\nThe response contains the diff of changes and the stack ID.\n\nUse this endpoint to install an InfluxDB template to an organization.\nProvide template URLs or template objects in your request.\nTo customize which template resources are installed, use the `actions`\nparameter.\n\nBy default, when you apply a template, InfluxDB installs the template to\ncreate and update stack resources and then generates a diff of the changes.\nIf you pass `dryRun: true` in the request body, InfluxDB validates the\ntemplate and generates the resource diff, but doesn’t make any\nchanges to your instance.\n\n#### Custom values for templates\n\n- Some templates may contain [environment references](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/create/#include-user-definable-resource-names) for custom metadata.\n  To provide custom values for environment references, pass the _`envRefs`_\n  property in the request body.\n  For more information and examples, see how to\n  [define environment references](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/use/#define-environment-references).\n\n- Some templates may contain queries that use\n  [secrets](https://docs.influxdata.com/influxdb/cloud/security/secrets/).\n  To provide custom secret values, pass the _`secrets`_ property\n  in the request body.\n  Don't expose secret values in templates.\n  For more information, see [how to pass secrets when installing a template](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/use/#pass-secrets-when-installing-a-template).\n\n#### Required permissions\n\n- `write` permissions for resource types in the template.\n\n#### Rate limits (with InfluxDB Cloud)\n\n- Adjustable service quotas apply.\n  For more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).\n\n#### Related guides\n\n- [Use templates](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/use/)\n- [Stacks](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/)\n"
+      requestBody:
+        required: true
+        description: 'Parameters for applying templates.
+
+          '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateApply'
+            examples:
+              skipKindAction:
+                summary: Skip all bucket and task resources in the provided templates
+                value:
+                  orgID: INFLUX_ORG_ID
+                  actions:
+                  - action: skipKind
+                    properties:
+                      kind: Bucket
+                  - action: skipKind
+                    properties:
+                      kind: Task
+                  templates:
+                  - contents:
+                    - '[object Object]': null
+              skipResourceAction:
+                summary: Skip specific resources in the provided templates
+                value:
+                  orgID: INFLUX_ORG_ID
+                  actions:
+                  - action: skipResource
+                    properties:
+                      kind: Label
+                      resourceTemplateName: foo-001
+                  - action: skipResource
+                    properties:
+                      kind: Bucket
+                      resourceTemplateName: bar-020
+                  - action: skipResource
+                    properties:
+                      kind: Bucket
+                      resourceTemplateName: baz-500
+                  templates:
+                  - contents:
+                    - apiVersion: influxdata.com/v2alpha1
+                      kind: Bucket
+                      metadata:
+                        name: baz-500
+              templateObjectEnvRefs:
+                summary: envRefs for template objects
+                value:
+                  orgID: INFLUX_ORG_ID
+                  envRefs:
+                    linux-cpu-label: MY_CPU_LABEL
+                    docker-bucket: MY_DOCKER_BUCKET
+                    docker-spec-1: MY_DOCKER_SPEC
+                  templates:
+                  - contents:
+                    - apiVersion: influxdata.com/v2alpha1
+                      kind: Label
+                      metadata:
+                        name:
+                          envRef:
+                            key: linux-cpu-label
+                      spec:
+                        color: '#326BBA'
+                        name: inputs.cpu
+                  - contents:
+                    - apiVersion: influxdata.com/v2alpha1
+                      kind: Bucket
+                      metadata:
+                        name:
+                          envRef:
+                            key: docker-bucket
+          application/x-jsonnet:
+            schema:
+              $ref: '#/components/schemas/TemplateApply'
+          text/yml:
+            schema:
+              $ref: '#/components/schemas/TemplateApply'
+      x-codeSamples:
+      - lang: Shell
+        label: 'cURL: Dry run with a remote template'
+        source: "curl --request POST \"http://localhost:8086/api/v2/templates/apply\" \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\" \\\n  --data @- << EOF\n    {\n      \"dryRun\": true,\n      \"orgID\": \"INFLUX_ORG_ID\",\n      \"remotes\": [\n        {\n          \"url\": \"https://raw.githubusercontent.com/influxdata/community-templates/master/linux_system/linux_system.yml\"\n        }\n      ]\n    }\nEOF\n"
+      - lang: Shell
+        label: 'cURL: Apply with secret values'
+        source: "curl \"http://localhost:8086/api/v2/templates/apply\" \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\" \\\n  --data @- << EOF | jq .\n    {\n      \"orgID\": \"INFLUX_ORG_ID\",\n      \"secrets\": {\n        \"SLACK_WEBHOOK\": \"YOUR_SECRET_WEBHOOK_URL\"\n      },\n      \"remotes\": [\n        {\n          \"url\": \"https://raw.githubusercontent.com/influxdata/community-templates/master/fortnite/fn-template.yml\"\n        }\n      ]\n    }\nEOF\n"
+      - lang: Shell
+        label: 'cURL: Apply template objects with environment references'
+        source: "curl --request POST \"http://localhost:8086/api/v2/templates/apply\" \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\" \\\n  --data @- << EOF\n  { \"orgID\": \"INFLUX_ORG_ID\",\n    \"envRefs\": {\n      \"linux-cpu-label\": \"MY_CPU_LABEL\",\n      \"docker-bucket\": \"MY_DOCKER_BUCKET\",\n      \"docker-spec-1\": \"MY_DOCKER_SPEC\"\n    },\n    \"templates\": [\n      { \"contents\": [{\n          \"apiVersion\": \"influxdata.com/v2alpha1\",\n          \"kind\": \"Label\",\n          \"metadata\": {\n            \"name\": {\n              \"envRef\": {\n                \"key\": \"linux-cpu-label\"\n              }\n            }\n          },\n          \"spec\": {\n            \"color\": \"#326BBA\",\n            \"name\": \"inputs.cpu\"\n          }\n        }]\n      },\n      \"templates\": [\n        { \"contents\": [{\n            \"apiVersion\": \"influxdata.com/v2alpha1\",\n            \"kind\": \"Label\",\n            \"metadata\": {\n              \"name\": {\n                \"envRef\": {\n                  \"key\": \"linux-cpu-label\"\n                }\n              }\n            },\n            \"spec\": {\n              \"color\": \"#326BBA\",\n              \"name\": \"inputs.cpu\"\n            }\n          }]\n        },\n        { \"contents\": [{\n            \"apiVersion\": \"influxdata.com/v2alpha1\",\n            \"kind\": \"Bucket\",\n            \"metadata\": {\n              \"name\": {\n                \"envRef\": {\n                  \"key\": \"docker-bucket\"\n                }\n              }\n            }\n          }]\n        }\n      ]\n    }\nEOF\n"
+      responses:
+        '200':
+          description: 'Success.
+
+            The template dry run succeeded.
+
+            The response body contains a resource diff of changes that the
+
+            template would have made if installed.
+
+            No resources were created or updated.
+
+            The diff and summary won''t contain IDs for resources
+
+            that didn''t exist at the time of the dry run.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateSummary'
+        '201':
+          description: 'Success.
+
+            The template applied successfully.
+
+            The response body contains the stack ID, a diff, and a summary.
+
+            The diff compares the initial state to the state after the template installation.
+
+            The summary contains newly created resources.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateSummary'
+        '422':
+          description: 'Unprocessable entity.
+
+
+
+            The error may indicate one of the following problems:
+
+
+            - The template failed validation.
+
+            - You passed a parameter combination that InfluxDB doesn''t support.
+
+            '
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/TemplateSummary'
+                - type: object
+                  required:
+                  - message
+                  - code
+                  properties:
+                    message:
+                      type: string
+                    code:
+                      type: string
+        '500':
+          description: "Internal server error.\n\n#### InfluxDB Cloud\n\n- Returns this error if creating one of the template\n  resources (bucket, dashboard, task, user) exceeds your plan’s\n  adjustable service quotas.\n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                createExceedsQuota:
+                  summary: 'InfluxDB Cloud: Creating resource would exceed quota.'
+                  value:
+                    code: internal error
+                    message: "resource_type=\"tasks\" err=\"failed to apply resource\"\n\tmetadata_name=\"alerting-gates-b84003\" err_msg=\"failed to create tasks[\\\"alerting-gates-b84003\\\"]: creating task would exceed quota\""
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /templates/export:
+    post:
+      operationId: ExportTemplate
+      tags:
+      - Templates
+      summary: Export a new template
+      requestBody:
+        description: Export resources as an InfluxDB template.
+        required: false
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/TemplateExportByID'
+              - $ref: '#/components/schemas/TemplateExportByName'
+      responses:
+        '200':
+          description: The template was created successfully. Returns the newly created template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Template'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TableViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - tableOptions
+      - fieldOptions
+      - timeFormat
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - table
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        tableOptions:
+          type: object
+          properties:
+            verticalTimeAxis:
+              description: verticalTimeAxis describes the orientation of the table by indicating whether the time axis will be displayed vertically
+              type: boolean
+            sortBy:
+              $ref: '#/components/schemas/RenamableField'
+            wrapping:
+              description: Wrapping describes the text wrapping style to be used in table views
+              type: string
+              enum:
+              - truncate
+              - wrap
+              - single-line
+            fixFirstColumn:
+              description: fixFirstColumn indicates whether the first column of the table should be locked
+              type: boolean
+        fieldOptions:
+          description: fieldOptions represent the fields retrieved by the query with customization options
+          type: array
+          items:
+            $ref: '#/components/schemas/RenamableField'
+        timeFormat:
+          description: timeFormat describes the display format for time values according to moment.js date formatting
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    BuilderTagsType:
+      type: object
+      properties:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        aggregateFunctionType:
+          $ref: '#/components/schemas/BuilderAggregateFunctionType'
+    TemplateEnvReferences:
+      type: array
+      items:
+        type: object
+        properties:
+          resourceField:
+            type: string
+            description: Field the environment reference corresponds too
+          envRefKey:
+            type: string
+            description: Key identified as environment reference and is the key identified in the template
+          value:
+            description: Value provided to fulfill reference
+            nullable: true
+            oneOf:
+            - type: string
+            - type: integer
+            - type: number
+            - type: boolean
+          defaultValue:
+            description: Default value that will be provided for the reference when no value is provided
+            nullable: true
+            oneOf:
+            - type: string
+            - type: integer
+            - type: number
+            - type: boolean
+        required:
+        - resourceField
+        - envRefKey
+    StaticLegend:
+      description: StaticLegend represents the options specific to the static legend
+      type: object
+      properties:
+        colorizeRows:
+          type: boolean
+        heightRatio:
+          type: number
+          format: float
+        show:
+          type: boolean
+        opacity:
+          type: number
+          format: float
+        orientationThreshold:
+          type: integer
+        valueAxis:
+          type: string
+        widthRatio:
+          type: number
+          format: float
+    QueryEditMode:
+      type: string
+      enum:
+      - builder
+      - advanced
+    GeoViewLayerProperties:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - heatmap
+          - circleMap
+          - pointMap
+          - trackMap
+    ColorMapping:
+      type: object
+      description: A color mapping is an object that maps time series data to a UI color scheme to allow the UI to render graphs consistent colors across reloads.
+      additionalProperties:
+        type: string
+      example:
+        series_id_1: '#edf529'
+        series_id_2: '#edf529'
+        measurement_birdmigration_europe: '#663cd0'
+        configcat_deployments-autopromotionblocker: '#663cd0'
+    ViewProperties:
+      oneOf:
+      - $ref: '#/components/schemas/LinePlusSingleStatProperties'
+      - $ref: '#/components/schemas/XYViewProperties'
+      - $ref: '#/components/schemas/SingleStatViewProperties'
+      - $ref: '#/components/schemas/HistogramViewProperties'
+      - $ref: '#/components/schemas/GaugeViewProperties'
+      - $ref: '#/components/schemas/TableViewProperties'
+      - $ref: '#/components/schemas/SimpleTableViewProperties'
+      - $ref: '#/components/schemas/MarkdownViewProperties'
+      - $ref: '#/components/schemas/CheckViewProperties'
+      - $ref: '#/components/schemas/ScatterViewProperties'
+      - $ref: '#/components/schemas/HeatmapViewProperties'
+      - $ref: '#/components/schemas/MosaicViewProperties'
+      - $ref: '#/components/schemas/BandViewProperties'
+      - $ref: '#/components/schemas/GeoViewProperties'
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
+    BuilderConfig:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderTagsType'
+        functions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderFunctionsType'
+        aggregateWindow:
+          type: object
+          properties:
+            period:
+              type: string
+            fillValues:
+              type: boolean
+    GaugeViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - tickPrefix
+      - suffix
+      - tickSuffix
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - gauge
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        prefix:
+          type: string
+        tickPrefix:
+          type: string
+        suffix:
+          type: string
+        tickSuffix:
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    CustomCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - custom
+        required:
+        - type
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    DashboardQuery:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text of the Flux query.
+        editMode:
+          $ref: '#/components/schemas/QueryEditMode'
+        name:
+          type: string
+        builderConfig:
+          $ref: '#/components/schemas/BuilderConfig'
+    TemplateSummaryLabel:
+      type: object
+      properties:
+        id:
+          type: string
+        orgID:
+          type: string
+        kind:
+          $ref: '#/components/schemas/TemplateKind'
+        templateMetaName:
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          properties:
+            color:
+              type: string
+            description:
+              type: string
+        envReferences:
+          $ref: '#/components/schemas/TemplateEnvReferences'
+    TemplateSummary:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            type: string
+        stackID:
+          type: string
+        summary:
+          type: object
+          properties:
+            buckets:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  orgID:
+                    type: string
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  templateMetaName:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  retentionPeriod:
+                    type: integer
+                  labelAssociations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateSummaryLabel'
+                  envReferences:
+                    $ref: '#/components/schemas/TemplateEnvReferences'
+            checks:
+              type: array
+              items:
+                allOf:
+                - $ref: '#/components/schemas/CheckDiscriminator'
+                - type: object
+                  properties:
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                    templateMetaName:
+                      type: string
+                    labelAssociations:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/TemplateSummaryLabel'
+                    envReferences:
+                      $ref: '#/components/schemas/TemplateEnvReferences'
+            dashboards:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  orgID:
+                    type: string
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  templateMetaName:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  labelAssociations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateSummaryLabel'
+                  charts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateChart'
+                  envReferences:
+                    $ref: '#/components/schemas/TemplateEnvReferences'
+            labels:
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSummaryLabel'
+            labelMappings:
+              type: array
+              items:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  resourceTemplateMetaName:
+                    type: string
+                  resourceName:
+                    type: string
+                  resourceID:
+                    type: string
+                  resourceType:
+                    type: string
+                  labelTemplateMetaName:
+                    type: string
+                  labelName:
+                    type: string
+                  labelID:
+                    type: string
+            missingEnvRefs:
+              type: array
+              items:
+                type: string
+            missingSecrets:
+              type: array
+              items:
+                type: string
+            notificationEndpoints:
+              type: array
+              items:
+                allOf:
+                - $ref: '#/components/schemas/NotificationEndpointDiscriminator'
+                - type: object
+                  properties:
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                    templateMetaName:
+                      type: string
+                    labelAssociations:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/TemplateSummaryLabel'
+                    envReferences:
+                      $ref: '#/components/schemas/TemplateEnvReferences'
+            notificationRules:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  templateMetaName:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  endpointTemplateMetaName:
+                    type: string
+                  endpointID:
+                    type: string
+                  endpointType:
+                    type: string
+                  every:
+                    type: string
+                  offset:
+                    type: string
+                  messageTemplate:
+                    type: string
+                  status:
+                    type: string
+                  statusRules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currentLevel:
+                          type: string
+                        previousLevel:
+                          type: string
+                  tagRules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                        value:
+                          type: string
+                        operator:
+                          type: string
+                  labelAssociations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateSummaryLabel'
+                  envReferences:
+                    $ref: '#/components/schemas/TemplateEnvReferences'
+            tasks:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  templateMetaName:
+                    type: string
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  cron:
+                    type: string
+                  description:
+                    type: string
+                  every:
+                    type: string
+                  offset:
+                    type: string
+                  query:
+                    type: string
+                  status:
+                    type: string
+                  envReferences:
+                    $ref: '#/components/schemas/TemplateEnvReferences'
+            telegrafConfigs:
+              type: array
+              items:
+                allOf:
+                - $ref: '#/components/schemas/TelegrafRequest'
+                - type: object
+                  properties:
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                    templateMetaName:
+                      type: string
+                    labelAssociations:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/TemplateSummaryLabel'
+                    envReferences:
+                      $ref: '#/components/schemas/TemplateEnvReferences'
+            variables:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  templateMetaName:
+                    type: string
+                  id:
+                    type: string
+                  orgID:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  arguments:
+                    $ref: '#/components/schemas/VariableProperties'
+                  labelAssociations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateSummaryLabel'
+                  envReferences:
+                    $ref: '#/components/schemas/TemplateEnvReferences'
+        diff:
+          type: object
+          properties:
+            buckets:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      retentionRules:
+                        $ref: '#/components/schemas/RetentionRules'
+                  old:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      retentionRules:
+                        $ref: '#/components/schemas/RetentionRules'
+            checks:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    $ref: '#/components/schemas/CheckDiscriminator'
+                  old:
+                    $ref: '#/components/schemas/CheckDiscriminator'
+            dashboards:
+              type: array
+              items:
+                type: object
+                properties:
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  templateMetaName:
+                    type: string
+                  new:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      charts:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TemplateChart'
+                  old:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      charts:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TemplateChart'
+            labels:
+              type: array
+              items:
+                type: object
+                properties:
+                  stateStatus:
+                    type: string
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      color:
+                        type: string
+                      description:
+                        type: string
+                  old:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      color:
+                        type: string
+                      description:
+                        type: string
+            labelMappings:
+              type: array
+              items:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  resourceType:
+                    type: string
+                  resourceID:
+                    type: string
+                  resourceTemplateMetaName:
+                    type: string
+                  resourceName:
+                    type: string
+                  labelID:
+                    type: string
+                  labelTemplateMetaName:
+                    type: string
+                  labelName:
+                    type: string
+            notificationEndpoints:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    $ref: '#/components/schemas/NotificationEndpointDiscriminator'
+                  old:
+                    $ref: '#/components/schemas/NotificationEndpointDiscriminator'
+            notificationRules:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      endpointName:
+                        type: string
+                      endpointID:
+                        type: string
+                      endpointType:
+                        type: string
+                      every:
+                        type: string
+                      offset:
+                        type: string
+                      messageTemplate:
+                        type: string
+                      status:
+                        type: string
+                      statusRules:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            currentLevel:
+                              type: string
+                            previousLevel:
+                              type: string
+                      tagRules:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                            value:
+                              type: string
+                            operator:
+                              type: string
+                  old:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      endpointName:
+                        type: string
+                      endpointID:
+                        type: string
+                      endpointType:
+                        type: string
+                      every:
+                        type: string
+                      offset:
+                        type: string
+                      messageTemplate:
+                        type: string
+                      status:
+                        type: string
+                      statusRules:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            currentLevel:
+                              type: string
+                            previousLevel:
+                              type: string
+                      tagRules:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                            value:
+                              type: string
+                            operator:
+                              type: string
+            tasks:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      cron:
+                        type: string
+                      description:
+                        type: string
+                      every:
+                        type: string
+                      offset:
+                        type: string
+                      query:
+                        type: string
+                      status:
+                        type: string
+                  old:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      cron:
+                        type: string
+                      description:
+                        type: string
+                      every:
+                        type: string
+                      offset:
+                        type: string
+                      query:
+                        type: string
+                      status:
+                        type: string
+            telegrafConfigs:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    $ref: '#/components/schemas/TelegrafRequest'
+                  old:
+                    $ref: '#/components/schemas/TelegrafRequest'
+            variables:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/components/schemas/TemplateKind'
+                  stateStatus:
+                    type: string
+                  id:
+                    type: string
+                  templateMetaName:
+                    type: string
+                  new:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      args:
+                        $ref: '#/components/schemas/VariableProperties'
+                  old:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      args:
+                        $ref: '#/components/schemas/VariableProperties'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              kind:
+                $ref: '#/components/schemas/TemplateKind'
+              reason:
+                type: string
+              fields:
+                type: array
+                items:
+                  type: string
+              indexes:
+                type: array
+                items:
+                  type: integer
+    TemplateApply:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+          description: 'Only applies a dry run of the templates passed in the request.
+
+
+            - Validates the template and generates a resource diff and summary.
+
+            - Doesn''t install templates or make changes to the InfluxDB instance.
+
+            '
+        orgID:
+          type: string
+          description: 'Organization ID.
+
+            InfluxDB applies templates to this organization.
+
+            The organization owns all resources created by the template.
+
+
+            To find your organization, see how to
+
+            [view organizations](https://docs.influxdata.com/influxdb/cloud/organizations/view-orgs/).
+
+            '
+        stackID:
+          type: string
+          description: 'ID of the stack to update.
+
+
+            To apply templates to an existing stack in the organization, use the `stackID` parameter.
+
+            If you apply templates without providing a stack ID,
+
+            InfluxDB initializes a new stack with all new resources.
+
+
+            To find a stack ID, use the InfluxDB [`/api/v2/stacks` API endpoint](#operation/ListStacks) to list stacks.
+
+
+            #### Related guides
+
+
+            - [Stacks](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/)
+
+            - [View stacks](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/view/)
+
+            '
+        template:
+          type: object
+          description: 'A template object to apply.
+
+            A template object has a `contents` property
+
+            with an array of InfluxDB resource configurations.
+
+
+            Pass `template` to apply only one template object.
+
+            If you use `template`, you can''t use the `templates` parameter.
+
+            If you want to apply multiple template objects, use `templates` instead.
+
+            '
+          properties:
+            contentType:
+              type: string
+            sources:
+              type: array
+              items:
+                type: string
+            contents:
+              $ref: '#/components/schemas/Template'
+        templates:
+          type: array
+          description: 'A list of template objects to apply.
+
+            A template object has a `contents` property
+
+            with an array of InfluxDB resource configurations.
+
+
+            Use the `templates` parameter to apply multiple template objects.
+
+            If you use `templates`, you can''t use the `template` parameter.
+
+            '
+          items:
+            type: object
+            properties:
+              contentType:
+                type: string
+              sources:
+                type: array
+                items:
+                  type: string
+              contents:
+                $ref: '#/components/schemas/Template'
+        envRefs:
+          type: object
+          description: "An object with key-value pairs that map to **environment references** in templates.\n\nEnvironment references in templates are `envRef` objects with an `envRef.key`\nproperty.\nTo substitute a custom environment reference value when applying templates,\npass `envRefs` with the `envRef.key` and the value.\n\nWhen you apply a template, InfluxDB replaces `envRef` objects in the template\nwith the values that you provide in the `envRefs` parameter.\nFor more examples, see how to [define environment references](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/use/#define-environment-references).\n\nThe following template fields may use environment references:\n\n  - `metadata.name`\n  - `spec.endpointName`\n  - `spec.associations.name`\n\nFor more information about including environment references in template fields, see how to\n[include user-definable resource names](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/create/#include-user-definable-resource-names).\n"
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: integer
+            - type: number
+            - type: boolean
+        secrets:
+          type: object
+          description: "An object with key-value pairs that map to **secrets** in queries.\n\nQueries may reference secrets stored in InfluxDB--for example,\nthe following Flux script retrieves `POSTGRES_USERNAME` and `POSTGRES_PASSWORD`\nsecrets and then uses them to connect to a PostgreSQL database:\n\n```js\nimport \"sql\"\nimport \"influxdata/influxdb/secrets\"\n\nusername = secrets.get(key: \"POSTGRES_USERNAME\")\npassword = secrets.get(key: \"POSTGRES_PASSWORD\")\n\nsql.from(\n  driverName: \"postgres\",\n  dataSourceName: \"postgresql://${username}:${password}@localhost:5432\",\n  query: \"SELECT * FROM example_table\",\n)\n```\n\nTo define secret values in your `/api/v2/templates/apply` request,\npass the `secrets` parameter with key-value pairs--for example:\n\n```json\n{\n  ...\n  \"secrets\": {\n    \"POSTGRES_USERNAME\": \"pguser\",\n    \"POSTGRES_PASSWORD\": \"foo\"\n  }\n  ...\n}\n```\n\nInfluxDB stores the key-value pairs as secrets that you can access with `secrets.get()`.\nOnce stored, you can't view secret values in InfluxDB.\n\n#### Related guides\n\n- [How to pass secrets when installing a template](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/use/#pass-secrets-when-installing-a-template)\n"
+          additionalProperties:
+            type: string
+        remotes:
+          type: array
+          description: 'A list of URLs for template files.
+
+
+            To apply a template manifest file located at a URL, pass `remotes`
+
+            with an array that contains the URL.
+
+            '
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              contentType:
+                type: string
+            required:
+            - url
+        actions:
+          type: array
+          description: "A list of `action` objects.\nActions let you customize how InfluxDB applies templates in the request.\n\nYou can use the following actions to prevent creating or updating resources:\n\n- A `skipKind` action skips template resources of a specified `kind`.\n- A `skipResource` action skips template resources with a specified `metadata.name`\n  and `kind`.\n"
+          items:
+            oneOf:
+            - type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                  - skipKind
+                properties:
+                  type: object
+                  properties:
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                  required:
+                  - kind
+            - type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                  - skipResource
+                properties:
+                  type: object
+                  properties:
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                    resourceTemplateName:
+                      type: string
+                  required:
+                  - kind
+                  - resourceTemplateName
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
+    ThresholdCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - threshold
+          thresholds:
+            type: array
+            items:
+              $ref: '#/components/schemas/Threshold'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    AxisScale:
+      description: 'Scale is the axis formatting scale. Supported: "log", "linear"'
+      type: string
+      enum:
+      - log
+      - linear
+    TelegramNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - token
+        - channel
+        properties:
+          token:
+            description: Specifies the Telegram bot token. See https://core.telegram.org/bots#creating-a-new-bot .
+            type: string
+          channel:
+            description: The ID of the telegram channel; a chat_id in https://core.telegram.org/bots/api#sendmessage .
+            type: string
+    BuilderFunctionsType:
+      type: object
+      properties:
+        name:
+          type: string
+    Threshold:
+      oneOf:
+      - $ref: '#/components/schemas/GreaterThreshold'
+      - $ref: '#/components/schemas/LesserThreshold'
+      - $ref: '#/components/schemas/RangeThreshold'
+      discriminator:
+        propertyName: type
+        mapping:
+          greater: '#/components/schemas/GreaterThreshold'
+          lesser: '#/components/schemas/LesserThreshold'
+          range: '#/components/schemas/RangeThreshold'
+    MapVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - map
+        values:
+          type: object
+          additionalProperties:
+            type: string
+    DeadmanCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - deadman
+          timeSince:
+            description: String duration before deadman triggers.
+            type: string
+          staleTime:
+            description: String duration for time that a series is considered stale and should not trigger deadman.
+            type: string
+          reportZero:
+            description: If only zero values reported since time, trigger an alert
+            type: boolean
+          level:
+            $ref: '#/components/schemas/CheckStatusLevel'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    NotificationEndpointBase:
+      type: object
+      required:
+      - type
+      - name
+      properties:
+        id:
+          type: string
+        orgID:
+          type: string
+        userID:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        description:
+          description: An optional description of the notification endpoint.
+          type: string
+        name:
+          type: string
+        status:
+          description: The status of the endpoint.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/notificationEndpoints/1
+            labels: /api/v2/notificationEndpoints/1/labels
+            members: /api/v2/notificationEndpoints/1/members
+            owners: /api/v2/notificationEndpoints/1/owners
+          properties:
+            self:
+              description: The URL for this endpoint.
+              $ref: '#/components/schemas/Link'
+            labels:
+              description: The URL to retrieve labels for this endpoint.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members for this endpoint.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners for this endpoint.
+              $ref: '#/components/schemas/Link'
+        type:
+          $ref: '#/components/schemas/NotificationEndpointType'
+    ThresholdBase:
+      properties:
+        level:
+          $ref: '#/components/schemas/CheckStatusLevel'
+        allValues:
+          description: If true, only alert if all values meet threshold.
+          type: boolean
+    ConstantVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - constant
+        values:
+          type: array
+          items:
+            type: string
+    DashboardColor:
+      type: object
+      description: Defines an encoding of data value into color space.
+      required:
+      - id
+      - type
+      - hex
+      - name
+      - value
+      properties:
+        id:
+          description: The unique ID of the view color.
+          type: string
+        type:
+          description: Type is how the color is used.
+          type: string
+          enum:
+          - min
+          - max
+          - threshold
+          - scale
+          - text
+          - background
+        hex:
+          description: The hex number of the color
+          type: string
+          maxLength: 7
+          minLength: 7
+        name:
+          description: The user-facing name of the hex color.
+          type: string
+        value:
+          description: The data value mapped to this color.
+          type: number
+          format: float
+    SingleStatViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - tickPrefix
+      - suffix
+      - tickSuffix
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - single-stat
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        prefix:
+          type: string
+        tickPrefix:
+          type: string
+        suffix:
+          type: string
+        tickSuffix:
+          type: string
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    LatLonColumns:
+      description: Object type to define lat/lon columns
+      type: object
+      required:
+      - lat
+      - lon
+      properties:
+        lat:
+          $ref: '#/components/schemas/LatLonColumn'
+        lon:
+          $ref: '#/components/schemas/LatLonColumn'
+    HistogramViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - fillColumns
+      - xDomain
+      - xAxisLabel
+      - position
+      - binCount
+      properties:
+        type:
+          type: string
+          enum:
+          - histogram
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        fillColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+            format: float
+        xAxisLabel:
+          type: string
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        binCount:
+          type: integer
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    RangeThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - min
+        - max
+        - within
+        properties:
+          type:
+            type: string
+            enum:
+            - range
+          min:
+            type: number
+            format: float
+          max:
+            type: number
+            format: float
+          within:
+            type: boolean
+    CheckBase:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        orgID:
+          description: The ID of the organization that owns this check.
+          type: string
+        taskID:
+          description: The ID of the task associated with this check.
+          type: string
+        ownerID:
+          description: The ID of creator used to create this check.
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        query:
+          $ref: '#/components/schemas/DashboardQuery'
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        description:
+          description: An optional description of the check.
+          type: string
+        latestCompleted:
+          type: string
+          description: A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)) of the latest scheduled and completed run.
+          format: date-time
+          readOnly: true
+        lastRunStatus:
+          readOnly: true
+          type: string
+          enum:
+          - failed
+          - success
+          - canceled
+        lastRunError:
+          readOnly: true
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/checks/1
+            labels: /api/v2/checks/1/labels
+            members: /api/v2/checks/1/members
+            owners: /api/v2/checks/1/owners
+            query: /api/v2/checks/1/query
+          properties:
+            self:
+              description: The URL for this check.
+              $ref: '#/components/schemas/Link'
+            labels:
+              description: The URL to retrieve labels for this check.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members for this check.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners for this check.
+              $ref: '#/components/schemas/Link'
+            query:
+              description: The URL to retrieve the Flux script for this check.
+              $ref: '#/components/schemas/Link'
+      required:
+      - name
+      - orgID
+      - query
+    CheckStatusLevel:
+      description: The state to record if check matches a criteria.
+      type: string
+      enum:
+      - UNKNOWN
+      - OK
+      - INFO
+      - CRIT
+      - WARN
+    Stack:
+      type: object
+      properties:
+        id:
+          type: string
+        orgID:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              eventType:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              sources:
+                type: array
+                items:
+                  type: string
+              resources:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    apiVersion:
+                      type: string
+                    resourceID:
+                      type: string
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                    templateMetaName:
+                      type: string
+                    associations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          kind:
+                            $ref: '#/components/schemas/TemplateKind'
+                          metaName:
+                            type: string
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+              urls:
+                type: array
+                items:
+                  type: string
+              updatedAt:
+                type: string
+                format: date-time
+                readOnly: true
+    SlackNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        properties:
+          url:
+            description: Specifies the URL of the Slack endpoint. Specify either `URL` or `Token`.
+            type: string
+          token:
+            description: Specifies the API token string. Specify either `URL` or `Token`.
+            type: string
+    GeoPointMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - colorField
+        - colorDimension
+        - colors
+        properties:
+          colorField:
+            type: string
+            description: Marker color field
+          colorDimension:
+            $ref: '#/components/schemas/Axis'
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+          isClustered:
+            description: Cluster close markers together
+            type: boolean
+          tooltipColumns:
+            description: An array for which columns to display in tooltip
+            type: array
+            items:
+              type: string
+    CheckDiscriminator:
+      oneOf:
+      - $ref: '#/components/schemas/DeadmanCheck'
+      - $ref: '#/components/schemas/ThresholdCheck'
+      - $ref: '#/components/schemas/CustomCheck'
+      discriminator:
+        propertyName: type
+        mapping:
+          deadman: '#/components/schemas/DeadmanCheck'
+          threshold: '#/components/schemas/ThresholdCheck'
+          custom: '#/components/schemas/CustomCheck'
+    RenamableField:
+      description: Describes a field that can be renamed and made visible or invisible.
+      type: object
+      properties:
+        internalName:
+          description: The calculated name of a field.
+          readOnly: true
+          type: string
+        displayName:
+          description: The name that a field is renamed to by the user.
+          type: string
+        visible:
+          description: Indicates whether this field should be visible on the table.
+          type: boolean
+    MosaicViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - ySeriesColumns
+      - fillColumns
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      properties:
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - mosaic
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yLabelColumnSeparator:
+          type: string
+        yLabelColumns:
+          type: array
+          items:
+            type: string
+        ySeriesColumns:
+          type: array
+          items:
+            type: string
+        fillColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    GeoHeatMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - intensityField
+        - intensityDimension
+        - radius
+        - blur
+        - colors
+        properties:
+          intensityField:
+            type: string
+            description: Intensity field
+          intensityDimension:
+            $ref: '#/components/schemas/Axis'
+          radius:
+            description: Radius size in pixels
+            type: integer
+          blur:
+            description: Blur for heatmap points
+            type: integer
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+    MarkdownViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - note
+      properties:
+        type:
+          type: string
+          enum:
+          - markdown
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+    GeoViewLayer:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/GeoCircleViewLayer'
+      - $ref: '#/components/schemas/GeoHeatMapViewLayer'
+      - $ref: '#/components/schemas/GeoPointMapViewLayer'
+      - $ref: '#/components/schemas/GeoTrackMapViewLayer'
+    Check:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
+    TemplateChart:
+      type: object
+      properties:
+        xPos:
+          type: integer
+        yPos:
+          type: integer
+        height:
+          type: integer
+        width:
+          type: integer
+        properties:
+          $ref: '#/components/schemas/ViewProperties'
+    SimpleTableViewProperties:
+      type: object
+      required:
+      - type
+      - showAll
+      - queries
+      - shape
+      - note
+      - showNoteWhenEmpty
+      properties:
+        type:
+          type: string
+          enum:
+          - simple-table
+        showAll:
+          type: boolean
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+    LatLonColumn:
+      description: Object type for key and column definitions
+      type: object
+      required:
+      - key
+      - column
+      properties:
+        key:
+          description: Key to determine whether the column is tag/field
+          type: string
+        column:
+          description: Column to look up Lat/Lon
+          type: string
+    BandViewProperties:
+      type: object
+      required:
+      - type
+      - geom
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - band
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        upperColumn:
+          type: string
+        mainColumn:
+          type: string
+        lowerColumn:
+          type: string
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        geom:
+          $ref: '#/components/schemas/XYGeom'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    NotificationEndpointDiscriminator:
+      oneOf:
+      - $ref: '#/components/schemas/SlackNotificationEndpoint'
+      - $ref: '#/components/schemas/PagerDutyNotificationEndpoint'
+      - $ref: '#/components/schemas/HTTPNotificationEndpoint'
+      - $ref: '#/components/schemas/TelegramNotificationEndpoint'
+      discriminator:
+        propertyName: type
+        mapping:
+          slack: '#/components/schemas/SlackNotificationEndpoint'
+          pagerduty: '#/components/schemas/PagerDutyNotificationEndpoint'
+          http: '#/components/schemas/HTTPNotificationEndpoint'
+          telegram: '#/components/schemas/TelegramNotificationEndpoint'
+    ScatterViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - yColumn
+      - fillColumns
+      - symbolColumns
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - scatter
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        fillColumns:
+          type: array
+          items:
+            type: string
+        symbolColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    HTTPNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - url
+        - authMethod
+        - method
+        properties:
+          url:
+            type: string
+          username:
+            type: string
+          password:
+            type: string
+          token:
+            type: string
+          method:
+            type: string
+            enum:
+            - POST
+            - GET
+            - PUT
+          authMethod:
+            type: string
+            enum:
+            - none
+            - basic
+            - bearer
+          contentTemplate:
+            type: string
+          headers:
+            type: object
+            description: Customized headers.
+            additionalProperties:
+              type: string
+    TelegrafRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        metadata:
+          type: object
+          properties:
+            buckets:
+              type: array
+              items:
+                type: string
+        config:
+          type: string
+        orgID:
+          type: string
+    RetentionRule:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+            '
+      required:
+      - everySeconds
+    NotificationEndpointType:
+      type: string
+      enum:
+      - slack
+      - pagerduty
+      - http
+      - telegram
+    VariableProperties:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/QueryVariableProperties'
+      - $ref: '#/components/schemas/ConstantVariableProperties'
+      - $ref: '#/components/schemas/MapVariableProperties'
+    GeoViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - queries
+      - note
+      - showNoteWhenEmpty
+      - center
+      - zoom
+      - allowPanAndZoom
+      - detectCoordinateFields
+      - layers
+      properties:
+        type:
+          type: string
+          enum:
+          - geo
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        center:
+          description: Coordinates of the center of the map
+          type: object
+          required:
+          - lat
+          - lon
+          properties:
+            lat:
+              description: Latitude of the center of the map
+              type: number
+              format: double
+            lon:
+              description: Longitude of the center of the map
+              type: number
+              format: double
+        zoom:
+          description: Zoom level used for initial display of the map
+          type: number
+          format: double
+          minimum: 1
+          maximum: 28
+        allowPanAndZoom:
+          description: If true, map zoom and pan controls are enabled on the dashboard view
+          type: boolean
+          default: true
+        detectCoordinateFields:
+          description: If true, search results get automatically regroupped so that lon,lat and value are treated as columns
+          type: boolean
+          default: true
+        useS2CellID:
+          description: If true, S2 column is used to calculate lat/lon
+          type: boolean
+        s2Column:
+          description: String to define the column
+          type: string
+        latLonColumns:
+          $ref: '#/components/schemas/LatLonColumns'
+        mapStyle:
+          description: Define map type - regular, satellite etc.
+          type: string
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        layers:
+          description: List of individual layers shown in the map
+          type: array
+          items:
+            $ref: '#/components/schemas/GeoViewLayer'
+    TemplateExportByName:
+      type: object
+      properties:
+        stackID:
+          type: string
+        orgIDs:
+          type: array
+          items:
+            type: object
+            properties:
+              orgID:
+                type: string
+              resourceFilters:
+                type: object
+                properties:
+                  byLabel:
+                    type: array
+                    items:
+                      type: string
+                  byResourceKind:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateKind'
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              kind:
+                $ref: '#/components/schemas/TemplateKind'
+              name:
+                type: string
+            required:
+            - name
+            - kind
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    LinePlusSingleStatProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - suffix
+      - decimalPlaces
+      - position
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - line-plus-single-stat
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        shadeBelow:
+          type: boolean
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        prefix:
+          type: string
+        suffix:
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    Axes:
+      description: The viewport for a View's visualizations
+      type: object
+      required:
+      - x
+      - y
+      properties:
+        x:
+          $ref: '#/components/schemas/Axis'
+        y:
+          $ref: '#/components/schemas/Axis'
+    BuilderAggregateFunctionType:
+      type: string
+      enum:
+      - filter
+      - group
+    PagerDutyNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - routingKey
+        properties:
+          clientURL:
+            type: string
+          routingKey:
+            type: string
+    Axis:
+      type: object
+      description: Axis used in a visualization.
+      properties:
+        bounds:
+          type: array
+          minItems: 0
+          maxItems: 2
+          description: The extents of the axis in the form [lower, upper]. Clients determine whether bounds are inclusive or exclusive of their limits.
+          items:
+            type: string
+        label:
+          description: Description of the axis.
+          type: string
+        prefix:
+          description: Label prefix for formatting axis values.
+          type: string
+        suffix:
+          description: Label suffix for formatting axis values.
+          type: string
+        base:
+          description: Radix for formatting axis values.
+          type: string
+          enum:
+          - ''
+          - '2'
+          - '10'
+        scale:
+          $ref: '#/components/schemas/AxisScale'
+    Template:
+      type: array
+      items:
+        type: object
+        description: 'A template entry.
+
+          Defines an InfluxDB resource in a template.
+
+          '
+        properties:
+          apiVersion:
+            type: string
+            example: influxdata.com/v2alpha1
+          kind:
+            $ref: '#/components/schemas/TemplateKind'
+          metadata:
+            type: object
+            description: 'Metadata properties used for the resource when the template is applied.
+
+              '
+            properties:
+              name:
+                type: string
+          spec:
+            type: object
+            description: "Configuration properties used for the resource when the template is applied.\nKey-value pairs map to the specification for the resource.\n\nThe following code samples show `spec` configurations for template resources:\n\n- A bucket:\n\n```json\n{ \"spec\": {\n    \"name\": \"iot_center\",\n    \"retentionRules\": [{\n        \"everySeconds\": 2.592e+06,\n        \"type\": \"expire\"\n      }]\n  }\n}\n```\n\n- A variable:\n\n```json\n{ \"spec\": {\n    \"language\": \"flux\",\n    \"name\": \"Node_Service\",\n    \"query\": \"import \\\"influxdata/influxdb/v1\\\"\\r\\nv1.tagValues(bucket: \\\"iot_center\\\",\n        tag: \\\"service\\\")\",\n    \"type\": \"query\"\n  }\n}\n```\n"
+    HeatmapViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - yColumn
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      - binSize
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - heatmap
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        binSize:
+          type: number
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    TemplateExportByID:
+      type: object
+      properties:
+        stackID:
+          type: string
+        orgIDs:
+          type: array
+          items:
+            type: object
+            properties:
+              orgID:
+                type: string
+              resourceFilters:
+                type: object
+                properties:
+                  byLabel:
+                    type: array
+                    items:
+                      type: string
+                  byResourceKind:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateKind'
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              kind:
+                $ref: '#/components/schemas/TemplateKind'
+              name:
+                type: string
+                description: if defined with id, name is used for resource exported by id. if defined independently, resources strictly matching name are exported
+            required:
+            - id
+            - kind
+    QueryVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - query
+        values:
+          type: object
+          properties:
+            query:
+              type: string
+            language:
+              type: string
+    GeoCircleViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - radiusField
+        - radiusDimension
+        - colorField
+        - colorDimension
+        - colors
+        properties:
+          radiusField:
+            type: string
+            description: Radius field
+          radiusDimension:
+            $ref: '#/components/schemas/Axis'
+          colorField:
+            type: string
+            description: Circle color field
+          colorDimension:
+            $ref: '#/components/schemas/Axis'
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+          radius:
+            description: Maximum radius size in pixels
+            type: integer
+          interpolateColors:
+            description: Interpolate circle color based on displayed value
+            type: boolean
+    DecimalPlaces:
+      description: Indicates whether decimal places should be enforced, and how many digits it should show.
+      type: object
+      properties:
+        isEnforced:
+          description: Indicates whether decimal point setting should be enforced
+          type: boolean
+        digits:
+          description: The number of digits after decimal to display
+          type: integer
+          format: int32
+    XYViewProperties:
+      type: object
+      required:
+      - type
+      - geom
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      - position
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - xy
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        colorMapping:
+          description: An object that contains information about the color mapping
+          $ref: '#/components/schemas/ColorMapping'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        shadeBelow:
+          type: boolean
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        geom:
+          $ref: '#/components/schemas/XYGeom'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    LesserThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - lesser
+          value:
+            type: number
+            format: float
+    CheckViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - checkID
+      - queries
+      - colors
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - check
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        checkID:
+          type: string
+        check:
+          $ref: '#/components/schemas/Check'
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    TemplateKind:
+      type: string
+      enum:
+      - Bucket
+      - Check
+      - CheckDeadman
+      - CheckThreshold
+      - Dashboard
+      - Label
+      - NotificationEndpoint
+      - NotificationEndpointHTTP
+      - NotificationEndpointPagerDuty
+      - NotificationEndpointSlack
+      - NotificationRule
+      - Task
+      - Telegraf
+      - Variable
+    XYGeom:
+      type: string
+      enum:
+      - line
+      - step
+      - stacked
+      - bar
+      - monotoneX
+      - stepBefore
+      - stepAfter
+    GeoTrackMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - trackWidth
+        - speed
+        - randomColors
+        - trackPointVisualization
+      properties:
+        trackWidth:
+          description: Width of the track
+          type: integer
+        speed:
+          description: Speed of the track animation
+          type: integer
+        randomColors:
+          description: Assign different colors to different tracks
+          type: boolean
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+    GreaterThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - greater
+          value:
+            type: number
+            format: float
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+  responses:
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    AuthorizationError:
+      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'The HTTP status code description. Default is `unauthorized`.
+
+                  '
+                readOnly: true
+                type: string
+                enum:
+                - unauthorized
+              message:
+                readOnly: true
+                description: A human-readable message that may contain detail about the error.
+                type: string
+          examples:
+            tokenNotAuthorized:
+              summary: Token is not authorized to access a resource
+              value:
+                code: unauthorized
+                message: unauthorized access
+  securitySchemes:
+    TokenAuthentication:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: "Use the [Token authentication](#section/Authentication/TokenAuthentication)\nscheme to authenticate to the InfluxDB API.\n\nIn your API requests, send an `Authorization` header.\nFor the header value, provide the word `Token` followed by a space and an InfluxDB API token.\nThe word `Token` is case-sensitive.\n\n### Syntax\n\n`Authorization: Token INFLUX_API_TOKEN`\n\n### Example\n\n#### Use Token authentication with cURL\n\nThe following example shows how to use cURL to send an API request that uses Token authentication:\n\n```sh\ncurl --request GET \"INFLUX_URL/api/v2/buckets\" \\\n     --header \"Authorization: Token INFLUX_API_TOKEN\"\n```\n\nReplace the following:\n\n  - *`INFLUX_URL`*: your InfluxDB Cloud URL\n  - *`INFLUX_API_TOKEN`*: your [InfluxDB API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n\n### Related endpoints\n\n- [`/authorizations` endpoints](#tag/Authorizations-(API-tokens))\n\n### Related guides\n\n- [Authorize API requests](https://docs.influxdata.com/influxdb/cloud/api-guide/api_intro/#authentication)\n- [Manage API tokens](https://docs.influxdata.com/influxdb/cloud/security/tokens/)\n"
+    BasicAuthentication:
+      type: http
+      scheme: basic
+      description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-tagGroups:
+- name: Overview
+  tags:
+  - Quick start
+  - Authentication
+  - Supported operations
+  - Headers
+  - Pagination
+  - Response codes
+- name: Popular endpoints
+  tags:
+  - Data I/O endpoints
+  - Security and access endpoints
+  - System information endpoints
+- name: All endpoints
+  tags: []

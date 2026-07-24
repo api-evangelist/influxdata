@@ -1,0 +1,791 @@
+openapi: 3.0.0
+info:
+  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Setup API
+  version: 2.0.1
+  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
+
+    '
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: /api/v2
+security:
+- TokenAuthentication: []
+tags:
+- name: Setup
+paths:
+  /setup:
+    get:
+      operationId: GetSetup
+      tags:
+      - Setup
+      summary: Retrieve setup status
+      description: Check if setup is allowed. Returns `true` if no default user, organization, or bucket have been created.
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      responses:
+        '200':
+          description: Setup is allowed, true or false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsOnboarding'
+    post:
+      operationId: PostSetup
+      tags:
+      - Setup
+      summary: Create an initial user, organization, and bucket
+      description: Post an onboarding request to create an initial user, organization, and bucket.
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      requestBody:
+        description: Source to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardingRequest'
+      responses:
+        '201':
+          description: The created default user, bucket, and organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingResponse'
+        default:
+          description: Unexpected error
+          $ref: '#/components/responses/GeneralServerError'
+  /setup/user:
+    post:
+      operationId: PostSetupUser
+      tags:
+      - Setup
+      summary: Create a new user, organization, and bucket
+      description: Post an onboarding request to create a new user, organization, and bucket.
+      requestBody:
+        description: Source to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardingRequest'
+      responses:
+        '201':
+          description: The created default user, bucket, and organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingResponse'
+        default:
+          description: Unexpected error
+          $ref: '#/components/responses/GeneralServerError'
+components:
+  schemas:
+    RetentionRule:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+            '
+      required:
+      - everySeconds
+    Permission:
+      required:
+      - action
+      - resource
+      properties:
+        action:
+          type: string
+          enum:
+          - read
+          - write
+        resource:
+          $ref: '#/components/schemas/Resource'
+    IsOnboarding:
+      type: object
+      properties:
+        allowed:
+          description: 'If `true`, the InfluxDB instance hasn''t had initial setup;
+
+            `false` otherwise.
+
+            '
+          type: boolean
+    Bucket:
+      properties:
+        links:
+          type: object
+          readOnly: true
+          example:
+            labels: /api/v2/buckets/1/labels
+            members: /api/v2/buckets/1/members
+            org: /api/v2/orgs/2
+            owners: /api/v2/buckets/1/owners
+            self: /api/v2/buckets/1
+            write: /api/v2/write?org=2&bucket=1
+          properties:
+            labels:
+              description: The URL to retrieve labels for this bucket.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members that can read this bucket.
+              $ref: '#/components/schemas/Link'
+            org:
+              description: The URL to retrieve parent organization for this bucket.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners that can read and write to this bucket.
+              $ref: '#/components/schemas/Link'
+            self:
+              description: The URL for this bucket.
+              $ref: '#/components/schemas/Link'
+            write:
+              description: The URL to write line protocol to this bucket.
+              $ref: '#/components/schemas/Link'
+        id:
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+          default: user
+          enum:
+          - user
+          - system
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        rp:
+          type: string
+        schemaType:
+          $ref: '#/components/schemas/SchemaType'
+          default: implicit
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        retentionRules:
+          $ref: '#/components/schemas/RetentionRules'
+        labels:
+          $ref: '#/components/schemas/Labels'
+      required:
+      - name
+      - retentionRules
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    OnboardingResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserResponse'
+        org:
+          $ref: '#/components/schemas/Organization'
+        bucket:
+          $ref: '#/components/schemas/Bucket'
+        auth:
+          $ref: '#/components/schemas/Authorization'
+    AuthorizationUpdateRequest:
+      properties:
+        status:
+          description: Status of the token. If `inactive`, InfluxDB rejects requests that use the token.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        description:
+          type: string
+          description: A description of the token.
+    SchemaType:
+      type: string
+      enum:
+      - implicit
+      - explicit
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    Authorization:
+      required:
+      - orgID
+      - permissions
+      allOf:
+      - $ref: '#/components/schemas/AuthorizationUpdateRequest'
+      - type: object
+        properties:
+          createdAt:
+            type: string
+            format: date-time
+            readOnly: true
+          updatedAt:
+            type: string
+            format: date-time
+            readOnly: true
+          orgID:
+            type: string
+            description: 'The organization ID.
+
+              Specifies the [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) that the authorization is scoped to.
+
+              '
+          permissions:
+            type: array
+            minItems: 1
+            description: 'The list of permissions.
+
+              An authorization must have at least one permission.
+
+              '
+            items:
+              $ref: '#/components/schemas/Permission'
+          id:
+            readOnly: true
+            type: string
+            description: The authorization ID.
+          token:
+            readOnly: true
+            type: string
+            description: 'The API token.
+
+              The token value is unique to the authorization.
+
+              [API tokens](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token) are
+
+              used to authenticate and authorize InfluxDB API requests and `influx`
+
+              CLI commands--after receiving the request, InfluxDB checks that the
+
+              token is valid and that the `permissions` allow the requested action(s).
+
+              '
+          userID:
+            readOnly: true
+            type: string
+            description: The user ID. Specifies the [user](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#user) that owns the authorization. If _scoped_, the user that the authorization is scoped to; otherwise, the creator of the authorization.
+          user:
+            readOnly: true
+            type: string
+            description: 'The user name.
+
+              Specifies the [user](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#user) that owns the authorization.
+
+              If the authorization is _scoped_ to a user, the user;
+
+              otherwise, the creator of the authorization.
+
+              '
+          org:
+            readOnly: true
+            type: string
+            description: 'The organization name.
+
+              Specifies the [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization)
+
+              that the token is scoped to.
+
+              '
+          links:
+            type: object
+            readOnly: true
+            example:
+              self: /api/v2/authorizations/1
+              user: /api/v2/users/12
+            properties:
+              self:
+                readOnly: true
+                $ref: '#/components/schemas/Link'
+              user:
+                readOnly: true
+                $ref: '#/components/schemas/Link'
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    OnboardingRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        org:
+          type: string
+        bucket:
+          type: string
+        retentionPeriodHrs:
+          type: integer
+          deprecated: true
+        retentionPeriodSeconds:
+          type: integer
+        limit:
+          $ref: '#/components/schemas/Limit'
+      required:
+      - username
+      - org
+      - bucket
+    Organization:
+      properties:
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/orgs/1
+            members: /api/v2/orgs/1/members
+            owners: /api/v2/orgs/1/owners
+            labels: /api/v2/orgs/1/labels
+            secrets: /api/v2/orgs/1/secrets
+            buckets: /api/v2/buckets?org=myorg
+            tasks: /api/v2/tasks?org=myorg
+            dashboards: /api/v2/dashboards?org=myorg
+          properties:
+            self:
+              $ref: '#/components/schemas/Link'
+            members:
+              $ref: '#/components/schemas/Link'
+            owners:
+              $ref: '#/components/schemas/Link'
+            labels:
+              $ref: '#/components/schemas/Link'
+            secrets:
+              $ref: '#/components/schemas/Link'
+            buckets:
+              $ref: '#/components/schemas/Link'
+            tasks:
+              $ref: '#/components/schemas/Link'
+            dashboards:
+              $ref: '#/components/schemas/Link'
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        defaultStorageType:
+          description: Discloses whether the organization uses TSM or IOx.
+          type: string
+          enum:
+          - tsm
+          - iox
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          description: If inactive, the organization is inactive.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+      required:
+      - name
+    Resource:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - authorizations
+          - buckets
+          - dashboards
+          - orgs
+          - tasks
+          - telegrafs
+          - users
+          - variables
+          - secrets
+          - labels
+          - views
+          - documents
+          - notificationRules
+          - notificationEndpoints
+          - checks
+          - dbrp
+          - annotations
+          - sources
+          - scrapers
+          - notebooks
+          - remotes
+          - replications
+          - instance
+          - flows
+          - functions
+          - subscriptions
+          description: 'A resource type.
+
+            Identifies the API resource''s type (or _kind_).
+
+            '
+        id:
+          type: string
+          description: 'A resource ID.
+
+            Identifies a specific resource.
+
+            '
+        name:
+          type: string
+          description: 'The name of the resource.
+
+            _Note: not all resource types have a `name` property_.
+
+            '
+        orgID:
+          type: string
+          description: 'An organization ID.
+
+            Identifies the organization that owns the resource.
+
+            '
+        org:
+          type: string
+          description: 'An organization name.
+
+            The organization that owns the resource.
+
+            '
+    Limit:
+      type: object
+      description: These are org limits similar to those configured in/by quartz.
+      properties:
+        orgID:
+          type: string
+        rate:
+          type: object
+          properties:
+            queryTime:
+              type: integer
+              description: Query Time in nanoseconds
+            readKBs:
+              type: integer
+              description: Query limit in kb/sec. 0 is unlimited.
+            concurrentReadRequests:
+              type: integer
+              description: Allowed concurrent queries. 0 is unlimited.
+            writeKBs:
+              type: integer
+              description: Write limit in kb/sec. 0 is unlimited.
+            concurrentWriteRequests:
+              type: integer
+              description: Allowed concurrent writes. 0 is unlimited.
+            cardinality:
+              type: integer
+              description: Allowed organization total cardinality. 0 is unlimited.
+            concurrentDeleteRequests:
+              type: integer
+              description: Allowed organization concurrent outstanding delete requests.
+            deleteRequestsPerSecond:
+              type: integer
+              description: Allowed organization delete request rate.
+          required:
+          - readKBs
+          - queryTime
+          - concurrentReadRequests
+          - writeKBs
+          - concurrentWriteRequests
+          - cardinality
+        bucket:
+          type: object
+          properties:
+            maxBuckets:
+              type: integer
+            maxRetentionDuration:
+              type: integer
+              description: Max bucket retention duration in nanoseconds. 0 is unlimited.
+          required:
+          - maxBuckets
+          - maxRetentionDuration
+        task:
+          type: object
+          properties:
+            maxTasks:
+              type: integer
+          required:
+          - maxTasks
+        dashboard:
+          type: object
+          properties:
+            maxDashboards:
+              type: integer
+          required:
+          - maxDashboards
+        check:
+          type: object
+          properties:
+            maxChecks:
+              type: integer
+          required:
+          - maxChecks
+        notificationRule:
+          type: object
+          properties:
+            maxNotifications:
+              type: integer
+            blockedNotificationRules:
+              type: string
+              description: comma separated list of notification rules
+              example: http,pagerduty
+          required:
+          - maxNotifications
+          - blockNotificationRules
+        notificationEndpoint:
+          type: object
+          properties:
+            blockedNotificationEndpoints:
+              type: string
+              description: comma separated list of notification endpoints
+              example: http,pagerduty
+          required:
+          - blockNotificationEndpoints
+        stack:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+          required:
+          - enabled
+        timeout:
+          type: object
+          properties:
+            queryUnconditionalTimeoutSeconds:
+              type: integer
+            queryidleWriteTimeoutSeconds:
+              type: integer
+          required:
+          - queryUnconditionalTimeoutSeconds
+          - queryidleWriteTimeoutSeconds
+        ioxQuery:
+          type: object
+          properties:
+            partitions:
+              type: integer
+            parquetFiles:
+              type: integer
+          required:
+          - partitions
+          - parquetFiles
+        features:
+          type: object
+          properties:
+            allowDelete:
+              type: boolean
+              description: allow delete predicate endpoint
+      required:
+      - rate
+      - bucket
+      - task
+      - dashboard
+      - check
+      - notificationRule
+      - notificationEndpoint
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    TokenAuthentication:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: "Use the [Token authentication](#section/Authentication/TokenAuthentication)\nscheme to authenticate to the InfluxDB API.\n\nIn your API requests, send an `Authorization` header.\nFor the header value, provide the word `Token` followed by a space and an InfluxDB API token.\nThe word `Token` is case-sensitive.\n\n### Syntax\n\n`Authorization: Token INFLUX_API_TOKEN`\n\n### Example\n\n#### Use Token authentication with cURL\n\nThe following example shows how to use cURL to send an API request that uses Token authentication:\n\n```sh\ncurl --request GET \"INFLUX_URL/api/v2/buckets\" \\\n     --header \"Authorization: Token INFLUX_API_TOKEN\"\n```\n\nReplace the following:\n\n  - *`INFLUX_URL`*: your InfluxDB Cloud URL\n  - *`INFLUX_API_TOKEN`*: your [InfluxDB API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n\n### Related endpoints\n\n- [`/authorizations` endpoints](#tag/Authorizations-(API-tokens))\n\n### Related guides\n\n- [Authorize API requests](https://docs.influxdata.com/influxdb/cloud/api-guide/api_intro/#authentication)\n- [Manage API tokens](https://docs.influxdata.com/influxdb/cloud/security/tokens/)\n"
+    BasicAuthentication:
+      type: http
+      scheme: basic
+      description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-tagGroups:
+- name: Overview
+  tags:
+  - Quick start
+  - Authentication
+  - Supported operations
+  - Headers
+  - Pagination
+  - Response codes
+- name: Popular endpoints
+  tags:
+  - Data I/O endpoints
+  - Security and access endpoints
+  - System information endpoints
+- name: All endpoints
+  tags: []

@@ -1,0 +1,2164 @@
+openapi: 3.0.0
+info:
+  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Query API
+  version: 2.0.1
+  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
+
+    '
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: /api/v2
+security:
+- TokenAuthentication: []
+tags:
+- name: Query
+  description: 'Retrieve data, analyze queries, and get query suggestions.
+
+    '
+paths:
+  /query/ast:
+    post:
+      operationId: PostQueryAst
+      tags:
+      - Query
+      summary: Generate a query Abstract Syntax Tree (AST)
+      description: "Analyzes a Flux query and returns a complete package source [Abstract Syntax\nTree (AST)](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#abstract-syntax-tree-ast)\nfor the query.\n\nUse this endpoint for deep query analysis such as debugging unexpected query\nresults.\n\nA Flux query AST provides a semantic, tree-like representation with contextual\ninformation about the query. The AST illustrates how the query is distributed\ninto different components for execution.\n\n#### Limitations\n\n-  The endpoint doesn't validate values in the query--for example:\n\n    The following sample Flux query has correct syntax, but contains an incorrect `from()` property key:\n\n    ```js\n    from(foo: \"iot_center\")\n        |> range(start: -90d)\n        |> filter(fn: (r) => r._measurement == \"environment\")\n    ```\n\n    The following sample JSON shows how to pass the query in the request body:\n\n    ```js\n    from(foo: \"iot_center\")\n    |> range(start: -90d)\n    |> filter(fn: (r) => r._measurement == \"environment\")\n    ```\n\n    The following code sample shows how to pass the query as JSON in the request body:\n\n    ```json\n    { \"query\": \"from(foo: \\\"iot_center\\\")\\\n                    |> range(start: -90d)\\\n                    |> filter(fn: (r) => r._measurement == \\\"environment\\\")\"\n    }\n    ```\n\n    Passing this to `/api/v2/query/ast` will return a successful response\n    with a generated AST.\n"
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: header
+        name: Content-Type
+        schema:
+          type: string
+          enum:
+          - application/json
+      requestBody:
+        description: The Flux query to analyze.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
+      x-codeSamples:
+      - lang: Shell
+        label: 'cURL: Analyze and generate AST for the query'
+        source: "curl --request POST \"http://localhost:8086/api/v2/query/ast\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Token INFLUX_TOKEN\" \\\n  --data-binary @- << EOL\n      {\n        \"query\": \"from(bucket: \\\"INFLUX_BUCKET_NAME\\\")\\\n        |> range(start: -5m)\\\n        |> filter(fn: (r) => r._measurement == \\\"example-measurement\\\")\"\n      }\nEOL\n"
+      responses:
+        '200':
+          description: 'Success.
+
+            The response body contains an Abstract Syntax Tree (AST) of the Flux query.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ASTResponse'
+              examples:
+                successResponse:
+                  value:
+                    ast:
+                      type: Package
+                      package: main
+                      files:
+                      - type: File
+                        location:
+                          start:
+                            line: 1
+                            column: 1
+                          end:
+                            line: 1
+                            column: 109
+                          source: 'from(bucket: "example-bucket") |> range(start: -5m) |> filter(fn: (r) => r._measurement == "example-measurement")'
+                        metadata: parser-type=rust
+                        package: null
+                        imports: null
+                        body:
+                        - type: ExpressionStatement
+                          location:
+                            start:
+                              line: 1
+                              column: 1
+                            end:
+                              line: 1
+                              column: 109
+                            source: 'from(bucket: "example-bucket") |> range(start: -5m) |> filter(fn: (r) => r._measurement == "example-measurement")'
+                          expression:
+                            type: PipeExpression
+                            location:
+                              start:
+                                line: 1
+                                column: 1
+                              end:
+                                line: 1
+                                column: 109
+                              source: 'from(bucket: "example-bucket") |> range(start: -5m) |> filter(fn: (r) => r._measurement == "example-measurement")'
+                            argument:
+                              type: PipeExpression
+                              location:
+                                start:
+                                  line: 1
+                                  column: 1
+                                end:
+                                  line: 1
+                                  column: 47
+                                source: 'from(bucket: "example-bucket") |> range(start: -5m)'
+                              argument:
+                                type: CallExpression
+                                location:
+                                  start:
+                                    line: 1
+                                    column: 1
+                                  end:
+                                    line: 1
+                                    column: 26
+                                  source: 'from(bucket: "example-bucket")'
+                                callee:
+                                  type: Identifier
+                                  location:
+                                    start:
+                                      line: 1
+                                      column: 1
+                                    end:
+                                      line: 1
+                                      column: 5
+                                    source: from
+                                  name: from
+                                arguments:
+                                - type: ObjectExpression
+                                  location:
+                                    start:
+                                      line: 1
+                                      column: 6
+                                    end:
+                                      line: 1
+                                      column: 25
+                                    source: 'bucket: "example-bucket"'
+                                  properties:
+                                  - type: Property
+                                    location:
+                                      start:
+                                        line: 1
+                                        column: 6
+                                      end:
+                                        line: 1
+                                        column: 25
+                                      source: 'bucket: "example-bucket"'
+                                    key:
+                                      type: Identifier
+                                      location:
+                                        start:
+                                          line: 1
+                                          column: 6
+                                        end:
+                                          line: 1
+                                          column: 12
+                                        source: bucket
+                                      name: bucket
+                                    value:
+                                      type: StringLiteral
+                                      location:
+                                        start:
+                                          line: 1
+                                          column: 14
+                                        end:
+                                          line: 1
+                                          column: 25
+                                        source: '"example-bucket"'
+                                      value: example-bucket
+                              call:
+                                type: CallExpression
+                                location:
+                                  start:
+                                    line: 1
+                                    column: 30
+                                  end:
+                                    line: 1
+                                    column: 47
+                                  source: 'range(start: -5m)'
+                                callee:
+                                  type: Identifier
+                                  location:
+                                    start:
+                                      line: 1
+                                      column: 30
+                                    end:
+                                      line: 1
+                                      column: 35
+                                    source: range
+                                  name: range
+                                arguments:
+                                - type: ObjectExpression
+                                  location:
+                                    start:
+                                      line: 1
+                                      column: 36
+                                    end:
+                                      line: 1
+                                      column: 46
+                                    source: 'start: -5m'
+                                  properties:
+                                  - type: Property
+                                    location:
+                                      start:
+                                        line: 1
+                                        column: 36
+                                      end:
+                                        line: 1
+                                        column: 46
+                                      source: 'start: -5m'
+                                    key:
+                                      type: Identifier
+                                      location:
+                                        start:
+                                          line: 1
+                                          column: 36
+                                        end:
+                                          line: 1
+                                          column: 41
+                                        source: start
+                                      name: start
+                                    value:
+                                      type: UnaryExpression
+                                      location:
+                                        start:
+                                          line: 1
+                                          column: 43
+                                        end:
+                                          line: 1
+                                          column: 46
+                                        source: -5m
+                                      operator: '-'
+                                      argument:
+                                        type: DurationLiteral
+                                        location:
+                                          start:
+                                            line: 1
+                                            column: 44
+                                          end:
+                                            line: 1
+                                            column: 46
+                                          source: 5m
+                                        values:
+                                        - magnitude: 5
+                                          unit: m
+                            call:
+                              type: CallExpression
+                              location:
+                                start:
+                                  line: 1
+                                  column: 51
+                                end:
+                                  line: 1
+                                  column: 109
+                                source: 'filter(fn: (r) => r._measurement == "example-measurement")'
+                              callee:
+                                type: Identifier
+                                location:
+                                  start:
+                                    line: 1
+                                    column: 51
+                                  end:
+                                    line: 1
+                                    column: 57
+                                  source: filter
+                                name: filter
+                              arguments:
+                              - type: ObjectExpression
+                                location:
+                                  start:
+                                    line: 1
+                                    column: 58
+                                  end:
+                                    line: 1
+                                    column: 108
+                                  source: 'fn: (r) => r._measurement == "example-measurement"'
+                                properties:
+                                - type: Property
+                                  location:
+                                    start:
+                                      line: 1
+                                      column: 58
+                                    end:
+                                      line: 1
+                                      column: 108
+                                    source: 'fn: (r) => r._measurement == "example-measurement"'
+                                  key:
+                                    type: Identifier
+                                    location:
+                                      start:
+                                        line: 1
+                                        column: 58
+                                      end:
+                                        line: 1
+                                        column: 60
+                                      source: fn
+                                    name: fn
+                                  value:
+                                    type: FunctionExpression
+                                    location:
+                                      start:
+                                        line: 1
+                                        column: 62
+                                      end:
+                                        line: 1
+                                        column: 108
+                                      source: (r) => r._measurement == "example-measurement"
+                                    params:
+                                    - type: Property
+                                      location:
+                                        start:
+                                          line: 1
+                                          column: 63
+                                        end:
+                                          line: 1
+                                          column: 64
+                                        source: r
+                                      key:
+                                        type: Identifier
+                                        location:
+                                          start:
+                                            line: 1
+                                            column: 63
+                                          end:
+                                            line: 1
+                                            column: 64
+                                          source: r
+                                        name: r
+                                      value: null
+                                    body:
+                                      type: BinaryExpression
+                                      location:
+                                        start:
+                                          line: 1
+                                          column: 69
+                                        end:
+                                          line: 1
+                                          column: 108
+                                        source: r._measurement == "example-measurement"
+                                      operator: ==
+                                      left:
+                                        type: MemberExpression
+                                        location:
+                                          start:
+                                            line: 1
+                                            column: 69
+                                          end:
+                                            line: 1
+                                            column: 83
+                                          source: r._measurement
+                                        object:
+                                          type: Identifier
+                                          location:
+                                            start:
+                                              line: 1
+                                              column: 69
+                                            end:
+                                              line: 1
+                                              column: 70
+                                            source: r
+                                          name: r
+                                        property:
+                                          type: Identifier
+                                          location:
+                                            start:
+                                              line: 1
+                                              column: 71
+                                            end:
+                                              line: 1
+                                              column: 83
+                                            source: _measurement
+                                          name: _measurement
+                                      right:
+                                        type: StringLiteral
+                                        location:
+                                          start:
+                                            line: 1
+                                            column: 87
+                                          end:
+                                            line: 1
+                                            column: 108
+                                          source: '"example-measurement"'
+                                        value: example-measurement
+        '400':
+          description: 'Bad request.
+
+            InfluxDB is unable to parse the request.
+
+            The response body contains detail about the problem.
+
+            '
+          headers:
+            X-Platform-Error-Code:
+              description: 'The reason for the error.
+
+                '
+              schema:
+                type: string
+                example: invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalidASTValue:
+                  summary: Invalid AST
+                  description: 'If the request body contains a missing property key in `from()`,
+
+                    returns `invalid` and problem detail.
+
+                    '
+                  value:
+                    code: invalid
+                    message: 'invalid AST: loc 1:6-1:19: missing property key'
+        default:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /query/suggestions:
+    get:
+      operationId: GetQuerySuggestions
+      tags:
+      - Query
+      summary: List Flux query suggestions
+      description: "Lists Flux query suggestions. Each suggestion contains a\n[Flux function](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/)\nname and parameters.\n\nUse this endpoint to retrieve a list of Flux query suggestions used in the\nInfluxDB Flux Query Builder.\n\n#### Limitations\n\n- When writing a query, avoid using `_functionName()` helper functions\nexposed by this endpoint.  Helper function names have an underscore (`_`)\nprefix and aren't meant to be used directly in queries--for example:\n\n  - To sort on a column and keep the top n records, use the\n    `top(n, columns=[\"_value\"], tables=<-)` function instead of the `_sortLimit`\n    helper function. `top` uses `_sortLimit`.\n\n#### Related Guides\n\n- [List of all Flux functions](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/)\n"
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      responses:
+        '200':
+          description: 'Success.
+
+            The response body contains a list of Flux query suggestions--function
+
+            names used in the Flux Query Builder autocomplete suggestions.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FluxSuggestions'
+              examples:
+                successResponse:
+                  value:
+                    funcs:
+                    - name: _fillEmpty
+                      params:
+                        createEmpty: bool
+                        tables: stream
+                    - name: _highestOrLowest
+                      params:
+                        _sortLimit: function
+                        column: invalid
+                        groupColumns: array
+                        n: invalid
+                        reducer: function
+                        tables: stream
+                    - name: _hourSelection
+                      params:
+                        location: object
+                        start: int
+                        stop: int
+                        tables: stream
+                        timeColumn: string
+                    - name: _sortLimit
+                      params:
+                        columns: array
+                        desc: bool
+                        n: int
+                        tables: stream
+                    - name: _window
+                      params:
+                        createEmpty: bool
+                        every: duration
+                        location: object
+                        offset: duration
+                        period: duration
+                        startColumn: string
+                        stopColumn: string
+                        tables: stream
+                        timeColumn: string
+                    - name: aggregateWindow
+                      params:
+                        column: invalid
+                        createEmpty: bool
+                        every: duration
+                        fn: function
+                        location: object
+                        offset: duration
+                        period: duration
+                        tables: stream
+                        timeDst: string
+                        timeSrc: string
+                    - name: bool
+                      params:
+                        v: invalid
+                    - name: bottom
+                      params:
+                        columns: array
+                        n: int
+                        tables: stream
+                    - name: buckets
+                      params:
+                        host: string
+                        org: string
+                        orgID: string
+                        token: string
+                    - name: bytes
+                      params:
+                        v: invalid
+                    - name: cardinality
+                      params:
+                        bucket: string
+                        bucketID: string
+                        host: string
+                        org: string
+                        orgID: string
+                        predicate: function
+                        start: invalid
+                        stop: invalid
+                        token: string
+                    - name: chandeMomentumOscillator
+                      params:
+                        columns: array
+                        n: int
+                        tables: stream
+                    - name: columns
+                      params:
+                        column: string
+                        tables: stream
+                    - name: contains
+                      params:
+                        set: array
+                        value: invalid
+                    - name: count
+                      params:
+                        column: string
+                        tables: stream
+                    - name: cov
+                      params:
+                        'on': array
+                        pearsonr: bool
+                        x: invalid
+                        y: invalid
+                    - name: covariance
+                      params:
+                        columns: array
+                        pearsonr: bool
+                        tables: stream
+                        valueDst: string
+                    - name: cumulativeSum
+                      params:
+                        columns: array
+                        tables: stream
+                    - name: derivative
+                      params:
+                        columns: array
+                        initialZero: bool
+                        nonNegative: bool
+                        tables: stream
+                        timeColumn: string
+                        unit: duration
+                    - name: die
+                      params:
+                        msg: string
+                    - name: difference
+                      params:
+                        columns: array
+                        initialZero: bool
+                        keepFirst: bool
+                        nonNegative: bool
+                        tables: stream
+                    - name: display
+                      params:
+                        v: invalid
+                    - name: distinct
+                      params:
+                        column: string
+                        tables: stream
+                    - name: doubleEMA
+                      params:
+                        n: int
+                        tables: stream
+                    - name: drop
+                      params:
+                        columns: array
+                        fn: function
+                        tables: stream
+                    - name: duplicate
+                      params:
+                        as: string
+                        column: string
+                        tables: stream
+                    - name: duration
+                      params:
+                        v: invalid
+                    - name: elapsed
+                      params:
+                        columnName: string
+                        tables: stream
+                        timeColumn: string
+                        unit: duration
+                    - name: exponentialMovingAverage
+                      params:
+                        n: int
+                        tables: stream
+                    - name: fill
+                      params:
+                        column: string
+                        tables: stream
+                        usePrevious: bool
+                        value: invalid
+                    - name: filter
+                      params:
+                        fn: function
+                        onEmpty: string
+                        tables: stream
+                    - name: findColumn
+                      params:
+                        column: string
+                        fn: function
+                        tables: stream
+                    - name: findRecord
+                      params:
+                        fn: function
+                        idx: int
+                        tables: stream
+                    - name: first
+                      params:
+                        column: string
+                        tables: stream
+                    - name: float
+                      params:
+                        v: invalid
+                    - name: from
+                      params:
+                        bucket: string
+                        bucketID: string
+                        host: string
+                        org: string
+                        orgID: string
+                        token: string
+                    - name: getColumn
+                      params:
+                        column: string
+                    - name: getRecord
+                      params:
+                        idx: int
+                    - name: group
+                      params:
+                        columns: array
+                        mode: string
+                        tables: stream
+                    - name: highestAverage
+                      params:
+                        column: string
+                        groupColumns: array
+                        n: int
+                        tables: stream
+                    - name: highestCurrent
+                      params:
+                        column: string
+                        groupColumns: array
+                        n: int
+                        tables: stream
+                    - name: highestMax
+                      params:
+                        column: string
+                        groupColumns: array
+                        n: int
+                        tables: stream
+                    - name: histogram
+                      params:
+                        bins: array
+                        column: string
+                        countColumn: string
+                        normalize: bool
+                        tables: stream
+                        upperBoundColumn: string
+                    - name: histogramQuantile
+                      params:
+                        countColumn: string
+                        minValue: float
+                        quantile: float
+                        tables: stream
+                        upperBoundColumn: string
+                        valueColumn: string
+                    - name: holtWinters
+                      params:
+                        column: string
+                        interval: duration
+                        n: int
+                        seasonality: int
+                        tables: stream
+                        timeColumn: string
+                        withFit: bool
+                    - name: hourSelection
+                      params:
+                        location: object
+                        start: int
+                        stop: int
+                        tables: stream
+                        timeColumn: string
+                    - name: increase
+                      params:
+                        columns: array
+                        tables: stream
+                    - name: int
+                      params:
+                        v: invalid
+                    - name: integral
+                      params:
+                        column: string
+                        interpolate: string
+                        tables: stream
+                        timeColumn: string
+                        unit: duration
+                    - name: join
+                      params:
+                        method: string
+                        'on': array
+                        tables: invalid
+                    - name: kaufmansAMA
+                      params:
+                        column: string
+                        n: int
+                        tables: stream
+                    - name: kaufmansER
+                      params:
+                        n: int
+                        tables: stream
+                    - name: keep
+                      params:
+                        columns: array
+                        fn: function
+                        tables: stream
+                    - name: keyValues
+                      params:
+                        keyColumns: array
+                        tables: stream
+                    - name: keys
+                      params:
+                        column: string
+                        tables: stream
+                    - name: last
+                      params:
+                        column: string
+                        tables: stream
+                    - name: length
+                      params:
+                        arr: array
+                    - name: limit
+                      params:
+                        n: int
+                        offset: int
+                        tables: stream
+                    - name: linearBins
+                      params:
+                        count: int
+                        infinity: bool
+                        start: float
+                        width: float
+                    - name: logarithmicBins
+                      params:
+                        count: int
+                        factor: float
+                        infinity: bool
+                        start: float
+                    - name: lowestAverage
+                      params:
+                        column: string
+                        groupColumns: array
+                        n: int
+                        tables: stream
+                    - name: lowestCurrent
+                      params:
+                        column: string
+                        groupColumns: array
+                        n: int
+                        tables: stream
+                    - name: lowestMin
+                      params:
+                        column: string
+                        groupColumns: array
+                        n: int
+                        tables: stream
+                    - name: map
+                      params:
+                        fn: function
+                        mergeKey: bool
+                        tables: stream
+                    - name: max
+                      params:
+                        column: string
+                        tables: stream
+                    - name: mean
+                      params:
+                        column: string
+                        tables: stream
+                    - name: median
+                      params:
+                        column: string
+                        compression: float
+                        method: string
+                        tables: stream
+                    - name: min
+                      params:
+                        column: string
+                        tables: stream
+                    - name: mode
+                      params:
+                        column: string
+                        tables: stream
+                    - name: movingAverage
+                      params:
+                        n: int
+                        tables: stream
+                    - name: now
+                      params: {}
+                    - name: pearsonr
+                      params:
+                        'on': array
+                        x: invalid
+                        y: invalid
+                    - name: pivot
+                      params:
+                        columnKey: array
+                        rowKey: array
+                        tables: stream
+                        valueColumn: string
+                    - name: quantile
+                      params:
+                        column: string
+                        compression: float
+                        method: string
+                        q: float
+                        tables: stream
+                    - name: range
+                      params:
+                        start: invalid
+                        stop: invalid
+                        tables: stream
+                    - name: reduce
+                      params:
+                        fn: function
+                        identity: invalid
+                        tables: stream
+                    - name: relativeStrengthIndex
+                      params:
+                        columns: array
+                        n: int
+                        tables: stream
+                    - name: rename
+                      params:
+                        columns: invalid
+                        fn: function
+                        tables: stream
+                    - name: sample
+                      params:
+                        column: string
+                        n: int
+                        pos: int
+                        tables: stream
+                    - name: set
+                      params:
+                        key: string
+                        tables: stream
+                        value: string
+                    - name: skew
+                      params:
+                        column: string
+                        tables: stream
+                    - name: sort
+                      params:
+                        columns: array
+                        desc: bool
+                        tables: stream
+                    - name: spread
+                      params:
+                        column: string
+                        tables: stream
+                    - name: stateCount
+                      params:
+                        column: string
+                        fn: function
+                        tables: stream
+                    - name: stateDuration
+                      params:
+                        column: string
+                        fn: function
+                        tables: stream
+                        timeColumn: string
+                        unit: duration
+                    - name: stateTracking
+                      params:
+                        countColumn: string
+                        durationColumn: string
+                        durationUnit: duration
+                        fn: function
+                        tables: stream
+                        timeColumn: string
+                    - name: stddev
+                      params:
+                        column: string
+                        mode: string
+                        tables: stream
+                    - name: string
+                      params:
+                        v: invalid
+                    - name: sum
+                      params:
+                        column: string
+                        tables: stream
+                    - name: tableFind
+                      params:
+                        fn: function
+                        tables: stream
+                    - name: tail
+                      params:
+                        n: int
+                        offset: int
+                        tables: stream
+                    - name: time
+                      params:
+                        v: invalid
+                    - name: timeShift
+                      params:
+                        columns: array
+                        duration: duration
+                        tables: stream
+                    - name: timeWeightedAvg
+                      params:
+                        tables: stream
+                        unit: duration
+                    - name: timedMovingAverage
+                      params:
+                        column: string
+                        every: duration
+                        period: duration
+                        tables: stream
+                    - name: to
+                      params:
+                        bucket: string
+                        bucketID: string
+                        fieldFn: function
+                        host: string
+                        measurementColumn: string
+                        org: string
+                        orgID: string
+                        tables: stream
+                        tagColumns: array
+                        timeColumn: string
+                        token: string
+                    - name: toBool
+                      params:
+                        tables: stream
+                    - name: toFloat
+                      params:
+                        tables: stream
+                    - name: toInt
+                      params:
+                        tables: stream
+                    - name: toString
+                      params:
+                        tables: stream
+                    - name: toTime
+                      params:
+                        tables: stream
+                    - name: toUInt
+                      params:
+                        tables: stream
+                    - name: today
+                      params: {}
+                    - name: top
+                      params:
+                        columns: array
+                        n: int
+                        tables: stream
+                    - name: tripleEMA
+                      params:
+                        n: int
+                        tables: stream
+                    - name: tripleExponentialDerivative
+                      params:
+                        n: int
+                        tables: stream
+                    - name: truncateTimeColumn
+                      params:
+                        tables: stream
+                        timeColumn: invalid
+                        unit: duration
+                    - name: uint
+                      params:
+                        v: invalid
+                    - name: union
+                      params:
+                        tables: array
+                    - name: unique
+                      params:
+                        column: string
+                        tables: stream
+                    - name: wideTo
+                      params:
+                        bucket: string
+                        bucketID: string
+                        host: string
+                        org: string
+                        orgID: string
+                        tables: stream
+                        token: string
+                    - name: window
+                      params:
+                        createEmpty: bool
+                        every: duration
+                        location: object
+                        offset: duration
+                        period: duration
+                        startColumn: string
+                        stopColumn: string
+                        tables: stream
+                        timeColumn: string
+                    - name: yield
+                      params:
+                        name: string
+                        tables: stream
+        '301':
+          description: 'Moved Permanently.
+
+            InfluxData has moved the URL of the endpoint.
+
+            Use `/api/v2/query/suggestions` (without a trailing slash).
+
+            '
+          content:
+            text/html:
+              schema:
+                properties:
+                  body:
+                    readOnly: true
+                    description: Response message with URL of requested resource.
+                    type: string
+              examples:
+                movedPermanently:
+                  summary: Invalid URL
+                  description: 'The URL has been permanently moved. Use `/api/v2/query/suggestions`.
+
+                    '
+                  value: '<a href="/api/v2/query/suggestions?orgID=INFLUX_ORG_ID">Moved Permanently</a>
+
+                    '
+        default:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl --request GET \"INFLUX_URL/api/v2/query/suggestions\" \\\n  --header \"Accept: application/json\" \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\"\n"
+  /query/suggestions/{name}:
+    get:
+      operationId: GetQuerySuggestionsName
+      tags:
+      - Query
+      summary: Retrieve a query suggestion for a branching suggestion
+      description: 'Retrieves a query suggestion that contains the name and parameters of the
+
+        requested function.
+
+
+        Use this endpoint to pass a branching suggestion (a Flux function name) and
+
+        retrieve the parameters of the requested function.
+
+
+        #### Limitations
+
+
+        - Use `/api/v2/query/suggestions/{name}` (without a trailing slash).
+
+        `/api/v2/query/suggestions/{name}/` (note the trailing slash) results in a
+
+        HTTP `301 Moved Permanently` status.
+
+
+        - The function `name` must exist and must be spelled correctly.
+
+
+        #### Related Guides
+
+
+        - [List of all Flux functions](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/)
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+        description: 'A [Flux function](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/) name.
+
+          '
+      responses:
+        '200':
+          description: 'Success.
+
+            The response body contains the function name and parameters.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FluxSuggestion'
+              examples:
+                successResponse:
+                  value:
+                    name: sum
+                    params:
+                      column: string
+                      tables: stream
+        '500':
+          description: 'Internal server error.
+
+            The value passed for _`name`_ may have been misspelled.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                internalError:
+                  summary: Invalid function
+                  description: 'The requested function doesn''t exist.
+
+                    '
+                  value:
+                    code: internal error
+                    message: An internal error has occurred
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl --request GET \"INFLUX_URL/api/v2/query/suggestions/sum/\" \\\n  --header \"Accept: application/json\" \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\"\n"
+  /query/analyze:
+    post:
+      operationId: PostQueryAnalyze
+      tags:
+      - Query
+      summary: Analyze a Flux query
+      description: "Analyzes a [Flux query](https://docs.influxdata.com/flux/v0.x/) for syntax\nerrors and returns the list of errors.\n\nIn the following sample query, `from()` is missing the property key.\n\n    ```json\n    { \"query\": \"from(: \\\"iot_center\\\")\\\n                |> range(start: -90d)\\\n                |> filter(fn: (r) => r._measurement == \\\"environment\\\")\",\n      \"type\": \"flux\"\n    }\n    ```\n\nIf you pass this in a request to the `/api/v2/analyze` endpoint,\nInfluxDB returns an `errors` list that contains an error object for the missing key.\n\n#### Limitations\n\n-  The endpoint doesn't validate values in the query--for example:\n\n  - The following sample query has correct syntax, but contains an incorrect `from()` property key:\n\n    ```json\n    { \"query\": \"from(foo: \\\"iot_center\\\")\\\n                |> range(start: -90d)\\\n                |> filter(fn: (r) => r._measurement == \\\"environment\\\")\",\n      \"type\": \"flux\"\n    }\n    ```\n\n    If you pass this in a request to the `/api/v2/analyze` endpoint,\n    InfluxDB returns an empty `errors` list.\n"
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: header
+        name: Content-Type
+        schema:
+          type: string
+          enum:
+          - application/json
+      requestBody:
+        description: Flux query to analyze
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Query'
+      responses:
+        '200':
+          description: 'Success.
+
+            The response body contains the list of `errors`.
+
+            If the query syntax is valid, the endpoint returns an empty `errors` list.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyzeQueryResponse'
+              examples:
+                missingQueryPropertyKey:
+                  summary: Missing property key error
+                  description: "Returns an error object if the Flux query is missing a property key.\n\nThe following sample query is missing the _`bucket`_ property key:\n\n```json\n{\n  \"query\": \"from(: \\\"iot_center\\\")\\\n  ...\n}\n```\n"
+                  value:
+                    errors:
+                    - line: 1
+                      column: 6
+                      character: 0
+                      message: missing property key
+        '400':
+          description: 'Bad request.
+
+            InfluxDB is unable to parse the request.
+
+            The response body contains detail about the problem.
+
+            '
+          headers:
+            X-Platform-Error-Code:
+              description: 'The reason for the error.
+
+                '
+              schema:
+                type: string
+                example: invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalidJSONStringValue:
+                  summary: Invalid JSON
+                  description: If the request body contains invalid JSON, returns `invalid` and problem detail.
+                  value:
+                    code: invalid
+                    message: 'invalid json: invalid character ''\'''' looking for beginning of value'
+        default:
+          description: Internal server error
+          headers:
+            X-Platform-Error-Code:
+              description: The reason for the error.
+              schema:
+                type: string
+                example: internal error
+            X-Influx-Error:
+              description: A string that describes the problem.
+              schema:
+                type: string
+            X-Influx-Reference:
+              description: The numeric reference code for the error type.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                emptyJSONObject:
+                  summary: Empty JSON object in request body
+                  description: 'If the request body contains an empty JSON object, returns `internal error`.
+
+                    '
+                  value:
+                    code: internal error
+                    message: An internal error has occurred - check server logs
+      x-codeSamples:
+      - lang: Shell
+        label: 'cURL: Analyze a Flux query'
+        source: "curl -v --request POST \\\n  \"http://localhost:8086/api/v2/query/analyze\" \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\" \\\n  --header 'Content-type: application/json' \\\n  --header 'Accept: application/json' \\\n  --data-binary @- << EOF\n  { \"query\": \"from(bucket: \\\"iot_center\\\")\\\n              |> range(start: -90d)\\\n              |> filter(fn: (r) => r._measurement == \\\"environment\\\")\",\n    \"type\": \"flux\"\n  }\nEOF\n"
+  /query:
+    post:
+      operationId: PostQuery
+      tags:
+      - Query
+      summary: Query data
+      description: 'Retrieves data from buckets.
+
+
+        Use this endpoint to send a Flux query request and retrieve data from a bucket.
+
+
+        #### Rate limits (with InfluxDB Cloud)
+
+
+        `read` rate limits apply.
+
+        For more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).
+
+
+        #### Related guides
+
+
+        - [Query with the InfluxDB API](https://docs.influxdata.com/influxdb/cloud/query-data/execute-queries/influx-api/)
+
+        - [Get started with Flux](https://docs.influxdata.com/flux/v0.x/get-started/)
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: header
+        name: Accept-Encoding
+        description: The content encoding (usually a compression algorithm) that the client can understand.
+        schema:
+          type: string
+          description: The content coding.  Use `gzip` for compressed data or `identity` for unmodified, uncompressed data.
+          default: identity
+          enum:
+          - gzip
+          - identity
+      - in: header
+        name: Content-Type
+        schema:
+          type: string
+          enum:
+          - application/json
+          - application/vnd.flux
+      - in: query
+        name: org
+        description: 'An organization name or ID.
+
+
+          #### InfluxDB Cloud
+
+
+          - Doesn''t use the `org` parameter or `orgID` parameter.
+
+          - Queries the bucket in the organization associated with the authorization (API token).
+
+
+          #### InfluxDB OSS
+
+
+          - Requires either the `org` parameter or `orgID` parameter.
+
+          - Queries the bucket in the specified organization.
+
+          '
+        schema:
+          type: string
+      - in: query
+        name: orgID
+        description: 'An organization ID.
+
+
+          #### InfluxDB Cloud
+
+
+          - Doesn''t use the `org` parameter or `orgID` parameter.
+
+          - Queries the bucket in the organization associated with the authorization (API token).
+
+
+          #### InfluxDB OSS
+
+
+          - Requires either the `org` parameter or `orgID` parameter.
+
+          - Queries the bucket in the specified organization.
+
+          '
+        schema:
+          type: string
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl --request POST 'INFLUX_URL/api/v2/query?org=INFLUX_ORG' \\\n--header 'Content-Type: application/vnd.flux' \\\n--header 'Accept: application/csv \\\n--header 'Authorization: Token INFLUX_API_TOKEN' \\\n--data 'from(bucket: \"example-bucket\")\n          |> range(start: -5m)\n          |> filter(fn: (r) => r._measurement == \"example-measurement\")'\n"
+      requestBody:
+        description: Flux query or specification to execute
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Query'
+          application/vnd.flux:
+            schema:
+              type: string
+            example: "from(bucket: \"example-bucket\")\n    |> range(start: -5m)\n    |> filter(fn: (r) => r._measurement == \"example-measurement\")\n"
+      responses:
+        '200':
+          description: Success. The response body contains query results.
+          headers:
+            Content-Encoding:
+              description: Lists encodings (usually compression algorithms) that have been applied to the response payload.
+              schema:
+                type: string
+                description: 'The content coding: `gzip` for compressed data or `identity` for unmodified, uncompressed data.
+
+                  '
+                default: identity
+                enum:
+                - gzip
+                - identity
+            Trace-Id:
+              description: The trace ID, if generated, of the request.
+              schema:
+                type: string
+                description: Trace ID of a request.
+          content:
+            application/csv:
+              schema:
+                type: string
+              example: 'result,table,_start,_stop,_time,region,host,_value
+
+                mean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:00Z,east,A,15.43
+
+                mean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:20Z,east,B,59.25
+
+                mean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:40Z,east,C,52.62
+
+                '
+        '400':
+          description: 'Bad request.
+
+            The response body contains detail about the error.
+
+
+            #### InfluxDB OSS
+
+
+            - Returns this error if the `org` parameter or `orgID` parameter doesn''t match an organization.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                orgNotFound:
+                  summary: Organization not found
+                  value:
+                    code: invalid
+                    message: 'failed to decode request body: organization not found'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '429':
+          description: "#### InfluxDB Cloud:\n  - returns this error if a **read** or **write** request exceeds your\n    plan's [adjustable service quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#adjustable-service-quotas)\n    or if a **delete** request exceeds the maximum\n    [global limit](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#global-limits)\n  - returns `Retry-After` header that describes when to try the write again.\n\n#### InfluxDB OSS:\n  - doesn't return this error.\n"
+          headers:
+            Retry-After:
+              description: Non-negative decimal integer indicating seconds to wait before retrying the request.
+              schema:
+                type: integer
+                format: int32
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/GeneralServerError'
+components:
+  responses:
+    AuthorizationError:
+      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'The HTTP status code description. Default is `unauthorized`.
+
+                  '
+                readOnly: true
+                type: string
+                enum:
+                - unauthorized
+              message:
+                readOnly: true
+                description: A human-readable message that may contain detail about the error.
+                type: string
+          examples:
+            tokenNotAuthorized:
+              summary: Token is not authorized to access a resource
+              value:
+                code: unauthorized
+                message: unauthorized access
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
+  schemas:
+    MemberExpression:
+      description: Represents accessing a property of an object
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        object:
+          $ref: '#/components/schemas/Expression'
+        property:
+          $ref: '#/components/schemas/PropertyKey'
+    MemberAssignment:
+      description: Object property assignment
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        member:
+          $ref: '#/components/schemas/MemberExpression'
+        init:
+          $ref: '#/components/schemas/Expression'
+    TestStatement:
+      description: Declares a Flux test case
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        assignment:
+          $ref: '#/components/schemas/VariableAssignment'
+    DictItem:
+      description: A key-value pair in a dictionary.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        key:
+          $ref: '#/components/schemas/Expression'
+        val:
+          $ref: '#/components/schemas/Expression'
+    BinaryExpression:
+      description: uses binary operators to act on two operands in an expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        operator:
+          type: string
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+    ObjectExpression:
+      description: Allows the declaration of an anonymous object within a declaration
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        properties:
+          description: Object properties
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    NodeType:
+      description: Type of AST node
+      type: string
+    PipeLiteral:
+      description: Represents a specialized literal value, indicating the left hand value of a pipe expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+    Expression:
+      oneOf:
+      - $ref: '#/components/schemas/ArrayExpression'
+      - $ref: '#/components/schemas/DictExpression'
+      - $ref: '#/components/schemas/FunctionExpression'
+      - $ref: '#/components/schemas/BinaryExpression'
+      - $ref: '#/components/schemas/CallExpression'
+      - $ref: '#/components/schemas/ConditionalExpression'
+      - $ref: '#/components/schemas/LogicalExpression'
+      - $ref: '#/components/schemas/MemberExpression'
+      - $ref: '#/components/schemas/IndexExpression'
+      - $ref: '#/components/schemas/ObjectExpression'
+      - $ref: '#/components/schemas/ParenExpression'
+      - $ref: '#/components/schemas/PipeExpression'
+      - $ref: '#/components/schemas/UnaryExpression'
+      - $ref: '#/components/schemas/BooleanLiteral'
+      - $ref: '#/components/schemas/DateTimeLiteral'
+      - $ref: '#/components/schemas/DurationLiteral'
+      - $ref: '#/components/schemas/FloatLiteral'
+      - $ref: '#/components/schemas/IntegerLiteral'
+      - $ref: '#/components/schemas/PipeLiteral'
+      - $ref: '#/components/schemas/RegexpLiteral'
+      - $ref: '#/components/schemas/StringLiteral'
+      - $ref: '#/components/schemas/UnsignedIntegerLiteral'
+      - $ref: '#/components/schemas/Identifier'
+    Block:
+      description: A set of statements
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        body:
+          description: Block body
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+    ConditionalExpression:
+      description: Selects one of two expressions, `Alternate` or `Consequent`, depending on a third boolean expression, `Test`
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        test:
+          $ref: '#/components/schemas/Expression'
+        alternate:
+          $ref: '#/components/schemas/Expression'
+        consequent:
+          $ref: '#/components/schemas/Expression'
+    VariableAssignment:
+      description: Represents the declaration of a variable
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        id:
+          $ref: '#/components/schemas/Identifier'
+        init:
+          $ref: '#/components/schemas/Expression'
+    AnalyzeQueryResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+              column:
+                type: integer
+              character:
+                type: integer
+              message:
+                type: string
+    ImportDeclaration:
+      description: Declares a package import
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        as:
+          $ref: '#/components/schemas/Identifier'
+        path:
+          $ref: '#/components/schemas/StringLiteral'
+    ReturnStatement:
+      description: Defines an expression to return
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        argument:
+          $ref: '#/components/schemas/Expression'
+    UnaryExpression:
+      description: Uses operators to act on a single operand in an expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        operator:
+          type: string
+        argument:
+          $ref: '#/components/schemas/Expression'
+    Statement:
+      oneOf:
+      - $ref: '#/components/schemas/BadStatement'
+      - $ref: '#/components/schemas/VariableAssignment'
+      - $ref: '#/components/schemas/MemberAssignment'
+      - $ref: '#/components/schemas/ExpressionStatement'
+      - $ref: '#/components/schemas/ReturnStatement'
+      - $ref: '#/components/schemas/OptionStatement'
+      - $ref: '#/components/schemas/BuiltinStatement'
+      - $ref: '#/components/schemas/TestStatement'
+    Property:
+      description: The value associated with a key
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        key:
+          $ref: '#/components/schemas/PropertyKey'
+        value:
+          $ref: '#/components/schemas/Expression'
+    CallExpression:
+      description: Represents a function call
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        callee:
+          $ref: '#/components/schemas/Expression'
+        arguments:
+          description: Function arguments
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+    ExpressionStatement:
+      description: May consist of an expression that doesn't return a value and is executed solely for its side-effects
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        expression:
+          $ref: '#/components/schemas/Expression'
+    Node:
+      oneOf:
+      - $ref: '#/components/schemas/Expression'
+      - $ref: '#/components/schemas/Block'
+    LanguageRequest:
+      description: Flux query to be analyzed.
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          description: 'The Flux query script to be analyzed.
+
+            '
+          type: string
+    BooleanLiteral:
+      description: Represents boolean values
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: boolean
+    DateTimeLiteral:
+      description: Represents an instant in time with nanosecond precision in [RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp).
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+          format: date-time
+    FluxSuggestions:
+      type: object
+      properties:
+        funcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FluxSuggestion'
+    FloatLiteral:
+      description: Represents floating point numbers according to the double representations defined by the IEEE-754-1985
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: number
+    UnsignedIntegerLiteral:
+      description: Represents integer numbers
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    Dialect:
+      description: 'Options for tabular data output.
+
+        Default output is [annotated CSV](https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/#csv-response-format) with headers.
+
+
+        For more information about tabular data **dialect**,
+
+        see [W3 metadata vocabulary for tabular data](https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#dialect-descriptions).
+
+        '
+      type: object
+      properties:
+        header:
+          description: If true, the results contain a header row.
+          type: boolean
+          default: true
+        delimiter:
+          description: The separator used between cells. Default is a comma (`,`).
+          type: string
+          default: ','
+          maxLength: 1
+          minLength: 1
+        annotations:
+          description: 'Annotation rows to include in the results.
+
+            An _annotation_ is metadata associated with an object (column) in the data model.
+
+
+            #### Related guides
+
+
+            - See [Annotated CSV annotations](https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/#annotations) for examples and more information.
+
+
+            For more information about **annotations** in tabular data,
+
+            see [W3 metadata vocabulary for tabular data](https://www.w3.org/TR/2015/REC-tabular-data-model-20151217/#columns).
+
+            '
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - group
+            - datatype
+            - default
+        commentPrefix:
+          description: The character prefixed to comment strings. Default is a number sign (`#`).
+          type: string
+          default: '#'
+          maxLength: 1
+          minLength: 0
+        dateTimeFormat:
+          description: 'The format for timestamps in results.
+
+            Default is [`RFC3339` date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp).
+
+            To include nanoseconds in timestamps, use `RFC3339Nano`.
+
+
+            #### Example formatted date/time values
+
+
+            | Format      | Value                       |
+
+            |:------------|:----------------------------|
+
+            | `RFC3339`    | `"2006-01-02T15:04:05Z07:00"` |
+
+            | `RFC3339Nano` | `"2006-01-02T15:04:05.999999999Z07:00"` |
+
+            '
+          type: string
+          default: RFC3339
+          enum:
+          - RFC3339
+          - RFC3339Nano
+    BuiltinStatement:
+      description: Declares a builtin identifier and its type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        id:
+          $ref: '#/components/schemas/Identifier'
+    Query:
+      description: Query InfluxDB with the Flux language
+      type: object
+      required:
+      - query
+      properties:
+        extern:
+          $ref: '#/components/schemas/File'
+        query:
+          description: The query script to execute.
+          type: string
+        type:
+          description: The type of query. Must be "flux".
+          type: string
+          enum:
+          - flux
+        params:
+          type: object
+          additionalProperties: true
+          description: "Key-value pairs passed as parameters during query execution.\n\nTo use parameters in your query, pass a _`query`_ with `params` references (in dot notation)--for example:\n\n```json\n  query: \"from(bucket: params.mybucket)\\\n              |> range(start: params.rangeStart) |> limit(n:1)\"\n```\n\nand pass _`params`_ with the key-value pairs--for example:\n\n```json\n  params: {\n    \"mybucket\": \"environment\",\n    \"rangeStart\": \"-30d\"\n  }\n```\n\nDuring query execution, InfluxDB passes _`params`_ to your script and substitutes the values.\n\n#### Limitations\n\n- If you use _`params`_, you can't use _`extern`_.\n"
+        dialect:
+          $ref: '#/components/schemas/Dialect'
+        now:
+          description: 'Specifies the time that should be reported as `now` in the query.
+
+            Default is the server `now` time.
+
+            '
+          type: string
+          format: date-time
+    Duration:
+      description: A pair consisting of length of time and the unit of time measured. It is the atomic unit from which all duration literals are composed.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        magnitude:
+          type: integer
+        unit:
+          type: string
+    PropertyKey:
+      oneOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/StringLiteral'
+    ArrayExpression:
+      description: Used to create and directly specify the elements of an array object
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        elements:
+          description: Elements of the array
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+    PackageClause:
+      description: Defines a package identifier
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        name:
+          $ref: '#/components/schemas/Identifier'
+    ParenExpression:
+      description: Represents an expression wrapped in parenthesis
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        expression:
+          $ref: '#/components/schemas/Expression'
+    File:
+      description: Represents a source from a single file
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        name:
+          description: The name of the file.
+          type: string
+        package:
+          $ref: '#/components/schemas/PackageClause'
+        imports:
+          description: A list of package imports
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportDeclaration'
+        body:
+          description: List of Flux statements
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+    DurationLiteral:
+      description: Represents the elapsed time between two instants as an int64 nanosecond count with syntax of golang's time.Duration
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        values:
+          description: Duration values
+          type: array
+          items:
+            $ref: '#/components/schemas/Duration'
+    FunctionExpression:
+      description: Function expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        params:
+          description: Function parameters
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        body:
+          $ref: '#/components/schemas/Node'
+    OptionStatement:
+      description: A single variable declaration
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        assignment:
+          oneOf:
+          - $ref: '#/components/schemas/VariableAssignment'
+          - $ref: '#/components/schemas/MemberAssignment'
+    ASTResponse:
+      description: Contains the AST for the supplied Flux query
+      type: object
+      properties:
+        ast:
+          $ref: '#/components/schemas/Package'
+    BadStatement:
+      description: A placeholder for statements for which no correct statement nodes can be created
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        text:
+          description: Raw source text
+          type: string
+    IndexExpression:
+      description: Represents indexing into an array
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        array:
+          $ref: '#/components/schemas/Expression'
+        index:
+          $ref: '#/components/schemas/Expression'
+    Identifier:
+      description: A valid Flux identifier
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        name:
+          type: string
+    IntegerLiteral:
+      description: Represents integer numbers
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    DictExpression:
+      description: Used to create and directly specify the elements of a dictionary
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        elements:
+          description: Elements of the dictionary
+          type: array
+          items:
+            $ref: '#/components/schemas/DictItem'
+    PipeExpression:
+      description: Call expression with pipe argument
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        argument:
+          $ref: '#/components/schemas/Expression'
+        call:
+          $ref: '#/components/schemas/CallExpression'
+    RegexpLiteral:
+      description: Expressions begin and end with `/` and are regular expressions with syntax accepted by RE2
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    FluxSuggestion:
+      type: object
+      properties:
+        name:
+          type: string
+        params:
+          type: object
+          additionalProperties:
+            type: string
+    Package:
+      description: Represents a complete package source tree.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        path:
+          description: Package import path
+          type: string
+        package:
+          description: Package name
+          type: string
+        files:
+          description: Package files
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+    StringLiteral:
+      description: Expressions begin and end with double quote marks
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    LogicalExpression:
+      description: Represents the rule conditions that collectively evaluate to either true or false
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        operator:
+          type: string
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    TokenAuthentication:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: "Use the [Token authentication](#section/Authentication/TokenAuthentication)\nscheme to authenticate to the InfluxDB API.\n\nIn your API requests, send an `Authorization` header.\nFor the header value, provide the word `Token` followed by a space and an InfluxDB API token.\nThe word `Token` is case-sensitive.\n\n### Syntax\n\n`Authorization: Token INFLUX_API_TOKEN`\n\n### Example\n\n#### Use Token authentication with cURL\n\nThe following example shows how to use cURL to send an API request that uses Token authentication:\n\n```sh\ncurl --request GET \"INFLUX_URL/api/v2/buckets\" \\\n     --header \"Authorization: Token INFLUX_API_TOKEN\"\n```\n\nReplace the following:\n\n  - *`INFLUX_URL`*: your InfluxDB Cloud URL\n  - *`INFLUX_API_TOKEN`*: your [InfluxDB API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n\n### Related endpoints\n\n- [`/authorizations` endpoints](#tag/Authorizations-(API-tokens))\n\n### Related guides\n\n- [Authorize API requests](https://docs.influxdata.com/influxdb/cloud/api-guide/api_intro/#authentication)\n- [Manage API tokens](https://docs.influxdata.com/influxdb/cloud/security/tokens/)\n"
+    BasicAuthentication:
+      type: http
+      scheme: basic
+      description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-tagGroups:
+- name: Overview
+  tags:
+  - Quick start
+  - Authentication
+  - Supported operations
+  - Headers
+  - Pagination
+  - Response codes
+- name: Popular endpoints
+  tags:
+  - Data I/O endpoints
+  - Security and access endpoints
+  - System information endpoints
+- name: All endpoints
+  tags: []

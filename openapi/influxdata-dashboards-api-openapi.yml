@@ -1,0 +1,2918 @@
+openapi: 3.0.0
+info:
+  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Dashboards API
+  version: 2.0.1
+  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
+
+    '
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: /api/v2
+security:
+- TokenAuthentication: []
+tags:
+- name: Dashboards
+paths:
+  /dashboards/{dashboardID}:
+    get:
+      operationId: GetDashboardsID
+      tags:
+      - Dashboards
+      summary: Retrieve a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      - in: query
+        name: include
+        required: false
+        schema:
+          type: string
+          enum:
+          - properties
+        description: If `properties`, includes the cell view properties in the response.
+      responses:
+        '200':
+          description: Retrieve a single dashboard
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/Dashboard'
+                - $ref: '#/components/schemas/DashboardWithViewProperties'
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: PatchDashboardsID
+      tags:
+      - Dashboards
+      summary: Update a dashboard
+      requestBody:
+        description: Patching of a dashboard
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: PatchDashboardRequest
+              properties:
+                name:
+                  description: optional, when provided will replace the name
+                  type: string
+                description:
+                  description: optional, when provided will replace the description
+                  type: string
+                cells:
+                  description: optional, when provided will replace all existing cells with the cells provided
+                  $ref: '#/components/schemas/CellWithViewProperties'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      responses:
+        '200':
+          description: Updated dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: DeleteDashboardsID
+      tags:
+      - Dashboards
+      summary: Delete a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      responses:
+        '204':
+          description: Delete has been accepted
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/cells:
+    put:
+      operationId: PutDashboardsIDCells
+      tags:
+      - Dashboards
+      summary: Replace cells in a dashboard
+      description: Replaces all cells in a dashboard. This is used primarily to update the positional information of all cells.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cells'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      responses:
+        '201':
+          description: Replaced dashboard cells
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: PostDashboardsIDCells
+      tags:
+      - Dashboards
+      summary: Create a dashboard cell
+      requestBody:
+        description: Cell that will be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCell'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      responses:
+        '201':
+          description: Cell successfully added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cell'
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/cells/{cellID}:
+    patch:
+      operationId: PatchDashboardsIDCellsID
+      tags:
+      - Dashboards
+      summary: Update the non-positional information related to a cell
+      description: Updates the non positional information related to a cell. Updates to a single cell's positional data could cause grid conflicts.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CellUpdate'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      - in: path
+        name: cellID
+        schema:
+          type: string
+        required: true
+        description: The ID of the cell to update.
+      responses:
+        '200':
+          description: Updated dashboard cell
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cell'
+        '404':
+          description: Cell or dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: DeleteDashboardsIDCellsID
+      tags:
+      - Dashboards
+      summary: Delete a dashboard cell
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to delete.
+      - in: path
+        name: cellID
+        schema:
+          type: string
+        required: true
+        description: The ID of the cell to delete.
+      responses:
+        '204':
+          description: Cell successfully deleted
+        '404':
+          description: Cell or dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/cells/{cellID}/view:
+    get:
+      operationId: GetDashboardsIDCellsIDView
+      tags:
+      - Dashboards
+      summary: Retrieve the view for a cell
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      - in: path
+        name: cellID
+        schema:
+          type: string
+        required: true
+        description: The cell ID.
+      responses:
+        '200':
+          description: A dashboard cells view
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/View'
+        '404':
+          description: Cell or dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: PatchDashboardsIDCellsIDView
+      tags:
+      - Dashboards
+      summary: Update the view for a cell
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/View'
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The ID of the dashboard to update.
+      - in: path
+        name: cellID
+        schema:
+          type: string
+        required: true
+        description: The ID of the cell to update.
+      responses:
+        '200':
+          description: Updated cell view
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/View'
+        '404':
+          description: Cell or dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/labels:
+    get:
+      operationId: GetDashboardsIDLabels
+      tags:
+      - Dashboards
+      summary: List all labels for a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      responses:
+        '200':
+          description: A list of all labels for a dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelsResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: PostDashboardsIDLabels
+      tags:
+      - Dashboards
+      summary: Add a label to a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      requestBody:
+        description: Label to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelMapping'
+      responses:
+        '201':
+          description: The label added to the dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/labels/{labelID}:
+    delete:
+      operationId: DeleteDashboardsIDLabelsID
+      tags:
+      - Dashboards
+      summary: Delete a label from a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      - in: path
+        name: labelID
+        schema:
+          type: string
+        required: true
+        description: The ID of the label to delete.
+      responses:
+        '204':
+          description: Delete has been accepted
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/members:
+    get:
+      operationId: GetDashboardsIDMembers
+      tags:
+      - Dashboards
+      summary: List all dashboard members
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      responses:
+        '200':
+          description: A list of users who have member privileges for a dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceMembers'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: PostDashboardsIDMembers
+      tags:
+      - Dashboards
+      summary: Add a member to a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      requestBody:
+        description: User to add as member
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddResourceMemberRequestBody'
+      responses:
+        '201':
+          description: Added to dashboard members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceMember'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/members/{userID}:
+    delete:
+      operationId: DeleteDashboardsIDMembersID
+      tags:
+      - Dashboards
+      summary: Remove a member from a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: userID
+        schema:
+          type: string
+        required: true
+        description: The ID of the member to remove.
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      responses:
+        '204':
+          description: Member removed
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/owners:
+    get:
+      operationId: GetDashboardsIDOwners
+      tags:
+      - Dashboards
+      summary: List all dashboard owners
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      responses:
+        '200':
+          description: A list of users who have owner privileges for a dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceOwners'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: PostDashboardsIDOwners
+      tags:
+      - Dashboards
+      summary: Add an owner to a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      requestBody:
+        description: User to add as owner
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddResourceMemberRequestBody'
+      responses:
+        '201':
+          description: Added to dashboard owners
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceOwner'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards/{dashboardID}/owners/{userID}:
+    delete:
+      operationId: DeleteDashboardsIDOwnersID
+      tags:
+      - Dashboards
+      summary: Remove an owner from a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - in: path
+        name: userID
+        schema:
+          type: string
+        required: true
+        description: The ID of the owner to remove.
+      - in: path
+        name: dashboardID
+        schema:
+          type: string
+        required: true
+        description: The dashboard ID.
+      responses:
+        '204':
+          description: Owner removed
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /dashboards:
+    post:
+      operationId: PostDashboards
+      tags:
+      - Dashboards
+      summary: Create a dashboard
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      requestBody:
+        description: Dashboard to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDashboardRequest'
+      responses:
+        '201':
+          description: Success. The dashboard is created.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/Dashboard'
+                - $ref: '#/components/schemas/DashboardWithViewProperties'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      operationId: GetDashboards
+      tags:
+      - Dashboards
+      summary: List dashboards
+      description: 'Lists [dashboards](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#dashboard).
+
+
+        #### Related guides
+
+
+        - [Manage dashboards](https://docs.influxdata.com/influxdb/cloud/visualize-data/dashboards/).
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TraceSpan'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Descending'
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: -1
+          maximum: 100
+          default: 20
+        description: 'The maximum number of [dashboards](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#dashboard) to return.
+
+          Default is `20`.
+
+          The minimum is `-1` and the maximum is `100`.
+
+          '
+      - in: query
+        name: owner
+        description: A user ID. Only returns [dashboards](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#dashboard) where the specified user has the `owner` role.
+        schema:
+          type: string
+      - in: query
+        name: sortBy
+        description: The column to sort by.
+        schema:
+          type: string
+          enum:
+          - ID
+          - CreatedAt
+          - UpdatedAt
+      - in: query
+        name: id
+        description: 'A list of dashboard IDs.
+
+          Returns only the specified [dashboards](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#dashboard).
+
+          If you specify `id` and `owner`, only `id` is used.
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: orgID
+        description: 'An organization ID.
+
+          Only returns [dashboards](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#dashboard) that belong to the specified
+
+          [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization).
+
+          '
+        schema:
+          type: string
+      - in: query
+        name: org
+        description: 'An organization name.
+
+          Only returns [dashboards](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#dashboard) that belong to the specified
+
+          [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization).
+
+          '
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response body contains dashboards.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboards'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TableViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - tableOptions
+      - fieldOptions
+      - timeFormat
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - table
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        tableOptions:
+          type: object
+          properties:
+            verticalTimeAxis:
+              description: verticalTimeAxis describes the orientation of the table by indicating whether the time axis will be displayed vertically
+              type: boolean
+            sortBy:
+              $ref: '#/components/schemas/RenamableField'
+            wrapping:
+              description: Wrapping describes the text wrapping style to be used in table views
+              type: string
+              enum:
+              - truncate
+              - wrap
+              - single-line
+            fixFirstColumn:
+              description: fixFirstColumn indicates whether the first column of the table should be locked
+              type: boolean
+        fieldOptions:
+          description: fieldOptions represent the fields retrieved by the query with customization options
+          type: array
+          items:
+            $ref: '#/components/schemas/RenamableField'
+        timeFormat:
+          description: timeFormat describes the display format for time values according to moment.js date formatting
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    BuilderTagsType:
+      type: object
+      properties:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        aggregateFunctionType:
+          $ref: '#/components/schemas/BuilderAggregateFunctionType'
+    Cells:
+      type: array
+      items:
+        $ref: '#/components/schemas/Cell'
+    CellWithViewProperties:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Cell'
+      - type: object
+        properties:
+          name:
+            type: string
+          properties:
+            $ref: '#/components/schemas/ViewProperties'
+    StaticLegend:
+      description: StaticLegend represents the options specific to the static legend
+      type: object
+      properties:
+        colorizeRows:
+          type: boolean
+        heightRatio:
+          type: number
+          format: float
+        show:
+          type: boolean
+        opacity:
+          type: number
+          format: float
+        orientationThreshold:
+          type: integer
+        valueAxis:
+          type: string
+        widthRatio:
+          type: number
+          format: float
+    QueryEditMode:
+      type: string
+      enum:
+      - builder
+      - advanced
+    GeoViewLayerProperties:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - heatmap
+          - circleMap
+          - pointMap
+          - trackMap
+    ColorMapping:
+      type: object
+      description: A color mapping is an object that maps time series data to a UI color scheme to allow the UI to render graphs consistent colors across reloads.
+      additionalProperties:
+        type: string
+      example:
+        series_id_1: '#edf529'
+        series_id_2: '#edf529'
+        measurement_birdmigration_europe: '#663cd0'
+        configcat_deployments-autopromotionblocker: '#663cd0'
+    ViewProperties:
+      oneOf:
+      - $ref: '#/components/schemas/LinePlusSingleStatProperties'
+      - $ref: '#/components/schemas/XYViewProperties'
+      - $ref: '#/components/schemas/SingleStatViewProperties'
+      - $ref: '#/components/schemas/HistogramViewProperties'
+      - $ref: '#/components/schemas/GaugeViewProperties'
+      - $ref: '#/components/schemas/TableViewProperties'
+      - $ref: '#/components/schemas/SimpleTableViewProperties'
+      - $ref: '#/components/schemas/MarkdownViewProperties'
+      - $ref: '#/components/schemas/CheckViewProperties'
+      - $ref: '#/components/schemas/ScatterViewProperties'
+      - $ref: '#/components/schemas/HeatmapViewProperties'
+      - $ref: '#/components/schemas/MosaicViewProperties'
+      - $ref: '#/components/schemas/BandViewProperties'
+      - $ref: '#/components/schemas/GeoViewProperties'
+    CellsWithViewProperties:
+      type: array
+      items:
+        $ref: '#/components/schemas/CellWithViewProperties'
+    BuilderConfig:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderTagsType'
+        functions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderFunctionsType'
+        aggregateWindow:
+          type: object
+          properties:
+            period:
+              type: string
+            fillValues:
+              type: boolean
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    GaugeViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - tickPrefix
+      - suffix
+      - tickSuffix
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - gauge
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        prefix:
+          type: string
+        tickPrefix:
+          type: string
+        suffix:
+          type: string
+        tickSuffix:
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
+    View:
+      required:
+      - name
+      - properties
+      properties:
+        links:
+          type: object
+          readOnly: true
+          properties:
+            self:
+              type: string
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          $ref: '#/components/schemas/ViewProperties'
+    CustomCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - custom
+        required:
+        - type
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    DashboardQuery:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text of the Flux query.
+        editMode:
+          $ref: '#/components/schemas/QueryEditMode'
+        name:
+          type: string
+        builderConfig:
+          $ref: '#/components/schemas/BuilderConfig'
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
+    ThresholdCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - threshold
+          thresholds:
+            type: array
+            items:
+              $ref: '#/components/schemas/Threshold'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    AxisScale:
+      description: 'Scale is the axis formatting scale. Supported: "log", "linear"'
+      type: string
+      enum:
+      - log
+      - linear
+    BuilderFunctionsType:
+      type: object
+      properties:
+        name:
+          type: string
+    Threshold:
+      oneOf:
+      - $ref: '#/components/schemas/GreaterThreshold'
+      - $ref: '#/components/schemas/LesserThreshold'
+      - $ref: '#/components/schemas/RangeThreshold'
+      discriminator:
+        propertyName: type
+        mapping:
+          greater: '#/components/schemas/GreaterThreshold'
+          lesser: '#/components/schemas/LesserThreshold'
+          range: '#/components/schemas/RangeThreshold'
+    DeadmanCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - deadman
+          timeSince:
+            description: String duration before deadman triggers.
+            type: string
+          staleTime:
+            description: String duration for time that a series is considered stale and should not trigger deadman.
+            type: string
+          reportZero:
+            description: If only zero values reported since time, trigger an alert
+            type: boolean
+          level:
+            $ref: '#/components/schemas/CheckStatusLevel'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    ThresholdBase:
+      properties:
+        level:
+          $ref: '#/components/schemas/CheckStatusLevel'
+        allValues:
+          description: If true, only alert if all values meet threshold.
+          type: boolean
+    DashboardColor:
+      type: object
+      description: Defines an encoding of data value into color space.
+      required:
+      - id
+      - type
+      - hex
+      - name
+      - value
+      properties:
+        id:
+          description: The unique ID of the view color.
+          type: string
+        type:
+          description: Type is how the color is used.
+          type: string
+          enum:
+          - min
+          - max
+          - threshold
+          - scale
+          - text
+          - background
+        hex:
+          description: The hex number of the color
+          type: string
+          maxLength: 7
+          minLength: 7
+        name:
+          description: The user-facing name of the hex color.
+          type: string
+        value:
+          description: The data value mapped to this color.
+          type: number
+          format: float
+    SingleStatViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - tickPrefix
+      - suffix
+      - tickSuffix
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - single-stat
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        prefix:
+          type: string
+        tickPrefix:
+          type: string
+        suffix:
+          type: string
+        tickSuffix:
+          type: string
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    LatLonColumns:
+      description: Object type to define lat/lon columns
+      type: object
+      required:
+      - lat
+      - lon
+      properties:
+        lat:
+          $ref: '#/components/schemas/LatLonColumn'
+        lon:
+          $ref: '#/components/schemas/LatLonColumn'
+    HistogramViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - fillColumns
+      - xDomain
+      - xAxisLabel
+      - position
+      - binCount
+      properties:
+        type:
+          type: string
+          enum:
+          - histogram
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        fillColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+            format: float
+        xAxisLabel:
+          type: string
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        binCount:
+          type: integer
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    RangeThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - min
+        - max
+        - within
+        properties:
+          type:
+            type: string
+            enum:
+            - range
+          min:
+            type: number
+            format: float
+          max:
+            type: number
+            format: float
+          within:
+            type: boolean
+    CreateDashboardRequest:
+      properties:
+        orgID:
+          type: string
+          description: The ID of the organization that owns the dashboard.
+        name:
+          type: string
+          description: The user-facing name of the dashboard.
+        description:
+          type: string
+          description: The user-facing description of the dashboard.
+      required:
+      - orgID
+      - name
+    CheckBase:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        orgID:
+          description: The ID of the organization that owns this check.
+          type: string
+        taskID:
+          description: The ID of the task associated with this check.
+          type: string
+        ownerID:
+          description: The ID of creator used to create this check.
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        query:
+          $ref: '#/components/schemas/DashboardQuery'
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        description:
+          description: An optional description of the check.
+          type: string
+        latestCompleted:
+          type: string
+          description: A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)) of the latest scheduled and completed run.
+          format: date-time
+          readOnly: true
+        lastRunStatus:
+          readOnly: true
+          type: string
+          enum:
+          - failed
+          - success
+          - canceled
+        lastRunError:
+          readOnly: true
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/checks/1
+            labels: /api/v2/checks/1/labels
+            members: /api/v2/checks/1/members
+            owners: /api/v2/checks/1/owners
+            query: /api/v2/checks/1/query
+          properties:
+            self:
+              description: The URL for this check.
+              $ref: '#/components/schemas/Link'
+            labels:
+              description: The URL to retrieve labels for this check.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members for this check.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners for this check.
+              $ref: '#/components/schemas/Link'
+            query:
+              description: The URL to retrieve the Flux script for this check.
+              $ref: '#/components/schemas/Link'
+      required:
+      - name
+      - orgID
+      - query
+    CheckStatusLevel:
+      description: The state to record if check matches a criteria.
+      type: string
+      enum:
+      - UNKNOWN
+      - OK
+      - INFO
+      - CRIT
+      - WARN
+    AddResourceMemberRequestBody:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'The ID of the user to add to the resource.
+
+            '
+        name:
+          type: string
+          description: 'The name of the user to add to the resource.
+
+            '
+      required:
+      - id
+    GeoPointMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - colorField
+        - colorDimension
+        - colors
+        properties:
+          colorField:
+            type: string
+            description: Marker color field
+          colorDimension:
+            $ref: '#/components/schemas/Axis'
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+          isClustered:
+            description: Cluster close markers together
+            type: boolean
+          tooltipColumns:
+            description: An array for which columns to display in tooltip
+            type: array
+            items:
+              type: string
+    CheckDiscriminator:
+      oneOf:
+      - $ref: '#/components/schemas/DeadmanCheck'
+      - $ref: '#/components/schemas/ThresholdCheck'
+      - $ref: '#/components/schemas/CustomCheck'
+      discriminator:
+        propertyName: type
+        mapping:
+          deadman: '#/components/schemas/DeadmanCheck'
+          threshold: '#/components/schemas/ThresholdCheck'
+          custom: '#/components/schemas/CustomCheck'
+    CreateCell:
+      type: object
+      properties:
+        name:
+          type: string
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+        w:
+          type: integer
+          format: int32
+        h:
+          type: integer
+          format: int32
+        usingView:
+          type: string
+          description: Makes a copy of the provided view.
+    RenamableField:
+      description: Describes a field that can be renamed and made visible or invisible.
+      type: object
+      properties:
+        internalName:
+          description: The calculated name of a field.
+          readOnly: true
+          type: string
+        displayName:
+          description: The name that a field is renamed to by the user.
+          type: string
+        visible:
+          description: Indicates whether this field should be visible on the table.
+          type: boolean
+    MosaicViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - ySeriesColumns
+      - fillColumns
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      properties:
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - mosaic
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yLabelColumnSeparator:
+          type: string
+        yLabelColumns:
+          type: array
+          items:
+            type: string
+        ySeriesColumns:
+          type: array
+          items:
+            type: string
+        fillColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    GeoHeatMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - intensityField
+        - intensityDimension
+        - radius
+        - blur
+        - colors
+        properties:
+          intensityField:
+            type: string
+            description: Intensity field
+          intensityDimension:
+            $ref: '#/components/schemas/Axis'
+          radius:
+            description: Radius size in pixels
+            type: integer
+          blur:
+            description: Blur for heatmap points
+            type: integer
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+    MarkdownViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - note
+      properties:
+        type:
+          type: string
+          enum:
+          - markdown
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    GeoViewLayer:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/GeoCircleViewLayer'
+      - $ref: '#/components/schemas/GeoHeatMapViewLayer'
+      - $ref: '#/components/schemas/GeoPointMapViewLayer'
+      - $ref: '#/components/schemas/GeoTrackMapViewLayer'
+    Check:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
+    SimpleTableViewProperties:
+      type: object
+      required:
+      - type
+      - showAll
+      - queries
+      - shape
+      - note
+      - showNoteWhenEmpty
+      properties:
+        type:
+          type: string
+          enum:
+          - simple-table
+        showAll:
+          type: boolean
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+    LatLonColumn:
+      description: Object type for key and column definitions
+      type: object
+      required:
+      - key
+      - column
+      properties:
+        key:
+          description: Key to determine whether the column is tag/field
+          type: string
+        column:
+          description: Column to look up Lat/Lon
+          type: string
+    BandViewProperties:
+      type: object
+      required:
+      - type
+      - geom
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - band
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        upperColumn:
+          type: string
+        mainColumn:
+          type: string
+        lowerColumn:
+          type: string
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        geom:
+          $ref: '#/components/schemas/XYGeom'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    ScatterViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - yColumn
+      - fillColumns
+      - symbolColumns
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - scatter
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        fillColumns:
+          type: array
+          items:
+            type: string
+        symbolColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    Cell:
+      type: object
+      properties:
+        id:
+          type: string
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+            view:
+              type: string
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+        w:
+          type: integer
+          format: int32
+        h:
+          type: integer
+          format: int32
+        viewID:
+          type: string
+          description: The reference to a view from the views API.
+    GeoViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - queries
+      - note
+      - showNoteWhenEmpty
+      - center
+      - zoom
+      - allowPanAndZoom
+      - detectCoordinateFields
+      - layers
+      properties:
+        type:
+          type: string
+          enum:
+          - geo
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        center:
+          description: Coordinates of the center of the map
+          type: object
+          required:
+          - lat
+          - lon
+          properties:
+            lat:
+              description: Latitude of the center of the map
+              type: number
+              format: double
+            lon:
+              description: Longitude of the center of the map
+              type: number
+              format: double
+        zoom:
+          description: Zoom level used for initial display of the map
+          type: number
+          format: double
+          minimum: 1
+          maximum: 28
+        allowPanAndZoom:
+          description: If true, map zoom and pan controls are enabled on the dashboard view
+          type: boolean
+          default: true
+        detectCoordinateFields:
+          description: If true, search results get automatically regroupped so that lon,lat and value are treated as columns
+          type: boolean
+          default: true
+        useS2CellID:
+          description: If true, S2 column is used to calculate lat/lon
+          type: boolean
+        s2Column:
+          description: String to define the column
+          type: string
+        latLonColumns:
+          $ref: '#/components/schemas/LatLonColumns'
+        mapStyle:
+          description: Define map type - regular, satellite etc.
+          type: string
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        layers:
+          description: List of individual layers shown in the map
+          type: array
+          items:
+            $ref: '#/components/schemas/GeoViewLayer'
+    CellUpdate:
+      type: object
+      properties:
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+        w:
+          type: integer
+          format: int32
+        h:
+          type: integer
+          format: int32
+    LinePlusSingleStatProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - suffix
+      - decimalPlaces
+      - position
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - line-plus-single-stat
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        shadeBelow:
+          type: boolean
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        prefix:
+          type: string
+        suffix:
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    Axes:
+      description: The viewport for a View's visualizations
+      type: object
+      required:
+      - x
+      - y
+      properties:
+        x:
+          $ref: '#/components/schemas/Axis'
+        y:
+          $ref: '#/components/schemas/Axis'
+    BuilderAggregateFunctionType:
+      type: string
+      enum:
+      - filter
+      - group
+    Axis:
+      type: object
+      description: Axis used in a visualization.
+      properties:
+        bounds:
+          type: array
+          minItems: 0
+          maxItems: 2
+          description: The extents of the axis in the form [lower, upper]. Clients determine whether bounds are inclusive or exclusive of their limits.
+          items:
+            type: string
+        label:
+          description: Description of the axis.
+          type: string
+        prefix:
+          description: Label prefix for formatting axis values.
+          type: string
+        suffix:
+          description: Label suffix for formatting axis values.
+          type: string
+        base:
+          description: Radix for formatting axis values.
+          type: string
+          enum:
+          - ''
+          - '2'
+          - '10'
+        scale:
+          $ref: '#/components/schemas/AxisScale'
+    DashboardWithViewProperties:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateDashboardRequest'
+      - type: object
+        properties:
+          links:
+            type: object
+            example:
+              self: /api/v2/dashboards/1
+              cells: /api/v2/dashboards/1/cells
+              owners: /api/v2/dashboards/1/owners
+              members: /api/v2/dashboards/1/members
+              labels: /api/v2/dashboards/1/labels
+              org: /api/v2/labels/1
+            properties:
+              self:
+                $ref: '#/components/schemas/Link'
+              cells:
+                $ref: '#/components/schemas/Link'
+              members:
+                $ref: '#/components/schemas/Link'
+              owners:
+                $ref: '#/components/schemas/Link'
+              labels:
+                $ref: '#/components/schemas/Link'
+              org:
+                $ref: '#/components/schemas/Link'
+          id:
+            readOnly: true
+            type: string
+          meta:
+            type: object
+            properties:
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+          cells:
+            $ref: '#/components/schemas/CellsWithViewProperties'
+          labels:
+            $ref: '#/components/schemas/Labels'
+    HeatmapViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - yColumn
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      - binSize
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - heatmap
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        binSize:
+          type: number
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    Dashboards:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        dashboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dashboard'
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    GeoCircleViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - radiusField
+        - radiusDimension
+        - colorField
+        - colorDimension
+        - colors
+        properties:
+          radiusField:
+            type: string
+            description: Radius field
+          radiusDimension:
+            $ref: '#/components/schemas/Axis'
+          colorField:
+            type: string
+            description: Circle color field
+          colorDimension:
+            $ref: '#/components/schemas/Axis'
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+          radius:
+            description: Maximum radius size in pixels
+            type: integer
+          interpolateColors:
+            description: Interpolate circle color based on displayed value
+            type: boolean
+    Dashboard:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateDashboardRequest'
+      - type: object
+        properties:
+          links:
+            type: object
+            example:
+              self: /api/v2/dashboards/1
+              cells: /api/v2/dashboards/1/cells
+              owners: /api/v2/dashboards/1/owners
+              members: /api/v2/dashboards/1/members
+              labels: /api/v2/dashboards/1/labels
+              org: /api/v2/labels/1
+            properties:
+              self:
+                $ref: '#/components/schemas/Link'
+              cells:
+                $ref: '#/components/schemas/Link'
+              members:
+                $ref: '#/components/schemas/Link'
+              owners:
+                $ref: '#/components/schemas/Link'
+              labels:
+                $ref: '#/components/schemas/Link'
+              org:
+                $ref: '#/components/schemas/Link'
+          id:
+            readOnly: true
+            type: string
+          meta:
+            type: object
+            properties:
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+          cells:
+            $ref: '#/components/schemas/Cells'
+          labels:
+            $ref: '#/components/schemas/Labels'
+    DecimalPlaces:
+      description: Indicates whether decimal places should be enforced, and how many digits it should show.
+      type: object
+      properties:
+        isEnforced:
+          description: Indicates whether decimal point setting should be enforced
+          type: boolean
+        digits:
+          description: The number of digits after decimal to display
+          type: integer
+          format: int32
+    XYViewProperties:
+      type: object
+      required:
+      - type
+      - geom
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      - position
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - xy
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        colorMapping:
+          description: An object that contains information about the color mapping
+          $ref: '#/components/schemas/ColorMapping'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        shadeBelow:
+          type: boolean
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        geom:
+          $ref: '#/components/schemas/XYGeom'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    CheckViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - checkID
+      - queries
+      - colors
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - check
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        checkID:
+          type: string
+        check:
+          $ref: '#/components/schemas/Check'
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    LesserThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - lesser
+          value:
+            type: number
+            format: float
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    XYGeom:
+      type: string
+      enum:
+      - line
+      - step
+      - stacked
+      - bar
+      - monotoneX
+      - stepBefore
+      - stepAfter
+    GeoTrackMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - trackWidth
+        - speed
+        - randomColors
+        - trackPointVisualization
+      properties:
+        trackWidth:
+          description: Width of the track
+          type: integer
+        speed:
+          description: Speed of the track animation
+          type: integer
+        randomColors:
+          description: Assign different colors to different tracks
+          type: boolean
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    GreaterThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - greater
+          value:
+            type: number
+            format: float
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+  parameters:
+    Offset:
+      in: query
+      name: offset
+      required: false
+      description: 'The offset for pagination.
+
+        The number of records to skip.
+
+
+        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
+    Descending:
+      in: query
+      name: descending
+      required: false
+      schema:
+        type: boolean
+        default: false
+  securitySchemes:
+    TokenAuthentication:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: "Use the [Token authentication](#section/Authentication/TokenAuthentication)\nscheme to authenticate to the InfluxDB API.\n\nIn your API requests, send an `Authorization` header.\nFor the header value, provide the word `Token` followed by a space and an InfluxDB API token.\nThe word `Token` is case-sensitive.\n\n### Syntax\n\n`Authorization: Token INFLUX_API_TOKEN`\n\n### Example\n\n#### Use Token authentication with cURL\n\nThe following example shows how to use cURL to send an API request that uses Token authentication:\n\n```sh\ncurl --request GET \"INFLUX_URL/api/v2/buckets\" \\\n     --header \"Authorization: Token INFLUX_API_TOKEN\"\n```\n\nReplace the following:\n\n  - *`INFLUX_URL`*: your InfluxDB Cloud URL\n  - *`INFLUX_API_TOKEN`*: your [InfluxDB API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n\n### Related endpoints\n\n- [`/authorizations` endpoints](#tag/Authorizations-(API-tokens))\n\n### Related guides\n\n- [Authorize API requests](https://docs.influxdata.com/influxdb/cloud/api-guide/api_intro/#authentication)\n- [Manage API tokens](https://docs.influxdata.com/influxdb/cloud/security/tokens/)\n"
+    BasicAuthentication:
+      type: http
+      scheme: basic
+      description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-tagGroups:
+- name: Overview
+  tags:
+  - Quick start
+  - Authentication
+  - Supported operations
+  - Headers
+  - Pagination
+  - Response codes
+- name: Popular endpoints
+  tags:
+  - Data I/O endpoints
+  - Security and access endpoints
+  - System information endpoints
+- name: All endpoints
+  tags: []
