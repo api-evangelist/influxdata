@@ -1,0 +1,34 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/influxdata-cloud-openapi-original.yml
+note: No official first-party InfluxData MCP server confirmed as of 2026-07-19. Candidate tool list derived
+  from marquee InfluxDB Cloud v2 operations.
+server:
+  name: influxdata
+  transport: http
+tools:
+- name: write_data
+  description: Write line-protocol time series data to a bucket
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#PostWrite
+- name: query_data
+  description: Query data with Flux
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#PostQuery
+- name: delete_data
+  description: Delete data from a bucket by time range and predicate
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#PostDelete
+- name: list_buckets
+  description: List buckets
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#GetBuckets
+- name: create_bucket
+  description: Create a bucket
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#PostBuckets
+- name: list_orgs
+  description: List organizations
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#GetOrgs
+- name: create_task
+  description: Create a scheduled Flux task
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#PostTasks
+- name: create_authorization
+  description: Create an API token (authorization)
+  source_operation: openapi/influxdata-cloud-openapi-original.yml#PostAuthorizations

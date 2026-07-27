@@ -1,0 +1,15 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+url: https://www.influxdata.com/security/
+certifications:
+- SOC 2 Type 2
+- ISO/IEC 27001
+- ISO/IEC 27018
+evidence:
+- source: https://www.influxdata.com/security/
+  keywords:
+  - soc 2 type 2
+  - iso 27001
+  - iso 27018
+  - bug bounty

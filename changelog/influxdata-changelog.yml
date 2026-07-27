@@ -1,0 +1,17 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.influxdata.com/influxdb/cloud/reference/release-notes/cloud-updates/
+scheme: semver / date-based product release notes
+docs: https://docs.influxdata.com/influxdb/cloud/reference/release-notes/
+note: InfluxDB Cloud publishes continuously-updated cloud release notes; OSS and InfluxDB 3 Core/Enterprise
+  ship versioned release notes. Recent highlights captured from the release-notes index.
+entries:
+- product: InfluxDB 3 Core/Enterprise
+  version: '3.10'
+  highlights: catalog upgrades
+- product: InfluxDB OSS
+  version: 2.9.0
+  highlights: API tokens hashed by default
+- product: InfluxDB Explorer
+  version: '1.9'
+  highlights: InfluxQL support, AI converter

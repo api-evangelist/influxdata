@@ -1,0 +1,81 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.influxdata.com/influxdb/cloud/api-guide/client-libraries/ + public registries
+packages:
+- language: python
+  registry: pypi
+  name: influxdb-client
+  url: https://pypi.org/project/influxdb-client/
+  install: pip install influxdb-client
+  official: true
+  note: InfluxDB v2 Python client
+- language: python
+  registry: pypi
+  name: influxdb3-python
+  url: https://pypi.org/project/influxdb3-python/
+  install: pip install influxdb3-python
+  official: true
+  note: InfluxDB v3 Python client
+- language: javascript
+  registry: npm
+  name: '@influxdata/influxdb-client'
+  url: https://www.npmjs.com/package/@influxdata/influxdb-client
+  install: npm install @influxdata/influxdb-client
+  official: true
+  note: InfluxDB v2 JS/Node client
+- language: javascript
+  registry: npm
+  name: '@influxdata/influxdb3-client'
+  url: https://www.npmjs.com/package/@influxdata/influxdb3-client
+  install: npm install @influxdata/influxdb3-client
+  official: true
+  note: InfluxDB v3 JS client
+- language: go
+  registry: pkg.go.dev
+  name: github.com/influxdata/influxdb-client-go/v2
+  url: https://pkg.go.dev/github.com/influxdata/influxdb-client-go/v2
+  install: go get github.com/influxdata/influxdb-client-go/v2
+  official: true
+  note: InfluxDB v2 Go client
+- language: java
+  registry: maven
+  name: com.influxdb:influxdb-client-java
+  url: https://repo1.maven.org/maven2/com/influxdb/influxdb-client-java/
+  install: com.influxdb:influxdb-client-java
+  official: true
+  note: InfluxDB v2 Java client
+- language: java
+  registry: maven
+  name: com.influxdb:influxdb3-java
+  url: https://repo1.maven.org/maven2/com/influxdb/influxdb3-java/
+  install: com.influxdb:influxdb3-java
+  official: true
+  note: InfluxDB v3 Java client
+- language: csharp
+  registry: nuget
+  name: InfluxDB.Client
+  url: https://www.nuget.org/packages/InfluxDB.Client
+  install: dotnet add package InfluxDB.Client
+  official: true
+  note: InfluxDB v2 .NET client
+- language: csharp
+  registry: nuget
+  name: InfluxDB3.Client
+  url: https://www.nuget.org/packages/InfluxDB3.Client
+  install: dotnet add package InfluxDB3.Client
+  official: true
+  note: InfluxDB v3 .NET client
+- language: php
+  registry: packagist
+  name: influxdata/influxdb-client-php
+  url: https://packagist.org/packages/influxdata/influxdb-client-php
+  install: composer require influxdata/influxdb-client-php
+  official: true
+  note: InfluxDB v2 PHP client
+- language: ruby
+  registry: rubygems
+  name: influxdb-client
+  url: https://rubygems.org/gems/influxdb-client
+  install: gem install influxdb-client
+  official: true
+  note: InfluxDB v2 Ruby client

@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for InfluxDB Cloud API
+  version: 1.0.0
+extends: openapi/influxdata-cloud-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-19'
+      x-apievangelist-provider: influxdata
+      x-apievangelist-artifacts:
+        authentication: authentication/influxdata-authentication.yml
+        errors: errors/influxdata-problem-types.yml
+        conventions: conventions/influxdata-conventions.yml
+        lifecycle: lifecycle/influxdata-lifecycle.yml
+        packages: packages/influxdata-packages.yml
+  - target: $.info
+    update:
+      x-apievangelist-auth: 'API token (Authorization: Token <token>) or HTTP Basic'

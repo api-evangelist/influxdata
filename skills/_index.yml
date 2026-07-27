@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: generated
+api: openapi/influxdata-cloud-openapi-original.yml
+skills:
+- file: influxdata-write-time-series.md
+  name: Write time series data to InfluxDB
+  api: openapi/influxdata-cloud-openapi-original.yml
+  operations:
+  - GetBuckets
+  - PostBuckets
+  - PostWrite
+- file: influxdata-query-flux.md
+  name: Query InfluxDB with Flux
+  api: openapi/influxdata-cloud-openapi-original.yml
+  operations:
+  - PostQuery
+- file: influxdata-manage-tokens.md
+  name: Create and manage API tokens
+  api: openapi/influxdata-cloud-openapi-original.yml
+  operations:
+  - GetAuthorizations
+  - PostAuthorizations
+  - DeleteAuthorizationsID

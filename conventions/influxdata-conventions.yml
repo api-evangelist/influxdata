@@ -1,0 +1,34 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.influxdata.com/influxdb/cloud/api/ (Common parameters, Pagination, Headers)
+authentication:
+  style: API token
+  header: 'Authorization: Token <token>'
+  also: HTTP Basic on supported operations
+  artifact: authentication/influxdata-authentication.yml
+idempotency:
+  supported: false
+  note: InfluxDB v2 API does not expose an idempotency-key contract. Writes are keyed by measurement+tagset+timestamp
+    so re-writing the same point overwrites rather than duplicating (natural last-write-wins), but there
+    is no request-level Idempotency-Key header.
+pagination:
+  style: limit/offset + cursor(after)
+  params:
+  - limit
+  - offset
+  - after
+  note: Documented under the Pagination tag; defaults and maxima vary by resource.
+content_types:
+  write: text/plain (line protocol)
+  query: application/json (Flux) -> annotated CSV response
+  api: application/json
+versioning:
+  style: uri-path
+  current: /api/v2
+  artifact: lifecycle/influxdata-lifecycle.yml
+errors:
+  envelope: application/json Error {code,message,op,err}
+  artifact: errors/influxdata-problem-types.yml
+rate_limiting:
+  signal: HTTP 429 + Retry-After
+  note: InfluxDB Cloud enforces per-plan rate and write/query/storage quotas.

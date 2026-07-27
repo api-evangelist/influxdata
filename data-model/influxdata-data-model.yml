@@ -1,0 +1,67 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/influxdata-cloud-openapi-original.yml (components.schemas)
+note: Entity-relationship graph derived from InfluxDB v2 schema $ref/id-reference fields.
+entities:
+- name: Organization
+  id: id
+  summary: Top-level tenant that owns all resources.
+- name: Bucket
+  id: id
+  summary: Named store for time series data with retention rules.
+- name: Authorization
+  id: id
+  summary: API token with a permission set scoped to an org.
+- name: Task
+  id: id
+  summary: Scheduled Flux script (cron/every).
+- name: DBRP
+  id: id
+  summary: Database/retention-policy mapping to a v2 bucket (v1 compat).
+- name: Label
+  id: id
+  summary: Tag applied to resources for organization.
+- name: User
+  id: id
+  summary: Member/owner of an organization.
+relationships:
+- from: Bucket
+  to: Organization
+  type: belongs_to
+  via: orgID
+- from: Bucket
+  to: Label
+  type: has_many
+  via: labels
+- from: Task
+  to: Organization
+  type: belongs_to
+  via: orgID
+- from: Task
+  to: Authorization
+  type: has_one
+  via: authorizationID
+- from: Task
+  to: User
+  type: belongs_to
+  via: ownerID
+- from: Task
+  to: Label
+  type: has_many
+  via: labels
+- from: DBRP
+  to: Organization
+  type: belongs_to
+  via: orgID
+- from: DBRP
+  to: Bucket
+  type: belongs_to
+  via: bucketID
+- from: Label
+  to: Organization
+  type: belongs_to
+  via: orgID
+- from: User
+  to: Organization
+  type: belongs_to
+  via: org_id

@@ -1,0 +1,52 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/influxdata-cloud-openapi-original.yml, openapi/influxdata-oss-openapi-original.yml
+docs: https://docs.influxdata.com/influxdb/cloud/api/
+format: custom
+envelope:
+  content_type: application/json
+  schema: Error
+  fields:
+  - code
+  - message
+  - op
+  - err
+note: InfluxDB v2 returns a JSON Error object (not RFC 9457). The code field is a machine-readable string
+  enum; message is human-readable.
+problems:
+- status: 400
+  code: invalid
+  title: Bad request
+  remediation: Malformed request or line protocol; check syntax and parameters.
+- status: 401
+  code: unauthorized
+  title: Unauthorized
+  remediation: 'Missing or invalid API token; send Authorization: Token <token>.'
+- status: 403
+  code: forbidden
+  title: Forbidden
+  remediation: Token lacks permission for the resource/organization.
+- status: 404
+  code: not found
+  title: Resource not found
+  remediation: Bucket, org, or resource ID does not exist.
+- status: 413
+  code: request too large
+  title: Payload too large
+  remediation: Reduce write batch size below the request size limit.
+- status: 422
+  code: unprocessable entity
+  title: Unprocessable entity
+  remediation: Request understood but semantically invalid (e.g. bad Flux).
+- status: 429
+  code: too many requests
+  title: Rate limited
+  remediation: Slow down; honor Retry-After. Cloud enforces rate/quota limits by plan.
+- status: 500
+  code: internal error
+  title: Internal server error
+  remediation: Retry with backoff; contact support if persistent.
+- status: 503
+  code: unavailable
+  title: Service unavailable
+  remediation: Temporary; retry with backoff.

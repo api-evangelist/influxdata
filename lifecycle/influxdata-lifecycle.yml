@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.influxdata.com/influxdb/cloud/reference/release-notes/ , https://status.influxdata.com/
+versioning:
+  scheme: uri-path
+  current: v2
+  also: InfluxDB 3 (SQL/InfluxQL over /api/v3) is the current generation
+  docs: https://docs.influxdata.com/influxdb/cloud/api/
+status_page: https://status.influxdata.com/
+release_notes: https://docs.influxdata.com/influxdb/cloud/reference/release-notes/cloud-updates/
+deprecation:
+  notes: 'Deprecated operations are flagged with deprecated: true in the OpenAPI; InfluxDB communicates
+    removals via release notes.'
+deprecated_operations:
+- 'openapi/influxdata-cloud-openapi-original.yml (7 operations flagged deprecated: true)'
+- 'openapi/influxdata-oss-openapi-original.yml (9 operations flagged deprecated: true)'

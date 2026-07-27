@@ -1,24 +1,1251 @@
 aid: influxdata
 name: InfluxData
-description: InfluxData is a company surfaced as a portfolio company of battery-ventures, y-combinator
-  and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the
-  enrichment pipeline.
+description: InfluxData is the company behind InfluxDB, the leading open source time series database purpose-built
+  for real-time analytics, monitoring, IoT and sensor data, application metrics, and observability workloads.
+  InfluxDB ingests millions of data points per second and ships as open source (InfluxDB OSS), a fully
+  managed multi-cloud service (InfluxDB Cloud), and dedicated/clustered offerings. The platform exposes
+  a REST /api/v2 HTTP API for writing line-protocol data, querying with Flux and InfluxQL/SQL, and managing
+  buckets, organizations, tasks, API tokens, and dashboards, alongside official client libraries, the
+  influx CLI, and the Telegraf collection agent.
 url: https://raw.githubusercontent.com/api-evangelist/influxdata/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - battery-ventures
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: enrichment-pipeline-2026-07-19
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
+- Time Series Database
+- Database
+- Monitoring
+- Observability
+- IoT
+- Metrics
+- Analytics
+- DevOps
+- Real-Time Data
+- InfluxDB
+- Telegraf
 - Company
-apis: []
+apis:
+- aid: influxdata:influxdata-authorizations-api-tokens-api
+  name: InfluxData Authorizations (API tokens) API
+  description: >-
+    Create and manage authorizations (API tokens).
+
+
+    An _authorization_ contains a list of `read` and `write`
+
+    permissions for organization resources and provides an API token for authentication.
+
+    An authorization belongs to an organization and only contains permissions for that organization.
+
+
+    We recommend the following for managing your tokens:
+
+
+    - Create a generic user to create and manage tokens for writing data.
+
+    - Store your tokens in a secure password vault for future access.
+
+
+    ### User sessions with authorizations
+
+
+    Optionally, when creating an authorization, you can scope it to a specific user.
+
+    If the user signs in with username and password, creating a _user session_,
+
+    the session carries the permissions granted by all the user's authorizations.
+
+    For more information, see [how to assign a token to a specific user](https://docs.influxdata.com/influxdb/cloud/security/tokens/create-token/).
+
+    To create a user session, use the [`POST /api/v2/signin` endpoint](#operation/PostSignin).
+
+
+    ### Related endpoints
+
+
+    - [Signin](#tag/Signin)
+
+    - [Signout](#tag/Signout)
+
+
+    ### Related guides
+
+
+    - [Authorize API requests](https://docs.influxdata.com/influxdb/cloud/api-guide/api_intro/#authentication)
+
+    - [Manage API tokens](https://docs.influxdata.com/influxdb/cloud/security/tokens/)
+
+    - [Assign a token to a specific user](https://docs.influxdata.com/influxdb/cloud/security/tokens/create-token/)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Authorizations (API tokens)
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-authorizations-api-tokens-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-backup-api
+  name: InfluxData Backup API
+  description: The Backup API from InfluxData — 3 operation(s) for backup.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Backup
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-backup-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-bucket-schemas-api
+  name: InfluxData Bucket Schemas API
+  description: The Bucket Schemas API from InfluxData — 2 operation(s) for bucket schemas.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Bucket Schemas
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-bucket-schemas-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-buckets-api
+  name: InfluxData Buckets API
+  description: >-
+    Store your data in InfluxDB [buckets](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#bucket).
+
+    A bucket is a named location where time series data is stored. All buckets
+
+    have a [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period),
+
+    a duration of time that each data point persists. InfluxDB drops all
+
+    points with timestamps older than the bucket’s retention period.
+
+    A bucket belongs to an organization.
+
+
+    ### Related guides
+
+
+    - [Manage buckets](https://docs.influxdata.com/influxdb/cloud/organizations/buckets/)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-buckets-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-cells-api
+  name: InfluxData Cells API
+  description: The Cells API from InfluxData — 3 operation(s) for cells.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Cells
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-cells-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-checks-api
+  name: InfluxData Checks API
+  description: The Checks API from InfluxData — 5 operation(s) for checks.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Checks
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-checks-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-config-api
+  name: InfluxData Config API
+  description: The Config API from InfluxData — 2 operation(s) for config.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Config
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-config-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-dashboards-api
+  name: InfluxData Dashboards API
+  description: The Dashboards API from InfluxData — 11 operation(s) for dashboards.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Dashboards
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-dashboards-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-data-i-o-endpoints-api
+  name: InfluxData Data I/O endpoints API
+  description: The Data I/O endpoints API from InfluxData — 6 operation(s) for data i/o endpoints.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Data I/O endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-data-i-o-endpoints-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-dbrps-api
+  name: InfluxData DBRPs API
+  description: >-
+    The InfluxDB 1.x data model includes [databases](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#database)
+
+    and [retention policies](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp).
+
+    InfluxDB 2.x replaces databases and retention policies with buckets.
+
+    To support InfluxDB 1.x query and write patterns in InfluxDB 2.x,
+
+    databases and retention policies are mapped to buckets using the
+
+    database and retention policy (DBRP) mapping service.
+
+    The DBRP mapping service uses the database and retention policy
+
+    specified in 1.x compatibility API requests to route operations to a bucket.
+
+
+    ### Related guides
+
+
+    - [Database and retention policy mapping](https://docs.influxdata.com/influxdb/cloud/reference/api/influxdb-1x/dbrp/)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - DBRPs
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-dbrps-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-debug-api
+  name: InfluxData Debug API
+  description: >-
+    Generate profiling and trace reports.
+
+
+    Use routes under `/debug/pprof` to analyze the Go runtime of InfluxDB.
+
+    These endpoints generate [Go runtime profiles](https://pkg.go.dev/runtime/pprof)
+
+    and **trace** reports.
+
+    **Profiles** are collections of stack traces that show call sequences
+
+    leading to instances of a particular event, such as allocation.
+
+
+    For more information about **pprof profile** and **trace** reports,
+
+    see the following resources:
+
+
+    - [Google pprof tool](https://github.com/google/pprof)
+
+    - [Golang diagnostics](https://go.dev/doc/diagnostics)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-debug-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-delete-api
+  name: InfluxData Delete API
+  description: Delete data from an InfluxDB bucket.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Delete
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-delete-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-health-api
+  name: InfluxData Health API
+  description: The Health API from InfluxData — 1 operation(s) for health.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-health-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-labels-api
+  name: InfluxData Labels API
+  description: The Labels API from InfluxData — 2 operation(s) for labels.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Labels
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-labels-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-limits-api
+  name: InfluxData Limits API
+  description: The Limits API from InfluxData — 1 operation(s) for limits.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Limits
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-limits-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-metrics-api
+  name: InfluxData Metrics API
+  description: The Metrics API from InfluxData — 1 operation(s) for metrics.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-metrics-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-notificationendpoints-api
+  name: InfluxData NotificationEndpoints API
+  description: >-
+    The NotificationEndpoints API from InfluxData — 4 operation(s) for notificationendpoints.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - NotificationEndpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-notificationendpoints-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-notificationrules-api
+  name: InfluxData NotificationRules API
+  description: The NotificationRules API from InfluxData — 4 operation(s) for notificationrules.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - NotificationRules
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-notificationrules-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-organizations-api
+  name: InfluxData Organizations API
+  description: >-
+    Manage your [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization).
+
+    An organization is a workspace for a group of users. Organizations can be
+
+    used to separate different environments, projects, teams or users within
+
+    InfluxDB.
+
+
+    Use the `/api/v2/orgs` endpoints to view and manage organizations.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-organizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-ping-api
+  name: InfluxData Ping API
+  description: The Ping API from InfluxData — 1 operation(s) for ping.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Ping
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-ping-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-query-api
+  name: InfluxData Query API
+  description: Retrieve data, analyze queries, and get query suggestions.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Query
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-query-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-ready-api
+  name: InfluxData Ready API
+  description: The Ready API from InfluxData — 1 operation(s) for ready.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Ready
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-ready-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-remoteconnections-api
+  name: InfluxData RemoteConnections API
+  description: The RemoteConnections API from InfluxData — 2 operation(s) for remoteconnections.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - RemoteConnections
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-remoteconnections-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-replications-api
+  name: InfluxData Replications API
+  description: The Replications API from InfluxData — 3 operation(s) for replications.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Replications
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-replications-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-resources-api
+  name: InfluxData Resources API
+  description: The Resources API from InfluxData — 1 operation(s) for resources.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-resources-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-restore-api
+  name: InfluxData Restore API
+  description: The Restore API from InfluxData — 5 operation(s) for restore.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Restore
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-restore-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-routes-api
+  name: InfluxData Routes API
+  description: The Routes API from InfluxData — 1 operation(s) for routes.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Routes
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-routes-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-rules-api
+  name: InfluxData Rules API
+  description: The Rules API from InfluxData — 1 operation(s) for rules.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-rules-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-scraper-targets-api
+  name: InfluxData Scraper Targets API
+  description: The Scraper Targets API from InfluxData — 8 operation(s) for scraper targets.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Scraper Targets
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-scraper-targets-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-secrets-api
+  name: InfluxData Secrets API
+  description: The Secrets API from InfluxData — 3 operation(s) for secrets.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-secrets-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-security-and-access-endpoints-api
+  name: InfluxData Security and access endpoints API
+  description: >-
+    The Security and access endpoints API from InfluxData — 16 operation(s) for security and access endpoints.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Security and access endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-security-and-access-endpoints-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-setup-api
+  name: InfluxData Setup API
+  description: The Setup API from InfluxData — 2 operation(s) for setup.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Setup
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-setup-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-signin-api
+  name: InfluxData Signin API
+  description: The Signin API from InfluxData — 1 operation(s) for signin.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Signin
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-signin-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-signout-api
+  name: InfluxData Signout API
+  description: The Signout API from InfluxData — 1 operation(s) for signout.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Signout
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-signout-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-sources-api
+  name: InfluxData Sources API
+  description: The Sources API from InfluxData — 4 operation(s) for sources.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-sources-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-system-information-endpoints-api
+  name: InfluxData System information endpoints API
+  description: >-
+    The System information endpoints API from InfluxData — 17 operation(s) for system information endpoints.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - System information endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-system-information-endpoints-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-tasks-api
+  name: InfluxData Tasks API
+  description: >-
+    Process and analyze your data with [tasks](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task)
+
+    in the InfluxDB task engine.
+
+    Use the `/api/v2/tasks` endpoints to schedule and manage tasks, retry task runs, and retrieve run
+    logs.
+
+
+    To configure a task, provide the script and the schedule to run the task.
+
+    For examples, see how to create a task with the [`POST /api/v2/tasks` endpoint](#operation/PostTasks).
+
+
+    <span id="tasks-schemaref-task" />
+
+
+    ### Properties
+
+
+    A `task` object contains information about an InfluxDB task resource.
+
+
+    The following table defines the properties that appear in this object:
+
+
+    <SchemaDefinition schemaRef="#/components/schemas/Task" />
+
+
+    ### Related guides
+
+
+    - [Get started with tasks](https://docs.influxdata.com/influxdb/cloud/process-data/get-started/)
+
+    - [Common data processing tasks](https://docs.influxdata.com/influxdb/cloud/process-data/common-tasks/)
+
+    - [Create a script](https://docs.influxdata.com/influxdb/cloud/api-guide/api-invokable-scripts/#create-an-invokable-script)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-tasks-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-telegraf-plugins-api
+  name: InfluxData Telegraf Plugins API
+  description: The Telegraf Plugins API from InfluxData — 1 operation(s) for telegraf plugins.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Telegraf Plugins
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-telegraf-plugins-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-telegrafs-api
+  name: InfluxData Telegrafs API
+  description: The Telegrafs API from InfluxData — 8 operation(s) for telegrafs.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Telegrafs
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-telegrafs-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-templates-api
+  name: InfluxData Templates API
+  description: >-
+    Export and apply InfluxDB **templates**.
+
+    Manage **stacks** of templated InfluxDB resources.
+
+
+    InfluxDB templates are prepackaged configurations for resources.
+
+    Use InfluxDB templates to configure a fresh instance of InfluxDB,
+
+    back up your dashboard configuration, or share your configuration.
+
+
+    Use the `/api/v2/templates` endpoints to export templates and apply templates.
+
+
+    **InfluxDB stacks** are stateful InfluxDB templates that let you
+
+    add, update, and remove installed template resources over time, avoid duplicating
+
+    resources when applying the same or similar templates more than once, and
+
+    apply changes to distributed instances of InfluxDB OSS or InfluxDB Cloud.
+
+
+    Use the `/api/v2/stacks` endpoints to manage installed template resources.
+
+
+    ### Related guides
+
+
+    - [InfluxDB stacks](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/stacks/)
+
+    - [InfluxDB templates](https://docs.influxdata.com/influxdb/cloud/influxdb-templates/)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-usage-api
+  name: InfluxData Usage API
+  description: The Usage API from InfluxData — 1 operation(s) for usage.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-usage-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-users-api
+  name: InfluxData Users API
+  description: >-
+    Retrieve specific users.
+
+
+    InfluxDB Cloud lets you invite and collaborate with multiple users in your organization.
+
+    To invite and remove users from your organization, use the InfluxDB Cloud user interface (UI);
+
+    you can't use the InfluxDB API to manage users in InfluxDB Cloud.
+
+    Once a user is added to your organization, you can use the
+
+    `GET /api/v2/users` and `GET /api/v2/users/USER_ID` API endpoints to
+
+    view specific members.
+
+
+    ### User sessions with authorizations
+
+
+    Optionally, you can scope an authorization (and its API token) to a user.
+
+    If a user signs in with username and password, creating a _user session_,
+
+    the session carries the permissions granted by all the user's authorizations.
+
+    To create a user session, use the [`POST /api/v2/signin` endpoint](#operation/PostSignin).
+
+
+    ### Related guides
+
+
+    - [Manage users](https://docs.influxdata.com/influxdb/cloud/organizations/users/)
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-users-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-variables-api
+  name: InfluxData Variables API
+  description: The Variables API from InfluxData — 4 operation(s) for variables.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-variables-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-views-api
+  name: InfluxData Views API
+  description: The Views API from InfluxData — 1 operation(s) for views.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Views
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-views-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-write-api
+  name: InfluxData Write API
+  description: >-
+    Write time series data to [buckets](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#bucket).
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Write
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-write-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DomainSecurity
+  url: security/influxdata-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/influxdata-agentic-access.yml
+- type: Authentication
+  url: authentication/influxdata-authentication.yml
+- type: Website
+  url: https://www.influxdata.com/
+- type: DeveloperPortal
+  url: https://docs.influxdata.com/
+- type: Documentation
+  url: https://docs.influxdata.com/
+- type: APIReference
+  url: https://docs.influxdata.com/influxdb/cloud/api/
+- type: GettingStarted
+  url: https://docs.influxdata.com/influxdb/cloud/get-started/
+- type: Support
+  url: https://support.influxdata.com/s/
+- type: HelpCenter
+  url: https://community.influxdata.com/
+- type: Blog
+  url: https://www.influxdata.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/influxdata
+- type: Pricing
+  url: https://www.influxdata.com/influxdb-pricing/
+- type: SignUp
+  url: https://www.influxdata.com/influxdb-signup/
+- type: Login
+  url: https://cloud2.influxdata.com/login
+- type: TermsOfService
+  url: https://www.influxdata.com/legal/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.influxdata.com/legal/privacy-policy/
+- type: Packages
+  url: packages/influxdata-packages.yml
+- type: SDKs
+  url: packages/influxdata-packages.yml
+- type: CLI
+  url: cli/influxdata-cli.yml
+- type: MCPServer
+  url: mcp/influxdata-mcp.yml
+- type: LLMsTxt
+  url: llms/influxdata-llms.txt
+- type: Conformance
+  url: conformance/influxdata-conformance.yml
+- type: Compliance
+  url: https://www.influxdata.com/security/
+- type: ErrorCatalog
+  url: errors/influxdata-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/influxdata-lifecycle.yml
+- type: StatusPage
+  url: https://status.influxdata.com/
+- type: Conventions
+  url: conventions/influxdata-conventions.yml
+- type: ChangeLog
+  url: changelog/influxdata-changelog.yml
+- type: DataModel
+  url: data-model/influxdata-data-model.yml
+- type: Components
+  url: components/influxdata-components.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: VulnerabilityDisclosure
+  url: security/influxdata-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.influxdata.com/how-to-report-security-vulnerabilities/
+- type: TrustCenter
+  url: https://www.influxdata.com/security/
+image: https://github.com/influxdata.png
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

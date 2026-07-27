@@ -1,0 +1,17 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/influxdata/giraffe , https://github.com/influxdata/clockface
+components:
+- family: Giraffe
+  type: React visualization library
+  name: '@influxdata/giraffe'
+  url: https://github.com/influxdata/giraffe
+  registry: https://www.npmjs.com/package/@influxdata/giraffe
+  summary: React library for time-series visualizations (line/graph/heatmap/histogram) powering the InfluxDB
+    UI.
+- family: Clockface
+  type: UI component library / design system
+  name: '@influxdata/clockface'
+  url: https://github.com/influxdata/clockface
+  registry: https://www.npmjs.com/package/@influxdata/clockface
+  summary: The InfluxDB UI component library and design system.

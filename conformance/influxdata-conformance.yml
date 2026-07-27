@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/*, https://www.influxdata.com/security/
+standards:
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme; uses API token + basic auth
+- id: oidc
+  conforms: false
+- id: api-key-auth
+  conforms: true
+  evidence: 'TokenAuthentication apiKey scheme (Authorization: Token)'
+- id: http-basic
+  conforms: true
+  evidence: BasicAuthentication http basic scheme
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use application/json Error schema (code,message,op,err), not application/problem+json
+- id: pagination
+  conforms: true
+  evidence: limit/offset/after query params documented under Pagination tag
+- id: idempotency
+  conforms: false
+  evidence: no idempotency-key contract in the v2 API
+- id: line-protocol
+  conforms: true
+  evidence: InfluxDB line protocol write format (/write, PostWrite)
+- id: flux
+  conforms: true
+  evidence: Flux query language over /query (PostQuery)
+- id: soc2-type2
+  conforms: true
+  evidence: SOC 2 Type 2 certified (influxdata.com/security)
+- id: iso-27001
+  conforms: true
+  evidence: ISO/IEC 27001 (influxdata.com/security)
+- id: iso-27018
+  conforms: true
+  evidence: ISO/IEC 27018 (influxdata.com/security)

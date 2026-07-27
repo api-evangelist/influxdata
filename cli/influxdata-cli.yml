@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.influxdata.com/influxdb/cloud/reference/cli/influx/ , https://github.com/influxdata/influx-cli
+name: influx
+repo: https://github.com/influxdata/influx-cli
+docs: https://docs.influxdata.com/influxdb/cloud/reference/cli/influx/
+install:
+- brew install influxdata/brew/influx
+- download binary from docs
+- packaged with InfluxDB OSS
+command_groups:
+- group: auth
+  summary: Create and manage API tokens (authorizations)
+- group: bucket
+  summary: Create, list, update, delete buckets
+- group: org
+  summary: Manage organizations and members
+- group: write
+  summary: Write line-protocol data to a bucket
+- group: query
+  summary: Execute a Flux query
+- group: task
+  summary: Manage scheduled Flux tasks
+- group: delete
+  summary: Delete data by time range and predicate
+- group: config
+  summary: Manage CLI connection configs (host/org/token)
+- group: dbrp
+  summary: Manage database/retention-policy mappings
+- group: setup
+  summary: Initialize a new InfluxDB instance
+note: A separate influxctl CLI administers InfluxDB 3 Cloud Dedicated / Clustered.
