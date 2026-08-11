@@ -1173,6 +1173,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/influxdata-cloud-overlay.yaml
 - type: DomainSecurity
   url: security/influxdata-domain-security.yml
 - type: AgenticAccess
