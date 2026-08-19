@@ -1,0 +1,1686 @@
+{
+  "item": [
+    {
+      "id": "255ff77d-7e46-4c5b-9131-991e9a98bbdf",
+      "name": "Replications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5dc1ac2-e0a3-4763-b5b7-2ca18dfd7b78",
+          "name": "List all replications",
+          "request": {
+            "name": "List all replications",
+            "description": {},
+            "url": {
+              "path": [
+                "replications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "(Required) The organization ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "remoteID",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "localBucketID",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84aa4804-8a74-4e59-8888-6570c784a792",
+              "name": "List of replications",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remoteID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "localBucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"replications\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"remoteID\": \"string\",\n      \"orgID\": \"string\",\n      \"localBucketID\": \"string\",\n      \"maxQueueSizeBytes\": 1314,\n      \"description\": \"string\",\n      \"remoteBucketID\": \"string\",\n      \"remoteBucketName\": \"string\",\n      \"currentQueueSizeBytes\": 3237,\n      \"remainingBytesToBeSynced\": 7804,\n      \"latestResponseCode\": 2150,\n      \"latestErrorMessage\": \"string\",\n      \"dropNonRetryableData\": true\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"remoteID\": \"string\",\n      \"orgID\": \"string\",\n      \"localBucketID\": \"string\",\n      \"maxQueueSizeBytes\": 660,\n      \"description\": \"string\",\n      \"remoteBucketID\": \"string\",\n      \"remoteBucketName\": \"string\",\n      \"currentQueueSizeBytes\": 6581,\n      \"remainingBytesToBeSynced\": 9523,\n      \"latestResponseCode\": 8167,\n      \"latestErrorMessage\": \"string\",\n      \"dropNonRetryableData\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15db4e92-f372-4e0a-a7d5-6243abaed955",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remoteID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "localBucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "320b9151-2009-4e82-879a-86ac84e11033",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remoteID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "localBucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3ddf7aa-2b0a-4e29-b6f9-f845a90d69e7",
+          "name": "Register a new replication",
+          "request": {
+            "name": "Register a new replication",
+            "description": {},
+            "url": {
+              "path": [
+                "replications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "validate",
+                  "value": "false",
+                  "description": "If true, validate the replication, but don't save it."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"localBucketID\": \"<string>\",\n  \"maxQueueSizeBytes\": 67108860,\n  \"maxAgeSeconds\": 604800,\n  \"description\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"dropNonRetryableData\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e48820a-2e89-4694-a69a-b6269b36cd51",
+              "name": "Replication saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"localBucketID\": \"<string>\",\n  \"maxQueueSizeBytes\": 67108860,\n  \"maxAgeSeconds\": 604800,\n  \"description\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"dropNonRetryableData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"remoteID\": \"string\",\n  \"orgID\": \"string\",\n  \"localBucketID\": \"string\",\n  \"maxQueueSizeBytes\": 1001,\n  \"description\": \"string\",\n  \"remoteBucketID\": \"string\",\n  \"remoteBucketName\": \"string\",\n  \"currentQueueSizeBytes\": 9609,\n  \"remainingBytesToBeSynced\": 1790,\n  \"latestResponseCode\": 1760,\n  \"latestErrorMessage\": \"string\",\n  \"dropNonRetryableData\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76ea93ad-622e-42c9-8568-0430a9819017",
+              "name": "Replication validated, but not saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"localBucketID\": \"<string>\",\n  \"maxQueueSizeBytes\": 67108860,\n  \"maxAgeSeconds\": 604800,\n  \"description\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"dropNonRetryableData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9ea3842-f687-40c3-89d1-c83c37891b38",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"localBucketID\": \"<string>\",\n  \"maxQueueSizeBytes\": 67108860,\n  \"maxAgeSeconds\": 604800,\n  \"description\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"dropNonRetryableData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55661353-b27c-49ce-a559-73bfa099a5c2",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"localBucketID\": \"<string>\",\n  \"maxQueueSizeBytes\": 67108860,\n  \"maxAgeSeconds\": 604800,\n  \"description\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"dropNonRetryableData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9edcb4c8-c26c-4125-ae90-18a47494b5b0",
+          "name": "Retrieve a replication",
+          "request": {
+            "name": "Retrieve a replication",
+            "description": {},
+            "url": {
+              "path": [
+                "replications",
+                ":replicationID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "replicationID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "537f36d7-16bf-4cbc-a952-50d30ea05fe1",
+              "name": "Replication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"remoteID\": \"string\",\n  \"orgID\": \"string\",\n  \"localBucketID\": \"string\",\n  \"maxQueueSizeBytes\": 1001,\n  \"description\": \"string\",\n  \"remoteBucketID\": \"string\",\n  \"remoteBucketName\": \"string\",\n  \"currentQueueSizeBytes\": 9609,\n  \"remainingBytesToBeSynced\": 1790,\n  \"latestResponseCode\": 1760,\n  \"latestErrorMessage\": \"string\",\n  \"dropNonRetryableData\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91f6079a-2a94-4df9-93be-9f3008fea0e7",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d4581e5-9c9a-43d3-a800-5b865ccb291d",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "770ae18f-c8be-407d-8dbd-16908bcc61fb",
+          "name": "Update a replication",
+          "request": {
+            "name": "Update a replication",
+            "description": {},
+            "url": {
+              "path": [
+                "replications",
+                ":replicationID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "validate",
+                  "value": "false",
+                  "description": "If true, validate the updated information, but don't save it."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "replicationID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"maxQueueSizeBytes\": \"<long>\",\n  \"dropNonRetryableData\": \"<boolean>\",\n  \"maxAgeSeconds\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b75c3e63-e40a-486e-90af-94bca79c3162",
+              "name": "Updated information saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"maxQueueSizeBytes\": \"<long>\",\n  \"dropNonRetryableData\": \"<boolean>\",\n  \"maxAgeSeconds\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"remoteID\": \"string\",\n  \"orgID\": \"string\",\n  \"localBucketID\": \"string\",\n  \"maxQueueSizeBytes\": 1001,\n  \"description\": \"string\",\n  \"remoteBucketID\": \"string\",\n  \"remoteBucketName\": \"string\",\n  \"currentQueueSizeBytes\": 9609,\n  \"remainingBytesToBeSynced\": 1790,\n  \"latestResponseCode\": 1760,\n  \"latestErrorMessage\": \"string\",\n  \"dropNonRetryableData\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c29bd618-a9fd-43bf-8e66-1390f935e2a4",
+              "name": "Updated replication validated, but not saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"maxQueueSizeBytes\": \"<long>\",\n  \"dropNonRetryableData\": \"<boolean>\",\n  \"maxAgeSeconds\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f957536c-6cf7-4a25-85d7-72c65271c3fb",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"maxQueueSizeBytes\": \"<long>\",\n  \"dropNonRetryableData\": \"<boolean>\",\n  \"maxAgeSeconds\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8e2c8aa-c16b-466a-a5ac-75d003d5ed77",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"maxQueueSizeBytes\": \"<long>\",\n  \"dropNonRetryableData\": \"<boolean>\",\n  \"maxAgeSeconds\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88270d14-21bc-417f-9c33-69aa1ead6796",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "validate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"remoteID\": \"<string>\",\n  \"remoteBucketID\": \"<string>\",\n  \"remoteBucketName\": \"<string>\",\n  \"maxQueueSizeBytes\": \"<long>\",\n  \"dropNonRetryableData\": \"<boolean>\",\n  \"maxAgeSeconds\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce84d063-e550-477c-89cd-8ff94b7f685a",
+          "name": "Delete a replication",
+          "request": {
+            "name": "Delete a replication",
+            "description": {},
+            "url": {
+              "path": [
+                "replications",
+                ":replicationID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "replicationID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4cc12e38-cced-435e-a56f-18c1c6021cbd",
+              "name": "Replication deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "da055e45-d181-462f-a4cb-8779ceda4667",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fabe0737-b47d-4dd3-9440-194f8eb4806f",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73594aa3-ad09-474d-b051-4eb391970baa",
+          "name": "Validate a replication",
+          "request": {
+            "name": "Validate a replication",
+            "description": {},
+            "url": {
+              "path": [
+                "replications",
+                ":replicationID",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "replicationID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7f7b721-008c-4f68-86e4-075dbb5519e4",
+              "name": "Replication is valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "32e18218-5250-4377-ac5c-0f74c2e4da6c",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec8f5577-f8b5-4d73-b0de-a7c9fb3508c5",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replications",
+                    ":replicationID",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "replicationID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6ba0770d-b0f9-44a5-915d-3d8c5d130c82",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Replications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

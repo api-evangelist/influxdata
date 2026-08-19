@@ -32,3 +32,9 @@ tools:
 - name: create_authorization
   description: Create an API token (authorization)
   source_operation: openapi/influxdata-cloud-openapi-original.yml#PostAuthorizations
+deployment:
+  mode: none
+  verified: derived
+  tools: 8
+  checked: '2026-08-12'
+  source: catalog MCP census

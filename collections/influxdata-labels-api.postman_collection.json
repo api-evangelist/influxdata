@@ -1,0 +1,1398 @@
+{
+  "item": [
+    {
+      "id": "dfa800cd-3e15-4a6e-85f8-14326d2c9a4a",
+      "name": "Labels",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01347d1e-7c95-41c8-af11-5d05fee1e470",
+          "name": "Create a label",
+          "request": {
+            "name": "Create a label",
+            "description": {},
+            "url": {
+              "path": [
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgID\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf40faed-a2ec-4fc1-be33-f810f64d4dd2",
+              "name": "Success. The label was created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://tHiiJlcegDjBblpLklVLQCJ.bqaG1amFifZho2,5y,4+5ChXJuG33LOb9OB4SJHm\",\n    \"next\": \"https://HpPDYHibVyVFVvBetkquRQqDQZ.oaxQcsYjg2eq8,E5xP5yWVy5mJb\",\n    \"prev\": \"http://iPJOQnqSGRqhlyGQjMmMtLnxxlNhCvpou.yhhvR-ij,PF\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0007de0e-8a6e-447d-9431-86d2e933028d",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fef76b30-a26d-4272-9207-f214712e7534",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8453d757-f7b1-4cde-808a-2fd05ceed9f4",
+          "name": "List all labels",
+          "request": {
+            "name": "List all labels",
+            "description": {},
+            "url": {
+              "path": [
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "The organization ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7bf0847c-d17d-4923-aa3d-0305e16eca15",
+              "name": "Success. The response body contains a list of labels.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://d.wbTmvzRBOsJt7tBBf32qiVdMBUrsTNZJilRgsbZ\",\n    \"next\": \"https://ZgsLpFVlruSbDvfDBtrBXQ.ppiEG\",\n    \"prev\": \"http://AWe.vgf6aCKYiJq49\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01282b17-d942-4a70-a473-4a25c2c1de67",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33e9bff1-6d08-4e5a-90e3-83552f9e47e2",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0227fa77-e0ab-4c23-a0ad-919e65a588d3",
+          "name": "Retrieve a label",
+          "request": {
+            "name": "Retrieve a label",
+            "description": {},
+            "url": {
+              "path": [
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The ID of the label to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc1eefce-1ef8-4d3c-aeba-950590adf170",
+              "name": "Success. The response body contains the label.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://tHiiJlcegDjBblpLklVLQCJ.bqaG1amFifZho2,5y,4+5ChXJuG33LOb9OB4SJHm\",\n    \"next\": \"https://HpPDYHibVyVFVvBetkquRQqDQZ.oaxQcsYjg2eq8,E5xP5yWVy5mJb\",\n    \"prev\": \"http://iPJOQnqSGRqhlyGQjMmMtLnxxlNhCvpou.yhhvR-ij,PF\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29b50648-4bed-4575-a941-6e156f83c0cb",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "862238d6-16cd-4060-b2da-456160ddf3bd",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8f4320f-1ece-4a73-8047-a0d6c26ba36d",
+          "name": "Update a label",
+          "request": {
+            "name": "Update a label",
+            "description": {},
+            "url": {
+              "path": [
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The ID of the label to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "923f178f-8b7d-4982-b6f8-9e1ea6a30eaa",
+              "name": "Success. The response body contains the updated label.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://tHiiJlcegDjBblpLklVLQCJ.bqaG1amFifZho2,5y,4+5ChXJuG33LOb9OB4SJHm\",\n    \"next\": \"https://HpPDYHibVyVFVvBetkquRQqDQZ.oaxQcsYjg2eq8,E5xP5yWVy5mJb\",\n    \"prev\": \"http://iPJOQnqSGRqhlyGQjMmMtLnxxlNhCvpou.yhhvR-ij,PF\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8b0e431-79ae-4b21-861d-b0b40c569b6a",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a268632a-4e0a-4044-a029-fd2ab5a674c9",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "007db901-259b-4a0d-8d8f-b8f917499289",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56e7f3f1-551a-47e3-9c03-9de6b584cfe3",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"color\": \"ffb3b3\",\n    \"description\": \"this is a description\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c83a61b7-8564-43f0-805e-d760768de58e",
+          "name": "Delete a label",
+          "request": {
+            "name": "Delete a label",
+            "description": {},
+            "url": {
+              "path": [
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The ID of the label to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f51b4a7-5451-4564-8fb5-121ef68c1030",
+              "name": "Success. The delete was accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9d245d0f-1055-4080-969b-5b4a138e9a6d",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a144615d-60c2-4e43-ad26-72e9df1e857f",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "968f34da-3be3-468c-98da-8f1785e39124",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "feebe574-4c59-4b36-8792-62143d756810",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b346622a-7471-45b5-8dfa-c887335fe551",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Labels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

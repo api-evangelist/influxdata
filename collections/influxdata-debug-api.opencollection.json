@@ -1,0 +1,310 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Debug API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Debug",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all runtime profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/all",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "cpu",
+                "value": "",
+                "type": "query",
+                "description": "Collects and returns CPU profiling data for the specified [duration](https://docs.influxdata.com/influxdb/latest/reference/glossary/#duration).\n"
+              }
+            ]
+          },
+          "docs": "Collects samples and returns reports for the following [Go runtime profiles](https://pkg.go.dev/runtime/pprof):\n\n- **allocs**: All past memory allocations\n- **block**: Stack traces that led to blocking on synchronization primitives\n- **cpu**: (Optional) Program counters sampled from the executing stack.\n  Include by passing the `cpu` query parameter with a [duration](https://docs.influxdata.com/influxdb/latest/reference/glossary/#duration) value.\n  Equivalent to the report from [`GET /debug/ppro"
+        },
+        {
+          "info": {
+            "name": "Retrieve the memory allocations runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/allocs",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+              },
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+              }
+            ]
+          },
+          "docs": "Returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof) report of\nall past memory allocations.\n**allocs** is the same as the **heap** profile,\nbut changes the default [pprof](https://pkg.go.dev/runtime/pprof)\ndisplay to __-alloc_space__,\nthe total number of bytes allocated since the program began (including garbage-collected bytes).\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the block runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/block",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+              },
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+              }
+            ]
+          },
+          "docs": "Collects samples and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of stack traces that led to blocking on synchronization primitives.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the command line invocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/cmdline",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ]
+          },
+          "docs": "Returns the command line that invoked InfluxDB.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the goroutines runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/goroutine",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as\n       human-readable text with comments that translate addresses to\n       function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+              },
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+              }
+            ]
+          },
+          "docs": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of all current goroutines.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the heap runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/heap",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+              },
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+              },
+              {
+                "name": "gc",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) don't force garbage collection before sampling.\n- `1`: Force garbage collection before sampling.\n"
+              }
+            ]
+          },
+          "docs": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of memory allocations for live objects.\n\nTo run **garbage collection** before sampling,\npass the `gc` query parameter with a value of `1`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the mutual exclusion (mutex) runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/mutex",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+              },
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+              }
+            ]
+          },
+          "docs": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof) report of\nlock contentions.\nThe profile contains stack traces of holders of contended mutual exclusions (mutexes).\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the CPU runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/profile",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect profile data. Default is `30` seconds."
+              }
+            ]
+          },
+          "docs": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of program counters on the executing stack.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the threadcreate runtime profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/threadcreate",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+              },
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+              }
+            ]
+          },
+          "docs": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of stack traces that led to the creation of new OS threads.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the runtime execution trace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/debug/pprof/trace",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "seconds",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to collect profile data."
+              }
+            ]
+          },
+          "docs": "Collects profile data and returns trace execution events for the current program.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

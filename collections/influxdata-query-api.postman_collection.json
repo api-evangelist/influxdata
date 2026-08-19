@@ -1,0 +1,1567 @@
+{
+  "item": [
+    {
+      "id": "99bbf064-52f5-4f84-9b76-fd0d78ca64aa",
+      "name": "Query",
+      "description": {
+        "content": "Retrieve data, analyze queries, and get query suggestions.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "19ce1fa3-5e42-42e8-8c4b-87108f8f4774",
+          "name": "Generate a query Abstract Syntax Tree (AST)",
+          "request": {
+            "name": "Generate a query Abstract Syntax Tree (AST)",
+            "description": {
+              "content": "Analyzes a Flux query and returns a complete package source [Abstract Syntax\nTree (AST)](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#abstract-syntax-tree-ast)\nfor the query.\n\nUse this endpoint for deep query analysis such as debugging unexpected query\nresults.\n\nA Flux query AST provides a semantic, tree-like representation with contextual\ninformation about the query. The AST illustrates how the query is distributed\ninto different components for execution.\n\n#### Limitations\n\n-  The endpoint doesn't validate values in the query--for example:\n\n    The following sample Flux query has correct syntax, but contains an incorrect `from()` property key:\n\n    ```js\n    from(foo: \"iot_center\")\n        |> range(start: -90d)\n        |> filter(fn: (r) => r._measurement == \"environment\")\n    ```\n\n    The following sample JSON shows how to pass the query in the request body:\n\n    ```js\n    from(foo: \"iot_center\")\n    |> range(start: -90d)\n    |> filter(fn: (r) => r._measurement == \"environment\")\n    ```\n\n    The following code sample shows how to pass the query as JSON in the request body:\n\n    ```json\n    { \"query\": \"from(foo: \\\"iot_center\\\")\\\n                    |> range(start: -90d)\\\n                    |> filter(fn: (r) => r._measurement == \\\"environment\\\")\"\n    }\n    ```\n\n    Passing this to `/api/v2/query/ast` will return a successful response\n    with a generated AST.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query",
+                "ast"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9a50e5d7-aada-40bf-a659-b7968b3d71ce",
+              "name": "Success.\nThe response body contains an Abstract Syntax Tree (AST) of the Flux query.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "ast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ast\": {\n    \"type\": \"Package\",\n    \"package\": \"main\",\n    \"files\": [\n      {\n        \"type\": \"File\",\n        \"location\": {\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 109\n          },\n          \"source\": \"from(bucket: \\\"example-bucket\\\") |> range(start: -5m) |> filter(fn: (r) => r._measurement == \\\"example-measurement\\\")\"\n        },\n        \"metadata\": \"parser-type=rust\",\n        \"package\": null,\n        \"imports\": null,\n        \"body\": [\n          {\n            \"type\": \"ExpressionStatement\",\n            \"location\": {\n              \"start\": {\n                \"line\": 1,\n                \"column\": 1\n              },\n              \"end\": {\n                \"line\": 1,\n                \"column\": 109\n              },\n              \"source\": \"from(bucket: \\\"example-bucket\\\") |> range(start: -5m) |> filter(fn: (r) => r._measurement == \\\"example-measurement\\\")\"\n            },\n            \"expression\": {\n              \"type\": \"PipeExpression\",\n              \"location\": {\n                \"start\": {\n                  \"line\": 1,\n                  \"column\": 1\n                },\n                \"end\": {\n                  \"line\": 1,\n                  \"column\": 109\n                },\n                \"source\": \"from(bucket: \\\"example-bucket\\\") |> range(start: -5m) |> filter(fn: (r) => r._measurement == \\\"example-measurement\\\")\"\n              },\n              \"argument\": {\n                \"type\": \"PipeExpression\",\n                \"location\": {\n                  \"start\": {\n                    \"line\": 1,\n                    \"column\": 1\n                  },\n                  \"end\": {\n                    \"line\": 1,\n                    \"column\": 47\n                  },\n                  \"source\": \"from(bucket: \\\"example-bucket\\\") |> range(start: -5m)\"\n                },\n                \"argument\": {\n                  \"type\": \"CallExpression\",\n                  \"location\": {\n                    \"start\": {\n                      \"line\": 1,\n                      \"column\": 1\n                    },\n                    \"end\": {\n                      \"line\": 1,\n                      \"column\": 26\n                    },\n                    \"source\": \"from(bucket: \\\"example-bucket\\\")\"\n                  },\n                  \"callee\": {\n                    \"type\": \"Identifier\",\n                    \"location\": {\n                      \"start\": {\n                        \"line\": 1,\n                        \"column\": 1\n                      },\n                      \"end\": {\n                        \"line\": 1,\n                        \"column\": 5\n                      },\n                      \"source\": \"from\"\n                    },\n                    \"name\": \"from\"\n                  },\n                  \"arguments\": [\n                    {\n                      \"type\": \"ObjectExpression\",\n                      \"location\": {\n                        \"start\": {\n                          \"line\": 1,\n                          \"column\": 6\n                        },\n                        \"end\": {\n                          \"line\": 1,\n                          \"column\": 25\n                        },\n                        \"source\": \"bucket: \\\"example-bucket\\\"\"\n                      },\n                      \"properties\": [\n                        {\n                          \"type\": \"Property\",\n                          \"location\": {\n                            \"start\": {\n                              \"line\": 1,\n                              \"column\": 6\n                            },\n                            \"end\": {\n                              \"line\": 1,\n                              \"column\": 25\n                            },\n                            \"source\": \"bucket: \\\"example-bucket\\\"\"\n                          },\n                          \"key\": {\n                            \"type\": \"Identifier\",\n                            \"location\": {\n                              \"start\": {\n                                \"line\": 1,\n                                \"column\": 6\n                              },\n                              \"end\": {\n                                \"line\": 1,\n                                \"column\": 12\n                              },\n                              \"source\": \"bucket\"\n                            },\n                            \"name\": \"bucket\"\n                          },\n                          \"value\": {\n                            \"type\": \"StringLiteral\",\n                            \"location\": {\n                              \"start\": {\n                                \"line\": 1,\n                                \"column\": 14\n                              },\n                              \"end\": {\n                                \"line\": 1,\n                                \"column\": 25\n                              },\n                              \"source\": \"\\\"example-bucket\\\"\"\n                            },\n                            \"value\": \"example-bucket\"\n                          }\n                        }\n                      ]\n                    }\n                  ]\n                },\n                \"call\": {\n                  \"type\": \"CallExpression\",\n                  \"location\": {\n                    \"start\": {\n                      \"line\": 1,\n                      \"column\": 30\n                    },\n                    \"end\": {\n                      \"line\": 1,\n                      \"column\": 47\n                    },\n                    \"source\": \"range(start: -5m)\"\n                  },\n                  \"callee\": {\n                    \"type\": \"Identifier\",\n                    \"location\": {\n                      \"start\": {\n                        \"line\": 1,\n                        \"column\": 30\n                      },\n                      \"end\": {\n                        \"line\": 1,\n                        \"column\": 35\n                      },\n                      \"source\": \"range\"\n                    },\n                    \"name\": \"range\"\n                  },\n                  \"arguments\": [\n                    {\n                      \"type\": \"ObjectExpression\",\n                      \"location\": {\n                        \"start\": {\n                          \"line\": 1,\n                          \"column\": 36\n                        },\n                        \"end\": {\n                          \"line\": 1,\n                          \"column\": 46\n                        },\n                        \"source\": \"start: -5m\"\n                      },\n                      \"properties\": [\n                        {\n                          \"type\": \"Property\",\n                          \"location\": {\n                            \"start\": {\n                              \"line\": 1,\n                              \"column\": 36\n                            },\n                            \"end\": {\n                              \"line\": 1,\n                              \"column\": 46\n                            },\n                            \"source\": \"start: -5m\"\n                          },\n                          \"key\": {\n                            \"type\": \"Identifier\",\n                            \"location\": {\n                              \"start\": {\n                                \"line\": 1,\n                                \"column\": 36\n                              },\n                              \"end\": {\n                                \"line\": 1,\n                                \"column\": 41\n                              },\n                              \"source\": \"start\"\n                            },\n                            \"name\": \"start\"\n                          },\n                          \"value\": {\n                            \"type\": \"UnaryExpression\",\n                            \"location\": {\n                              \"start\": {\n                                \"line\": 1,\n                                \"column\": 43\n                              },\n                              \"end\": {\n                                \"line\": 1,\n                                \"column\": 46\n                              },\n                              \"source\": \"-5m\"\n                            },\n                            \"operator\": \"-\",\n                            \"argument\": {\n                              \"type\": \"DurationLiteral\",\n                              \"location\": {\n                                \"start\": {\n                                  \"line\": 1,\n                                  \"column\": 44\n                                },\n                                \"end\": {\n                                  \"line\": 1,\n                                  \"column\": 46\n                                },\n                                \"source\": \"5m\"\n                              },\n                              \"values\": [\n                                {\n                                  \"magnitude\": 5,\n                                  \"unit\": \"m\"\n                                }\n                              ]\n                            }\n                          }\n                        }\n                      ]\n                    }\n                  ]\n                }\n              },\n              \"call\": {\n                \"type\": \"CallExpression\",\n                \"location\": {\n                  \"start\": {\n                    \"line\": 1,\n                    \"column\": 51\n                  },\n                  \"end\": {\n                    \"line\": 1,\n                    \"column\": 109\n                  },\n                  \"source\": \"filter(fn: (r) => r._measurement == \\\"example-measurement\\\")\"\n                },\n                \"callee\": {\n                  \"type\": \"Identifier\",\n                  \"location\": {\n                    \"start\": {\n                      \"line\": 1,\n                      \"column\": 51\n                    },\n                    \"end\": {\n                      \"line\": 1,\n                      \"column\": 57\n                    },\n                    \"source\": \"filter\"\n                  },\n                  \"name\": \"filter\"\n                },\n                \"arguments\": [\n                  {\n                    \"type\": \"ObjectExpression\",\n                    \"location\": {\n                      \"start\": {\n                        \"line\": 1,\n                        \"column\": 58\n                      },\n                      \"end\": {\n                        \"line\": 1,\n                        \"column\": 108\n                      },\n                      \"source\": \"fn: (r) => r._measurement == \\\"example-measurement\\\"\"\n                    },\n                    \"properties\": [\n                      {\n                        \"type\": \"Property\",\n                        \"location\": {\n                          \"start\": {\n                            \"line\": 1,\n                            \"column\": 58\n                          },\n                          \"end\": {\n                            \"line\": 1,\n                            \"column\": 108\n                          },\n                          \"source\": \"fn: (r) => r._measurement == \\\"example-measurement\\\"\"\n                        },\n                        \"key\": {\n                          \"type\": \"Identifier\",\n                          \"location\": {\n                            \"start\": {\n                              \"line\": 1,\n                              \"column\": 58\n                            },\n                            \"end\": {\n                              \"line\": 1,\n                              \"column\": 60\n                            },\n                            \"source\": \"fn\"\n                          },\n                          \"name\": \"fn\"\n                        },\n                        \"value\": {\n                          \"type\": \"FunctionExpression\",\n                          \"location\": {\n                            \"start\": {\n                              \"line\": 1,\n                              \"column\": 62\n                            },\n                            \"end\": {\n                              \"line\": 1,\n                              \"column\": 108\n                            },\n                            \"source\": \"(r) => r._measurement == \\\"example-measurement\\\"\"\n                          },\n                          \"params\": [\n                            {\n                              \"type\": \"Property\",\n                              \"location\": {\n                                \"start\": {\n                                  \"line\": 1,\n                                  \"column\": 63\n                                },\n                                \"end\": {\n                                  \"line\": 1,\n                                  \"column\": 64\n                                },\n                                \"source\": \"r\"\n                              },\n                              \"key\": {\n                                \"type\": \"Identifier\",\n                                \"location\": {\n                                  \"start\": {\n                                    \"line\": 1,\n                                    \"column\": 63\n                                  },\n                                  \"end\": {\n                                    \"line\": 1,\n                                    \"column\": 64\n                                  },\n                                  \"source\": \"r\"\n                                },\n                                \"name\": \"r\"\n                              },\n                              \"value\": null\n                            }\n                          ],\n                          \"body\": {\n                            \"type\": \"BinaryExpression\",\n                            \"location\": {\n                              \"start\": {\n                                \"line\": 1,\n                                \"column\": 69\n                              },\n                              \"end\": {\n                                \"line\": 1,\n                                \"column\": 108\n                              },\n                              \"source\": \"r._measurement == \\\"example-measurement\\\"\"\n                            },\n                            \"operator\": \"==\",\n                            \"left\": {\n                              \"type\": \"MemberExpression\",\n                              \"location\": {\n                                \"start\": {\n                                  \"line\": 1,\n                                  \"column\": 69\n                                },\n                                \"end\": {\n                                  \"line\": 1,\n                                  \"column\": 83\n                                },\n                                \"source\": \"r._measurement\"\n                              },\n                              \"object\": {\n                                \"type\": \"Identifier\",\n                                \"location\": {\n                                  \"start\": {\n                                    \"line\": 1,\n                                    \"column\": 69\n                                  },\n                                  \"end\": {\n                                    \"line\": 1,\n                                    \"column\": 70\n                                  },\n                                  \"source\": \"r\"\n                                },\n                                \"name\": \"r\"\n                              },\n                              \"property\": {\n                                \"type\": \"Identifier\",\n                                \"location\": {\n                                  \"start\": {\n                                    \"line\": 1,\n                                    \"column\": 71\n                                  },\n                                  \"end\": {\n                                    \"line\": 1,\n                                    \"column\": 83\n                                  },\n                                  \"source\": \"_measurement\"\n                                },\n                                \"name\": \"_measurement\"\n                              }\n                            },\n                            \"right\": {\n                              \"type\": \"StringLiteral\",\n                              \"location\": {\n                                \"start\": {\n                                  \"line\": 1,\n                                  \"column\": 87\n                                },\n                                \"end\": {\n                                  \"line\": 1,\n                                  \"column\": 108\n                                },\n                                \"source\": \"\\\"example-measurement\\\"\"\n                              },\n                              \"value\": \"example-measurement\"\n                            }\n                          }\n                        }\n                      }\n                    ]\n                  }\n                ]\n              }\n            }\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37a223d9-6166-4dae-a15f-b675978e5538",
+              "name": "Bad request.\nInfluxDB is unable to parse the request.\nThe response body contains detail about the problem.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "ast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The reason for the error.\n",
+                  "key": "X-Platform-Error-Code",
+                  "value": "invalid"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"invalid AST: loc 1:6-1:19: missing property key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d781350b-c43c-4477-904a-48b7ff0e41db",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "ast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67fc9114-3be2-4289-bda2-d2a9de0059cb",
+          "name": "List Flux query suggestions",
+          "request": {
+            "name": "List Flux query suggestions",
+            "description": {
+              "content": "Lists Flux query suggestions. Each suggestion contains a\n[Flux function](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/)\nname and parameters.\n\nUse this endpoint to retrieve a list of Flux query suggestions used in the\nInfluxDB Flux Query Builder.\n\n#### Limitations\n\n- When writing a query, avoid using `_functionName()` helper functions\nexposed by this endpoint.  Helper function names have an underscore (`_`)\nprefix and aren't meant to be used directly in queries--for example:\n\n  - To sort on a column and keep the top n records, use the\n    `top(n, columns=[\"_value\"], tables=<-)` function instead of the `_sortLimit`\n    helper function. `top` uses `_sortLimit`.\n\n#### Related Guides\n\n- [List of all Flux functions](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query",
+                "suggestions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9763fc9-c99e-4573-9118-e47a26e6f7f9",
+              "name": "Success.\nThe response body contains a list of Flux query suggestions--function\nnames used in the Flux Query Builder autocomplete suggestions.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "suggestions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"funcs\": [\n    {\n      \"name\": \"_fillEmpty\",\n      \"params\": {\n        \"createEmpty\": \"bool\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"_highestOrLowest\",\n      \"params\": {\n        \"_sortLimit\": \"function\",\n        \"column\": \"invalid\",\n        \"groupColumns\": \"array\",\n        \"n\": \"invalid\",\n        \"reducer\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"_hourSelection\",\n      \"params\": {\n        \"location\": \"object\",\n        \"start\": \"int\",\n        \"stop\": \"int\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"_sortLimit\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"desc\": \"bool\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"_window\",\n      \"params\": {\n        \"createEmpty\": \"bool\",\n        \"every\": \"duration\",\n        \"location\": \"object\",\n        \"offset\": \"duration\",\n        \"period\": \"duration\",\n        \"startColumn\": \"string\",\n        \"stopColumn\": \"string\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"aggregateWindow\",\n      \"params\": {\n        \"column\": \"invalid\",\n        \"createEmpty\": \"bool\",\n        \"every\": \"duration\",\n        \"fn\": \"function\",\n        \"location\": \"object\",\n        \"offset\": \"duration\",\n        \"period\": \"duration\",\n        \"tables\": \"stream\",\n        \"timeDst\": \"string\",\n        \"timeSrc\": \"string\"\n      }\n    },\n    {\n      \"name\": \"bool\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"bottom\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"buckets\",\n      \"params\": {\n        \"host\": \"string\",\n        \"org\": \"string\",\n        \"orgID\": \"string\",\n        \"token\": \"string\"\n      }\n    },\n    {\n      \"name\": \"bytes\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"cardinality\",\n      \"params\": {\n        \"bucket\": \"string\",\n        \"bucketID\": \"string\",\n        \"host\": \"string\",\n        \"org\": \"string\",\n        \"orgID\": \"string\",\n        \"predicate\": \"function\",\n        \"start\": \"invalid\",\n        \"stop\": \"invalid\",\n        \"token\": \"string\"\n      }\n    },\n    {\n      \"name\": \"chandeMomentumOscillator\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"columns\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"contains\",\n      \"params\": {\n        \"set\": \"array\",\n        \"value\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"count\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"cov\",\n      \"params\": {\n        \"on\": \"array\",\n        \"pearsonr\": \"bool\",\n        \"x\": \"invalid\",\n        \"y\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"covariance\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"pearsonr\": \"bool\",\n        \"tables\": \"stream\",\n        \"valueDst\": \"string\"\n      }\n    },\n    {\n      \"name\": \"cumulativeSum\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"derivative\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"initialZero\": \"bool\",\n        \"nonNegative\": \"bool\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\",\n        \"unit\": \"duration\"\n      }\n    },\n    {\n      \"name\": \"die\",\n      \"params\": {\n        \"msg\": \"string\"\n      }\n    },\n    {\n      \"name\": \"difference\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"initialZero\": \"bool\",\n        \"keepFirst\": \"bool\",\n        \"nonNegative\": \"bool\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"display\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"distinct\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"doubleEMA\",\n      \"params\": {\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"drop\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"duplicate\",\n      \"params\": {\n        \"as\": \"string\",\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"duration\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"elapsed\",\n      \"params\": {\n        \"columnName\": \"string\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\",\n        \"unit\": \"duration\"\n      }\n    },\n    {\n      \"name\": \"exponentialMovingAverage\",\n      \"params\": {\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"fill\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\",\n        \"usePrevious\": \"bool\",\n        \"value\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"filter\",\n      \"params\": {\n        \"fn\": \"function\",\n        \"onEmpty\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"findColumn\",\n      \"params\": {\n        \"column\": \"string\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"findRecord\",\n      \"params\": {\n        \"fn\": \"function\",\n        \"idx\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"first\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"float\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"from\",\n      \"params\": {\n        \"bucket\": \"string\",\n        \"bucketID\": \"string\",\n        \"host\": \"string\",\n        \"org\": \"string\",\n        \"orgID\": \"string\",\n        \"token\": \"string\"\n      }\n    },\n    {\n      \"name\": \"getColumn\",\n      \"params\": {\n        \"column\": \"string\"\n      }\n    },\n    {\n      \"name\": \"getRecord\",\n      \"params\": {\n        \"idx\": \"int\"\n      }\n    },\n    {\n      \"name\": \"group\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"mode\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"highestAverage\",\n      \"params\": {\n        \"column\": \"string\",\n        \"groupColumns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"highestCurrent\",\n      \"params\": {\n        \"column\": \"string\",\n        \"groupColumns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"highestMax\",\n      \"params\": {\n        \"column\": \"string\",\n        \"groupColumns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"histogram\",\n      \"params\": {\n        \"bins\": \"array\",\n        \"column\": \"string\",\n        \"countColumn\": \"string\",\n        \"normalize\": \"bool\",\n        \"tables\": \"stream\",\n        \"upperBoundColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"histogramQuantile\",\n      \"params\": {\n        \"countColumn\": \"string\",\n        \"minValue\": \"float\",\n        \"quantile\": \"float\",\n        \"tables\": \"stream\",\n        \"upperBoundColumn\": \"string\",\n        \"valueColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"holtWinters\",\n      \"params\": {\n        \"column\": \"string\",\n        \"interval\": \"duration\",\n        \"n\": \"int\",\n        \"seasonality\": \"int\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\",\n        \"withFit\": \"bool\"\n      }\n    },\n    {\n      \"name\": \"hourSelection\",\n      \"params\": {\n        \"location\": \"object\",\n        \"start\": \"int\",\n        \"stop\": \"int\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"increase\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"int\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"integral\",\n      \"params\": {\n        \"column\": \"string\",\n        \"interpolate\": \"string\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\",\n        \"unit\": \"duration\"\n      }\n    },\n    {\n      \"name\": \"join\",\n      \"params\": {\n        \"method\": \"string\",\n        \"on\": \"array\",\n        \"tables\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"kaufmansAMA\",\n      \"params\": {\n        \"column\": \"string\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"kaufmansER\",\n      \"params\": {\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"keep\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"keyValues\",\n      \"params\": {\n        \"keyColumns\": \"array\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"keys\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"last\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"length\",\n      \"params\": {\n        \"arr\": \"array\"\n      }\n    },\n    {\n      \"name\": \"limit\",\n      \"params\": {\n        \"n\": \"int\",\n        \"offset\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"linearBins\",\n      \"params\": {\n        \"count\": \"int\",\n        \"infinity\": \"bool\",\n        \"start\": \"float\",\n        \"width\": \"float\"\n      }\n    },\n    {\n      \"name\": \"logarithmicBins\",\n      \"params\": {\n        \"count\": \"int\",\n        \"factor\": \"float\",\n        \"infinity\": \"bool\",\n        \"start\": \"float\"\n      }\n    },\n    {\n      \"name\": \"lowestAverage\",\n      \"params\": {\n        \"column\": \"string\",\n        \"groupColumns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"lowestCurrent\",\n      \"params\": {\n        \"column\": \"string\",\n        \"groupColumns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"lowestMin\",\n      \"params\": {\n        \"column\": \"string\",\n        \"groupColumns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"map\",\n      \"params\": {\n        \"fn\": \"function\",\n        \"mergeKey\": \"bool\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"max\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"mean\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"median\",\n      \"params\": {\n        \"column\": \"string\",\n        \"compression\": \"float\",\n        \"method\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"min\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"mode\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"movingAverage\",\n      \"params\": {\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"now\",\n      \"params\": {}\n    },\n    {\n      \"name\": \"pearsonr\",\n      \"params\": {\n        \"on\": \"array\",\n        \"x\": \"invalid\",\n        \"y\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"pivot\",\n      \"params\": {\n        \"columnKey\": \"array\",\n        \"rowKey\": \"array\",\n        \"tables\": \"stream\",\n        \"valueColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"quantile\",\n      \"params\": {\n        \"column\": \"string\",\n        \"compression\": \"float\",\n        \"method\": \"string\",\n        \"q\": \"float\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"range\",\n      \"params\": {\n        \"start\": \"invalid\",\n        \"stop\": \"invalid\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"reduce\",\n      \"params\": {\n        \"fn\": \"function\",\n        \"identity\": \"invalid\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"relativeStrengthIndex\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"rename\",\n      \"params\": {\n        \"columns\": \"invalid\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"sample\",\n      \"params\": {\n        \"column\": \"string\",\n        \"n\": \"int\",\n        \"pos\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"set\",\n      \"params\": {\n        \"key\": \"string\",\n        \"tables\": \"stream\",\n        \"value\": \"string\"\n      }\n    },\n    {\n      \"name\": \"skew\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"sort\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"desc\": \"bool\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"spread\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"stateCount\",\n      \"params\": {\n        \"column\": \"string\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"stateDuration\",\n      \"params\": {\n        \"column\": \"string\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\",\n        \"unit\": \"duration\"\n      }\n    },\n    {\n      \"name\": \"stateTracking\",\n      \"params\": {\n        \"countColumn\": \"string\",\n        \"durationColumn\": \"string\",\n        \"durationUnit\": \"duration\",\n        \"fn\": \"function\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"stddev\",\n      \"params\": {\n        \"column\": \"string\",\n        \"mode\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"sum\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"tableFind\",\n      \"params\": {\n        \"fn\": \"function\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"tail\",\n      \"params\": {\n        \"n\": \"int\",\n        \"offset\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"time\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"timeShift\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"duration\": \"duration\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"timeWeightedAvg\",\n      \"params\": {\n        \"tables\": \"stream\",\n        \"unit\": \"duration\"\n      }\n    },\n    {\n      \"name\": \"timedMovingAverage\",\n      \"params\": {\n        \"column\": \"string\",\n        \"every\": \"duration\",\n        \"period\": \"duration\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"to\",\n      \"params\": {\n        \"bucket\": \"string\",\n        \"bucketID\": \"string\",\n        \"fieldFn\": \"function\",\n        \"host\": \"string\",\n        \"measurementColumn\": \"string\",\n        \"org\": \"string\",\n        \"orgID\": \"string\",\n        \"tables\": \"stream\",\n        \"tagColumns\": \"array\",\n        \"timeColumn\": \"string\",\n        \"token\": \"string\"\n      }\n    },\n    {\n      \"name\": \"toBool\",\n      \"params\": {\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"toFloat\",\n      \"params\": {\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"toInt\",\n      \"params\": {\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"toString\",\n      \"params\": {\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"toTime\",\n      \"params\": {\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"toUInt\",\n      \"params\": {\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"today\",\n      \"params\": {}\n    },\n    {\n      \"name\": \"top\",\n      \"params\": {\n        \"columns\": \"array\",\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"tripleEMA\",\n      \"params\": {\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"tripleExponentialDerivative\",\n      \"params\": {\n        \"n\": \"int\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"truncateTimeColumn\",\n      \"params\": {\n        \"tables\": \"stream\",\n        \"timeColumn\": \"invalid\",\n        \"unit\": \"duration\"\n      }\n    },\n    {\n      \"name\": \"uint\",\n      \"params\": {\n        \"v\": \"invalid\"\n      }\n    },\n    {\n      \"name\": \"union\",\n      \"params\": {\n        \"tables\": \"array\"\n      }\n    },\n    {\n      \"name\": \"unique\",\n      \"params\": {\n        \"column\": \"string\",\n        \"tables\": \"stream\"\n      }\n    },\n    {\n      \"name\": \"wideTo\",\n      \"params\": {\n        \"bucket\": \"string\",\n        \"bucketID\": \"string\",\n        \"host\": \"string\",\n        \"org\": \"string\",\n        \"orgID\": \"string\",\n        \"tables\": \"stream\",\n        \"token\": \"string\"\n      }\n    },\n    {\n      \"name\": \"window\",\n      \"params\": {\n        \"createEmpty\": \"bool\",\n        \"every\": \"duration\",\n        \"location\": \"object\",\n        \"offset\": \"duration\",\n        \"period\": \"duration\",\n        \"startColumn\": \"string\",\n        \"stopColumn\": \"string\",\n        \"tables\": \"stream\",\n        \"timeColumn\": \"string\"\n      }\n    },\n    {\n      \"name\": \"yield\",\n      \"params\": {\n        \"name\": \"string\",\n        \"tables\": \"stream\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f37cbefd-d3d4-447f-8611-0856817c9f48",
+              "name": "Moved Permanently.\nInfluxData has moved the URL of the endpoint.\nUse `/api/v2/query/suggestions` (without a trailing slash).\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "suggestions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Moved Permanently",
+              "code": 301,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "<a href=\"/api/v2/query/suggestions?orgID=INFLUX_ORG_ID\">Moved Permanently</a>\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3e6e126-5926-4391-8ea3-9be168f82f57",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "suggestions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04bdf36e-961f-41d5-b07e-0bda00471515",
+          "name": "Retrieve a query suggestion for a branching suggestion",
+          "request": {
+            "name": "Retrieve a query suggestion for a branching suggestion",
+            "description": {
+              "content": "Retrieves a query suggestion that contains the name and parameters of the\nrequested function.\n\nUse this endpoint to pass a branching suggestion (a Flux function name) and\nretrieve the parameters of the requested function.\n\n#### Limitations\n\n- Use `/api/v2/query/suggestions/{name}` (without a trailing slash).\n`/api/v2/query/suggestions/{name}/` (note the trailing slash) results in a\nHTTP `301 Moved Permanently` status.\n\n- The function `name` must exist and must be spelled correctly.\n\n#### Related Guides\n\n- [List of all Flux functions](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query",
+                "suggestions",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) A [Flux function](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/) name.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f6e30d65-d2f5-460e-8ff7-f0ca4e9739b4",
+              "name": "Success.\nThe response body contains the function name and parameters.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "suggestions",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) A [Flux function](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/) name.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"sum\",\n  \"params\": {\n    \"column\": \"string\",\n    \"tables\": \"stream\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cf436fe-0638-4b3b-9f92-c59c8c4bc358",
+              "name": "Internal server error.\nThe value passed for _`name`_ may have been misspelled.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "suggestions",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) A [Flux function](https://docs.influxdata.com/flux/v0.x/stdlib/all-functions/) name.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"internal error\",\n  \"message\": \"An internal error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd3ea103-1c66-4f77-90b2-0c9bab0990da",
+          "name": "Analyze a Flux query",
+          "request": {
+            "name": "Analyze a Flux query",
+            "description": {
+              "content": "Analyzes a [Flux query](https://docs.influxdata.com/flux/v0.x/) for syntax\nerrors and returns the list of errors.\n\nIn the following sample query, `from()` is missing the property key.\n\n    ```json\n    { \"query\": \"from(: \\\"iot_center\\\")\\\n                |> range(start: -90d)\\\n                |> filter(fn: (r) => r._measurement == \\\"environment\\\")\",\n      \"type\": \"flux\"\n    }\n    ```\n\nIf you pass this in a request to the `/api/v2/analyze` endpoint,\nInfluxDB returns an `errors` list that contains an error object for the missing key.\n\n#### Limitations\n\n-  The endpoint doesn't validate values in the query--for example:\n\n  - The following sample query has correct syntax, but contains an incorrect `from()` property key:\n\n    ```json\n    { \"query\": \"from(foo: \\\"iot_center\\\")\\\n                |> range(start: -90d)\\\n                |> filter(fn: (r) => r._measurement == \\\"environment\\\")\",\n      \"type\": \"flux\"\n    }\n    ```\n\n    If you pass this in a request to the `/api/v2/analyze` endpoint,\n    InfluxDB returns an empty `errors` list.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query",
+                "analyze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": 573\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ccd2f1b6-56cc-4964-b298-c4eee30c1528",
+              "name": "Success.\nThe response body contains the list of `errors`.\nIf the query syntax is valid, the endpoint returns an empty `errors` list.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "analyze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"line\": 1,\n      \"column\": 6,\n      \"character\": 0,\n      \"message\": \"missing property key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8daa86a8-9f1e-44c5-833d-f70bc184acc6",
+              "name": "Bad request.\nInfluxDB is unable to parse the request.\nThe response body contains detail about the problem.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "analyze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The reason for the error.\n",
+                  "key": "X-Platform-Error-Code",
+                  "value": "invalid"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"invalid json: invalid character '\\\\'' looking for beginning of value\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "799b456d-0687-452c-bb71-c90dde7da788",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "analyze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The reason for the error.",
+                  "key": "X-Platform-Error-Code",
+                  "value": "internal error"
+                },
+                {
+                  "disabled": false,
+                  "description": "A string that describes the problem.",
+                  "key": "X-Influx-Error",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The numeric reference code for the error type.",
+                  "key": "X-Influx-Reference",
+                  "value": "2679"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"internal error\",\n  \"message\": \"An internal error has occurred - check server logs\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6f2fbc6-b662-4934-b432-4bdb05486e5f",
+          "name": "Query data",
+          "request": {
+            "name": "Query data",
+            "description": {
+              "content": "Retrieves data from buckets.\n\nUse this endpoint to send a Flux query request and retrieve data from a bucket.\n\n#### Rate limits (with InfluxDB Cloud)\n\n`read` rate limits apply.\nFor more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).\n\n#### Related guides\n\n- [Query with the InfluxDB API](https://docs.influxdata.com/influxdb/cloud/query-data/execute-queries/influx-api/)\n- [Get started with Flux](https://docs.influxdata.com/flux/v0.x/get-started/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An organization name or ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Queries the bucket in the organization associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or `orgID` parameter.\n- Queries the bucket in the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Queries the bucket in the organization associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or `orgID` parameter.\n- Queries the bucket in the specified organization.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                "key": "Accept-Encoding",
+                "value": "identity"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/csv"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": 9300.819873686696\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c42c1c35-fd10-497e-9760-00c033883030",
+              "name": "Success. The response body contains query results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Lists encodings (usually compression algorithms) that have been applied to the response payload.",
+                  "key": "Content-Encoding",
+                  "value": "identity"
+                },
+                {
+                  "disabled": false,
+                  "description": "The trace ID, if generated, of the request.",
+                  "key": "Trace-Id",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/csv"
+                }
+              ],
+              "body": "result,table,_start,_stop,_time,region,host,_value\nmean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:00Z,east,A,15.43\nmean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:20Z,east,B,59.25\nmean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:40Z,east,C,52.62\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ac159f50-f62d-4a29-8c4a-ad1445b7f5c2",
+              "name": "Bad request.\nThe response body contains detail about the error.\n\n#### InfluxDB OSS\n\n- Returns this error if the `org` parameter or `orgID` parameter doesn't match an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"failed to decode request body: organization not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f802738d-9424-478a-a326-03b50e27d61f",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6e18d63-c223-4131-9316-b5ed68949f2e",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f86a32c-7f2c-4031-94d5-7ad0a134f882",
+              "name": "#### InfluxDB Cloud:\n  - returns this error if a **read** or **write** request exceeds your\n    plan's [adjustable service quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#adjustable-service-quotas)\n    or if a **delete** request exceeds the maximum\n    [global limit](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#global-limits)\n  - returns `Retry-After` header that describes when to try the write again.\n\n#### InfluxDB OSS:\n  - doesn't return this error.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Non-negative decimal integer indicating seconds to wait before retrying the request.",
+                  "key": "Retry-After",
+                  "value": "2679"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba330060-2a8b-4656-8056-d48bc5bcec5d",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b99405a9-17d7-4f33-97d2-d7a12c5bfbc4",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ea2b85bc-774e-4550-8835-4440abb88091",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Query API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

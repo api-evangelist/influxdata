@@ -1,0 +1,197 @@
+{
+  "item": [
+    {
+      "id": "4bc25468-66ef-44ce-849b-9efb33ea4d42",
+      "name": "Limits",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b804250-4822-4ec6-8478-9ec59be8452d",
+          "name": "Retrieve limits for an organization",
+          "request": {
+            "name": "Retrieve limits for an organization",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs",
+                ":orgID",
+                "limits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orgID",
+                  "description": "(Required) The ID of the organization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ca2ae07-f90a-4aa9-b935-2316255b49c3",
+              "name": "Limits defined for the organization.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgID",
+                    "limits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgID",
+                      "description": "(Required) The ID of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://wtPEAsAFEBFnINpxkHswEKGBZQnA.klalNAcn,YLQFPx49-nmpAIFMFvMAn,J.mfLwUfjTRxDnH9SVKFJJC\",\n    \"next\": \"http://Ro.utt5LH,e8BuS8tYgafOehSP+jG3eMcZlZnHAnmT1xOEzU\",\n    \"prev\": \"http://AjcJNHz.olvO8qj-1Mr7aLf6dyA0J3v1B.U8\"\n  },\n  \"limits\": {\n    \"rate\": {\n      \"readKBs\": 7934,\n      \"queryTime\": 6643,\n      \"concurrentReadRequests\": 1112,\n      \"writeKBs\": 9499,\n      \"concurrentWriteRequests\": 8682,\n      \"cardinality\": 9632,\n      \"concurrentDeleteRequests\": 2242,\n      \"deleteRequestsPerSecond\": 1157\n    },\n    \"bucket\": {\n      \"maxBuckets\": 8635,\n      \"maxRetentionDuration\": 3027\n    },\n    \"task\": {\n      \"maxTasks\": 1850\n    },\n    \"dashboard\": {\n      \"maxDashboards\": 6565\n    },\n    \"check\": {\n      \"maxChecks\": 5156\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": 209,\n      \"blockedNotificationRules\": \"http,pagerduty\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"http,pagerduty\"\n    },\n    \"orgID\": \"string\",\n    \"stack\": {\n      \"enabled\": false\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": 7721,\n      \"queryidleWriteTimeoutSeconds\": 2048\n    },\n    \"ioxQuery\": {\n      \"partitions\": 8828,\n      \"parquetFiles\": 2930\n    },\n    \"features\": {\n      \"allowDelete\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baee6678-fbd3-40bf-8df1-475cd4012155",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgID",
+                    "limits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgID",
+                      "description": "(Required) The ID of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"empty value\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4616c51d-0493-4276-a819-82ebcc346c71",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Limits API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

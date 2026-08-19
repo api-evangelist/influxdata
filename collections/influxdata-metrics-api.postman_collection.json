@@ -1,0 +1,179 @@
+{
+  "item": [
+    {
+      "id": "0ebc170c-a0e4-490c-af39-505d8212fde4",
+      "name": "Metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "35db075f-f595-408d-937b-06d264ba4989",
+          "name": "Retrieve workload performance metrics",
+          "request": {
+            "name": "Retrieve workload performance metrics",
+            "description": {
+              "content": "Returns metrics about the workload performance of an InfluxDB instance.\n\nUse this endpoint to get performance, resource, and usage metrics.\n\n#### Related guides\n\n- For the list of metrics categories, see [InfluxDB OSS metrics](https://docs.influxdata.com/influxdb/latest/reference/internals/metrics/).\n- Learn how to use InfluxDB to [scrape Prometheus metrics](https://docs.influxdata.com/influxdb/latest/write-data/developer-tools/scrape-prometheus-metrics/).\n- Learn how InfluxDB [parses the Prometheus exposition format](https://docs.influxdata.com/influxdb/latest/reference/prometheus-metrics/).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a67e2bf-47a3-4e7a-be27-a80f8b0e31ce",
+              "name": "Success. The response body contains metrics in\n[Prometheus plain-text exposition format](https://prometheus.io/docs/instrumenting/exposition_formats)\nMetrics contain a name, an optional set of key-value pairs, and a value.\n\nThe following descriptors precede each metric:\n\n- `HELP`: description of the metric\n- `TYPE`: [Prometheus metric type](https://prometheus.io/docs/concepts/metric_types/) (`counter`, `gauge`, `histogram`, or `summary`)\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "# HELP go_threads Number of OS threads created.\n# TYPE go_threads gauge\ngo_threads 19\n# HELP http_api_request_duration_seconds Time taken to respond to HTTP request\n# TYPE http_api_request_duration_seconds histogram\nhttp_api_request_duration_seconds_bucket{handler=\"platform\",method=\"GET\",path=\"/:fallback_path\",response_code=\"200\",status=\"2XX\",user_agent=\"curl\",le=\"0.005\"} 4\nhttp_api_request_duration_seconds_bucket{handler=\"platform\",method=\"GET\",path=\"/:fallback_path\",response_code=\"200\",status=\"2XX\",user_agent=\"curl\",le=\"0.01\"} 4\nhttp_api_request_duration_seconds_bucket{handler=\"platform\",method=\"GET\",path=\"/:fallback_path\",response_code=\"200\",status=\"2XX\",user_agent=\"curl\",le=\"0.025\"} 5\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c4c546a9-9c8b-4047-b606-dc223f9bb136",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2d5a5af7-c590-4eda-b475-2f4c8bcaa543",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

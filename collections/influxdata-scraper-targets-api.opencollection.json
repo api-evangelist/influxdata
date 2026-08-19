@@ -1,0 +1,424 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Scraper Targets API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scraper Targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all scraper targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/scrapers",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the name of the scraper target."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "List of scraper target IDs to return. If both `id` and `owner` are specified, only `id` is used."
+              },
+              {
+                "name": "orgID",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the organization ID of the scraper target."
+              },
+              {
+                "name": "org",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the organization name of the scraper target."
+              }
+            ]
+          },
+          "docs": "List all scraper targets"
+        },
+        {
+          "info": {
+            "name": "Create a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/scrapers",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a scraper target"
+        },
+        {
+          "info": {
+            "name": "Retrieve a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/scrapers/:scraperTargetID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scraper target."
+              }
+            ]
+          },
+          "docs": "Retrieve a scraper target"
+        },
+        {
+          "info": {
+            "name": "Update a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/api/v2/scrapers/:scraperTargetID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scraper target."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a scraper target"
+        },
+        {
+          "info": {
+            "name": "Delete a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/scrapers/:scraperTargetID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scraper target."
+              }
+            ]
+          },
+          "docs": "Delete a scraper target"
+        },
+        {
+          "info": {
+            "name": "List all labels for a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/scrapers/:scraperTargetID/labels",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ]
+          },
+          "docs": "List all labels for a scraper target"
+        },
+        {
+          "info": {
+            "name": "Add a label to a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/scrapers/:scraperTargetID/labels",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a label to a scraper target"
+        },
+        {
+          "info": {
+            "name": "Delete a label from a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/scrapers/:scraperTargetID/labels/:labelID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              },
+              {
+                "name": "labelID",
+                "value": "",
+                "type": "path",
+                "description": "The label ID."
+              }
+            ]
+          },
+          "docs": "Delete a label from a scraper target"
+        },
+        {
+          "info": {
+            "name": "List all users with member privileges for a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/scrapers/:scraperTargetID/members",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ]
+          },
+          "docs": "List all users with member privileges for a scraper target"
+        },
+        {
+          "info": {
+            "name": "Add a member to a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/scrapers/:scraperTargetID/members",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a member to a scraper target"
+        },
+        {
+          "info": {
+            "name": "Remove a member from a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/scrapers/:scraperTargetID/members/:userID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of member to remove."
+              },
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ]
+          },
+          "docs": "Remove a member from a scraper target"
+        },
+        {
+          "info": {
+            "name": "List all owners of a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/scrapers/:scraperTargetID/owners",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ]
+          },
+          "docs": "List all owners of a scraper target"
+        },
+        {
+          "info": {
+            "name": "Add an owner to a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/scrapers/:scraperTargetID/owners",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an owner to a scraper target"
+        },
+        {
+          "info": {
+            "name": "Remove an owner from a scraper target",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/scrapers/:scraperTargetID/owners/:userID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of owner to remove."
+              },
+              {
+                "name": "scraperTargetID",
+                "value": "",
+                "type": "path",
+                "description": "The scraper target ID."
+              }
+            ]
+          },
+          "docs": "Remove an owner from a scraper target"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

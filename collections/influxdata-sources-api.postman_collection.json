@@ -1,0 +1,1535 @@
+{
+  "item": [
+    {
+      "id": "b34db801-672d-41e3-8983-06535877d621",
+      "name": "Sources",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3e4fcc08-2b47-4672-a0d5-792fbcc7d38c",
+          "name": "Create a source",
+          "request": {
+            "name": "Create a source",
+            "description": {},
+            "url": {
+              "path": [
+                "sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b6a84835-3334-4007-8a64-6179de44afc1",
+              "name": "Created Source",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\",\n  \"languages\": [\n    \"influxql\",\n    \"flux\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acab8c61-4937-4404-8a81-a90bf23f4bfe",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da0ce08f-fe6a-48c3-9c07-a07939ba5274",
+          "name": "List all sources",
+          "request": {
+            "name": "List all sources",
+            "description": {},
+            "url": {
+              "path": [
+                "sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "The name of the organization."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fefeadc4-b0f0-4974-9c49-abae31f23b70",
+              "name": "A list of sources",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"http://xtiIyQWTYar.gjlbE-y1aZvY9grKsfiGTQQygubPTNfSiZfmw9TrpmPeHqN8-i-aBgjKcV\"\n  },\n  \"sources\": [\n    {\n      \"links\": {\n        \"self\": \"<string>\",\n        \"query\": \"<string>\",\n        \"health\": \"<string>\",\n        \"buckets\": \"<string>\"\n      },\n      \"id\": \"<string>\",\n      \"orgID\": \"<string>\",\n      \"default\": \"<boolean>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"insecureSkipVerify\": \"<boolean>\",\n      \"telegraf\": \"<string>\",\n      \"token\": \"<string>\",\n      \"username\": \"<string>\",\n      \"password\": \"<string>\",\n      \"sharedSecret\": \"<string>\",\n      \"metaUrl\": \"<uri>\",\n      \"defaultRP\": \"<string>\",\n      \"languages\": [\n        \"influxql\",\n        \"influxql\"\n      ]\n    },\n    {\n      \"links\": {\n        \"self\": \"<string>\",\n        \"query\": \"<string>\",\n        \"health\": \"<string>\",\n        \"buckets\": \"<string>\"\n      },\n      \"id\": \"<string>\",\n      \"orgID\": \"<string>\",\n      \"default\": \"<boolean>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"insecureSkipVerify\": \"<boolean>\",\n      \"telegraf\": \"<string>\",\n      \"token\": \"<string>\",\n      \"username\": \"<string>\",\n      \"password\": \"<string>\",\n      \"sharedSecret\": \"<string>\",\n      \"metaUrl\": \"<uri>\",\n      \"defaultRP\": \"<string>\",\n      \"languages\": [\n        \"flux\",\n        \"influxql\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d78ddb61-28c2-48ee-9b91-bbd3c6ebee5f",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7589cfe-96d9-45ec-bef8-2b3882271e13",
+          "name": "Delete a source",
+          "request": {
+            "name": "Delete a source",
+            "description": {},
+            "url": {
+              "path": [
+                "sources",
+                ":sourceID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceID",
+                  "description": "(Required) The source ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ce9b489-c70b-4b7b-bf41-41704ab8420a",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f05a30c7-0648-414e-844e-dd09a33b9e59",
+              "name": "View not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e238095-0e11-40e0-a759-8e3c0c22d1ff",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2767a25-cffd-4b8d-be83-9ca69ebb840f",
+          "name": "Update a Source",
+          "request": {
+            "name": "Update a Source",
+            "description": {},
+            "url": {
+              "path": [
+                "sources",
+                ":sourceID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceID",
+                  "description": "(Required) The source ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b0fcf80-ee3c-413b-af66-11bbbc1379f1",
+              "name": "Created Source",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\",\n  \"languages\": [\n    \"influxql\",\n    \"influxql\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e51d1ad-c494-4937-8ecb-5b675ad3b164",
+              "name": "Source not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ad926e2-f30c-4b95-b32c-f3666e79ebf8",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2490a58b-5cfd-4f78-8d86-4e5a43487ad3",
+          "name": "Retrieve a source",
+          "request": {
+            "name": "Retrieve a source",
+            "description": {},
+            "url": {
+              "path": [
+                "sources",
+                ":sourceID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceID",
+                  "description": "(Required) The source ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a70457f-958d-48bb-a2a9-5033f121dc99",
+              "name": "A source",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"query\": \"<string>\",\n    \"health\": \"<string>\",\n    \"buckets\": \"<string>\"\n  },\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"default\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"insecureSkipVerify\": \"<boolean>\",\n  \"telegraf\": \"<string>\",\n  \"token\": \"<string>\",\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"sharedSecret\": \"<string>\",\n  \"metaUrl\": \"<uri>\",\n  \"defaultRP\": \"<string>\",\n  \"languages\": [\n    \"influxql\",\n    \"influxql\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e383634-3862-4fa2-b663-b729aceb3f6f",
+              "name": "Source not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7edfa8cf-64a9-43b8-9009-25752d3667ed",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4566f5b8-5153-4875-bb3a-ce13856ecf9b",
+          "name": "Get the health of a source",
+          "request": {
+            "name": "Get the health of a source",
+            "description": {},
+            "url": {
+              "path": [
+                "sources",
+                ":sourceID",
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceID",
+                  "description": "(Required) The source ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50b155b2-ecad-4851-9c7d-897411043d94",
+              "name": "The source is healthy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"status\": \"pass\",\n  \"message\": \"string\",\n  \"checks\": [\n    {\n      \"name\": \"string\",\n      \"status\": \"pass\",\n      \"message\": \"string\",\n      \"checks\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        }\n      ],\n      \"version\": \"string\",\n      \"commit\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"status\": \"pass\",\n      \"message\": \"string\",\n      \"checks\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        }\n      ],\n      \"version\": \"string\",\n      \"commit\": \"string\"\n    }\n  ],\n  \"version\": \"string\",\n  \"commit\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52264dd6-9da5-4fa3-9f87-3999bb88125c",
+              "name": "The source is not healthy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"status\": \"fail\",\n  \"message\": \"string\",\n  \"checks\": [\n    {\n      \"name\": \"string\",\n      \"status\": \"fail\",\n      \"message\": \"string\",\n      \"checks\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        }\n      ],\n      \"version\": \"string\",\n      \"commit\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"status\": \"fail\",\n      \"message\": \"string\",\n      \"checks\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/HealthCheck detected>\"\n        }\n      ],\n      \"version\": \"string\",\n      \"commit\": \"string\"\n    }\n  ],\n  \"version\": \"string\",\n  \"commit\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c1f2f76-99d1-4470-b610-0d13af7f478a",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "652a2a50-7715-4fd8-adb0-a3c577c53e52",
+          "name": "Get buckets in a source",
+          "request": {
+            "name": "Get buckets in a source",
+            "description": {},
+            "url": {
+              "path": [
+                "sources",
+                ":sourceID",
+                "buckets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "The name of the organization."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceID",
+                  "description": "(Required) The source ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "276a3b7f-2584-41fc-a127-ef456841ce76",
+              "name": "A source",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://CdyTshc.byfi1gVPGJRUkZo+UeBGo49ihhAWk\",\n    \"next\": \"https://wCIImFDnPWuXbkvAwZGJZQMhYHlettJL.mampO2aCa9.x0VEx4sA-OR+RC8x\",\n    \"prev\": \"https://fklQRrBUqhmr.ceePmWRFs4q,uA0djmbxmSgpsrnmoTZDq5N90kIGhPD\"\n  },\n  \"buckets\": [\n    {\n      \"name\": \"string\",\n      \"retentionRules\": [\n        {\n          \"everySeconds\": 86400,\n          \"type\": \"expire\",\n          \"shardGroupDurationSeconds\": 4628\n        },\n        {\n          \"everySeconds\": 86400,\n          \"type\": \"expire\",\n          \"shardGroupDurationSeconds\": 4730\n        }\n      ],\n      \"links\": {\n        \"labels\": \"https://WtflGprBIRevWhkygwScat.dezeZVtKYyzQlNn7C0O2jusyDHR,ip\",\n        \"members\": \"http://LkjVUgrDwkOfZKTGKbwOvFJmdOaHn.mpjnoOswybEbUgC9oxOil\",\n        \"org\": \"http://th.hvvEFGNTXtpLFxkYNLwucHvctHMI\",\n        \"owners\": \"https://i.luuudUUO5UejOgwC4k59adlLYsZTtsU,jmonIHNdN+M,cZvuDyJz6fNLs-VEyUcy\",\n        \"self\": \"http://GRIbzxzQUiFkfNFWxxMp.myudNF8GU1dYkXVxDEmuQK-n\",\n        \"write\": \"https://FBJaagVryMcmSFQspvoHZRtgi.nonOX6LByOBu-aOVwPZ,3Jbjsl9lgJtwzR8ke7zwA\"\n      },\n      \"id\": \"string\",\n      \"type\": \"user\",\n      \"description\": \"string\",\n      \"orgID\": \"string\",\n      \"rp\": \"string\",\n      \"schemaType\": \"implicit\",\n      \"createdAt\": \"2002-11-21T23:17:50.799Z\",\n      \"updatedAt\": \"1979-05-20T09:27:43.681Z\",\n      \"labels\": [\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"retentionRules\": [\n        {\n          \"everySeconds\": 86400,\n          \"type\": \"expire\",\n          \"shardGroupDurationSeconds\": 1263\n        },\n        {\n          \"everySeconds\": 86400,\n          \"type\": \"expire\",\n          \"shardGroupDurationSeconds\": 9615\n        }\n      ],\n      \"links\": {\n        \"labels\": \"http://AHwiikxlBAFUhHqEYq.uhedF4VkV\",\n        \"members\": \"https://VRmvkWObIJDyjjJpiYOblUuheSVFjal.hepcHuGsKhwwG-btBrSNa6JXw3h4pjvSAZNhYKaRegbskVqfFQ5iyMpW\",\n        \"org\": \"http://WtDbBvCMtiXRd.dyU9HtNx5zSlDwaD51bZ8z2AoYf5PX37nPD3Fld9KZZlOZ2OY\",\n        \"owners\": \"http://qBfTceTznwLE.irzlyKRYD,krAvikH0gfe1HfqpMxb78GVrMW-\",\n        \"self\": \"http://sUaWCBDyewBjkJ.tzwwqwDAgqNbjvWARYmyJen.zbaqd\",\n        \"write\": \"https://uZFVdCMariPvDNhraKKBZYYjfBjCzYvdz.djcky-FLxYF8PQFOQGMlZb.FyNYE5Alywc80BfYkJDDR6Gmdj5A3rryQYkqpyLiqnMwz8WQkvW5bM3GBAPIP\"\n      },\n      \"id\": \"string\",\n      \"type\": \"user\",\n      \"description\": \"string\",\n      \"orgID\": \"string\",\n      \"rp\": \"string\",\n      \"schemaType\": \"explicit\",\n      \"createdAt\": \"1985-09-27T08:56:17.593Z\",\n      \"updatedAt\": \"1966-04-07T14:35:29.865Z\",\n      \"labels\": [\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "345a5cb8-0937-4c17-9238-21cd6cc163ed",
+              "name": "Source not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57538197-942a-4941-beb2-82d988d52723",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources",
+                    ":sourceID",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceID",
+                      "description": "(Required) The source ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "754289b9-4a17-4bbd-95d2-790821cc3d79",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Sources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

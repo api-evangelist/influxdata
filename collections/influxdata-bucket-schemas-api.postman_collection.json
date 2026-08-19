@@ -1,0 +1,1720 @@
+{
+  "item": [
+    {
+      "id": "0055dfa3-dfd7-4167-ab84-5999658fcfd9",
+      "name": "Bucket Schemas",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f69aafab-b387-466f-997f-6e5e2482a98e",
+          "name": "List measurement schemas of a bucket",
+          "request": {
+            "name": "List measurement schemas of a bucket",
+            "description": {
+              "content": "Lists _explicit_\n[schemas](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#schema)\n(`\"schemaType\": \"explicit\"`) for a bucket.\n\n_Explicit_ schemas are used to enforce column names, tags, fields, and data\ntypes for your data.\n\nBy default, buckets have an _implicit_ schema-type (`\"schemaType\": \"implicit\"`)\nthat conforms to your data.\n\n#### Related guides\n\n- [Using bucket schemas](https://www.influxdata.com/blog/new-bucket-schema-option-protect-from-unwanted-schema-changes/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "buckets",
+                ":bucketID",
+                "schema",
+                "measurements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An organization name.\nSpecifies the organization that owns the schema.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\nSpecifies the organization that owns the schema.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "A measurement name.\nOnly returns measurement schemas with the specified name.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketID",
+                  "description": "(Required) A bucket ID.\nLists measurement schemas for the specified bucket.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2b0129c3-0f66-4025-9561-a081be158bcf",
+              "name": "A list of measurement schemas returning summary information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nLists measurement schemas for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The current version of the bucket schema",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"measurementSchemas\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"columns\": [\n        {\n          \"name\": \"string\",\n          \"type\": \"tag\",\n          \"dataType\": \"integer\"\n        },\n        {\n          \"name\": \"string\",\n          \"type\": \"field\",\n          \"dataType\": \"unsigned\"\n        }\n      ],\n      \"createdAt\": \"1958-03-23T12:52:35.391Z\",\n      \"updatedAt\": \"1950-03-04T14:07:17.155Z\",\n      \"orgID\": \"string\",\n      \"bucketID\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"columns\": [\n        {\n          \"name\": \"string\",\n          \"type\": \"field\",\n          \"dataType\": \"unsigned\"\n        },\n        {\n          \"name\": \"string\",\n          \"type\": \"field\",\n          \"dataType\": \"integer\"\n        }\n      ],\n      \"createdAt\": \"1975-02-25T11:16:05.373Z\",\n      \"updatedAt\": \"1977-06-06T18:21:00.672Z\",\n      \"orgID\": \"string\",\n      \"bucketID\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7be994a-0208-4129-9e96-e4f737588166",
+              "name": "Bad request.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nLists measurement schemas for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"bucket schemaType must be explicit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92e51760-a8d2-458e-8b68-bccd212abc90",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nLists measurement schemas for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a880c0d-8e53-4d96-aea4-6f81718968eb",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nLists measurement schemas for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b873c9ce-3f78-45f0-b69f-0f4b4a2fa7e4",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nLists measurement schemas for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa0b3eca-a95b-4cd6-9267-0c395e3e4c5c",
+          "name": "Create a measurement schema for a bucket",
+          "request": {
+            "name": "Create a measurement schema for a bucket",
+            "description": {
+              "content": "Creates an _explict_ measurement [schema](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#schema)\nfor a bucket.\n\n_Explicit_ schemas are used to enforce column names, tags, fields, and data\ntypes for your data.\n\nBy default, buckets have an _implicit_ schema-type (`\"schemaType\": \"implicit\"`)\nthat conforms to your data.\n\nUse this endpoint to create schemas that prevent non-conforming write requests.\n\n#### Limitations\n\n- Buckets must be created with the \"explict\" `schemaType` in order to use\nschemas.\n\n#### Related guides\n\n- [Manage bucket schemas](https://docs.influxdata.com/influxdb/cloud/organizations/buckets/bucket-schema/).\n- [Create a bucket with an explicit schema](https://docs.influxdata.com/influxdb/cloud/organizations/buckets/create-bucket/#create-a-bucket-with-an-explicit-schema)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "buckets",
+                ":bucketID",
+                "schema",
+                "measurements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An organization name.\nSpecifies the organization that owns the schema.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\nSpecifies the organization that owns the schema.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketID",
+                  "description": "(Required) A bucket ID.\nAdds a schema for the specified bucket.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c8faa72c-3e66-4021-bd6d-16ac9c870d5e",
+              "name": "The current version of the measurement schema.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nAdds a schema for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The current version of the measurement schema",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ],\n  \"createdAt\": \"2020-02-12T07:06:48.135Z\",\n  \"updatedAt\": \"1983-03-13T06:48:28.372Z\",\n  \"orgID\": \"string\",\n  \"bucketID\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "534a9b35-af4f-407d-8abb-b037f101245d",
+              "name": "Bad request.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nAdds a schema for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"name is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4a32469-c08b-46fd-8359-5477bdb7ff47",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nAdds a schema for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "096a9a79-2ed9-4601-9922-36f6021dc921",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nAdds a schema for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a27c34e2-2264-4274-a5d9-c73c042bad3e",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nAdds a schema for the specified bucket.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "53ff2923-5fe4-4ca7-b3bf-86e3bf52b44e",
+          "name": "Retrieve a measurement schema",
+          "request": {
+            "name": "Retrieve a measurement schema",
+            "description": {
+              "content": "Retrieves an explicit measurement [schema](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#schema).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "buckets",
+                ":bucketID",
+                "schema",
+                "measurements",
+                ":measurementID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "Organization name.\nSpecifies the organization that owns the schema.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "Organization ID.\nSpecifies the organization that owns the schema.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketID",
+                  "description": "(Required) A bucket ID.\nRetrieves schemas for the specified bucket.\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "measurementID",
+                  "description": "(Required) The measurement schema ID.\nSpecifies the measurement schema to retrieve.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e7c6120-0752-4f3b-9824-411cc72ef07a",
+              "name": "Schema definition for a single measurement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nRetrieves schemas for the specified bucket.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) The measurement schema ID.\nSpecifies the measurement schema to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The current version of the measurement schema",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ],\n  \"createdAt\": \"2020-02-12T07:06:48.135Z\",\n  \"updatedAt\": \"1983-03-13T06:48:28.372Z\",\n  \"orgID\": \"string\",\n  \"bucketID\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3c15ad1-cbb6-4bff-9cdb-108e5ee66cc6",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nRetrieves schemas for the specified bucket.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) The measurement schema ID.\nSpecifies the measurement schema to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed7670b1-6087-4d3f-9df6-99cc26499b2f",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nRetrieves schemas for the specified bucket.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) The measurement schema ID.\nSpecifies the measurement schema to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b3cd2a8-6900-4005-9dbe-12874fa46ce8",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nRetrieves schemas for the specified bucket.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) The measurement schema ID.\nSpecifies the measurement schema to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7397a013-ba8c-4ee3-acc9-4feb203ee153",
+          "name": "Update a measurement schema",
+          "request": {
+            "name": "Update a measurement schema",
+            "description": {
+              "content": "Updates a measurement [schema](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#schema).\n\nUse this endpoint to update the fields (`name`, `type`, and `dataType`) of a\nmeasurement schema.\n\n#### Limitations\n\n- You can't update the `name` of a measurement.\n\n#### Related guides\n\n- [Manage bucket schemas](https://docs.influxdata.com/influxdb/cloud/organizations/buckets/bucket-schema/).\n- [Using bucket schemas](https://www.influxdata.com/blog/new-bucket-schema-option-protect-from-unwanted-schema-changes/).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "buckets",
+                ":bucketID",
+                "schema",
+                "measurements",
+                ":measurementID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An organization name.\nSpecifies the organization that owns the schema.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\nSpecifies the organization that owns the schema.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketID",
+                  "description": "(Required) A bucket ID.\nSpecifies the bucket to retrieve schemas for.\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "measurementID",
+                  "description": "(Required) A measurement schema ID.\nRetrieves the specified measurement schema.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91cb0b97-82ce-40fb-b226-e8550ee8ec22",
+              "name": "Success.\nThe response body contains the measurement schema.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nSpecifies the bucket to retrieve schemas for.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) A measurement schema ID.\nRetrieves the specified measurement schema.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ],\n  \"createdAt\": \"2020-02-12T07:06:48.135Z\",\n  \"updatedAt\": \"1983-03-13T06:48:28.372Z\",\n  \"orgID\": \"string\",\n  \"bucketID\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c967cd6-683d-4578-a4a1-45e6ac8620b3",
+              "name": "Bad request.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nSpecifies the bucket to retrieve schemas for.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) A measurement schema ID.\nRetrieves the specified measurement schema.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"Unable to delete columns from schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d51c30a9-f53b-401b-9d5e-be4d5532a5cc",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nSpecifies the bucket to retrieve schemas for.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) A measurement schema ID.\nRetrieves the specified measurement schema.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "866905e0-29fe-47e3-b622-85a065020c8c",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nSpecifies the bucket to retrieve schemas for.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) A measurement schema ID.\nRetrieves the specified measurement schema.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce407578-bde8-4e17-b2eb-7e29e4d1ba63",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "buckets",
+                    ":bucketID",
+                    "schema",
+                    "measurements",
+                    ":measurementID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) A bucket ID.\nSpecifies the bucket to retrieve schemas for.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "measurementID",
+                      "description": "(Required) A measurement schema ID.\nRetrieves the specified measurement schema.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dataType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bca69b24-1c9f-489e-ad8b-a35c43b20d58",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Bucket Schemas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

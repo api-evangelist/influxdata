@@ -1,0 +1,460 @@
+{
+  "item": [
+    {
+      "id": "b697d97b-e269-4f3e-9321-fb2d2795de00",
+      "name": "Setup",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ce314b8a-c58a-4242-a6db-94ea29461585",
+          "name": "Retrieve setup status",
+          "request": {
+            "name": "Retrieve setup status",
+            "description": {
+              "content": "Check if setup is allowed. Returns `true` if no default user, organization, or bucket have been created.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e65fd30-37ab-4956-8f7c-1b65526e8227",
+              "name": "Setup is allowed, true or false",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"allowed\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec6c2c97-1783-4cfd-8fd1-a88d5046d42a",
+          "name": "Create an initial user, organization, and bucket",
+          "request": {
+            "name": "Create an initial user, organization, and bucket",
+            "description": {
+              "content": "Post an onboarding request to create an initial user, organization, and bucket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"org\": \"<string>\",\n  \"bucket\": \"<string>\",\n  \"password\": \"<string>\",\n  \"retentionPeriodHrs\": \"<integer>\",\n  \"retentionPeriodSeconds\": \"<integer>\",\n  \"limit\": {\n    \"rate\": {\n      \"readKBs\": \"<integer>\",\n      \"queryTime\": \"<integer>\",\n      \"concurrentReadRequests\": \"<integer>\",\n      \"writeKBs\": \"<integer>\",\n      \"concurrentWriteRequests\": \"<integer>\",\n      \"cardinality\": \"<integer>\",\n      \"concurrentDeleteRequests\": \"<integer>\",\n      \"deleteRequestsPerSecond\": \"<integer>\"\n    },\n    \"bucket\": {\n      \"maxBuckets\": \"<integer>\",\n      \"maxRetentionDuration\": \"<integer>\"\n    },\n    \"task\": {\n      \"maxTasks\": \"<integer>\"\n    },\n    \"dashboard\": {\n      \"maxDashboards\": \"<integer>\"\n    },\n    \"check\": {\n      \"maxChecks\": \"<integer>\"\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": \"<integer>\",\n      \"blockedNotificationRules\": \"<string>\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"<string>\"\n    },\n    \"orgID\": \"<string>\",\n    \"stack\": {\n      \"enabled\": \"<boolean>\"\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": \"<integer>\",\n      \"queryidleWriteTimeoutSeconds\": \"<integer>\"\n    },\n    \"ioxQuery\": {\n      \"partitions\": \"<integer>\",\n      \"parquetFiles\": \"<integer>\"\n    },\n    \"features\": {\n      \"allowDelete\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98f47cd1-8600-4e16-8550-d52d30f1de97",
+              "name": "The created default user, bucket, and organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"org\": \"<string>\",\n  \"bucket\": \"<string>\",\n  \"password\": \"<string>\",\n  \"retentionPeriodHrs\": \"<integer>\",\n  \"retentionPeriodSeconds\": \"<integer>\",\n  \"limit\": {\n    \"rate\": {\n      \"readKBs\": \"<integer>\",\n      \"queryTime\": \"<integer>\",\n      \"concurrentReadRequests\": \"<integer>\",\n      \"writeKBs\": \"<integer>\",\n      \"concurrentWriteRequests\": \"<integer>\",\n      \"cardinality\": \"<integer>\",\n      \"concurrentDeleteRequests\": \"<integer>\",\n      \"deleteRequestsPerSecond\": \"<integer>\"\n    },\n    \"bucket\": {\n      \"maxBuckets\": \"<integer>\",\n      \"maxRetentionDuration\": \"<integer>\"\n    },\n    \"task\": {\n      \"maxTasks\": \"<integer>\"\n    },\n    \"dashboard\": {\n      \"maxDashboards\": \"<integer>\"\n    },\n    \"check\": {\n      \"maxChecks\": \"<integer>\"\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": \"<integer>\",\n      \"blockedNotificationRules\": \"http,pagerduty\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"http,pagerduty\"\n    },\n    \"orgID\": \"<string>\",\n    \"stack\": {\n      \"enabled\": \"<boolean>\"\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": \"<integer>\",\n      \"queryidleWriteTimeoutSeconds\": \"<integer>\"\n    },\n    \"ioxQuery\": {\n      \"partitions\": \"<integer>\",\n      \"parquetFiles\": \"<integer>\"\n    },\n    \"features\": {\n      \"allowDelete\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"status\": \"active\",\n    \"links\": {\n      \"self\": \"https://WFgyDqyZiPIHfYW.vzrAHdShb8dXaF\"\n    }\n  },\n  \"org\": {\n    \"name\": \"string\",\n    \"links\": {\n      \"self\": \"http://LtB.jvhlpid.am\",\n      \"members\": \"https://CIDzqUZiJODcYsqPKIeCPPyR.tgod5Szdgc9-jWGY1QbjaDG0y-Y\",\n      \"owners\": \"http://uOrNIZYLdTkaHwsT.gmtsHbaPzmr5,P4bybAIScU.8JXGTifSACQCK\",\n      \"labels\": \"http://eptaouXuNeetX.zrsTF.e8pPClCQMU13J4gVxZLpfvhVWdE71jj5tjUmCZXPv3eWTQ0q+FUJC\",\n      \"secrets\": \"https://TojVXOoFtLjqdRbPkZcQaYiGFftuvFFwK.lnwpL7ZaGTvbYoU\",\n      \"buckets\": \"http://LwvSmpzdDWWRjVQJICzGPHnty.jfgr8EruUvzwjTAjT6S6wRFgtiyrYKD7bXjRRYiwSX0Fl7-v+wiCZzCFmRRnjuyI1cSMDMReg6QTnTWmOn9Zx\",\n      \"tasks\": \"http://kdBzWSkzEvkClLmZPAatTtsIZgAbjV.cnI,uK3zCh8KE+nmCMneMNT5YNuHfBv0zVI9Kpn4GK\",\n      \"dashboards\": \"http://aawEb.qwgduydW-uTs6tO-f1+QpsLBwbFHLcgseG9C1YdSAmR6b-gMLz1E3Y8EVLTWUDBzGB6yvIeL0FJmWvrE,\"\n    },\n    \"id\": \"string\",\n    \"defaultStorageType\": \"iox\",\n    \"description\": \"string\",\n    \"createdAt\": \"2003-07-13T00:12:23.923Z\",\n    \"updatedAt\": \"2021-03-16T02:28:46.459Z\",\n    \"status\": \"active\"\n  },\n  \"bucket\": {\n    \"name\": \"string\",\n    \"retentionRules\": [\n      {\n        \"everySeconds\": 86400,\n        \"type\": \"expire\",\n        \"shardGroupDurationSeconds\": 8198\n      },\n      {\n        \"everySeconds\": 86400,\n        \"type\": \"expire\",\n        \"shardGroupDurationSeconds\": 1473\n      }\n    ],\n    \"links\": {\n      \"labels\": \"http://nUUjVqvPQBqdMR.fxqh8qLMTnPaltVPzPOD+CRba-npCijOCmy0rRN1GsRiFFeCFrfL-ibeuZmVb\",\n      \"members\": \"http://jeOghHFLXJEBCfQaNtxBNgMZe.xwrD4usgX5THM7DnYyNdi0LAMBKGZDZkw-l42SWiVI\",\n      \"org\": \"https://WnhmXarbBcOGDdmZRyQQWpnNpLAQR.oxkUz,Qy1e5Xo-TVBC-mW5diaPz2KVq4W,O2Qy8y2J4DqVwVpPOy2e0\",\n      \"owners\": \"http://DQapUWAANTT.nfmopzU6jeno8gMqVD8wmn4C8K,lRJctjyKxrVjIdsADDQYKcGpNF8szyPpty\",\n      \"self\": \"http://UcAyNWBmVUcvvoao.sblyKvGqYTZjsxIE0MtR0oBurBPkZXTAMctQ.IoCD\",\n      \"write\": \"https://bGWkHmzmcmgKNvQsF.xoejjJIY6c+\"\n    },\n    \"id\": \"string\",\n    \"type\": \"user\",\n    \"description\": \"string\",\n    \"orgID\": \"string\",\n    \"rp\": \"string\",\n    \"schemaType\": \"implicit\",\n    \"createdAt\": \"2002-03-31T09:58:19.040Z\",\n    \"updatedAt\": \"1991-09-07T12:55:56.547Z\",\n    \"labels\": [\n      {\n        \"id\": \"string\",\n        \"orgID\": \"string\",\n        \"name\": \"string\",\n        \"properties\": {\n          \"color\": \"ffb3b3\",\n          \"description\": \"this is a description\"\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"orgID\": \"string\",\n        \"name\": \"string\",\n        \"properties\": {\n          \"color\": \"ffb3b3\",\n          \"description\": \"this is a description\"\n        }\n      }\n    ]\n  },\n  \"auth\": {\n    \"orgID\": \"string\",\n    \"permissions\": [\n      {\n        \"action\": \"write\",\n        \"resource\": {\n          \"type\": \"dashboards\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"orgID\": \"string\",\n          \"org\": \"string\"\n        }\n      }\n    ],\n    \"status\": \"active\",\n    \"description\": \"string\",\n    \"createdAt\": \"1951-08-12T02:20:44.576Z\",\n    \"updatedAt\": \"2009-02-02T04:48:55.007Z\",\n    \"id\": \"string\",\n    \"token\": \"string\",\n    \"userID\": \"string\",\n    \"user\": \"string\",\n    \"org\": \"string\",\n    \"links\": {\n      \"self\": \"http://Ku.cxbbexoAlPWo6M..fZRLNaU8aZCuGTZxHd-QUfzi-EAY7sZC9858VN\",\n      \"user\": \"https://vUNdkTYKVho.stxvGS0U2CduwwlH1yLXsERPqkyk0Z-p,bk0ogPozgutW,rHG3LJCH\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "045f1f2f-1686-4e10-af20-9fd73984a687",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"org\": \"<string>\",\n  \"bucket\": \"<string>\",\n  \"password\": \"<string>\",\n  \"retentionPeriodHrs\": \"<integer>\",\n  \"retentionPeriodSeconds\": \"<integer>\",\n  \"limit\": {\n    \"rate\": {\n      \"readKBs\": \"<integer>\",\n      \"queryTime\": \"<integer>\",\n      \"concurrentReadRequests\": \"<integer>\",\n      \"writeKBs\": \"<integer>\",\n      \"concurrentWriteRequests\": \"<integer>\",\n      \"cardinality\": \"<integer>\",\n      \"concurrentDeleteRequests\": \"<integer>\",\n      \"deleteRequestsPerSecond\": \"<integer>\"\n    },\n    \"bucket\": {\n      \"maxBuckets\": \"<integer>\",\n      \"maxRetentionDuration\": \"<integer>\"\n    },\n    \"task\": {\n      \"maxTasks\": \"<integer>\"\n    },\n    \"dashboard\": {\n      \"maxDashboards\": \"<integer>\"\n    },\n    \"check\": {\n      \"maxChecks\": \"<integer>\"\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": \"<integer>\",\n      \"blockedNotificationRules\": \"http,pagerduty\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"http,pagerduty\"\n    },\n    \"orgID\": \"<string>\",\n    \"stack\": {\n      \"enabled\": \"<boolean>\"\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": \"<integer>\",\n      \"queryidleWriteTimeoutSeconds\": \"<integer>\"\n    },\n    \"ioxQuery\": {\n      \"partitions\": \"<integer>\",\n      \"parquetFiles\": \"<integer>\"\n    },\n    \"features\": {\n      \"allowDelete\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"empty value\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a03c780e-8cdb-48bc-bcd8-d2e0d305c2cd",
+          "name": "Create a new user, organization, and bucket",
+          "request": {
+            "name": "Create a new user, organization, and bucket",
+            "description": {
+              "content": "Post an onboarding request to create a new user, organization, and bucket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup",
+                "user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"org\": \"<string>\",\n  \"bucket\": \"<string>\",\n  \"password\": \"<string>\",\n  \"retentionPeriodHrs\": \"<integer>\",\n  \"retentionPeriodSeconds\": \"<integer>\",\n  \"limit\": {\n    \"rate\": {\n      \"readKBs\": \"<integer>\",\n      \"queryTime\": \"<integer>\",\n      \"concurrentReadRequests\": \"<integer>\",\n      \"writeKBs\": \"<integer>\",\n      \"concurrentWriteRequests\": \"<integer>\",\n      \"cardinality\": \"<integer>\",\n      \"concurrentDeleteRequests\": \"<integer>\",\n      \"deleteRequestsPerSecond\": \"<integer>\"\n    },\n    \"bucket\": {\n      \"maxBuckets\": \"<integer>\",\n      \"maxRetentionDuration\": \"<integer>\"\n    },\n    \"task\": {\n      \"maxTasks\": \"<integer>\"\n    },\n    \"dashboard\": {\n      \"maxDashboards\": \"<integer>\"\n    },\n    \"check\": {\n      \"maxChecks\": \"<integer>\"\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": \"<integer>\",\n      \"blockedNotificationRules\": \"<string>\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"<string>\"\n    },\n    \"orgID\": \"<string>\",\n    \"stack\": {\n      \"enabled\": \"<boolean>\"\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": \"<integer>\",\n      \"queryidleWriteTimeoutSeconds\": \"<integer>\"\n    },\n    \"ioxQuery\": {\n      \"partitions\": \"<integer>\",\n      \"parquetFiles\": \"<integer>\"\n    },\n    \"features\": {\n      \"allowDelete\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac69ff71-c853-407f-9346-9277a1f88675",
+              "name": "The created default user, bucket, and organization.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup",
+                    "user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"org\": \"<string>\",\n  \"bucket\": \"<string>\",\n  \"password\": \"<string>\",\n  \"retentionPeriodHrs\": \"<integer>\",\n  \"retentionPeriodSeconds\": \"<integer>\",\n  \"limit\": {\n    \"rate\": {\n      \"readKBs\": \"<integer>\",\n      \"queryTime\": \"<integer>\",\n      \"concurrentReadRequests\": \"<integer>\",\n      \"writeKBs\": \"<integer>\",\n      \"concurrentWriteRequests\": \"<integer>\",\n      \"cardinality\": \"<integer>\",\n      \"concurrentDeleteRequests\": \"<integer>\",\n      \"deleteRequestsPerSecond\": \"<integer>\"\n    },\n    \"bucket\": {\n      \"maxBuckets\": \"<integer>\",\n      \"maxRetentionDuration\": \"<integer>\"\n    },\n    \"task\": {\n      \"maxTasks\": \"<integer>\"\n    },\n    \"dashboard\": {\n      \"maxDashboards\": \"<integer>\"\n    },\n    \"check\": {\n      \"maxChecks\": \"<integer>\"\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": \"<integer>\",\n      \"blockedNotificationRules\": \"http,pagerduty\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"http,pagerduty\"\n    },\n    \"orgID\": \"<string>\",\n    \"stack\": {\n      \"enabled\": \"<boolean>\"\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": \"<integer>\",\n      \"queryidleWriteTimeoutSeconds\": \"<integer>\"\n    },\n    \"ioxQuery\": {\n      \"partitions\": \"<integer>\",\n      \"parquetFiles\": \"<integer>\"\n    },\n    \"features\": {\n      \"allowDelete\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"status\": \"active\",\n    \"links\": {\n      \"self\": \"https://WQukSZHlYPqsTCtiHuCsONjD.xhhvfdfzv9ZZTtayfq2epv\"\n    }\n  },\n  \"org\": {\n    \"name\": \"string\",\n    \"links\": {\n      \"self\": \"https://DUTOMOym.ejqnw2zpRVG4zVOIzBOld2YH,wUeivR\",\n      \"members\": \"https://SaiZPhtjGQHV.kdhXodPe4cwVsu1Iu,WNEeSEesw+O6pkTH1bIXg7gobNWEdmH0SMcdCcJPfmiuQA,\",\n      \"owners\": \"http://GL.tnkrxMiaaEtkCPkiqpnZSF2FnZ\",\n      \"labels\": \"https://nKiw.uvbBRUFwMoMHdXmlySB51zUjRQH0nwMG2deqv9LCQGWEZFspwak4.t-.s\",\n      \"secrets\": \"http://XKCTrrMIfHMOt.pyrhC6zkz\",\n      \"buckets\": \"https://msPivhvohAJYFqFUJDzHBUVhDm.fnngyFVL5Kzg1gMrM44SSAFn\",\n      \"tasks\": \"https://kLyAiglIyxVjbSzCmZOPOSdCcWBsjwWV.ofkxZdoqvSpM4bX18zlaOnCdPFV5cRabM1hi6KY2nkm\",\n      \"dashboards\": \"https://QNhIIButBtQJpniKaiOprCUDfQbgvlof.pwdqPrIh-jUgs2LvzRV1,v3ohg4cv2r+,TdzzX4+Hd1u8Xf9vEfbHRq9Bmytgqc8vIbP9\"\n    },\n    \"id\": \"string\",\n    \"defaultStorageType\": \"iox\",\n    \"description\": \"string\",\n    \"createdAt\": \"1992-08-22T23:00:06.668Z\",\n    \"updatedAt\": \"1971-01-09T23:55:46.560Z\",\n    \"status\": \"active\"\n  },\n  \"bucket\": {\n    \"name\": \"string\",\n    \"retentionRules\": [\n      {\n        \"everySeconds\": 86400,\n        \"type\": \"expire\",\n        \"shardGroupDurationSeconds\": 1771\n      },\n      {\n        \"everySeconds\": 86400,\n        \"type\": \"expire\",\n        \"shardGroupDurationSeconds\": 4788\n      }\n    ],\n    \"links\": {\n      \"labels\": \"http://a.pryfK5mqayWcPmlq6FkAjBSfTPC.fWy79I2oTV.,z4H6tzX,\",\n      \"members\": \"http://Boh.iffpQLxp,B\",\n      \"org\": \"http://EPPxGJb.frvmcZl8FoVVP0Lv0uKtWNdUSyQY8MO\",\n      \"owners\": \"https://KERVOxAqjGKNxYLAROZpaDLZCqML.qjswfTXCPcoSgcj6hnxhwwOjVm+.vzOtlBDKx\",\n      \"self\": \"https://qycJfBNXvYd.alOEe9hCnpQpwHTkUeU,7adzb,CmR8DgSo-JdYOQd1FB,WLQkhajdqcgtuL4WWvuLa\",\n      \"write\": \"http://XqrNJyfStsNIrxCjjWbUgHIyPsPagsof.vtNSz9hXZRc6KD8,UD2jKFOqgfVS.rQpIKOsDy4JFE2wDk5jD1rj1Bimic6cc-oJOmg2zCu\"\n    },\n    \"id\": \"string\",\n    \"type\": \"user\",\n    \"description\": \"string\",\n    \"orgID\": \"string\",\n    \"rp\": \"string\",\n    \"schemaType\": \"explicit\",\n    \"createdAt\": \"1985-06-06T12:42:57.676Z\",\n    \"updatedAt\": \"1995-04-10T12:25:18.635Z\",\n    \"labels\": [\n      {\n        \"id\": \"string\",\n        \"orgID\": \"string\",\n        \"name\": \"string\",\n        \"properties\": {\n          \"color\": \"ffb3b3\",\n          \"description\": \"this is a description\"\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"orgID\": \"string\",\n        \"name\": \"string\",\n        \"properties\": {\n          \"color\": \"ffb3b3\",\n          \"description\": \"this is a description\"\n        }\n      }\n    ]\n  },\n  \"auth\": {\n    \"orgID\": \"string\",\n    \"permissions\": [\n      {\n        \"action\": \"write\",\n        \"resource\": {\n          \"type\": \"functions\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"orgID\": \"string\",\n          \"org\": \"string\"\n        }\n      }\n    ],\n    \"status\": \"active\",\n    \"description\": \"string\",\n    \"createdAt\": \"1987-06-19T04:52:24.859Z\",\n    \"updatedAt\": \"1952-06-20T06:36:53.829Z\",\n    \"id\": \"string\",\n    \"token\": \"string\",\n    \"userID\": \"string\",\n    \"user\": \"string\",\n    \"org\": \"string\",\n    \"links\": {\n      \"self\": \"https://EOPoEzWrCQXWfuvTSgDleVPQxVBH.ezAEeGUOJaCKvPNW,2MqqQr.erup,dMzOQRnNEg,4GAL86xnuEaP2BdfLHkdlV34Keo\",\n      \"user\": \"https://tOFBectbZwpR.ocyZ2AaQGOv8JoFikztJto4oJRKv6\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51306d46-a317-4466-8abb-70cd600b3f1e",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup",
+                    "user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"org\": \"<string>\",\n  \"bucket\": \"<string>\",\n  \"password\": \"<string>\",\n  \"retentionPeriodHrs\": \"<integer>\",\n  \"retentionPeriodSeconds\": \"<integer>\",\n  \"limit\": {\n    \"rate\": {\n      \"readKBs\": \"<integer>\",\n      \"queryTime\": \"<integer>\",\n      \"concurrentReadRequests\": \"<integer>\",\n      \"writeKBs\": \"<integer>\",\n      \"concurrentWriteRequests\": \"<integer>\",\n      \"cardinality\": \"<integer>\",\n      \"concurrentDeleteRequests\": \"<integer>\",\n      \"deleteRequestsPerSecond\": \"<integer>\"\n    },\n    \"bucket\": {\n      \"maxBuckets\": \"<integer>\",\n      \"maxRetentionDuration\": \"<integer>\"\n    },\n    \"task\": {\n      \"maxTasks\": \"<integer>\"\n    },\n    \"dashboard\": {\n      \"maxDashboards\": \"<integer>\"\n    },\n    \"check\": {\n      \"maxChecks\": \"<integer>\"\n    },\n    \"notificationRule\": {\n      \"maxNotifications\": \"<integer>\",\n      \"blockedNotificationRules\": \"http,pagerduty\"\n    },\n    \"notificationEndpoint\": {\n      \"blockedNotificationEndpoints\": \"http,pagerduty\"\n    },\n    \"orgID\": \"<string>\",\n    \"stack\": {\n      \"enabled\": \"<boolean>\"\n    },\n    \"timeout\": {\n      \"queryUnconditionalTimeoutSeconds\": \"<integer>\",\n      \"queryidleWriteTimeoutSeconds\": \"<integer>\"\n    },\n    \"ioxQuery\": {\n      \"partitions\": \"<integer>\",\n      \"parquetFiles\": \"<integer>\"\n    },\n    \"features\": {\n      \"allowDelete\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"empty value\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2eb44bc6-7665-4824-a721-2cfad97a726a",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Setup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

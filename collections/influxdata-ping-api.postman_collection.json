@@ -1,0 +1,197 @@
+{
+  "item": [
+    {
+      "id": "4e850143-a020-4cf5-8996-fa63494a8618",
+      "name": "Ping",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1c45ca7-68b1-4cdd-a11c-39f5e6bc06e8",
+          "name": "Get the status of the instance",
+          "request": {
+            "name": "Get the status of the instance",
+            "description": {
+              "content": "Retrieves the status and InfluxDB version of the instance.\n\nUse this endpoint to monitor uptime for the InfluxDB instance. The response\nreturns a HTTP `204` status code to inform you the instance is available.\n\n#### InfluxDB Cloud\n\n- Isn't versioned and doesn't return `X-Influxdb-Version` in the headers.\n\n#### Related guides\n\n- [Influx ping](https://docs.influxdata.com/influxdb/cloud/reference/cli/influx/ping/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ping"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c634e121-51d2-4c56-b5c0-e02343093ea6",
+              "name": "Success.\nHeaders contain InfluxDB version information.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ping"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The type of InfluxDB build.\n",
+                  "key": "X-Influxdb-Build",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The version of InfluxDB.\n\n#### InfluxDB Cloud\n  - Doesn't return version.\n",
+                  "key": "X-Influxdb-Version",
+                  "value": "6546"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9053e66-851a-49e9-a75c-d7962ecc3819",
+          "name": "Get the status of the instance",
+          "request": {
+            "name": "Get the status of the instance",
+            "description": {
+              "content": "Returns the status and InfluxDB version of the instance.\n\nUse this endpoint to monitor uptime for the InfluxDB instance. The response\nreturns a HTTP `204` status code to inform you the instance is available.\n\n#### InfluxDB Cloud\n\n- Isn't versioned and doesn't return `X-Influxdb-Version` in the headers.\n\n#### Related guides\n\n- [Influx ping](https://docs.influxdata.com/influxdb/cloud/reference/cli/influx/ping/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ping"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "HEAD",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5b21c526-9387-4eea-b3c7-3b2a37d2b499",
+              "name": "Success.\nHeaders contain InfluxDB version information.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ping"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The type of InfluxDB build.",
+                  "key": "X-Influxdb-Build",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The version of InfluxDB.\n\n#### InfluxDB Cloud\n- Doesn't return version.\n",
+                  "key": "X-Influxdb-Version",
+                  "value": "6546"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a665f352-d864-4713-bbca-01d409d7ddce",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Ping API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

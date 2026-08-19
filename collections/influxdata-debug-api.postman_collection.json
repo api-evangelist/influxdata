@@ -1,0 +1,1660 @@
+{
+  "item": [
+    {
+      "id": "d884a864-5b8b-4462-b9f2-d51d932bc679",
+      "name": "Debug",
+      "description": {
+        "content": "Generate profiling and trace reports.\n\nUse routes under `/debug/pprof` to analyze the Go runtime of InfluxDB.\nThese endpoints generate [Go runtime profiles](https://pkg.go.dev/runtime/pprof)\nand **trace** reports.\n**Profiles** are collections of stack traces that show call sequences\nleading to instances of a particular event, such as allocation.\n\nFor more information about **pprof profile** and **trace** reports,\nsee the following resources:\n\n- [Google pprof tool](https://github.com/google/pprof)\n- [Golang diagnostics](https://go.dev/doc/diagnostics)\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c87dfa06-ad18-4b6d-a62a-e4a812b28235",
+          "name": "Retrieve all runtime profiles",
+          "request": {
+            "name": "Retrieve all runtime profiles",
+            "description": {
+              "content": "Collects samples and returns reports for the following [Go runtime profiles](https://pkg.go.dev/runtime/pprof):\n\n- **allocs**: All past memory allocations\n- **block**: Stack traces that led to blocking on synchronization primitives\n- **cpu**: (Optional) Program counters sampled from the executing stack.\n  Include by passing the `cpu` query parameter with a [duration](https://docs.influxdata.com/influxdb/latest/reference/glossary/#duration) value.\n  Equivalent to the report from [`GET /debug/pprof/profile?seconds=NUMBER_OF_SECONDS`](#operation/GetDebugPprofProfile).\n- **goroutine**: All current goroutines\n- **heap**: Memory allocations for live objects\n- **mutex**: Holders of contended mutexes\n- **threadcreate**: Stack traces that led to the creation of new OS threads\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "all"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cpu",
+                  "value": "<duration>",
+                  "description": "Collects and returns CPU profiling data for the specified [duration](https://docs.influxdata.com/influxdb/latest/reference/glossary/#duration).\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5d4edd8-ef1b-445b-b5cc-5ad9c1ad2719",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) reports.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "cpu",
+                      "value": "<duration>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d83c241-5fe9-423b-93b1-9e421157e4e3",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "cpu",
+                      "value": "<duration>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1dc73129-59ef-4767-b2ee-cfa2bcceb115",
+          "name": "Retrieve the memory allocations runtime profile",
+          "request": {
+            "name": "Retrieve the memory allocations runtime profile",
+            "description": {
+              "content": "Returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof) report of\nall past memory allocations.\n**allocs** is the same as the **heap** profile,\nbut changes the default [pprof](https://pkg.go.dev/runtime/pprof)\ndisplay to __-alloc_space__,\nthe total number of bytes allocated since the program began (including garbage-collected bytes).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "allocs"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "debug",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c82fd61f-4fae-461b-8145-5be71634e65c",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\nIf debug is enabled (`?debug=1`), response body contains a human-readable profile.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "allocs"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "255cddba-4416-4763-8819-9d8256294dd3",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "allocs"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e69aa462-86a8-4904-a154-373825ebdc63",
+          "name": "Retrieve the block runtime profile",
+          "request": {
+            "name": "Retrieve the block runtime profile",
+            "description": {
+              "content": "Collects samples and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of stack traces that led to blocking on synchronization primitives.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "block"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "debug",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ea6712bd-e817-43c8-9a73-dd83d1af0c1e",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\nIf debug is enabled (`?debug=1`), response body contains a human-readable profile.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "block"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "166bfed8-faaa-4911-ae24-321a4441f81d",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "block"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8c89a6e-76d8-49f6-9d76-0794ea57eec2",
+          "name": "Retrieve the command line invocation",
+          "request": {
+            "name": "Retrieve the command line invocation",
+            "description": {
+              "content": "Returns the command line that invoked InfluxDB.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "cmdline"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "42bdefd3-8342-4f74-9c21-cae5db0a6d9c",
+              "name": "Command line invocation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "cmdline"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eee5031e-30a3-49bc-bde5-b0324a586256",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "cmdline"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80b7ba00-c452-4932-9183-7f362cba4bd0",
+          "name": "Retrieve the goroutines runtime profile",
+          "request": {
+            "name": "Retrieve the goroutines runtime profile",
+            "description": {
+              "content": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of all current goroutines.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "goroutine"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "debug",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as\n       human-readable text with comments that translate addresses to\n       function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "89532689-fd66-456e-8639-f519c33ec90c",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\nIf debug is enabled (`?debug=1`), response body contains a human-readable profile.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "goroutine"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ac02087f-c854-496d-9c03-0cca308a6cfb",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "goroutine"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b11f9dc-fbae-4fdc-ad1d-5637cdad5437",
+          "name": "Retrieve the heap runtime profile",
+          "request": {
+            "name": "Retrieve the heap runtime profile",
+            "description": {
+              "content": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of memory allocations for live objects.\n\nTo run **garbage collection** before sampling,\npass the `gc` query parameter with a value of `1`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "heap"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "debug",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "gc",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) don't force garbage collection before sampling.\n- `1`: Force garbage collection before sampling.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e044d9b1-19bc-4e67-aeb4-83dbeb7ab4ef",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\nIf debug is enabled (`?debug=1`), response body contains a human-readable profile.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "heap"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    },
+                    {
+                      "key": "gc",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce644ee2-5726-42de-b274-46efcc91d555",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "heap"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    },
+                    {
+                      "key": "gc",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9bd5f40a-4fcd-455b-83d8-9d665dfc1be2",
+          "name": "Retrieve the mutual exclusion (mutex) runtime profile",
+          "request": {
+            "name": "Retrieve the mutual exclusion (mutex) runtime profile",
+            "description": {
+              "content": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof) report of\nlock contentions.\nThe profile contains stack traces of holders of contended mutual exclusions (mutexes).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "mutex"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "debug",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9df78f4a-0b06-4359-bb81-58d8798b4eaa",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\nIf debug is enabled (`?debug=1`), response body contains a human-readable profile.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "mutex"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9cf31f56-135f-451b-9468-d90781df1149",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "mutex"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7295e4e5-c2bb-42bb-8bc7-b372329ebf08",
+          "name": "Retrieve the CPU runtime profile",
+          "request": {
+            "name": "Retrieve the CPU runtime profile",
+            "description": {
+              "content": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of program counters on the executing stack.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "profile"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect profile data. Default is `30` seconds."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c36fa946-f775-4c03-9040-942df8178148",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "profile"
+                  ],
+                  "query": [
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2c3b8962-f152-4633-bf21-1a23d26a37eb",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "profile"
+                  ],
+                  "query": [
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e93cd22d-c843-4931-9ab3-7c909491957d",
+          "name": "Retrieve the threadcreate runtime profile",
+          "request": {
+            "name": "Retrieve the threadcreate runtime profile",
+            "description": {
+              "content": "Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)\nreport of stack traces that led to the creation of new OS threads.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "threadcreate"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "debug",
+                  "value": "<long>",
+                  "description": "- `0`: (Default) Return the report as a gzip-compressed protocol buffer.\n- `1`: Return a response body with the report formatted as human-readable text.\n  The report contains comments that translate addresses to function names and line numbers for debugging.\n\n`debug=1` is mutually exclusive with the `seconds` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect statistics.\n\n`seconds` is mutually exclusive with `debug=1`.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f15ed3e3-d7b4-4159-b8e4-25a2d945c58b",
+              "name": "[Go runtime profile](https://pkg.go.dev/runtime/pprof) report compatible\nwith [pprof](https://github.com/google/pprof) analysis and visualization tools.\nIf debug is enabled (`?debug=1`), response body contains a human-readable profile.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "threadcreate"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3b7fe309-523e-48a1-b25f-b252ee961636",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "threadcreate"
+                  ],
+                  "query": [
+                    {
+                      "key": "debug",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "022d59ba-4a35-483f-9e0f-3ce989c1d7bf",
+          "name": "Retrieve the runtime execution trace",
+          "request": {
+            "name": "Retrieve the runtime execution trace",
+            "description": {
+              "content": "Collects profile data and returns trace execution events for the current program.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "pprof",
+                "trace"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "seconds",
+                  "value": "<int64>",
+                  "description": "Number of seconds to collect profile data."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a8fdee5-dbf7-4442-a3ab-4bf041f42b09",
+              "name": "[Trace file](https://pkg.go.dev/runtime/trace) compatible\nwith the [Golang `trace` command](https://pkg.go.dev/cmd/trace).\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "trace"
+                  ],
+                  "query": [
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "abf228c0-409b-4da6-9bbd-b6a537feaeca",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "pprof",
+                    "trace"
+                  ],
+                  "query": [
+                    {
+                      "key": "seconds",
+                      "value": "<int64>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3d2d080a-6efb-4fd5-aa1a-b2d5d120aabd",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Debug API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

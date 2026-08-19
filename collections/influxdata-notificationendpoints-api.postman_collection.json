@@ -1,0 +1,1887 @@
+{
+  "item": [
+    {
+      "id": "02dc1347-f4b4-4d97-aba0-64a57e1793e5",
+      "name": "NotificationEndpoints",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2cb2fdc5-da00-4afa-8029-6dff842741b6",
+          "name": "List all notification endpoints",
+          "request": {
+            "name": "List all notification endpoints",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "The offset for pagination.\nThe number of records to skip.\n\nFor more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Limits the number of records returned. Default is `20`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "(Required) Only show notification endpoints that belong to specific organization ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3c6ffebb-78c6-42c8-a84a-04e6a6fc61d8",
+              "name": "A list of notification endpoints",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notificationEndpoints\": [\n    {\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"orgID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"userID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"createdAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"status\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"labels\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"links\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"url\": \"string\",\n      \"token\": \"string\"\n    },\n    {\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"orgID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"userID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"createdAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"status\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"labels\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"links\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"url\": \"string\",\n      \"token\": \"string\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://vKxseyXijuSP.jipRcAnCEOgDHeoDaT9py66x70mTl.OoZG6WfffKdwrhngCDr5ozoAHqnUaDp3f1w58H0xopMS31qngEBeo\",\n    \"next\": \"https://aMsxAtSTkRQtLZBmHIdcqB.xdiTEd2erlbq5sEDPKd2Ntr6ItFkizpH9EB\",\n    \"prev\": \"https://hansuBeVNZpHnIrce.cafeDv3DrCtBhCYSz0VfXTFF+re9pquBiP9WZp-Z7Nupsr,W\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58def040-2f1e-4497-af7f-9975b6a9cd61",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8251e032-d267-42da-9f41-35121d8ea873",
+          "name": "Add a notification endpoint",
+          "request": {
+            "name": "Add a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff07946c-fd13-40ad-9ddf-d5afb3dd98b3",
+              "name": "Notification endpoint created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"createdAt\": \"1966-02-04T15:30:06.777Z\",\n  \"updatedAt\": \"1962-02-20T00:37:21.983Z\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://dLIe.njlig8ZTd9CKgSMQS,GQYLmNHkV4pq0mN80aC5-Xg2yx\",\n    \"labels\": \"http://FtTjaFCbHDlCuijhYdPyfFSZEj.shfnxbSv,3DXymPMdxVvoNpDBAOddmI\",\n    \"members\": \"https://afskJkZxeyJIuXFkWlQcVzZWSBkzd.dlOkVxhUiLEBY6gaG3bPD5\",\n    \"owners\": \"https://HCzQARhBNDu.rfsP8lm5MiSY,HQv5wZpNzAxXqkiG0LrHLS6pompQ\"\n  },\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e1b2ee1-7a52-4024-88e2-3483afe8d9cd",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95f084a3-6bbd-4263-b88b-b6d0793c6ecd",
+          "name": "Retrieve a notification endpoint",
+          "request": {
+            "name": "Retrieve a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "976d14c6-4fa7-4369-9782-8f1e9a15cb03",
+              "name": "The notification endpoint requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"createdAt\": \"1966-02-04T15:30:06.777Z\",\n  \"updatedAt\": \"1962-02-20T00:37:21.983Z\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://dLIe.njlig8ZTd9CKgSMQS,GQYLmNHkV4pq0mN80aC5-Xg2yx\",\n    \"labels\": \"http://FtTjaFCbHDlCuijhYdPyfFSZEj.shfnxbSv,3DXymPMdxVvoNpDBAOddmI\",\n    \"members\": \"https://afskJkZxeyJIuXFkWlQcVzZWSBkzd.dlOkVxhUiLEBY6gaG3bPD5\",\n    \"owners\": \"https://HCzQARhBNDu.rfsP8lm5MiSY,HQv5wZpNzAxXqkiG0LrHLS6pompQ\"\n  },\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10e8c7f6-4f84-4281-a52d-a13693546250",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f8ff976-f477-433d-a85a-c79fa830a0dd",
+          "name": "Update a notification endpoint",
+          "request": {
+            "name": "Update a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d715c75c-ca28-4903-b535-6d0d23517af5",
+              "name": "An updated notification endpoint",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"createdAt\": \"1966-02-04T15:30:06.777Z\",\n  \"updatedAt\": \"1962-02-20T00:37:21.983Z\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://dLIe.njlig8ZTd9CKgSMQS,GQYLmNHkV4pq0mN80aC5-Xg2yx\",\n    \"labels\": \"http://FtTjaFCbHDlCuijhYdPyfFSZEj.shfnxbSv,3DXymPMdxVvoNpDBAOddmI\",\n    \"members\": \"https://afskJkZxeyJIuXFkWlQcVzZWSBkzd.dlOkVxhUiLEBY6gaG3bPD5\",\n    \"owners\": \"https://HCzQARhBNDu.rfsP8lm5MiSY,HQv5wZpNzAxXqkiG0LrHLS6pompQ\"\n  },\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbe954c6-ebe9-4ed4-b7b7-2106943952bb",
+              "name": "The notification endpoint was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c81f15c-b3ee-48d4-becd-2c69a0a0c476",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e3a7c61-8ae4-43b0-8eee-4e418b9aebf3",
+          "name": "Update a notification endpoint",
+          "request": {
+            "name": "Update a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8c6f06ef-9455-4f6f-bfbc-80a4b50e37b5",
+              "name": "An updated notification endpoint",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"userID\": \"<string>\",\n  \"createdAt\": \"1966-02-04T15:30:06.777Z\",\n  \"updatedAt\": \"1962-02-20T00:37:21.983Z\",\n  \"description\": \"<string>\",\n  \"status\": \"active\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://dLIe.njlig8ZTd9CKgSMQS,GQYLmNHkV4pq0mN80aC5-Xg2yx\",\n    \"labels\": \"http://FtTjaFCbHDlCuijhYdPyfFSZEj.shfnxbSv,3DXymPMdxVvoNpDBAOddmI\",\n    \"members\": \"https://afskJkZxeyJIuXFkWlQcVzZWSBkzd.dlOkVxhUiLEBY6gaG3bPD5\",\n    \"owners\": \"https://HCzQARhBNDu.rfsP8lm5MiSY,HQv5wZpNzAxXqkiG0LrHLS6pompQ\"\n  },\n  \"url\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dedd0b3-c3cb-4a23-b49d-fa0fa37e9d34",
+              "name": "The notification endpoint was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f43d83f4-7aaf-49f3-9df8-e8c63b2a7ed4",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69a11552-eee2-4a03-9f63-42cdbb41a852",
+          "name": "Delete a notification endpoint",
+          "request": {
+            "name": "Delete a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d8a6c0c-8560-4259-a236-0b0131b55f1b",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1b270320-4a88-4a23-bc1e-b12226364944",
+              "name": "The endpoint was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f263e28-f9d1-41c3-988b-dd232ef104d4",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e236307-2412-4327-ab03-a43d4465902f",
+          "name": "List all labels for a notification endpoint",
+          "request": {
+            "name": "List all labels for a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe61bb5f-80bf-4a9d-a620-1aaa138cee15",
+              "name": "A list of all labels for a notification endpoint",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://BZjLaWbCqtNdjaPgFUMbDMZJLDLPMv.dsknonFgn7y,a9EqioUptvf6dFYYFFC9n\",\n    \"next\": \"https://mvzoXioZOydUNYJQFwgSTAIo.amWn-ZcnNGJQajJZtKnIiviqAYxnl34.rrC6hSd7.zURshHA\",\n    \"prev\": \"http://nKORGRYkcEMXsBAXb.fgrtAyKHjwZ5Ujc4sm67G6bMCTl6znz+HluZmW8oihryL.hfioCNqQwnAlq1UzFffb0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dbe1ef2-b06d-455e-b2fe-0dc13fcb1271",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12e85466-ce2c-4b94-89a1-c067a3d60611",
+          "name": "Add a label to a notification endpoint",
+          "request": {
+            "name": "Add a label to a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"labelID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e440cb64-af04-4670-a3fb-fa77d8019861",
+              "name": "The label was added to the notification endpoint",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"http://CHrmyMizXvtriLCIaHuoQFPccrOpeBKYU.lxI0HGBbDEauw-Rivzwj7rDFw\",\n    \"next\": \"http://XMEnDatwVIg.vrTiZ,R9WTNytvAu7bpCnpmBd.mM6BIon1nJKusIOxJ5uDi\",\n    \"prev\": \"https://pAn.kvhbbqnszQ4bvdozA846XOJlnz,JwWa7aRMgoWFZ,NlJdAtAwDeAXYZTB0pWH-\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cea066cb-9bcb-45b6-850a-8fc227b6619d",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99f0661e-7be1-4db9-a9c5-4dc5bddbd3ae",
+          "name": "Delete a label from a notification endpoint",
+          "request": {
+            "name": "Delete a label from a notification endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationEndpoints",
+                ":endpointID",
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpointID",
+                  "description": "(Required) The notification endpoint ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The ID of the label to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2be41729-e4cf-4c2e-8789-53e29d339533",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f5fd0fe3-cff4-4230-81f9-dda25a7da3ca",
+              "name": "Endpoint or label not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfaa2842-27c9-432e-85a5-0b79075f1d0c",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationEndpoints",
+                    ":endpointID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpointID",
+                      "description": "(Required) The notification endpoint ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"conflict\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9a36acfd-ed64-4e5b-acb8-293ba3ba07ca",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) NotificationEndpoints API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

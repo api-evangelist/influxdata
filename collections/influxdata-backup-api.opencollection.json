@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Backup API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Backup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download snapshot of metadata stored in the server's embedded KV store. Don't use with InfluxDB versions greater than InfluxDB 2.1.x.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/backup/kv",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ]
+          },
+          "docs": "Retrieves a snapshot of metadata stored in the server's embedded KV store.\nInfluxDB versions greater than 2.1.x don't include metadata stored in embedded SQL;\navoid using this endpoint with versions greater than 2.1.x.\n"
+        },
+        {
+          "info": {
+            "name": "Download snapshot of all metadata in the server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/backup/metadata",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              },
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Download snapshot of all metadata in the server"
+        },
+        {
+          "info": {
+            "name": "Download snapshot of all TSM data in a shard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/backup/shards/:shardID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              },
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "Gzip-Compression-Level",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "shardID",
+                "value": "",
+                "type": "path",
+                "description": "The shard ID."
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "The earliest time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp) to include in the snapshot."
+              }
+            ]
+          },
+          "docs": "Download snapshot of all TSM data in a shard"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

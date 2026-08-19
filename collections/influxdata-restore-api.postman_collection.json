@@ -1,0 +1,1028 @@
+{
+  "item": [
+    {
+      "id": "0d028ab7-36db-40d0-a6c3-7e90f59d81ec",
+      "name": "Restore",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "950a4c96-7b83-4d1d-be3e-f09f6d695d43",
+          "name": "Overwrite the embedded KV store on the server with a backed-up snapshot.",
+          "request": {
+            "name": "Overwrite the embedded KV store on the server with a backed-up snapshot.",
+            "description": {},
+            "url": {
+              "path": [
+                "restore",
+                "kv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                "key": "Content-Encoding",
+                "value": "identity"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "a4284317-4f88-4101-b2d8-26d62db45050",
+              "name": "KV store successfully overwritten.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "kv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e05fdf0e-a7b5-493a-bf22-b58a74e2daf6",
+              "name": "KV store successfully overwritten.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "kv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d43a8e10-85c5-4189-9a90-47e53fb5a63f",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "kv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unsupported media type\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6201bca9-9000-44cd-85cd-69592bee4a52",
+          "name": "Overwrite the embedded SQL store on the server with a backed-up snapshot.",
+          "request": {
+            "name": "Overwrite the embedded SQL store on the server with a backed-up snapshot.",
+            "description": {},
+            "url": {
+              "path": [
+                "restore",
+                "sql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                "key": "Content-Encoding",
+                "value": "identity"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "f324d3ce-1b6a-4067-89f3-f397f69aaeea",
+              "name": "SQL store successfully overwritten.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "sql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3d157bfb-3632-4f01-9a27-57b13e912116",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "sql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unsupported media type\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a79cd91-923e-4ffe-93fb-c3e6fbb76dc0",
+          "name": "Overwrite storage metadata for a bucket with shard info from a backup.",
+          "request": {
+            "name": "Overwrite storage metadata for a bucket with shard info from a backup.",
+            "description": {},
+            "url": {
+              "path": [
+                "restore",
+                "bucket",
+                ":bucketID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketID",
+                  "description": "(Required) The bucket ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<byte>"
+            }
+          },
+          "response": [
+            {
+              "id": "c55d9246-cc2e-46fd-9d11-6863ce245805",
+              "name": "ID mappings for shards in bucket.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "bucket",
+                    ":bucketID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) The bucket ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<byte>"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5bc47da-ccd9-4218-bb29-5b47df1aad2d",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "bucket",
+                    ":bucketID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketID",
+                      "description": "(Required) The bucket ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<byte>"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unsupported media type\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3f1668a-abe5-4a94-98d9-38716ab52442",
+          "name": "Create a new bucket pre-seeded with shard info from a backup.",
+          "request": {
+            "name": "Create a new bucket pre-seeded with shard info from a backup.",
+            "description": {},
+            "url": {
+              "path": [
+                "restore",
+                "bucketMetadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizationID\": \"<string>\",\n  \"organizationName\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"bucketName\": \"<string>\",\n  \"defaultRetentionPolicy\": \"<string>\",\n  \"retentionPolicies\": [\n    {\n      \"name\": \"<string>\",\n      \"replicaN\": \"<integer>\",\n      \"duration\": \"<long>\",\n      \"shardGroupDuration\": \"<long>\",\n      \"shardGroups\": [\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"subscriptions\": [\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"replicaN\": \"<integer>\",\n      \"duration\": \"<long>\",\n      \"shardGroupDuration\": \"<long>\",\n      \"shardGroups\": [\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"subscriptions\": [\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9017bc87-471a-4c3c-853f-daf7449f1114",
+              "name": "ID mappings for shards in new bucket.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "bucketMetadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organizationID\": \"<string>\",\n  \"organizationName\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"bucketName\": \"<string>\",\n  \"defaultRetentionPolicy\": \"<string>\",\n  \"retentionPolicies\": [\n    {\n      \"name\": \"<string>\",\n      \"replicaN\": \"<integer>\",\n      \"duration\": \"<long>\",\n      \"shardGroupDuration\": \"<long>\",\n      \"shardGroups\": [\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"subscriptions\": [\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"replicaN\": \"<integer>\",\n      \"duration\": \"<long>\",\n      \"shardGroupDuration\": \"<long>\",\n      \"shardGroups\": [\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"subscriptions\": [\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"shardMappings\": [\n    {\n      \"oldId\": 6847,\n      \"newId\": 1569\n    },\n    {\n      \"oldId\": 6466,\n      \"newId\": 971\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72b5725c-9c11-42f5-9e9d-10b7c65abd0a",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "bucketMetadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organizationID\": \"<string>\",\n  \"organizationName\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"bucketName\": \"<string>\",\n  \"defaultRetentionPolicy\": \"<string>\",\n  \"retentionPolicies\": [\n    {\n      \"name\": \"<string>\",\n      \"replicaN\": \"<integer>\",\n      \"duration\": \"<long>\",\n      \"shardGroupDuration\": \"<long>\",\n      \"shardGroups\": [\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"subscriptions\": [\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"replicaN\": \"<integer>\",\n      \"duration\": \"<long>\",\n      \"shardGroupDuration\": \"<long>\",\n      \"shardGroups\": [\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"shards\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deletedAt\": \"<dateTime>\",\n          \"truncatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"subscriptions\": [\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"mode\": \"<string>\",\n          \"destinations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unsupported media type\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae5f7348-5504-4655-972e-7ff650c8d455",
+          "name": "Restore a TSM snapshot into a shard.",
+          "request": {
+            "name": "Restore a TSM snapshot into a shard.",
+            "description": {},
+            "url": {
+              "path": [
+                "restore",
+                "shards",
+                ":shardID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shardID",
+                  "description": "(Required) The shard ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                "key": "Content-Encoding",
+                "value": "identity"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "5ad86bd5-1c9c-4b8a-909e-64aae454ae03",
+              "name": "TSM snapshot successfully restored.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "shards",
+                    ":shardID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shardID",
+                      "description": "(Required) The shard ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "373e3f79-d7e2-480f-9b4c-a417ee4c91dc",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restore",
+                    "shards",
+                    ":shardID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shardID",
+                      "description": "(Required) The shard ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The value tells InfluxDB what compression is applied to the line protocol in the request payload.\nTo make an API request with a GZIP payload, send `Content-Encoding: gzip` as a request header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/octet-stream",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unsupported media type\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "299b3397-5486-44c0-924f-b68cb0f36703",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Restore API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

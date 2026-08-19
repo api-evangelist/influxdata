@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Metrics API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve workload performance metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/metrics",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ]
+          },
+          "docs": "Returns metrics about the workload performance of an InfluxDB instance.\n\nUse this endpoint to get performance, resource, and usage metrics.\n\n#### Related guides\n\n- For the list of metrics categories, see [InfluxDB OSS metrics](https://docs.influxdata.com/influxdb/latest/reference/internals/metrics/).\n- Learn how to use InfluxDB to [scrape Prometheus metrics](https://docs.influxdata.com/influxdb/latest/write-data/developer-tools/scrape-prometheus-metrics/).\n- Learn how InfluxDB [parses the Promet"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

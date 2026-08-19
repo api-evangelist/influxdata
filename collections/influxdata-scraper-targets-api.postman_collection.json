@@ -1,0 +1,2575 @@
+{
+  "item": [
+    {
+      "id": "0abfc0e5-4e56-446e-b53f-d689d791dee6",
+      "name": "Scraper Targets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "714e3d01-a8c5-47ce-bd42-9ed1d198c1c1",
+          "name": "List all scraper targets",
+          "request": {
+            "name": "List all scraper targets",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Specifies the name of the scraper target."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "List of scraper target IDs to return. If both `id` and `owner` are specified, only `id` is used."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "List of scraper target IDs to return. If both `id` and `owner` are specified, only `id` is used."
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "Specifies the organization ID of the scraper target."
+                },
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "Specifies the organization name of the scraper target."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f689fbfe-8dc2-486e-9a86-bab16a95800e",
+              "name": "All scraper targets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"configurations\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"prometheus\",\n      \"url\": \"http://localhost:9090/metrics\",\n      \"orgID\": \"string\",\n      \"bucketID\": \"string\",\n      \"allowInsecure\": false,\n      \"id\": \"string\",\n      \"org\": \"string\",\n      \"bucket\": \"string\",\n      \"links\": {\n        \"self\": \"http://WmqSaAtEEEwVFAvSdMFBkXsaZKR.wxbjRPR5bQfYWM0vHb0RCLiV,-e3NVBhvZ2gQvai6Xnq9mc,sIGiWEpQu5EatCe3Vq,ddbaO2gG\",\n        \"members\": \"https://PtaGQqjqEPfbnuHQXn.zamklQEOy1OKSNFSBEwfPFYNlUOFUS-GIaJOKr3tQXFPsYTuI1P714Aj\",\n        \"owners\": \"http://VXzpnTPwDYFNqO.xmtrAI.ti6DX0Vx8w6GUcb3L1iLExYkLmLiIhc+kPPaEi+SO\",\n        \"bucket\": \"https://XlpaIDHrJDnBhEQOiVyQzMLuRoYEkaZjB.brmwbEwnrJH8gN0H7TD2DzieqvFSE7AohnwMEHk+\",\n        \"organization\": \"http://sukhFqUSfyoCWinLzhPUrmXIJJpMh.smUQy-Q-+G2LiOHd6qTacHDEq2xKI6k57.oen7\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"prometheus\",\n      \"url\": \"http://localhost:9090/metrics\",\n      \"orgID\": \"string\",\n      \"bucketID\": \"string\",\n      \"allowInsecure\": false,\n      \"id\": \"string\",\n      \"org\": \"string\",\n      \"bucket\": \"string\",\n      \"links\": {\n        \"self\": \"http://fESwkJzlBknbuPCZSNJwndUBCZPoSOagm.gelaXbt32giNifQghdxmKkf\",\n        \"members\": \"https://mTGjvFTIWwSUWtFrfUcwIpduSmf.szkgjVR-KUj44kZ+pJg8Bgh2H8h7SMn,rxB\",\n        \"owners\": \"http://mJGfDYGohROpeRIaXFRo.qfcYvypZQRwTm\",\n        \"bucket\": \"http://nzcrbuiZNSMvpykzBEhFlRcyzHyAfDn.bkoFI4LzRE+,iBlyfgehUaP95dx+IUrGMidczejBGiMsv6\",\n        \"organization\": \"http://lsQazovgdTMPPEjgNPYeyLTX.bowoTyugL.,o\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8337ca1f-f913-4f0d-b537-57a3433c6166",
+          "name": "Create a scraper target",
+          "request": {
+            "name": "Create a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a327f1d4-d334-41d2-9c9c-d231bdcb9787",
+              "name": "Scraper target created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false,\n  \"id\": \"string\",\n  \"org\": \"string\",\n  \"bucket\": \"string\",\n  \"links\": {\n    \"self\": \"https://FGiWWNVslaKgKf.slzJcK6.s0FMQsLP-R-1U3wrHXEa8fq,.JWIbY3lUIbBxOgedMtzTH4\",\n    \"members\": \"http://LKIOv.ejjPTnia38Y5KBvH0WP4c,z4bNTDbtwKhdysFUAUWDNoSjibUq4ItPJNSD-c3PCXlOA\",\n    \"owners\": \"http://VguJJUGtZagUjjPXTtJDaS.cwtwzAdGK9P\",\n    \"bucket\": \"http://QthHoPLGzjzBKcXXzWekMEg.pxnjpRaujuydDPIpO0OELrGMtvi-yyb28OvxzO6MM5hYVDq3TTPVZuj3ZjTbkm1DWk0\",\n    \"organization\": \"http://PTxZcZerrUQeSzGZnaSkeFivDnCzQuU.qavcqRECPuO+h+LSpAvsTygz4n0QYWXj..XZs-\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd1ecb30-d9fb-43d0-8c11-a043c3eba597",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e84b694-bfc3-4fad-907e-5d53cf641484",
+          "name": "Retrieve a scraper target",
+          "request": {
+            "name": "Retrieve a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The identifier of the scraper target."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2736de1d-8d41-45b2-9cfa-9bc680df1200",
+              "name": "The scraper target",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The identifier of the scraper target."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false,\n  \"id\": \"string\",\n  \"org\": \"string\",\n  \"bucket\": \"string\",\n  \"links\": {\n    \"self\": \"https://FGiWWNVslaKgKf.slzJcK6.s0FMQsLP-R-1U3wrHXEa8fq,.JWIbY3lUIbBxOgedMtzTH4\",\n    \"members\": \"http://LKIOv.ejjPTnia38Y5KBvH0WP4c,z4bNTDbtwKhdysFUAUWDNoSjibUq4ItPJNSD-c3PCXlOA\",\n    \"owners\": \"http://VguJJUGtZagUjjPXTtJDaS.cwtwzAdGK9P\",\n    \"bucket\": \"http://QthHoPLGzjzBKcXXzWekMEg.pxnjpRaujuydDPIpO0OELrGMtvi-yyb28OvxzO6MM5hYVDq3TTPVZuj3ZjTbkm1DWk0\",\n    \"organization\": \"http://PTxZcZerrUQeSzGZnaSkeFivDnCzQuU.qavcqRECPuO+h+LSpAvsTygz4n0QYWXj..XZs-\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bf4246e-ed04-4850-8ebb-c8449222ac3c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The identifier of the scraper target."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3157a40-7c06-4e5f-905d-0962c6278b2b",
+          "name": "Delete a scraper target",
+          "request": {
+            "name": "Delete a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The identifier of the scraper target."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "03825736-b03c-44f8-be56-376c200a50b2",
+              "name": "Scraper target deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The identifier of the scraper target."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a129b37c-f5da-4a9b-a7ad-824e88c0299e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The identifier of the scraper target."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3aa39279-915c-4423-b806-a6d6852dd904",
+          "name": "Update a scraper target",
+          "request": {
+            "name": "Update a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The identifier of the scraper target."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "764d438d-ac9a-4866-b4f7-1daceb29b7a4",
+              "name": "Scraper target updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The identifier of the scraper target."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false,\n  \"id\": \"string\",\n  \"org\": \"string\",\n  \"bucket\": \"string\",\n  \"links\": {\n    \"self\": \"https://FGiWWNVslaKgKf.slzJcK6.s0FMQsLP-R-1U3wrHXEa8fq,.JWIbY3lUIbBxOgedMtzTH4\",\n    \"members\": \"http://LKIOv.ejjPTnia38Y5KBvH0WP4c,z4bNTDbtwKhdysFUAUWDNoSjibUq4ItPJNSD-c3PCXlOA\",\n    \"owners\": \"http://VguJJUGtZagUjjPXTtJDaS.cwtwzAdGK9P\",\n    \"bucket\": \"http://QthHoPLGzjzBKcXXzWekMEg.pxnjpRaujuydDPIpO0OELrGMtvi-yyb28OvxzO6MM5hYVDq3TTPVZuj3ZjTbkm1DWk0\",\n    \"organization\": \"http://PTxZcZerrUQeSzGZnaSkeFivDnCzQuU.qavcqRECPuO+h+LSpAvsTygz4n0QYWXj..XZs-\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce4bd752-4c5d-4cab-b4a7-972b6681c542",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The identifier of the scraper target."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"url\": \"http://localhost:9090/metrics\",\n  \"orgID\": \"<string>\",\n  \"bucketID\": \"<string>\",\n  \"allowInsecure\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c8c80d4-6673-44f4-82ce-938d658e7a09",
+          "name": "List all labels for a scraper target",
+          "request": {
+            "name": "List all labels for a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "284de7db-6621-43ab-a28f-499862814557",
+              "name": "A list of labels for a scraper target.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://USzvPiByJWJDzGl.jlKnefBnZHhIjUqe-jZ.1rYp64BK5OclMv7S\",\n    \"next\": \"http://LZNerqTmE.eyaxEFC21KzJgtxOBE9eq6PcE9H2\",\n    \"prev\": \"https://CPQGjzTAVaFSSTAYrKZbnglHh.jrmq.pnGg198kuGGT\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05811cee-d610-4789-b6da-3a2d755002fe",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c482ef59-2c67-4c8a-8736-cde15844056c",
+          "name": "Add a label to a scraper target",
+          "request": {
+            "name": "Add a label to a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"labelID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c86e66e1-9dd3-44d7-a5c2-ad64a8c271e6",
+              "name": "The newly added label",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"http://uoXcVPqXxUuxbUi.sgJZO8pyyOVfRqtFYJ8avnx-QQzisXj58QOfO5isvuBuHM9Fui6Trp5yM\",\n    \"next\": \"https://SiwjgOrVFFVjyunnybEuYUL.mnggfyUlu5xBEfquYzgJ7InS-hP3mm6pyvxQ6k4DTJImeNc6\",\n    \"prev\": \"http://FmnUOGGzfmUjYTg.rudevqIkDR.eTmYY44wr34BM8YO+yrO6\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79f181e4-61a8-4b6a-a33c-e3f47e13c13e",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b475144-151a-47c6-83f1-45f2d46a10b1",
+          "name": "Delete a label from a scraper target",
+          "request": {
+            "name": "Delete a label from a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The label ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cec4d047-41f6-4eee-aff9-713409606a18",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The label ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ad3ed556-36ce-432f-9b75-04c559bb172d",
+              "name": "Scraper target not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The label ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "229bd3b2-7be1-4594-aef6-b6c945b549ef",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The label ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6eb728c7-892d-41a0-86e5-cafc386093e7",
+          "name": "List all users with member privileges for a scraper target",
+          "request": {
+            "name": "List all users with member privileges for a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e65d45eb-cfde-4cbd-a35a-eace338ec301",
+              "name": "A list of scraper target members",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://pLWFASVJEuxoxKGeCVE.rbob1svYWv1TaroneKgQqcTMLsMJZ0M1eaaWgJ7A,E40w\"\n  },\n  \"users\": [\n    {\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"status\": \"active\",\n      \"links\": {\n        \"self\": \"https://TljYRnnrLFVRrhxqsMQzVjiHFcL.avnMWtzYjFNfxxOhbJV,oT8soM-t.rz2jsaQ9IvQus-qtde6CyOU-qhISn9hTPbw-\"\n      },\n      \"role\": \"member\"\n    },\n    {\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"status\": \"active\",\n      \"links\": {\n        \"self\": \"https://YFCmsjp.xdfs.H42UJuE6lgpTVK0dXzKjBdBNJhj\"\n      },\n      \"role\": \"member\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5aeb401d-bfb1-495b-9ae8-5a5b129abc22",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9dc725eb-6dd8-4b87-a4f9-c58b5b0d9418",
+          "name": "Add a member to a scraper target",
+          "request": {
+            "name": "Add a member to a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61cafaa5-a8c3-4f88-8bfd-073b15fde392",
+              "name": "Member added to scraper targets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"id\": \"string\",\n  \"status\": \"active\",\n  \"links\": {\n    \"self\": \"https://S.uwsxnjPy612mQPlbz1.4VmPL1N0yEjfNzIeLH.w4rPAINMYNVDbvp1oY42\"\n  },\n  \"role\": \"member\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57c11e05-8dd4-43a1-92c5-a5bbe0dea34d",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "688bf312-6550-4f9c-b83b-89da4558002a",
+          "name": "Remove a member from a scraper target",
+          "request": {
+            "name": "Remove a member from a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "members",
+                ":userID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userID",
+                  "description": "(Required) The ID of member to remove."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4119bd75-5816-4ba2-bf3a-fef7227b6de9",
+              "name": "Member removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "members",
+                    ":userID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userID",
+                      "description": "(Required) The ID of member to remove."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8742b6fd-1893-405e-90f2-d711cff523be",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "members",
+                    ":userID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userID",
+                      "description": "(Required) The ID of member to remove."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8919f8e-92d7-4f5a-9f16-fe7864dd683b",
+          "name": "List all owners of a scraper target",
+          "request": {
+            "name": "List all owners of a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "owners"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7bf77ab-001c-4e95-8abe-8f055af514f2",
+              "name": "A list of scraper target owners",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"http://VHDuMOcuGYOzwzHAF.vaeN1WI2bDaRbKcBZ\"\n  },\n  \"users\": [\n    {\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"status\": \"active\",\n      \"links\": {\n        \"self\": \"http://XcHdtHtAViNLhQpBlI.rtdkGetrkIk2LCcXqzu7\"\n      },\n      \"role\": \"owner\"\n    },\n    {\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"status\": \"active\",\n      \"links\": {\n        \"self\": \"http://PhVzligwIAmEYNGkTgEZzmPd.skDcR\"\n      },\n      \"role\": \"owner\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f6accfc-89dc-4ae8-963b-66af38d6dde9",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23005184-a19f-46bb-ad13-04547f6c34b5",
+          "name": "Add an owner to a scraper target",
+          "request": {
+            "name": "Add an owner to a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "owners"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d00b9d66-1fca-44bd-8d7f-d2dc4ea814ba",
+              "name": "Scraper target owner added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"id\": \"string\",\n  \"status\": \"active\",\n  \"links\": {\n    \"self\": \"http://YhrZDKzWbTuyMxvyDpLjVBsuhBGElEeUI.iennrchnmxa\"\n  },\n  \"role\": \"owner\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "922aca0b-45d8-4406-8c29-ad601ae3f95b",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed022684-9f6d-4c8b-893c-a047f508ea3c",
+          "name": "Remove an owner from a scraper target",
+          "request": {
+            "name": "Remove an owner from a scraper target",
+            "description": {},
+            "url": {
+              "path": [
+                "scrapers",
+                ":scraperTargetID",
+                "owners",
+                ":userID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userID",
+                  "description": "(Required) The ID of owner to remove."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scraperTargetID",
+                  "description": "(Required) The scraper target ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10f88c23-c350-4fca-87b7-056e0d4075a2",
+              "name": "Owner removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "owners",
+                    ":userID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userID",
+                      "description": "(Required) The ID of owner to remove."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ecdbf9e-2c97-4e59-af20-7801bb567e40",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scrapers",
+                    ":scraperTargetID",
+                    "owners",
+                    ":userID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userID",
+                      "description": "(Required) The ID of owner to remove."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scraperTargetID",
+                      "description": "(Required) The scraper target ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "146d978d-b440-461b-8018-b31f997340d7",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Scraper Targets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,3677 @@
+{
+  "item": [
+    {
+      "id": "3b45a4e1-d14d-4af8-9657-4b96c5787bf7",
+      "name": "Data I/O endpoints",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c41015be-f009-4828-b803-c5ba83cf8cff",
+          "name": "Write data",
+          "request": {
+            "name": "Write data",
+            "description": {
+              "content": "Writes data to a bucket.\n\nUse this endpoint to send data in [line protocol](https://docs.influxdata.com/influxdb/cloud/reference/syntax/line-protocol/) format to InfluxDB.\n\n#### InfluxDB Cloud\n\n- Does the following when you send a write request:\n\n  1. Validates the request and queues the write.\n  2. If queued, responds with _success_ (HTTP `2xx` status code); _error_ otherwise.\n  3. Handles the delete asynchronously and reaches eventual consistency.\n\n  To ensure that InfluxDB Cloud handles writes and deletes in the order you request them,\n  wait for a success response (HTTP `2xx` status code) before you send the next request.\n\n  Because writes and deletes are asynchronous, your change might not yet be readable\n  when you receive the response.\n\n#### InfluxDB OSS\n\n- Validates the request and handles the write synchronously.\n- If all points were written successfully, responds with HTTP `2xx` status code;\n  otherwise, returns the first line that failed.\n\n#### Required permissions\n\n- `write-buckets` or `write-bucket BUCKET_ID`.\n\n *`BUCKET_ID`* is the ID of the destination bucket.\n\n#### Rate limits (with InfluxDB Cloud)\n\n`write` rate limits apply.\nFor more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).\n\n#### Related guides\n\n- [Write data with the InfluxDB API](https://docs.influxdata.com/influxdb/cloud/write-data/developer-tools/api)\n- [Optimize writes to InfluxDB](https://docs.influxdata.com/influxdb/cloud/write-data/best-practices/optimize-writes/)\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "write"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "(Required) An organization name or ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Writes data to the bucket in the organization\n  associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or the `orgID` parameter.\n- If you pass both `orgID` and `org`, they must both be valid.\n- Writes data to the bucket in the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Writes data to the bucket in the organization\n  associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or the `orgID` parameter.\n- If you pass both `orgID` and `org`, they must both be valid.\n- Writes data to the bucket in the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket",
+                  "value": "<string>",
+                  "description": "(Required) A bucket name or ID.\nInfluxDB writes all points in the batch to the specified bucket.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "precision",
+                  "value": "<string>",
+                  "description": "The precision for unix timestamps in the line protocol batch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                "key": "Content-Encoding",
+                "value": "identity"
+              },
+              {
+                "disabled": false,
+                "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                "key": "Content-Length",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<byte>"
+            }
+          },
+          "response": [
+            {
+              "id": "1e3a088d-cabc-433f-8811-c283a73840a2",
+              "name": "Success.\n\n#### InfluxDB Cloud\n\n- Validated and queued the request.\n- Handles the write asynchronously - the write might not have completed yet.\n\n#### InfluxDB OSS\n\n- Successfully wrote all points in the batch.\n\n#### Related guides\n\n- [How to check for write errors](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f882d348-1203-49a6-acf6-b48668df44af",
+              "name": "Bad request. The response body contains detail about the error.\n\nInfluxDB returns this error if the line protocol data in the request is malformed.\nThe response body contains the first malformed line in the data, and indicates what was expected.\nFor partial writes, the number of points written and the number of points rejected are also included.\nFor more information, check the `rejected_points` measurement in your `_monitoring` bucket.\n\n#### InfluxDB Cloud\n\n- Returns this error for bucket schema conflicts.\n\n#### InfluxDB OSS\n\n- Returns this error if the `org` parameter or `orgID` parameter doesn't match an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"partial write error (2 written): unable to parse 'air_sensor,service=S1,sensor=L1 temperature=\\\"90.5\\\",humidity=70.0 1632850122': schema: field type for field \\\"temperature\\\" not permitted by schema; got String but expected Float\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9916bed7-0023-4fd8-a5ee-15b16a40e014",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f55d0896-fc6a-4a15-8459-81ad48ad8812",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01497a5e-7fbf-442b-82f3-fbc040142315",
+              "name": "The request payload is too large.\nInfluxDB rejected the batch and did not write any data.\n\n#### InfluxDB Cloud:\n\n - Returns this error if the payload exceeds the 50MB size limit.\n - Returns `Content-Type: text/html` for this error.\n\n#### InfluxDB OSS:\n\n - Returns this error only if the [Go (golang) `ioutil.ReadAll()`](https://pkg.go.dev/io/ioutil#ReadAll) function raises an error.\n - Returns `Content-Type: application/json` for this error.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\\"code\\\":\\\"request too large\\\",\\\"message\\\":\\\"unable to read data: points batch is too large\\\"}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e03caa8a-771b-4f80-b4b7-42cc18445e9f",
+              "name": "Too many requests.\n\n#### InfluxDB Cloud\n\n  - Returns this error if a **read** or **write** request exceeds your plan's [adjustable service quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#adjustable-service-quotas)\n    or if a **delete** request exceeds the maximum [global limit](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#global-limits).\n  - For rate limits that reset automatically, returns a `Retry-After` header that describes when to try the write again.\n  - For limits that can't reset (for example, **cardinality limit**), doesn't return a `Retry-After` header.\n\n  Rates (data-in (writes), queries (reads), and deletes) accrue within a fixed five-minute window.\n  Once a rate limit is exceeded, InfluxDB returns an error response until the current five-minute window resets.\n\n#### InfluxDB OSS\n\n  - Doesn't return this error.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Non-negative decimal integer indicating seconds to wait before retrying the request.",
+                  "key": "Retry-After",
+                  "value": "6237"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "022cdb77-6a9e-433e-a50f-e7124b0c11e7",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45a99783-8bde-44bd-905d-96129dbfa16a",
+              "name": "Service unavailable.\n\n- Returns this error if\n  the server is temporarily unavailable to accept writes.\n- Returns a `Retry-After` header that describes when to try the write again.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Non-negative decimal integer indicating seconds to wait before retrying the request.",
+                  "key": "Retry-After",
+                  "value": "6237"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1dc5abe6-e3bd-4517-b61f-36aac0da7922",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8fc3e5a-92d4-46ee-9e61-228866c9d38d",
+          "name": "Delete data",
+          "request": {
+            "name": "Delete data",
+            "description": {
+              "content": "Deletes data from a bucket.\n\nUse this endpoint to delete points from a bucket in a specified time range.\n\n#### InfluxDB Cloud\n\n- Does the following when you send a delete request:\n\n  1. Validates the request and queues the delete.\n  2. If queued, responds with _success_ (HTTP `2xx` status code); _error_ otherwise.\n  3. Handles the delete asynchronously and reaches eventual consistency.\n\nTo ensure that InfluxDB Cloud handles writes and deletes in the order you request them,\nwait for a success response (HTTP `2xx` status code) before you send the next request.\n\nBecause writes and deletes are asynchronous, your change might not yet be readable\nwhen you receive the response.\n\n#### InfluxDB OSS\n\n- Validates the request, handles the delete synchronously,\n  and then responds with success or failure.\n\n#### Required permissions\n\n- `write-buckets` or `write-bucket BUCKET_ID`.\n\n*`BUCKET_ID`* is the ID of the destination bucket.\n\n#### Rate limits (with InfluxDB Cloud)\n\n`write` rate limits apply.\nFor more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).\n\n#### Related guides\n\n- [Delete data](https://docs.influxdata.com/influxdb/cloud/write-data/delete-data/)\n- Learn how to use [delete predicate syntax](https://docs.influxdata.com/influxdb/cloud/reference/syntax/delete-predicate/).\n- Learn how InfluxDB handles [deleted tags](https://docs.influxdata.com/flux/v0.x/stdlib/influxdata/influxdb/schema/measurementtagkeys/)\n  and [deleted fields](https://docs.influxdata.com/flux/v0.x/stdlib/influxdata/influxdb/schema/measurementfieldkeys/).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An organization name or ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Deletes data from the bucket in the organization\n  associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or the `orgID` parameter.\n- Deletes data from the bucket in the specified organization.\n- If you pass both `orgID` and `org`, they must both be valid.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket",
+                  "value": "<string>",
+                  "description": "A bucket name or ID.\nSpecifies the bucket to delete data from.\nIf you pass both `bucket` and `bucketID`, `bucketID` takes precedence.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Deletes data from the bucket in the organization\n  associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or the `orgID` parameter.\n- Deletes data from the bucket in the specified organization.\n- If you pass both `orgID` and `org`, they must both be valid.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "bucketID",
+                  "value": "<string>",
+                  "description": "A bucket ID.\nSpecifies the bucket to delete data from.\nIf you pass both `bucket` and `bucketID`, `bucketID` takes precedence.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "19a3fe37-45ab-48b1-8976-d74b014da24e",
+              "name": "Success.\n\n#### InfluxDB Cloud\n\n- Validated and queued the request.\n- Handles the delete asynchronously - the deletion might not have completed yet.\n\nAn HTTP `2xx` status code acknowledges that the write or delete is queued.\nTo ensure that InfluxDB Cloud handles writes and deletes in the order you request them,\nwait for a response before you send the next request.\n\nBecause writes are asynchronous, data might not yet be written\nwhen you receive the response.\n\n#### InfluxDB OSS\n\n- Deleted the data.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"tag1=\\\"value1\\\" and (tag2=\\\"value2\\\" and tag3!=\\\"value3\\\")\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "afd631c4-ec10-4c56-98d4-1a3bc1407df3",
+              "name": "Bad request.\nThe response body contains detail about the error.\n\n#### InfluxDB OSS\n\n- Returns this error if the `org` parameter or `orgID` parameter doesn't match an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"tag1=\\\"value1\\\" and (tag2=\\\"value2\\\" and tag3!=\\\"value3\\\")\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"failed to decode request body: organization not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0258569-c0e1-4185-b049-64fc8a138e29",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"tag1=\\\"value1\\\" and (tag2=\\\"value2\\\" and tag3!=\\\"value3\\\")\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a86cfc5-6ec7-43b9-ae7e-3f0e339d00e4",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"tag1=\\\"value1\\\" and (tag2=\\\"value2\\\" and tag3!=\\\"value3\\\")\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b03d929-40f5-4652-9e27-a7cdba8e36fb",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"tag1=\\\"value1\\\" and (tag2=\\\"value2\\\" and tag3!=\\\"value3\\\")\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00c97236-a470-4710-816e-7df06e302d8b",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucketID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<dateTime>\",\n  \"stop\": \"<dateTime>\",\n  \"predicate\": \"tag1=\\\"value1\\\" and (tag2=\\\"value2\\\" and tag3!=\\\"value3\\\")\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7d64136-66fa-4144-abd6-2fc649bb2d3e",
+          "name": "Query data",
+          "request": {
+            "name": "Query data",
+            "description": {
+              "content": "Retrieves data from buckets.\n\nUse this endpoint to send a Flux query request and retrieve data from a bucket.\n\n#### Rate limits (with InfluxDB Cloud)\n\n`read` rate limits apply.\nFor more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).\n\n#### Related guides\n\n- [Query with the InfluxDB API](https://docs.influxdata.com/influxdb/cloud/query-data/execute-queries/influx-api/)\n- [Get started with Flux](https://docs.influxdata.com/flux/v0.x/get-started/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An organization name or ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Queries the bucket in the organization associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or `orgID` parameter.\n- Queries the bucket in the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Queries the bucket in the organization associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or `orgID` parameter.\n- Queries the bucket in the specified organization.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                "key": "Accept-Encoding",
+                "value": "identity"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/csv"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": 8702.936985712751,\n    \"key_1\": 8603.046047671334,\n    \"key_2\": \"string\"\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1204a6f0-94d7-42b2-b1f7-25e6dd603d45",
+              "name": "Success. The response body contains query results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Lists encodings (usually compression algorithms) that have been applied to the response payload.",
+                  "key": "Content-Encoding",
+                  "value": "identity"
+                },
+                {
+                  "disabled": false,
+                  "description": "The trace ID, if generated, of the request.",
+                  "key": "Trace-Id",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/csv"
+                }
+              ],
+              "body": "result,table,_start,_stop,_time,region,host,_value\nmean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:00Z,east,A,15.43\nmean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:20Z,east,B,59.25\nmean,0,2018-05-08T20:50:00Z,2018-05-08T20:51:00Z,2018-05-08T20:50:40Z,east,C,52.62\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c2f64313-38ee-461f-826d-24a89d12d1ac",
+              "name": "Bad request.\nThe response body contains detail about the error.\n\n#### InfluxDB OSS\n\n- Returns this error if the `org` parameter or `orgID` parameter doesn't match an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"failed to decode request body: organization not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e17db9d6-0fce-47a4-8053-88bfa59bc608",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1eb4cca-1d35-4582-90a5-29336533f08a",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c068c9ad-55ed-46fc-aaa8-5368cf6e69b4",
+              "name": "#### InfluxDB Cloud:\n  - returns this error if a **read** or **write** request exceeds your\n    plan's [adjustable service quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#adjustable-service-quotas)\n    or if a **delete** request exceeds the maximum\n    [global limit](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#global-limits)\n  - returns `Retry-After` header that describes when to try the write again.\n\n#### InfluxDB OSS:\n  - doesn't return this error.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Non-negative decimal integer indicating seconds to wait before retrying the request.",
+                  "key": "Retry-After",
+                  "value": "6237"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b1e6a9b5-6ef6-4d4b-aa14-aace514294a3",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57ada94e-2473-4a0e-9ff2-489691f7eb0a",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content encoding (usually a compression algorithm) that the client can understand.",
+                    "key": "Accept-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"extern\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"package\": {\n      \"type\": \"<string>\",\n      \"name\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    \"imports\": [\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"as\": {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"path\": {\n          \"type\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      }\n    ],\n    \"body\": [\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      }\n    ]\n  },\n  \"type\": \"<string>\",\n  \"params\": {\n    \"key_0\": true,\n    \"key_1\": false\n  },\n  \"dialect\": {\n    \"header\": true,\n    \"delimiter\": \",\",\n    \"annotations\": [\n      \"<string>\"\n    ],\n    \"commentPrefix\": \"#\",\n    \"dateTimeFormat\": \"RFC3339\"\n  },\n  \"now\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4cb44c1c-9c2b-4100-8240-9708024a132b",
+          "name": "Start a task run, overriding the schedule",
+          "request": {
+            "name": "Start a task run, overriding the schedule",
+            "description": {
+              "content": "Schedules a task run to start immediately, ignoring scheduled runs.\n\nUse this endpoint to manually start a task run.\nScheduled runs will continue to run as scheduled.\nThis may result in concurrently running tasks.\n\nTo _retry_ a previous run (and avoid creating a new run),\nuse the [`POST /api/v2/tasks/{taskID}/runs/{runID}/retry` endpoint](#operation/PostTasksIDRunsIDRetry).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tasks",
+                ":taskID",
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduledFor\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "66a375ba-94b3-46e1-b001-0d38691d3e76",
+              "name": "Success. The run is scheduled to start.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scheduledFor\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"taskID\": \"string\",\n  \"status\": \"canceled\",\n  \"scheduledFor\": \"2001-11-28T18:54:16.107Z\",\n  \"log\": [\n    {\n      \"time\": \"2018-11-08T08:40:55.571Z\",\n      \"message\": \"Halt and catch fire\",\n      \"runID\": \"string\"\n    },\n    {\n      \"time\": \"2008-06-19T05:54:39.838Z\",\n      \"message\": \"Halt and catch fire\",\n      \"runID\": \"string\"\n    }\n  ],\n  \"flux\": \"string\",\n  \"startedAt\": \"1999-07-12T22:55:24.942Z\",\n  \"finishedAt\": \"1968-03-07T21:42:10.288Z\",\n  \"requestedAt\": \"2004-05-14T09:55:42.503Z\",\n  \"links\": {\n    \"self\": \"http://Qka.mnymG2OMh816E-lOxh70NBIUbuUisvZyMQ8JhjIUlVpg,dasfLpt1kFdYkCsb4\",\n    \"task\": \"https://D.btjE333dz9fckElJ-y3d2voKhisfN3Ntcjbmi,eHrHK6ZqsKaJy6WXvE+o4Eh+7KgsBbNv\",\n    \"retry\": \"http://QzRdDSRISTz.brssODUqu1n.LpE\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a132e07-4499-4b96-9699-9409bf5feb0d",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scheduledFor\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e56832a-290e-49da-a31b-076b6a3468de",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scheduledFor\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8d5d764-6c56-4e7d-a0df-0f60455a996d",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scheduledFor\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4c9b2a2-2a46-4ee3-86c8-39d8f7d03386",
+          "name": "List all tasks",
+          "request": {
+            "name": "List all tasks",
+            "description": {
+              "content": "Retrieves a list of [tasks](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task).\n\nTo limit which tasks are returned, pass query parameters in your request.\nIf no query parameters are passed, InfluxDB returns all tasks up to the default `limit`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) name.\nOnly returns tasks with the specified name.\nDifferent tasks may have the same name.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nOnly returns tasks created after the specified task.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "A [user](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#user) ID.\nOnly returns tasks owned by the specified user.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "An [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) name.\nOnly returns tasks owned by the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) ID.\nOnly returns tasks owned by the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) status.\nOnly returns tasks that have the specified status (`active` or `inactive`).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "The maximum number of [tasks](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) to return.\nDefault is `100`.\nThe minimum is `1` and the maximum is `500`.\n\nTo reduce the payload size, combine _`type=basic`_ and _`limit`_ (see _Request samples_).\nFor more information about the `basic` response, see the _`type`_ parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of records to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "The sort field. Only `name` is supported.\nSpecifies the field used to sort records in the list.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "",
+                  "description": "A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) type (`basic` or `system`).\nDefault is `system`.\nSpecifies the level of detail for tasks in the response.\nThe default (`system`) response contains all the metadata properties for tasks.\nTo reduce the response size, pass `basic` to omit some task properties (`flux`, `createdAt`, `updatedAt`).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "scriptID",
+                  "value": "<string>",
+                  "description": "A [script](#tag/Invokable-Scripts) ID.\nOnly returns tasks that use the specified invokable script.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46192d12-b0bc-4cca-98d3-bf5004caeb4f",
+              "name": "Success.\nThe response body contains the list of tasks.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": ""
+                    },
+                    {
+                      "key": "scriptID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"/api/v2/tasks?limit=100\"\n  },\n  \"tasks\": [\n    {\n      \"links\": {\n        \"labels\": \"/api/v2/tasks/09956cbb6d378000/labels\",\n        \"logs\": \"/api/v2/tasks/09956cbb6d378000/logs\",\n        \"members\": \"/api/v2/tasks/09956cbb6d378000/members\",\n        \"owners\": \"/api/v2/tasks/09956cbb6d378000/owners\",\n        \"runs\": \"/api/v2/tasks/09956cbb6d378000/runs\",\n        \"self\": \"/api/v2/tasks/09956cbb6d378000\"\n      },\n      \"labels\": [],\n      \"id\": \"09956cbb6d378000\",\n      \"orgID\": \"48c88459ee424a04\",\n      \"org\": \"\",\n      \"ownerID\": \"0772396d1f411000\",\n      \"name\": \"task1\",\n      \"status\": \"active\",\n      \"flux\": \"\",\n      \"every\": \"30m\",\n      \"latestCompleted\": \"2022-06-30T15:00:00Z\",\n      \"lastRunStatus\": \"success\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a9eba34-d983-4ef4-a4d7-051d63fa3ad0",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": ""
+                    },
+                    {
+                      "key": "scriptID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e51088a2-267d-4999-ba99-1780edb1fc0d",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": ""
+                    },
+                    {
+                      "key": "scriptID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89b9dbdb-2ada-4d75-90f8-9667754cf16a",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": ""
+                    },
+                    {
+                      "key": "scriptID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e951a7ae-6874-46c0-8ab5-b7704b48d81e",
+          "name": "Create a task",
+          "request": {
+            "name": "Create a task",
+            "description": {
+              "content": "Creates a [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) and returns the task.\n\nUse this endpoint to create a scheduled task that runs a Flux script.\n\n#### InfluxDB Cloud\n\n- You can use either `flux` or `scriptID` to provide the task script.\n\n  - `flux`: a string of \"raw\" Flux that contains task options and the script--for example:\n\n    ```json\n    {\n      \"flux\": \"option task = {name: \\\"CPU Total 1 Hour New\\\", every: 1h}\\\n      from(bucket: \\\"telegraf\\\")\n        |> range(start: -1h)\n        |> filter(fn: (r) => (r._measurement == \\\"cpu\\\"))\n        |> filter(fn: (r) =>\\n\\t\\t(r._field == \\\"usage_system\\\"))\n        |> filter(fn: (r) => (r.cpu == \\\"cpu-total\\\"))\n        |> aggregateWindow(every: 1h, fn: max)\n        |> to(bucket: \\\"cpu_usage_user_total_1h\\\", org: \\\"INFLUX_ORG\\\")\",\n      \"status\": \"active\",\n      \"description\": \"This task downsamples CPU data every hour\"\n    }\n    ```\n\n  - `scriptID`: the ID of an [invokable script](#tag/Invokable-Scripts)\n    for the task to run.\n    To pass task options when using `scriptID`, pass the options as\n    properties in the request body--for example:\n\n    ```json\n    {\n      \"name\": \"CPU Total 1 Hour New\",\n      \"description\": \"This task downsamples CPU data every hour\",\n      \"every\": \"1h\",\n      \"scriptID\": \"SCRIPT_ID\",\n      \"scriptParameters\":\n        {\n          \"rangeStart\": \"-1h\",\n          \"bucket\": \"telegraf\",\n          \"filterField\": \"cpu-total\"\n        }\n      }\n    ```\n\n#### Limitations:\n\n- You can't use `flux` and `scriptID` for the same task.\n\n#### Related guides\n\n- [Get started with tasks](https://docs.influxdata.com/influxdb/cloud/process-data/get-started/)\n- [Create a task](https://docs.influxdata.com/influxdb/cloud/process-data/manage-tasks/create-task/)\n- [Common tasks](https://docs.influxdata.com/influxdb/cloud/process-data/common-tasks/)\n- [Task configuration options](https://docs.influxdata.com/influxdb/cloud/process-data/task-options/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgID\": \"<string>\",\n  \"org\": \"<string>\",\n  \"status\": \"<string>\",\n  \"flux\": \"<string>\",\n  \"description\": \"<string>\",\n  \"scriptID\": \"<string>\",\n  \"scriptParameters\": \"<object>\",\n  \"name\": \"<string>\",\n  \"every\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"offset\": \"<duration>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6cc0407a-857c-40b0-bad4-9b97fc67c676",
+              "name": "Success. The response body contains a `tasks` list with the new task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"org\": \"<string>\",\n  \"status\": \"<string>\",\n  \"flux\": \"<string>\",\n  \"description\": \"<string>\",\n  \"scriptID\": \"<string>\",\n  \"scriptParameters\": \"<object>\",\n  \"name\": \"<string>\",\n  \"every\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"offset\": \"<duration>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"orgID\": \"string\",\n  \"org\": \"string\",\n  \"ownerID\": \"string\",\n  \"description\": \"string\",\n  \"status\": \"<string>\",\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"authorizationID\": \"string\",\n  \"flux\": \"string\",\n  \"every\": \"string\",\n  \"cron\": \"string\",\n  \"offset\": \"string\",\n  \"latestCompleted\": \"1969-09-28T01:44:47.036Z\",\n  \"lastRunStatus\": \"canceled\",\n  \"lastRunError\": \"string\",\n  \"createdAt\": \"1973-03-21T19:33:51.212Z\",\n  \"updatedAt\": \"2002-07-26T18:00:48.323Z\",\n  \"links\": {\n    \"self\": \"http://zyOaUpVoWGrVTmsJxaAD.zladdwa1c.8JC61EUEwgQoLHZIgB0.ZXD7oe9U\",\n    \"owners\": \"https://fhHFrjWANHJFV.eaqlphnEi,TPtKS3WwD7J.UVuKbdENTxq+Rr4rRHFLyzSX-Psd3\",\n    \"members\": \"https://RHGDIFzCKkCDlZdBWzinBXc.eufYgMFlIS.,SHEoOivZdz+u\",\n    \"runs\": \"https://aVjNzHvtLORS.loqDH-EMLd-uvxc3,f-Rj-AUDq7IQxvfKfkNB1+MV\",\n    \"logs\": \"https://MbmXDtXZIkXGwwGCyUMLNsoxLteMHi.iwyaiB,v+4wDVlvI1XxPlgsyz7eERGq+uXiCXz4S.mbTp-iT52SIBIkaKY1QLvzYMt40SG4CjW9ZQM\",\n    \"labels\": \"https://wXPpls.hyffda4hrSph,IDP0-a3lL61U5i,FCpj9yamEz1InecHT2jgD8C05Clns+sEEjz,WRSiY\"\n  },\n  \"scriptID\": \"string\",\n  \"scriptParameters\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70023683-cabe-47e0-8c64-9db89cec04ae",
+              "name": "Bad request.\nThe response body contains detail about the error.\n\n#### InfluxDB Cloud\n\n- Returns this error if the task doesn't contain one of _`flux`_ or _`scriptID`_.\n- Returns this error if the task contains _`flux`_ _and_ _`scriptID`_.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"org\": \"<string>\",\n  \"status\": \"<string>\",\n  \"flux\": \"<string>\",\n  \"description\": \"<string>\",\n  \"scriptID\": \"<string>\",\n  \"scriptParameters\": \"<object>\",\n  \"name\": \"<string>\",\n  \"every\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"offset\": \"<duration>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"failed to decode request: can not provide both scriptID and flux\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f52eb473-c789-4052-bfae-2a0995b98f6f",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"org\": \"<string>\",\n  \"status\": \"<string>\",\n  \"flux\": \"<string>\",\n  \"description\": \"<string>\",\n  \"scriptID\": \"<string>\",\n  \"scriptParameters\": \"<object>\",\n  \"name\": \"<string>\",\n  \"every\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"offset\": \"<duration>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82148289-03c7-433a-93f2-ec0bf9031aa2",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"org\": \"<string>\",\n  \"status\": \"<string>\",\n  \"flux\": \"<string>\",\n  \"description\": \"<string>\",\n  \"scriptID\": \"<string>\",\n  \"scriptParameters\": \"<object>\",\n  \"name\": \"<string>\",\n  \"every\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"offset\": \"<duration>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6213822-8ce0-429b-986c-066aeef25fd4",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgID\": \"<string>\",\n  \"org\": \"<string>\",\n  \"status\": \"<string>\",\n  \"flux\": \"<string>\",\n  \"description\": \"<string>\",\n  \"scriptID\": \"<string>\",\n  \"scriptParameters\": \"<object>\",\n  \"name\": \"<string>\",\n  \"every\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"offset\": \"<duration>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8425505-aa8d-4baa-8cc1-24f8b2f569cb",
+          "name": "Retrieve a task",
+          "request": {
+            "name": "Retrieve a task",
+            "description": {
+              "content": "Retrieves a [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tasks",
+                ":taskID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskID",
+                  "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa7c99ad-5268-4550-8bff-fb9ee6dd26e5",
+              "name": "Success. The response body contains the task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"orgID\": \"string\",\n  \"org\": \"string\",\n  \"ownerID\": \"string\",\n  \"description\": \"string\",\n  \"status\": \"<string>\",\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"authorizationID\": \"string\",\n  \"flux\": \"string\",\n  \"every\": \"string\",\n  \"cron\": \"string\",\n  \"offset\": \"string\",\n  \"latestCompleted\": \"1984-01-03T09:39:40.887Z\",\n  \"lastRunStatus\": \"failed\",\n  \"lastRunError\": \"string\",\n  \"createdAt\": \"2017-10-15T09:36:09.455Z\",\n  \"updatedAt\": \"1986-07-16T04:42:43.114Z\",\n  \"links\": {\n    \"self\": \"https://RZgKmGUYbXdIXOolbpyd.mbhmAVpOmEIj9WT58u,qZoN6Vnpay9WPv9vFNtlS+0\",\n    \"owners\": \"http://ZsFUQgxmViREKntTOqcUMCh.hdlcBwjFU-IR2Bv8KCF3jzWg9aTzsUx.fY-RrYEI.0zjNrzyfEp,Blb8BmmxX\",\n    \"members\": \"http://vXI.ciaMiAl1-CFwi\",\n    \"runs\": \"http://wiss.kitxXE5O7,WTwSVxBBfjmX9FsOKOWWaveoLrVHlZ.75dKVp\",\n    \"logs\": \"https://NRVYKRDcMHjZYhXMuUVVQgMED.sbeyfRGcpCkrCS4W.b6lDVqy8Jp8VJ4Ha-WoOwF96XAG+kgPleKGWhDvA\",\n    \"labels\": \"https://IHLapylCyzTmqvnpSQrvgMofZngFWCOX.ryuhBJU868-xUx+49nU5KlviCCmMc3OqgcFCPld-rvpDpnMTxuTX2Xl9sLwEHAN4T\"\n  },\n  \"scriptID\": \"string\",\n  \"scriptParameters\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f0cb8f9-9fba-41b8-9b41-a458e2473ff5",
+              "name": "Bad request.\nThe response body contains detail about the error.\n\n#### InfluxDB OSS\n\n- Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"failed to decode request body: organization not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bcad648-1237-4f17-a4ba-025d175bd752",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2b39459-3cd4-4405-810d-ceb12bb1dffa",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afab0d7e-3af1-40fa-82a2-534a336c2d60",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e7d4df7-c2e8-4e17-8003-d781feb8f53d",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":taskID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskID",
+                      "description": "(Required) A [task](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#task) ID.\nSpecifies the task to retrieve.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "615f8569-4584-4dbe-8a93-72d6392647c6",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Data I/O endpoints API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

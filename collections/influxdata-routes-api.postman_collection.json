@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "ae353aec-35d6-4067-9aaf-0a219fb5e5c7",
+      "name": "Routes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b5b509f0-4996-4ea7-b52e-8e709092c5fc",
+          "name": "List all top level routes",
+          "request": {
+            "name": "List all top level routes",
+            "description": {
+              "content": "Retrieves all the top level routes for the InfluxDB API.\n\n#### Limitations\n\n- Only returns top level routes--for example, the response contains\n`\"tasks\":\"/api/v2/tasks\"`, and doesn't contain resource-specific routes\nfor tasks (`/api/v2/tasks/TASK_ID/...`).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c395b9c-b25a-443b-9c00-46f08459fd91",
+              "name": "Success.\nThe response body contains key-value pairs with the resource name and\ntop-level route.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"authorizations\": \"https://bPvPBbWKKVOkiUoSrijbUFkdjDp.rijlLkUC6Pe-\",\n  \"buckets\": \"http://NHTyTyqDFYIOcllgMoBqTi.bdWs0ICTtdbYig-kBB55m8P2fxeUJPB,1hjZm36xS88VNZ00x5GK+PypiV2-K42\",\n  \"dashboards\": \"http://kHhLTVPZV.ggW+AwZPekBWsJBkZZrsGNgGvX0X9exc+V9jDr3JIHhUgNWClB1vFRuSETDkoti6t\",\n  \"external\": {\n    \"statusFeed\": \"http://FZOXMUzsALTJrjR.szofT1turHUKPnMA2.ySR8FEHUf1HDM7GWofah-uR5P4,qcBWKMtH\"\n  },\n  \"variables\": \"http://ovhrIYmiCQwwUrnRJu.icaxBmrySK9NuLHJZ,RtEBJhrG7G0k9YhuPWDAC+gFT\",\n  \"me\": \"http://aKuJnqKzx.iatlcLin6YcYfSwmg1X7nyVh1imtiaEDFMkNL3DYdPsGK\",\n  \"flags\": \"https://QiroZYBRWVYZnkpHhjZfSRIA.cpinov-P6JGkAadKBFo59d00YcgObPz9F8bDzZg2\",\n  \"orgs\": \"https://BzyMbHnFqKndqxxTM.chP\",\n  \"query\": {\n    \"self\": \"https://oNyuOXIc.nfsi\",\n    \"ast\": \"https://tMk.gysnPJRRBIO7MdSJsXhHn2RLK,UGDgFHjUs\",\n    \"analyze\": \"https://zcHxUJJcZfKcmraCeqQCM.sumioc50gvO8byEtdz2.NDcW0gPE4gq0B0GdzGr6d-m+Tc\",\n    \"suggestions\": \"http://JMBeyHbasMtjuGkj.tryqftvHwVnR5WfqbsfyQ4zP9p\"\n  },\n  \"setup\": \"https://WuaiMWxZjVcLewBQvcmWvj.tyBANI0qInrbuUsQTC8e.ee7tf\",\n  \"signin\": \"http://xDbUElqhBzoxQiwlb.kgfu1ssmz+TU.LTIyOZi4M-q.-rqwPv+7G8eWJcNFCQhQ10xRxPI2pXW62CpQlh\",\n  \"signout\": \"https://OuOzfqLX.nnoIj7HbXLb2wb\",\n  \"sources\": \"https://VGsLDMTJc.kyhfiGxjFg.+\",\n  \"system\": {\n    \"metrics\": \"http://CLllHVIHpVupZAIRqEXodDwHzGFujb.zggCNFlRiNzNL1vJPULn2Tod3OzJH+aiI0uC-Zl1uZW6fQg-ua\",\n    \"debug\": \"https://DCUiFtLbYcWRKpwJLyiSQbxRIVC.hjkztTLOOW8RQLbcuBHe280J6DJXZIFLJPRM1uczAtRLcxQIgge2hNY\",\n    \"health\": \"http://yVgrUVTp.fxSt.,+fOHqPQ+\"\n  },\n  \"tasks\": \"http://cILtXaWlv.elqvxxd8iEbyoxvTkqy8GZl53Vv,yXhAExQyYtshKCp3TXzy4PDbrQCx0M5WL9hxYs,dATQIUC3xg\",\n  \"telegrafs\": \"http://AQEKEaiMGrgujZ.kjBdi3mt3dlEEmh9jAfNQSM.\",\n  \"users\": \"http://RdpgYtfWa.gkswNhYIirxHVG9jMRQ2\",\n  \"write\": \"http://CPRK.itrpxf05CSfKJ-Sys-GyBenkT,XmVRkXfQT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8ef94292-9e2f-487b-91e9-f4cfd901489d",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Routes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

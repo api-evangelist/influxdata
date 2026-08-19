@@ -1,0 +1,1915 @@
+{
+  "item": [
+    {
+      "id": "fb9c6cc1-7caa-49c0-92fb-8b9557f100ed",
+      "name": "NotificationRules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6bea4134-0e02-410b-bf44-b438e86915fa",
+          "name": "List all notification rules",
+          "request": {
+            "name": "List all notification rules",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "The offset for pagination.\nThe number of records to skip.\n\nFor more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Limits the number of records returned. Default is `20`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "(Required) Only show notification rules that belong to a specific organization ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "checkID",
+                  "value": "<string>",
+                  "description": "Only show notifications that belong to the specific check ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Only return notification rules that \"would match\" statuses which contain the tag key value pairs provided."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28927a09-438b-4685-afc7-645b70c1897c",
+              "name": "A list of notification rules",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "env:prod"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notificationRules\": [\n    {\n      \"endpointID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"messageTemplate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"orgID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"status\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"statusRules\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"latestCompleted\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lastRunStatus\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lastRunError\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"taskID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ownerID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"createdAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"sleepUntil\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"every\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offset\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"runbookLink\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"limitEvery\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"limit\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tagRules\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"labels\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"links\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"channel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"endpointID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"messageTemplate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"orgID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"status\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"statusRules\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"latestCompleted\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lastRunStatus\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lastRunError\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"taskID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ownerID\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"createdAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedAt\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"sleepUntil\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"every\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offset\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"runbookLink\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"limitEvery\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"limit\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tagRules\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"labels\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"links\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"channel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://WbKISYmfjaPXqFUKQ.ugjqlv.JnYsAZ6wRK3-rPdVYV.zknZY\",\n    \"next\": \"http://QxnyTrpXZyXaWHvnEUWKGKOwZIZAZKR.kdKU7lTSYN5Jzz7ULyLzjxgxpwgmHTxcnCzxbgut\",\n    \"prev\": \"http://LkF.tslyo5rv5AIA7JH9uX6HZrgqq3uzVD05L\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30de44ff-122b-4996-be10-3976f22016c4",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "env:prod"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d271604-367c-4fe4-89ee-890a984e5327",
+          "name": "Add a notification rule",
+          "request": {
+            "name": "Add a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b12b75b2-92f4-42c7-b656-97dcceb46eb6",
+              "name": "Notification rule created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"latestCompleted\": \"1957-07-11T12:18:17.013Z\",\n  \"lastRunStatus\": \"failed\",\n  \"lastRunError\": \"string\",\n  \"id\": \"string\",\n  \"taskID\": \"<string>\",\n  \"ownerID\": \"string\",\n  \"createdAt\": \"1971-12-03T13:02:30.492Z\",\n  \"updatedAt\": \"1959-10-28T09:57:18.495Z\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://RoJjdKZDAxNrjBiZwuloHznwwjbzvWau.zhz-0NtOsCXogsUiIE1ixr81Uw6vDXmt99zNF.2RCClii-omXR\",\n    \"labels\": \"http://QFoJKp.fvhyE20RqhGZUEkMZoBs.NHRkGuEOcU5yREtKYM8czDnxHwiyPDfnyu+jwU7qReLwY8C5GvKy5-c2pXdtvWN\",\n    \"members\": \"https://glzAhZg.ofaosdOj6Gduc\",\n    \"owners\": \"https://TbLlwYIOJGCwfRuFHOXeSnGs.vxiravOAjYSTxZJrXm,\",\n    \"query\": \"http://snXcbubliGv.xmsGEO+G0wIC6FpmqZYcfX3nfchpT0VE.JEUycAX6bv.a\"\n  },\n  \"channel\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82c3d6b9-3f0b-4930-bc79-6e639c6345ad",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f2b5839-a3cf-49e3-9758-5d52fd532c8a",
+          "name": "Retrieve a notification rule",
+          "request": {
+            "name": "Retrieve a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "288ce667-88b2-42b7-b4cd-b6dd27849da7",
+              "name": "The notification rule requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"latestCompleted\": \"1957-07-11T12:18:17.013Z\",\n  \"lastRunStatus\": \"failed\",\n  \"lastRunError\": \"string\",\n  \"id\": \"string\",\n  \"taskID\": \"<string>\",\n  \"ownerID\": \"string\",\n  \"createdAt\": \"1971-12-03T13:02:30.492Z\",\n  \"updatedAt\": \"1959-10-28T09:57:18.495Z\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://RoJjdKZDAxNrjBiZwuloHznwwjbzvWau.zhz-0NtOsCXogsUiIE1ixr81Uw6vDXmt99zNF.2RCClii-omXR\",\n    \"labels\": \"http://QFoJKp.fvhyE20RqhGZUEkMZoBs.NHRkGuEOcU5yREtKYM8czDnxHwiyPDfnyu+jwU7qReLwY8C5GvKy5-c2pXdtvWN\",\n    \"members\": \"https://glzAhZg.ofaosdOj6Gduc\",\n    \"owners\": \"https://TbLlwYIOJGCwfRuFHOXeSnGs.vxiravOAjYSTxZJrXm,\",\n    \"query\": \"http://snXcbubliGv.xmsGEO+G0wIC6FpmqZYcfX3nfchpT0VE.JEUycAX6bv.a\"\n  },\n  \"channel\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c091cd8-d8a2-46a0-857a-71cedf8fd719",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10b8ea71-a5c3-4d50-afc3-6a755b38706c",
+          "name": "Update a notification rule",
+          "request": {
+            "name": "Update a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "460a55a7-1695-45de-8446-674690638b0f",
+              "name": "An updated notification rule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"latestCompleted\": \"1957-07-11T12:18:17.013Z\",\n  \"lastRunStatus\": \"failed\",\n  \"lastRunError\": \"string\",\n  \"id\": \"string\",\n  \"taskID\": \"<string>\",\n  \"ownerID\": \"string\",\n  \"createdAt\": \"1971-12-03T13:02:30.492Z\",\n  \"updatedAt\": \"1959-10-28T09:57:18.495Z\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://RoJjdKZDAxNrjBiZwuloHznwwjbzvWau.zhz-0NtOsCXogsUiIE1ixr81Uw6vDXmt99zNF.2RCClii-omXR\",\n    \"labels\": \"http://QFoJKp.fvhyE20RqhGZUEkMZoBs.NHRkGuEOcU5yREtKYM8czDnxHwiyPDfnyu+jwU7qReLwY8C5GvKy5-c2pXdtvWN\",\n    \"members\": \"https://glzAhZg.ofaosdOj6Gduc\",\n    \"owners\": \"https://TbLlwYIOJGCwfRuFHOXeSnGs.vxiravOAjYSTxZJrXm,\",\n    \"query\": \"http://snXcbubliGv.xmsGEO+G0wIC6FpmqZYcfX3nfchpT0VE.JEUycAX6bv.a\"\n  },\n  \"channel\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6783f037-4817-40b4-bf2c-e5a951c48889",
+              "name": "The notification rule was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8427b2e8-8bce-48f2-b5de-60b4c1559dca",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"taskID\": \"<string>\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1bd52917-2189-40d9-87c5-10e63cfaf94c",
+          "name": "Update a notification rule",
+          "request": {
+            "name": "Update a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3594ada6-da4a-4793-8fed-23b3a826a44d",
+              "name": "An updated notification rule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endpointID\": \"<string>\",\n  \"messageTemplate\": \"<string>\",\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"statusRules\": [\n    {\n      \"currentLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"previousLevel\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"count\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"period\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"type\": \"<string>\",\n  \"latestCompleted\": \"1957-07-11T12:18:17.013Z\",\n  \"lastRunStatus\": \"failed\",\n  \"lastRunError\": \"string\",\n  \"id\": \"string\",\n  \"taskID\": \"<string>\",\n  \"ownerID\": \"string\",\n  \"createdAt\": \"1971-12-03T13:02:30.492Z\",\n  \"updatedAt\": \"1959-10-28T09:57:18.495Z\",\n  \"sleepUntil\": \"<string>\",\n  \"every\": \"<string>\",\n  \"offset\": \"<string>\",\n  \"runbookLink\": \"<string>\",\n  \"limitEvery\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"tagRules\": [\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"key\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"value\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operator\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"description\": \"<string>\",\n  \"labels\": [\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://RoJjdKZDAxNrjBiZwuloHznwwjbzvWau.zhz-0NtOsCXogsUiIE1ixr81Uw6vDXmt99zNF.2RCClii-omXR\",\n    \"labels\": \"http://QFoJKp.fvhyE20RqhGZUEkMZoBs.NHRkGuEOcU5yREtKYM8czDnxHwiyPDfnyu+jwU7qReLwY8C5GvKy5-c2pXdtvWN\",\n    \"members\": \"https://glzAhZg.ofaosdOj6Gduc\",\n    \"owners\": \"https://TbLlwYIOJGCwfRuFHOXeSnGs.vxiravOAjYSTxZJrXm,\",\n    \"query\": \"http://snXcbubliGv.xmsGEO+G0wIC6FpmqZYcfX3nfchpT0VE.JEUycAX6bv.a\"\n  },\n  \"channel\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fce6516a-9af3-4d53-9514-2898c6091f98",
+              "name": "The notification rule was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19564bd8-eb18-422e-b794-d47d67c9af0d",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4295273f-4c21-40cb-b7da-811cbafa5447",
+          "name": "Delete a notification rule",
+          "request": {
+            "name": "Delete a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "42c0a99f-e678-431c-adea-ce63277961c6",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "71761bb1-6f73-431c-83ce-f428a5229f30",
+              "name": "The check was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3257870d-b24c-48a5-bd06-808eb8cf93f1",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f01340c-3356-475a-9ba6-3e4d17684369",
+          "name": "List all labels for a notification rule",
+          "request": {
+            "name": "List all labels for a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5471346e-a821-4420-9353-43ce0e193f71",
+              "name": "A list of all labels for a notification rule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://wchcWKP.vjBfAY-LiBSftN0eUrv\",\n    \"next\": \"http://CRxQitnOpZDpJDeiCvpkbXUW.subnR.ucCks3UUh4Zkx\",\n    \"prev\": \"http://UsAKlpS.ptRCEx2icyEEJ2YGL6riSmIvATyzk0+BRqcoAk-lWC\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bcb942d-98d8-45bf-a5c9-3d487609e8e2",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "560296f8-eac8-4a84-ae4c-d03cd2f5eea5",
+          "name": "Add a label to a notification rule",
+          "request": {
+            "name": "Add a label to a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"labelID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7ed7a70e-803b-48f5-ba8f-76f81f3a6f2b",
+              "name": "The label was added to the notification rule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://ptSPIcTQTqvUoLpX.rffqxTWmdgWFcKUD1BmtNV0yTE,i-262vkgtoNikiNXb7F,70R3tb62zsYlKfnbk83wzlKCRAb\",\n    \"next\": \"https://qkNdxCDBXplWDEiRmFzDQgIy.qfqpzitS0SNkCOB5I,vB\",\n    \"prev\": \"https://TdCVFamHmNuTFOggAodHuwEPlVXpxHSIV.dvN34Cfw4SCpwsyoUerg\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69423581-e57a-44eb-a08c-c241fd97bc4e",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5ce72cc-0438-4ba5-97a7-7e58a9fbdbc7",
+          "name": "Delete label from a notification rule",
+          "request": {
+            "name": "Delete label from a notification rule",
+            "description": {},
+            "url": {
+              "path": [
+                "notificationRules",
+                ":ruleID",
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleID",
+                  "description": "(Required) The notification rule ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The ID of the label to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c0c9b7b-3a7f-49af-a2fe-feb266875bf5",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d4ad3c2a-f973-4d51-a915-681d1e4f2fc5",
+              "name": "Rule or label not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0761981-3f1c-455a-bd3b-1ad99f689204",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notificationRules",
+                    ":ruleID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleID",
+                      "description": "(Required) The notification rule ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The ID of the label to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"too many requests\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "48fd4f26-1a59-494a-8ff3-d73ecd65ac0b",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) NotificationRules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

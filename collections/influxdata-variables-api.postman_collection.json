@@ -1,0 +1,1817 @@
+{
+  "item": [
+    {
+      "id": "8f060333-a692-42ee-aaec-8785b79d4f73",
+      "name": "Variables",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b2d0453c-cd4c-4555-9b5d-0785830d9bce",
+          "name": "List all labels for a variable",
+          "request": {
+            "name": "List all labels for a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75ea64fe-35df-4ea8-941d-6aae9bde7a36",
+              "name": "A list of all labels for a variable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"string\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"http://OHCcUmlilkFcJFC.bzyW9BcQwQe+AEtbKPoDS8kV-lxeANzTQvCuZ0QW+lqkFwrtAEf\",\n    \"next\": \"https://LpidBmSwhJNEpOk.mfwsLNSsnT9ZUISrz9pXeMTxHxlwUxg,vif8JWs6HifgxxcoM\",\n    \"prev\": \"http://sAYoZYE.xkcZ4uvXBSYr1Evj0T-wA3jn+4PqfVOw,V0AmC9vCbaJCpEXlYoTlrbetOr\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29e675bc-1241-42a4-8e74-85509f70ef43",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59610f93-d3c9-4074-a7a7-5ff6ab3c50be",
+          "name": "Add a label to a variable",
+          "request": {
+            "name": "Add a label to a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"labelID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "473cd50a-d47e-4199-8b76-891034e0cbfe",
+              "name": "The newly added label",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"string\",\n    \"orgID\": \"string\",\n    \"name\": \"string\",\n    \"properties\": {\n      \"color\": \"ffb3b3\",\n      \"description\": \"this is a description\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://GkIMgUx.oqGxygTkrW+gmEfN-cQSXGGSPvMD2vzU7uJwfv3ta6RvS5TS7\",\n    \"next\": \"http://EianwZVOGvRcHIhaLMGPwFMPSVXd.remcSjUBh0j+dMB5MuOQKZLXOhs3Dg-+J-wXnYpcu1oVMPhy\",\n    \"prev\": \"https://uaGSBtCdyMsMPMPgcEnBHzV.xzN\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bf1a959-a2d9-4cb3-97b3-632c2928baa8",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"labelID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f56bcb5-eae5-4e11-935f-42b7e953b421",
+          "name": "Delete a label from a variable",
+          "request": {
+            "name": "Delete a label from a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID",
+                "labels",
+                ":labelID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelID",
+                  "description": "(Required) The label ID to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba616ba5-9180-4054-8e6b-ba4a52b914e8",
+              "name": "Delete has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The label ID to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "77cbdff4-2a26-42b2-b0b4-7fdbfe529f38",
+              "name": "Variable not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The label ID to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f9ca66d-de6e-42e4-9d31-eae9b6bcbab1",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID",
+                    "labels",
+                    ":labelID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelID",
+                      "description": "(Required) The label ID to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d756ae1-7d03-409a-b99a-1b1f8b234921",
+          "name": "List all variables",
+          "request": {
+            "name": "List all variables",
+            "description": {},
+            "url": {
+              "path": [
+                "variables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "The name of the organization."
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "The organization ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a64b99e5-49f4-43f3-bcf3-b389e19d1df2",
+              "name": "A list of variables for an organization.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"variables\": [\n    {\n      \"name\": \"string\",\n      \"orgID\": \"string\",\n      \"arguments\": {\n        \"type\": \"query\",\n        \"values\": {\n          \"query\": \"string\",\n          \"language\": \"string\"\n        }\n      },\n      \"links\": {\n        \"self\": \"https://PbolftqLQAriIeeRwKOomRuquYYM.hdwH\",\n        \"org\": \"http://BVunHClYZHfMAZTnmb.rqQWJYyBmoGIWupXmmVBoE7J0bdrkGLuzrNuxdm2hR40rrEOjwwr3nsSl\",\n        \"labels\": \"http://OiKptTNjHSODySGvTGn.mrahnfwL.8FVVDVAPcDmYtznD3KouXRNIQ.NAz8NCfAyeGJhxfvwi.CBURMI4tdLkWZiwHVZ0Bw\"\n      },\n      \"id\": \"string\",\n      \"description\": \"string\",\n      \"selected\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sort_order\": 7277,\n      \"labels\": [\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        }\n      ],\n      \"createdAt\": \"2007-04-25T10:23:03.340Z\",\n      \"updatedAt\": \"1971-01-13T02:41:02.458Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"orgID\": \"string\",\n      \"arguments\": {\n        \"type\": \"query\",\n        \"values\": {\n          \"query\": \"string\",\n          \"language\": \"string\"\n        }\n      },\n      \"links\": {\n        \"self\": \"https://AUniOdhosufAolCIcXHwWc.njNl0uY9DW3Jh82m4qbZLSdIQ9M,7\",\n        \"org\": \"https://suUKuukYCaayZkBAqVKaG.bxqnbRulo5XC.eTbM5cdEtxpLY3FJdNlT6.6EpycYctNHBdq8C-H1HrGKTzcge6\",\n        \"labels\": \"https://wyPtPiBIhSDWGfqmOf.zwxIKFBGYSXR8In0+aT6sNFhvD,n42nfDiHTZIGXVz+iW0PJOMpP\"\n      },\n      \"id\": \"string\",\n      \"description\": \"string\",\n      \"selected\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sort_order\": 1639,\n      \"labels\": [\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"orgID\": \"string\",\n          \"name\": \"string\",\n          \"properties\": {\n            \"color\": \"ffb3b3\",\n            \"description\": \"this is a description\"\n          }\n        }\n      ],\n      \"createdAt\": \"1992-08-11T20:12:48.927Z\",\n      \"updatedAt\": \"1974-11-12T07:59:16.568Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3479d37-7853-4346-a3f0-94835c0351c4",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e654bf56-50b4-4b6b-9e50-ce15d4f10374",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da246682-d7ba-40fa-a37f-8808320b0586",
+          "name": "Create a variable",
+          "request": {
+            "name": "Create a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"key_0\": \"<string>\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3926c918-2157-4519-9c51-e8177ae38f29",
+              "name": "Variable created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://eLBVgYJvDME.pnAbosjhE\",\n    \"org\": \"http://xhmp.aioom9GlWCTVkC5smSm1Ivyn00fKPX4DbIh6oY9sCyLJEw2iraqHwHUEXIBRowrr9HcsRBDntoIwp\",\n    \"labels\": \"http://tKtfPugDgXGDzRDEIDLAvqnJjyh.yrlivGkH.nOGJke..PTCazYLHQ5jy9JagND\"\n  },\n  \"id\": \"string\",\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0cd5982-81fc-454d-ac23-0907f2469a25",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60d97aef-4bc2-459d-b547-6d434ad5de87",
+          "name": "Retrieve a variable",
+          "request": {
+            "name": "Retrieve a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08a03e6c-d707-4d92-b917-040507f7bada",
+              "name": "Variable found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://eLBVgYJvDME.pnAbosjhE\",\n    \"org\": \"http://xhmp.aioom9GlWCTVkC5smSm1Ivyn00fKPX4DbIh6oY9sCyLJEw2iraqHwHUEXIBRowrr9HcsRBDntoIwp\",\n    \"labels\": \"http://tKtfPugDgXGDzRDEIDLAvqnJjyh.yrlivGkH.nOGJke..PTCazYLHQ5jy9JagND\"\n  },\n  \"id\": \"string\",\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45461ded-9612-4361-8ccc-7cd41ffafaf8",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ec3bc93-bfc6-447b-a57e-660f6a3cec94",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42f61ef1-31c7-4571-b316-b54c97ae92b9",
+          "name": "Delete a variable",
+          "request": {
+            "name": "Delete a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbbaf018-c0bf-4b6c-a765-f13a428ad80b",
+              "name": "Variable deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "48063c78-b456-42e1-a1dd-5f56dfa76172",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0151b0ca-1691-4da5-9e46-fc79e80df590",
+          "name": "Update a variable",
+          "request": {
+            "name": "Update a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"key_0\": \"<string>\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f43f9b71-37d1-40f1-a4fb-84ce6ae67db9",
+              "name": "Variable updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://eLBVgYJvDME.pnAbosjhE\",\n    \"org\": \"http://xhmp.aioom9GlWCTVkC5smSm1Ivyn00fKPX4DbIh6oY9sCyLJEw2iraqHwHUEXIBRowrr9HcsRBDntoIwp\",\n    \"labels\": \"http://tKtfPugDgXGDzRDEIDLAvqnJjyh.yrlivGkH.nOGJke..PTCazYLHQ5jy9JagND\"\n  },\n  \"id\": \"string\",\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b3e0743-1cd6-46b5-835d-16b271d80b83",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c34df225-a196-49c2-b12f-b46c610325fe",
+          "name": "Replace a variable",
+          "request": {
+            "name": "Replace a variable",
+            "description": {},
+            "url": {
+              "path": [
+                "variables",
+                ":variableID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "variableID",
+                  "description": "(Required) The variable ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"key_0\": \"<string>\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "34e4a95a-4a8b-42cf-b8ad-4c81ee8fb972",
+              "name": "Variable updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"links\": {\n    \"self\": \"https://eLBVgYJvDME.pnAbosjhE\",\n    \"org\": \"http://xhmp.aioom9GlWCTVkC5smSm1Ivyn00fKPX4DbIh6oY9sCyLJEw2iraqHwHUEXIBRowrr9HcsRBDntoIwp\",\n    \"labels\": \"http://tKtfPugDgXGDzRDEIDLAvqnJjyh.yrlivGkH.nOGJke..PTCazYLHQ5jy9JagND\"\n  },\n  \"id\": \"string\",\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"orgID\": \"string\",\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac9b5900-3820-4918-9fbd-e2f666c6033a",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "variables",
+                    ":variableID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "variableID",
+                      "description": "(Required) The variable ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"orgID\": \"<string>\",\n  \"arguments\": {\n    \"type\": \"<string>\",\n    \"values\": {\n      \"query\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"selected\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_order\": \"<integer>\",\n  \"labels\": [\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"properties\": {\n        \"color\": \"ffb3b3\",\n        \"description\": \"this is a description\"\n      }\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not implemented\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "22b7af20-db3b-4e91-973b-5dadf4250c95",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Variables API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

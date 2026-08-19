@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Health API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the health of the instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/health",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ]
+          },
+          "docs": "Returns the health of the instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

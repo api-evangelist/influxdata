@@ -1,0 +1,608 @@
+{
+  "item": [
+    {
+      "id": "de59cabb-ae49-4a11-aa11-33476f39ae79",
+      "name": "Views",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8465c09f-0d5e-4bcc-aced-6d3582cab9bc",
+          "name": "Retrieve the view for a cell",
+          "request": {
+            "name": "Retrieve the view for a cell",
+            "description": {},
+            "url": {
+              "path": [
+                "dashboards",
+                ":dashboardID",
+                "cells",
+                ":cellID",
+                "view"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dashboardID",
+                  "description": "(Required) The dashboard ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cellID",
+                  "description": "(Required) The cell ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "352a5ade-6d78-471f-93c3-e0e209076b62",
+              "name": "A dashboard cells view",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dashboards",
+                    ":dashboardID",
+                    "cells",
+                    ":cellID",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dashboardID",
+                      "description": "(Required) The dashboard ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cellID",
+                      "description": "(Required) The cell ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"properties\": {\n    \"type\": \"line-plus-single-stat\",\n    \"queries\": [\n      {\n        \"text\": \"string\",\n        \"editMode\": \"advanced\",\n        \"name\": \"string\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"text\": \"string\",\n        \"editMode\": \"builder\",\n        \"name\": \"string\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"shape\": \"chronograf-v2\",\n    \"axes\": {\n      \"x\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"string\",\n        \"prefix\": \"string\",\n        \"suffix\": \"string\",\n        \"base\": \"10\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"y\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"string\",\n        \"prefix\": \"string\",\n        \"suffix\": \"string\",\n        \"base\": \"\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"colors\": [\n      {\n        \"id\": \"string\",\n        \"type\": \"max\",\n        \"hex\": \"strings\",\n        \"name\": \"string\",\n        \"value\": 9186.533241320565\n      },\n      {\n        \"id\": \"string\",\n        \"type\": \"min\",\n        \"hex\": \"strings\",\n        \"name\": \"string\",\n        \"value\": 8239.881889438346\n      }\n    ],\n    \"note\": \"string\",\n    \"showNoteWhenEmpty\": true,\n    \"prefix\": \"string\",\n    \"suffix\": \"string\",\n    \"decimalPlaces\": {\n      \"isEnforced\": false,\n      \"digits\": 5502\n    },\n    \"position\": \"overlaid\",\n    \"adaptiveZoomHide\": false,\n    \"timeFormat\": \"string\",\n    \"staticLegend\": {\n      \"colorizeRows\": true,\n      \"heightRatio\": 5800.736675687583,\n      \"show\": true,\n      \"opacity\": 8.640524273296757,\n      \"orientationThreshold\": 2095,\n      \"valueAxis\": \"string\",\n      \"widthRatio\": 5534.91110936311\n    },\n    \"xColumn\": \"string\",\n    \"generateXAxisTicks\": [\n      \"string\",\n      \"string\"\n    ],\n    \"xTotalTicks\": 6322,\n    \"xTickStart\": 3565.588464267039,\n    \"xTickStep\": 5806.344059659134,\n    \"yColumn\": \"string\",\n    \"generateYAxisTicks\": [\n      \"string\",\n      \"string\"\n    ],\n    \"yTotalTicks\": 7780,\n    \"yTickStart\": 5513.6257356982605,\n    \"yTickStep\": 2737.0758533476815,\n    \"shadeBelow\": true,\n    \"hoverDimension\": \"y\",\n    \"legendColorizeRows\": true,\n    \"legendHide\": false,\n    \"legendOpacity\": 5537.399670374365,\n    \"legendOrientationThreshold\": 4306\n  },\n  \"links\": {\n    \"self\": \"string\"\n  },\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01398dcc-86fc-40a8-bea0-a412e63b9012",
+              "name": "Cell or dashboard not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dashboards",
+                    ":dashboardID",
+                    "cells",
+                    ":cellID",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dashboardID",
+                      "description": "(Required) The dashboard ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cellID",
+                      "description": "(Required) The cell ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"request too large\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a93d701b-abf3-4fcf-9926-88e938c3f713",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dashboards",
+                    ":dashboardID",
+                    "cells",
+                    ":cellID",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dashboardID",
+                      "description": "(Required) The dashboard ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cellID",
+                      "description": "(Required) The cell ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"request too large\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "439c4dec-1ee2-457d-93a7-e549cab47e68",
+          "name": "Update the view for a cell",
+          "request": {
+            "name": "Update the view for a cell",
+            "description": {},
+            "url": {
+              "path": [
+                "dashboards",
+                ":dashboardID",
+                "cells",
+                ":cellID",
+                "view"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dashboardID",
+                  "description": "(Required) The ID of the dashboard to update."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cellID",
+                  "description": "(Required) The ID of the cell to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"type\": \"<string>\",\n    \"queries\": [\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"shape\": \"<string>\",\n    \"axes\": {\n      \"x\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"y\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"colors\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      }\n    ],\n    \"note\": \"<string>\",\n    \"showNoteWhenEmpty\": \"<boolean>\",\n    \"prefix\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"decimalPlaces\": {\n      \"isEnforced\": \"<boolean>\",\n      \"digits\": \"<integer>\"\n    },\n    \"position\": \"<string>\",\n    \"adaptiveZoomHide\": \"<boolean>\",\n    \"timeFormat\": \"<string>\",\n    \"staticLegend\": {\n      \"colorizeRows\": \"<boolean>\",\n      \"heightRatio\": \"<float>\",\n      \"show\": \"<boolean>\",\n      \"opacity\": \"<float>\",\n      \"orientationThreshold\": \"<integer>\",\n      \"valueAxis\": \"<string>\",\n      \"widthRatio\": \"<float>\"\n    },\n    \"xColumn\": \"<string>\",\n    \"generateXAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xTotalTicks\": \"<integer>\",\n    \"xTickStart\": \"<float>\",\n    \"xTickStep\": \"<float>\",\n    \"yColumn\": \"<string>\",\n    \"generateYAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"yTotalTicks\": \"<integer>\",\n    \"yTickStart\": \"<float>\",\n    \"yTickStep\": \"<float>\",\n    \"shadeBelow\": \"<boolean>\",\n    \"hoverDimension\": \"<string>\",\n    \"legendColorizeRows\": \"<boolean>\",\n    \"legendHide\": \"<boolean>\",\n    \"legendOpacity\": \"<float>\",\n    \"legendOrientationThreshold\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ae494db6-d138-4875-9336-e07f1dffe2e3",
+              "name": "Updated cell view",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dashboards",
+                    ":dashboardID",
+                    "cells",
+                    ":cellID",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dashboardID",
+                      "description": "(Required) The ID of the dashboard to update."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cellID",
+                      "description": "(Required) The ID of the cell to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"type\": \"<string>\",\n    \"queries\": [\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"shape\": \"<string>\",\n    \"axes\": {\n      \"x\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"y\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"colors\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      }\n    ],\n    \"note\": \"<string>\",\n    \"showNoteWhenEmpty\": \"<boolean>\",\n    \"prefix\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"decimalPlaces\": {\n      \"isEnforced\": \"<boolean>\",\n      \"digits\": \"<integer>\"\n    },\n    \"position\": \"<string>\",\n    \"adaptiveZoomHide\": \"<boolean>\",\n    \"timeFormat\": \"<string>\",\n    \"staticLegend\": {\n      \"colorizeRows\": \"<boolean>\",\n      \"heightRatio\": \"<float>\",\n      \"show\": \"<boolean>\",\n      \"opacity\": \"<float>\",\n      \"orientationThreshold\": \"<integer>\",\n      \"valueAxis\": \"<string>\",\n      \"widthRatio\": \"<float>\"\n    },\n    \"xColumn\": \"<string>\",\n    \"generateXAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xTotalTicks\": \"<integer>\",\n    \"xTickStart\": \"<float>\",\n    \"xTickStep\": \"<float>\",\n    \"yColumn\": \"<string>\",\n    \"generateYAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"yTotalTicks\": \"<integer>\",\n    \"yTickStart\": \"<float>\",\n    \"yTickStep\": \"<float>\",\n    \"shadeBelow\": \"<boolean>\",\n    \"hoverDimension\": \"<string>\",\n    \"legendColorizeRows\": \"<boolean>\",\n    \"legendHide\": \"<boolean>\",\n    \"legendOpacity\": \"<float>\",\n    \"legendOrientationThreshold\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"type\": \"<string>\",\n    \"queries\": [\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"shape\": \"<string>\",\n    \"axes\": {\n      \"x\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"y\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"colors\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      }\n    ],\n    \"note\": \"<string>\",\n    \"showNoteWhenEmpty\": \"<boolean>\",\n    \"prefix\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"decimalPlaces\": {\n      \"isEnforced\": \"<boolean>\",\n      \"digits\": \"<integer>\"\n    },\n    \"position\": \"<string>\",\n    \"adaptiveZoomHide\": \"<boolean>\",\n    \"timeFormat\": \"<string>\",\n    \"staticLegend\": {\n      \"colorizeRows\": \"<boolean>\",\n      \"heightRatio\": \"<float>\",\n      \"show\": \"<boolean>\",\n      \"opacity\": \"<float>\",\n      \"orientationThreshold\": \"<integer>\",\n      \"valueAxis\": \"<string>\",\n      \"widthRatio\": \"<float>\"\n    },\n    \"xColumn\": \"<string>\",\n    \"generateXAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xTotalTicks\": \"<integer>\",\n    \"xTickStart\": \"<float>\",\n    \"xTickStep\": \"<float>\",\n    \"yColumn\": \"<string>\",\n    \"generateYAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"yTotalTicks\": \"<integer>\",\n    \"yTickStart\": \"<float>\",\n    \"yTickStep\": \"<float>\",\n    \"shadeBelow\": \"<boolean>\",\n    \"hoverDimension\": \"<string>\",\n    \"legendColorizeRows\": \"<boolean>\",\n    \"legendHide\": \"<boolean>\",\n    \"legendOpacity\": \"<float>\",\n    \"legendOrientationThreshold\": \"<integer>\"\n  },\n  \"links\": {\n    \"self\": \"string\"\n  },\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1a871c3-6685-4475-ab5e-918e3ad1b6ce",
+              "name": "Cell or dashboard not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dashboards",
+                    ":dashboardID",
+                    "cells",
+                    ":cellID",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dashboardID",
+                      "description": "(Required) The ID of the dashboard to update."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cellID",
+                      "description": "(Required) The ID of the cell to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"type\": \"<string>\",\n    \"queries\": [\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"shape\": \"<string>\",\n    \"axes\": {\n      \"x\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"y\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"colors\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      }\n    ],\n    \"note\": \"<string>\",\n    \"showNoteWhenEmpty\": \"<boolean>\",\n    \"prefix\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"decimalPlaces\": {\n      \"isEnforced\": \"<boolean>\",\n      \"digits\": \"<integer>\"\n    },\n    \"position\": \"<string>\",\n    \"adaptiveZoomHide\": \"<boolean>\",\n    \"timeFormat\": \"<string>\",\n    \"staticLegend\": {\n      \"colorizeRows\": \"<boolean>\",\n      \"heightRatio\": \"<float>\",\n      \"show\": \"<boolean>\",\n      \"opacity\": \"<float>\",\n      \"orientationThreshold\": \"<integer>\",\n      \"valueAxis\": \"<string>\",\n      \"widthRatio\": \"<float>\"\n    },\n    \"xColumn\": \"<string>\",\n    \"generateXAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xTotalTicks\": \"<integer>\",\n    \"xTickStart\": \"<float>\",\n    \"xTickStep\": \"<float>\",\n    \"yColumn\": \"<string>\",\n    \"generateYAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"yTotalTicks\": \"<integer>\",\n    \"yTickStart\": \"<float>\",\n    \"yTickStep\": \"<float>\",\n    \"shadeBelow\": \"<boolean>\",\n    \"hoverDimension\": \"<string>\",\n    \"legendColorizeRows\": \"<boolean>\",\n    \"legendHide\": \"<boolean>\",\n    \"legendOpacity\": \"<float>\",\n    \"legendOrientationThreshold\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"request too large\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1c9ef91-abb6-45e7-88ab-d7efc5fde3cb",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dashboards",
+                    ":dashboardID",
+                    "cells",
+                    ":cellID",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dashboardID",
+                      "description": "(Required) The ID of the dashboard to update."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cellID",
+                      "description": "(Required) The ID of the cell to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"type\": \"<string>\",\n    \"queries\": [\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"text\": \"<string>\",\n        \"editMode\": \"<string>\",\n        \"name\": \"<string>\",\n        \"builderConfig\": {\n          \"buckets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tags\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"functions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"aggregateWindow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"shape\": \"<string>\",\n    \"axes\": {\n      \"x\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"y\": {\n        \"bounds\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"label\": \"<string>\",\n        \"prefix\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"base\": \"<string>\",\n        \"scale\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"colors\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\",\n        \"hex\": \"<string>\",\n        \"name\": \"<string>\",\n        \"value\": \"<float>\"\n      }\n    ],\n    \"note\": \"<string>\",\n    \"showNoteWhenEmpty\": \"<boolean>\",\n    \"prefix\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"decimalPlaces\": {\n      \"isEnforced\": \"<boolean>\",\n      \"digits\": \"<integer>\"\n    },\n    \"position\": \"<string>\",\n    \"adaptiveZoomHide\": \"<boolean>\",\n    \"timeFormat\": \"<string>\",\n    \"staticLegend\": {\n      \"colorizeRows\": \"<boolean>\",\n      \"heightRatio\": \"<float>\",\n      \"show\": \"<boolean>\",\n      \"opacity\": \"<float>\",\n      \"orientationThreshold\": \"<integer>\",\n      \"valueAxis\": \"<string>\",\n      \"widthRatio\": \"<float>\"\n    },\n    \"xColumn\": \"<string>\",\n    \"generateXAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xTotalTicks\": \"<integer>\",\n    \"xTickStart\": \"<float>\",\n    \"xTickStep\": \"<float>\",\n    \"yColumn\": \"<string>\",\n    \"generateYAxisTicks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"yTotalTicks\": \"<integer>\",\n    \"yTickStart\": \"<float>\",\n    \"yTickStep\": \"<float>\",\n    \"shadeBelow\": \"<boolean>\",\n    \"hoverDimension\": \"<string>\",\n    \"legendColorizeRows\": \"<boolean>\",\n    \"legendHide\": \"<boolean>\",\n    \"legendOpacity\": \"<float>\",\n    \"legendOrientationThreshold\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"request too large\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "522035f1-fd74-4eca-b9bf-e240de2810a3",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Views API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

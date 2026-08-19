@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Restore API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Restore",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Overwrite the embedded KV store on the server with a backed-up snapshot.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/restore/kv",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              },
+              {
+                "name": "Content-Encoding",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Overwrite the embedded KV store on the server with a backed-up snapshot."
+        },
+        {
+          "info": {
+            "name": "Overwrite the embedded SQL store on the server with a backed-up snapshot.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/restore/sql",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              },
+              {
+                "name": "Content-Encoding",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Overwrite the embedded SQL store on the server with a backed-up snapshot."
+        },
+        {
+          "info": {
+            "name": "Overwrite storage metadata for a bucket with shard info from a backup.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/restore/bucket/:bucketID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bucketID",
+                "value": "",
+                "type": "path",
+                "description": "The bucket ID."
+              }
+            ]
+          },
+          "docs": "Overwrite storage metadata for a bucket with shard info from a backup."
+        },
+        {
+          "info": {
+            "name": "Create a new bucket pre-seeded with shard info from a backup.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/restore/bucketMetadata",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new bucket pre-seeded with shard info from a backup."
+        },
+        {
+          "info": {
+            "name": "Restore a TSM snapshot into a shard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/restore/shards/:shardID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              },
+              {
+                "name": "Content-Encoding",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "shardID",
+                "value": "",
+                "type": "path",
+                "description": "The shard ID."
+              }
+            ]
+          },
+          "docs": "Restore a TSM snapshot into a shard."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

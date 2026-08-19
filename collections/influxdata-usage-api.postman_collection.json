@@ -1,0 +1,248 @@
+{
+  "item": [
+    {
+      "id": "8237d3ad-bfa5-47ea-8852-dff946ca652c",
+      "name": "Usage",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e19bf8d1-1276-41fd-bd38-160dd299e97a",
+          "name": "Retrieve usage for an organization",
+          "request": {
+            "name": "Retrieve usage for an organization",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs",
+                ":orgID",
+                "usage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<unix timestamp>",
+                  "description": "(Required) Earliest time to include in results.\nFor more information about timestamps, see [Manipulate timestamps with Flux](https://docs.influxdata.com/influxdb/cloud/query-data/flux/manipulate-timestamps/).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "stop",
+                  "value": "<unix timestamp>",
+                  "description": "Latest time to include in results.\nFor more information about timestamps, see [Manipulate timestamps with Flux](https://docs.influxdata.com/influxdb/cloud/query-data/flux/manipulate-timestamps/).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "raw",
+                  "value": "false",
+                  "description": "return raw usage data"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orgID",
+                  "description": "(Required) The ID of the organization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ca42b36-49f4-4d09-b207-8d4df5ec110a",
+              "name": "Usage data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgID",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<unix timestamp>"
+                    },
+                    {
+                      "key": "stop",
+                      "value": "<unix timestamp>"
+                    },
+                    {
+                      "key": "raw",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgID",
+                      "description": "(Required) The ID of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Lists any encodings (usually compression algorithms) that have been applied to the response payload.",
+                  "key": "Content-Encoding",
+                  "value": "identity"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv"
+                }
+              ],
+              "body": "#group,false,false,true,true,false,false,true,true,true,true #datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string #default,_result,,,,,,,,, ,result,table,_start,_stop,_time,_value,_field,_measurement,bucket_id,org_id ,,0,2021-05-10T14:25:10.865702397Z,2021-05-10T15:25:10.865702397Z,2021-05-10T15:00:00Z,5434066,gauge,storage_usage_bucket_bytes,2f6ba0cf9a2fdcbb,cec6fc1d2176dc11 ,,1,2021-05-10T14:25:10.865702397Z,2021-05-10T15:25:10.865702397Z,2021-05-10T15:00:00Z,9924053.966666665,gauge,storage_usage_bucket_bytes,8af67bcaf69d9daf,cec6fc1d2176dc11\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0584944b-6d60-472e-b98e-c940723f8b1e",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgID",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<unix timestamp>"
+                    },
+                    {
+                      "key": "stop",
+                      "value": "<unix timestamp>"
+                    },
+                    {
+                      "key": "raw",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgID",
+                      "description": "(Required) The ID of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method not allowed\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "800d00cd-edf4-4b42-a4b4-9662da1dab0a",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Usage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

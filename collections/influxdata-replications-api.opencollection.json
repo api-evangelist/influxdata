@@ -1,0 +1,201 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Replications API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Replications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all replications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/replications",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "orgID",
+                "value": "",
+                "type": "query",
+                "description": "The organization ID."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "remoteID",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "localBucketID",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all replications"
+        },
+        {
+          "info": {
+            "name": "Register a new replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/replications",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "validate",
+                "value": "",
+                "type": "query",
+                "description": "If true, validate the replication, but don't save it."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new replication"
+        },
+        {
+          "info": {
+            "name": "Retrieve a replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/replications/:replicationID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "replicationID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a replication"
+        },
+        {
+          "info": {
+            "name": "Update a replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/api/v2/replications/:replicationID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "replicationID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "validate",
+                "value": "",
+                "type": "query",
+                "description": "If true, validate the updated information, but don't save it."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a replication"
+        },
+        {
+          "info": {
+            "name": "Delete a replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/replications/:replicationID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "replicationID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a replication"
+        },
+        {
+          "info": {
+            "name": "Validate a replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/replications/:replicationID/validate",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "replicationID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Validate a replication"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,972 @@
+{
+  "item": [
+    {
+      "id": "26b3abf9-5f60-45c0-88af-8a097503de9e",
+      "name": "Write",
+      "description": {
+        "content": "Write time series data to [buckets](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#bucket).\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "07ae41eb-b40b-480b-a3a7-87c8c3522ba1",
+          "name": "Write data",
+          "request": {
+            "name": "Write data",
+            "description": {
+              "content": "Writes data to a bucket.\n\nUse this endpoint to send data in [line protocol](https://docs.influxdata.com/influxdb/cloud/reference/syntax/line-protocol/) format to InfluxDB.\n\n#### InfluxDB Cloud\n\n- Does the following when you send a write request:\n\n  1. Validates the request and queues the write.\n  2. If queued, responds with _success_ (HTTP `2xx` status code); _error_ otherwise.\n  3. Handles the delete asynchronously and reaches eventual consistency.\n\n  To ensure that InfluxDB Cloud handles writes and deletes in the order you request them,\n  wait for a success response (HTTP `2xx` status code) before you send the next request.\n\n  Because writes and deletes are asynchronous, your change might not yet be readable\n  when you receive the response.\n\n#### InfluxDB OSS\n\n- Validates the request and handles the write synchronously.\n- If all points were written successfully, responds with HTTP `2xx` status code;\n  otherwise, returns the first line that failed.\n\n#### Required permissions\n\n- `write-buckets` or `write-bucket BUCKET_ID`.\n\n *`BUCKET_ID`* is the ID of the destination bucket.\n\n#### Rate limits (with InfluxDB Cloud)\n\n`write` rate limits apply.\nFor more information, see [limits and adjustable quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/).\n\n#### Related guides\n\n- [Write data with the InfluxDB API](https://docs.influxdata.com/influxdb/cloud/write-data/developer-tools/api)\n- [Optimize writes to InfluxDB](https://docs.influxdata.com/influxdb/cloud/write-data/best-practices/optimize-writes/)\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "write"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "(Required) An organization name or ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Writes data to the bucket in the organization\n  associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or the `orgID` parameter.\n- If you pass both `orgID` and `org`, they must both be valid.\n- Writes data to the bucket in the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgID",
+                  "value": "<string>",
+                  "description": "An organization ID.\n\n#### InfluxDB Cloud\n\n- Doesn't use the `org` parameter or `orgID` parameter.\n- Writes data to the bucket in the organization\n  associated with the authorization (API token).\n\n#### InfluxDB OSS\n\n- Requires either the `org` parameter or the `orgID` parameter.\n- If you pass both `orgID` and `org`, they must both be valid.\n- Writes data to the bucket in the specified organization.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket",
+                  "value": "<string>",
+                  "description": "(Required) A bucket name or ID.\nInfluxDB writes all points in the batch to the specified bucket.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "precision",
+                  "value": "<string>",
+                  "description": "The precision for unix timestamps in the line protocol batch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "OpenTracing span context",
+                "key": "Zap-Trace-Span",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                "key": "Content-Encoding",
+                "value": "identity"
+              },
+              {
+                "disabled": false,
+                "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                "key": "Content-Length",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<byte>"
+            }
+          },
+          "response": [
+            {
+              "id": "da33f853-2a02-41dd-ae3b-ccc7af36ab7e",
+              "name": "Success.\n\n#### InfluxDB Cloud\n\n- Validated and queued the request.\n- Handles the write asynchronously - the write might not have completed yet.\n\n#### InfluxDB OSS\n\n- Successfully wrote all points in the batch.\n\n#### Related guides\n\n- [How to check for write errors](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e496904-ff1a-4bb8-9dc9-2950f4d06351",
+              "name": "Bad request. The response body contains detail about the error.\n\nInfluxDB returns this error if the line protocol data in the request is malformed.\nThe response body contains the first malformed line in the data, and indicates what was expected.\nFor partial writes, the number of points written and the number of points rejected are also included.\nFor more information, check the `rejected_points` measurement in your `_monitoring` bucket.\n\n#### InfluxDB Cloud\n\n- Returns this error for bucket schema conflicts.\n\n#### InfluxDB OSS\n\n- Returns this error if the `org` parameter or `orgID` parameter doesn't match an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"invalid\",\n  \"message\": \"partial write error (2 written): unable to parse 'air_sensor,service=S1,sensor=L1 temperature=\\\"90.5\\\",humidity=70.0 1632850122': schema: field type for field \\\"temperature\\\" not permitted by schema; got String but expected Float\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "961ade09-35fc-40d0-85f8-a6f5bf7d93d9",
+              "name": "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"unauthorized access\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8713940d-e4f0-497b-95c2-bf2205ac0332",
+              "name": "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"organization name \\\"my-org\\\" not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b233f0d8-6840-4ddb-99fc-c0ee0b091ccf",
+              "name": "The request payload is too large.\nInfluxDB rejected the batch and did not write any data.\n\n#### InfluxDB Cloud:\n\n - Returns this error if the payload exceeds the 50MB size limit.\n - Returns `Content-Type: text/html` for this error.\n\n#### InfluxDB OSS:\n\n - Returns this error only if the [Go (golang) `ioutil.ReadAll()`](https://pkg.go.dev/io/ioutil#ReadAll) function raises an error.\n - Returns `Content-Type: application/json` for this error.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\\"code\\\":\\\"request too large\\\",\\\"message\\\":\\\"unable to read data: points batch is too large\\\"}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afd8e64e-fdfb-4b6c-bdd7-938ee9d512d2",
+              "name": "Too many requests.\n\n#### InfluxDB Cloud\n\n  - Returns this error if a **read** or **write** request exceeds your plan's [adjustable service quotas](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#adjustable-service-quotas)\n    or if a **delete** request exceeds the maximum [global limit](https://docs.influxdata.com/influxdb/cloud/account-management/limits/#global-limits).\n  - For rate limits that reset automatically, returns a `Retry-After` header that describes when to try the write again.\n  - For limits that can't reset (for example, **cardinality limit**), doesn't return a `Retry-After` header.\n\n  Rates (data-in (writes), queries (reads), and deletes) accrue within a fixed five-minute window.\n  Once a rate limit is exceeded, InfluxDB returns an error response until the current five-minute window resets.\n\n#### InfluxDB OSS\n\n  - Doesn't return this error.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Non-negative decimal integer indicating seconds to wait before retrying the request.",
+                  "key": "Retry-After",
+                  "value": "3434"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "560dac34-30d9-4c5e-a0fb-f1d9b4d008cc",
+              "name": "Internal server error.\nThe server encountered an unexpected situation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1df8208-3807-44d6-9d2e-da2e8209b008",
+              "name": "Service unavailable.\n\n- Returns this error if\n  the server is temporarily unavailable to accept writes.\n- Returns a `Retry-After` header that describes when to try the write again.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Non-negative decimal integer indicating seconds to wait before retrying the request.",
+                  "key": "Retry-After",
+                  "value": "3434"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ad01430-d70c-47dd-aa17-d6713453f546",
+              "name": "Non 2XX error response from server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "precision",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "OpenTracing span context",
+                    "key": "Zap-Trace-Span",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The compression applied to the line protocol in the request payload.\nTo send a GZIP payload, pass `Content-Encoding: gzip` header.\n",
+                    "key": "Content-Encoding",
+                    "value": "identity"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The format of the data in the request body.\nTo send a line protocol payload, pass `Content-Type: text/plain; charset=utf-8`.\n",
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The size of the entity-body, in bytes, sent to InfluxDB.\nIf the length is greater than the `max body` configuration option,\nthe server responds with status code `413`.\n",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The content type that the client can understand.\nWrites only return a response body if they fail--for example,\ndue to a formatting problem or quota limit.\n\n#### InfluxDB Cloud\n\n  - Returns only `application/json` for format and limit errors.\n  - Returns only `text/html` for some quota limit errors.\n\n#### InfluxDB OSS\n\n  - Returns only `application/json` for format and limit errors.\n\n#### Related guides\n\n- [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/cloud/write-data/troubleshoot/)\n",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1630424257000000000\nairSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 1630424257000000000\n"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not found\",\n  \"message\": \"string\",\n  \"op\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e0d82b89-b3f9-4241-a288-21624fd8b3a8",
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Write API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.\n",
+      "type": "text/plain"
+    }
+  }
+}

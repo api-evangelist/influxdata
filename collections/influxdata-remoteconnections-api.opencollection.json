@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) RemoteConnections API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RemoteConnections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all remote connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/remotes",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "orgID",
+                "value": "",
+                "type": "query",
+                "description": "The organization ID."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "remoteURL",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all remote connections"
+        },
+        {
+          "info": {
+            "name": "Register a new remote connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/remotes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new remote connection"
+        },
+        {
+          "info": {
+            "name": "Retrieve a remote connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/remotes/:remoteID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "remoteID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a remote connection"
+        },
+        {
+          "info": {
+            "name": "Update a remote connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/api/v2/remotes/:remoteID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "remoteID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a remote connection"
+        },
+        {
+          "info": {
+            "name": "Delete a remote connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/remotes/:remoteID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "remoteID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a remote connection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

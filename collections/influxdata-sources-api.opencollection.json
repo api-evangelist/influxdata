@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Sources API",
+    "version": "2.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/sources",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "org",
+                "value": "",
+                "type": "query",
+                "description": "The name of the organization."
+              }
+            ]
+          },
+          "docs": "List all sources"
+        },
+        {
+          "info": {
+            "name": "Create a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v2/sources",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a source"
+        },
+        {
+          "info": {
+            "name": "Retrieve a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/sources/:sourceID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "sourceID",
+                "value": "",
+                "type": "path",
+                "description": "The source ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a source"
+        },
+        {
+          "info": {
+            "name": "Update a Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/api/v2/sources/:sourceID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "sourceID",
+                "value": "",
+                "type": "path",
+                "description": "The source ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Source"
+        },
+        {
+          "info": {
+            "name": "Delete a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v2/sources/:sourceID",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "sourceID",
+                "value": "",
+                "type": "path",
+                "description": "The source ID."
+              }
+            ]
+          },
+          "docs": "Delete a source"
+        },
+        {
+          "info": {
+            "name": "Get the health of a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/sources/:sourceID/health",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "sourceID",
+                "value": "",
+                "type": "path",
+                "description": "The source ID."
+              }
+            ]
+          },
+          "docs": "Get the health of a source"
+        },
+        {
+          "info": {
+            "name": "Get buckets in a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v2/sources/:sourceID/buckets",
+            "headers": [
+              {
+                "name": "Zap-Trace-Span",
+                "value": "[object Object]"
+              }
+            ],
+            "params": [
+              {
+                "name": "sourceID",
+                "value": "",
+                "type": "path",
+                "description": "The source ID."
+              },
+              {
+                "name": "org",
+                "value": "",
+                "type": "query",
+                "description": "The name of the organization."
+              }
+            ]
+          },
+          "docs": "Get buckets in a source"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
