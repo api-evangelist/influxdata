@@ -1197,6 +1197,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/influxdata-capability-edges.yml
+  name: InfluxData Business Capability Map
 - type: Overlay
   url: overlays/influxdata-cloud-overlay.yaml
 - type: DomainSecurity
