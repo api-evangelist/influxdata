@@ -512,7 +512,7 @@ apis:
   humanURL: https://docs.influxdata.com/influxdb/cloud/api/
   baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
   tags:
-  - Notification Rules
+  - NotificationRules
   tags_raw:
   - NotificationRules
   properties:
@@ -827,7 +827,7 @@ apis:
   humanURL: https://docs.influxdata.com/influxdb/cloud/api/
   baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
   tags:
-  - Sign In
+  - Signin
   tags_raw:
   - Signin
   properties:
