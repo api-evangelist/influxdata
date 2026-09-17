@@ -507,28 +507,6 @@ apis:
     url: https://docs.influxdata.com/influxdb/v2/api/
   - type: Documentation
     url: https://docs.influxdata.com/influxdb/v2/
-- aid: influxdata:influxdata-notificationrules-api
-  name: InfluxData NotificationRules API
-  description: The NotificationRules API from InfluxData — 4 operation(s) for notificationrules.
-  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
-  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
-  tags:
-  - Notification Rules
-  tags_raw:
-  - NotificationRules
-  properties:
-  - type: OpenAPI
-    url: openapi/influxdata-notificationrules-api-openapi.yml
-  - type: APIReference
-    url: https://docs.influxdata.com/influxdb/cloud/api/
-  - type: Documentation
-    url: https://docs.influxdata.com/influxdb/cloud/
-  - type: GettingStarted
-    url: https://docs.influxdata.com/influxdb/cloud/get-started/
-  - type: APIReference
-    url: https://docs.influxdata.com/influxdb/v2/api/
-  - type: Documentation
-    url: https://docs.influxdata.com/influxdb/v2/
 - aid: influxdata:influxdata-organizations-api
   name: InfluxData Organizations API
   description: >-
@@ -611,26 +589,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/influxdata-ready-api-openapi.yml
-  - type: APIReference
-    url: https://docs.influxdata.com/influxdb/cloud/api/
-  - type: Documentation
-    url: https://docs.influxdata.com/influxdb/cloud/
-  - type: GettingStarted
-    url: https://docs.influxdata.com/influxdb/cloud/get-started/
-  - type: APIReference
-    url: https://docs.influxdata.com/influxdb/v2/api/
-  - type: Documentation
-    url: https://docs.influxdata.com/influxdb/v2/
-- aid: influxdata:influxdata-remoteconnections-api
-  name: InfluxData RemoteConnections API
-  description: The RemoteConnections API from InfluxData — 2 operation(s) for remoteconnections.
-  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
-  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
-  tags:
-  - RemoteConnections
-  properties:
-  - type: OpenAPI
-    url: openapi/influxdata-remoteconnections-api-openapi.yml
   - type: APIReference
     url: https://docs.influxdata.com/influxdb/cloud/api/
   - type: Documentation
@@ -812,28 +770,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/influxdata-setup-api-openapi.yml
-  - type: APIReference
-    url: https://docs.influxdata.com/influxdb/cloud/api/
-  - type: Documentation
-    url: https://docs.influxdata.com/influxdb/cloud/
-  - type: GettingStarted
-    url: https://docs.influxdata.com/influxdb/cloud/get-started/
-  - type: APIReference
-    url: https://docs.influxdata.com/influxdb/v2/api/
-  - type: Documentation
-    url: https://docs.influxdata.com/influxdb/v2/
-- aid: influxdata:influxdata-signin-api
-  name: InfluxData Signin API
-  description: The Signin API from InfluxData — 1 operation(s) for signin.
-  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
-  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
-  tags:
-  - Sign In
-  tags_raw:
-  - Signin
-  properties:
-  - type: OpenAPI
-    url: openapi/influxdata-signin-api-openapi.yml
   - type: APIReference
     url: https://docs.influxdata.com/influxdb/cloud/api/
   - type: Documentation
@@ -1182,6 +1118,66 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/influxdata-write-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-notification-rules-api
+  name: InfluxData Notification Rules API
+  description: The Notification Rules API from InfluxData — 4 operation(s) for notification rules.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Notification Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-notification-rules-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-remote-connections-api
+  name: InfluxData Remote Connections API
+  description: The Remote Connections API from InfluxData — 2 operation(s) for remote connections.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Remote Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-remote-connections-api-openapi.yml
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/cloud/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/cloud/
+  - type: GettingStarted
+    url: https://docs.influxdata.com/influxdb/cloud/get-started/
+  - type: APIReference
+    url: https://docs.influxdata.com/influxdb/v2/api/
+  - type: Documentation
+    url: https://docs.influxdata.com/influxdb/v2/
+- aid: influxdata:influxdata-sign-in-api
+  name: InfluxData Sign In API
+  description: The Sign In API from InfluxData — 1 operation(s) for sign in.
+  humanURL: https://docs.influxdata.com/influxdb/cloud/api/
+  baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
+  tags:
+  - Sign In
+  properties:
+  - type: OpenAPI
+    url: openapi/influxdata-sign-in-api-openapi.yml
   - type: APIReference
     url: https://docs.influxdata.com/influxdb/cloud/api/
   - type: Documentation
