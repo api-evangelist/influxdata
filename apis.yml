@@ -1154,6 +1154,8 @@ apis:
   humanURL: https://docs.influxdata.com/influxdb/cloud/api/
   baseURL: https://us-east-1-1.aws.cloud2.influxdata.com/api/v2
   tags:
+  - REMOTE_CONNECTIONS
+  tags_raw:
   - Remote Connections
   properties:
   - type: OpenAPI
