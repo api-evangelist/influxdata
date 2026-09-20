@@ -10,6 +10,13 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: developer-api
 pricing_basis: usage-other
+delivery:
+  delivery: open-core
+  method: page
+  read: '2026-09-20'
+  evidence: InfluxDB 3 Core is open source and free to download and run with no license required.
+  free_edition: InfluxDB 3 Core
+  managed_tier: Cloud Serverless
 published: true
 note: Page mixes published usage-based Serverless rates and a Telegraf Enterprise starting annual price
   with custom/contact-sales pricing for Enterprise and Cloud Dedicated.
