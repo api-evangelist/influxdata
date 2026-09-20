@@ -1196,6 +1196,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Plans
+  url: plans/influxdata-plans-pricing.yml
 - type: CapabilityMap
   url: capabilities/influxdata-capability-edges.yml
   name: InfluxData Business Capability Map

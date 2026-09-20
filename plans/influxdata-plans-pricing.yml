@@ -1,0 +1,69 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://www.influxdata.com/influxdb-pricing/
+sources:
+- https://www.influxdata.com/influxdb-pricing/
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+published: true
+note: Page mixes published usage-based Serverless rates and a Telegraf Enterprise starting annual price
+  with custom/contact-sales pricing for Enterprise and Cloud Dedicated.
+plan_count: 9
+currency: USD
+plans:
+- name: InfluxDB 3 Enterprise
+  price_text: Custom pricing
+  period: none
+  included_quota: Based on CPU configuration. 30-day free trial available — no commitment.
+- name: Amazon Timestream for InfluxDB
+  price_text: AWS consumption pricing
+  period: none
+  included_quota: Existing AWS credits & EDP discounts apply.
+- name: Cloud Dedicated
+  price_text: Custom pricing
+  period: none
+  included_quota: Based on CPU/RAM and storage.
+- name: Cloud Serverless - Data In
+  price_text: $0.0025 per MB written
+  price: 0.0025
+  currency: USD
+  period: per-use
+  unit: MB written
+  included_quota: $250 free credit included when you upgrade to the usage-based plan.
+- name: Cloud Serverless - Query Count
+  price_text: $0.012 per 100 query executions
+  price: 0.012
+  currency: USD
+  period: per-use
+  unit: 100 query executions
+- name: Cloud Serverless - Storage
+  price_text: $0.002 per GB-hour
+  price: 0.002
+  currency: USD
+  period: per-use
+  unit: GB-hour
+- name: Cloud Serverless - Data Out
+  price_text: $0.09 per GB transferred out
+  price: 0.09
+  currency: USD
+  period: per-use
+  unit: GB transferred out
+- name: InfluxDB 3 Core (OSS)
+  price_text: Free Forever
+  period: none
+  included_quota: Self-managed. Community supported.
+- name: Telegraf Enterprise
+  price_text: Plans start at $18,000 / year
+  price: 18000
+  currency: USD
+  period: year
+  included_quota: Telegraf Controller, Enterprise Support
+rate_limit_statements:
+- InfluxDB Cloud Serverless also has a free tier with limited data ingestion rates and 30-day retention.
+- Paid plans unlock higher rate limits, unlimited data retention, and enterprise features.
+- Multi-tenant · Service quotas apply · No HA
