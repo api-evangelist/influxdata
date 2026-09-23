@@ -1,13 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) Variables API
-  version: 2.0.1
-  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
-
-    '
+  title: Influxdata Variables API
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+  version: '1.0'
+  description: 'Operations tagged Variables across 2 of this provider''s published API definitions: influxdata-cloud-openapi-original.yml, influxdata-oss-openapi-original.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: /api/v2
 security:
@@ -75,6 +73,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: /api/v2
   /variables/{variableID}/labels/{labelID}:
     delete:
       operationId: DeleteVariablesIDLabelsID
@@ -110,6 +110,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: /api/v2
   /variables:
     get:
       operationId: GetVariables
@@ -165,6 +167,8 @@ paths:
         default:
           description: Internal server error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /variables/{variableID}:
     get:
       operationId: GetVariablesID
@@ -271,8 +275,20 @@ paths:
         default:
           description: Internal server error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
 components:
   schemas:
+    ConstantVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - constant
+        values:
+          type: array
+          items:
+            type: string
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -286,16 +302,49 @@ components:
           type: string
       required:
       - labelID
-    MapVariableProperties:
+    LabelResponse:
+      type: object
       properties:
-        type:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
           type: string
-          enum:
-          - map
-        values:
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
           type: object
           additionalProperties:
             type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    VariableProperties:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/QueryVariableProperties'
+      - $ref: '#/components/schemas/ConstantVariableProperties'
+      - $ref: '#/components/schemas/MapVariableProperties'
     Error:
       properties:
         code:
@@ -331,62 +380,6 @@ components:
           type: string
       required:
       - code
-    ConstantVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - constant
-        values:
-          type: array
-          items:
-            type: string
-    VariableProperties:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/QueryVariableProperties'
-      - $ref: '#/components/schemas/ConstantVariableProperties'
-      - $ref: '#/components/schemas/MapVariableProperties'
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    QueryVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - query
-        values:
-          type: object
-          properties:
-            query:
-              type: string
-            language:
-              type: string
     Variables:
       type: object
       example:
@@ -426,13 +419,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Variable'
-    LabelsResponse:
-      type: object
+    QueryVariableProperties:
       properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
+        type:
+          type: string
+          enum:
+          - query
+        values:
+          type: object
+          properties:
+            query:
+              type: string
+            language:
+              type: string
+    MapVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - map
+        values:
+          type: object
+          additionalProperties:
+            type: string
     Variable:
       type: object
       required:
@@ -478,18 +487,6 @@ components:
         updatedAt:
           type: string
           format: date-time
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
     Links:
       type: object
       description: 'URI pointers for additional paged results.
@@ -504,13 +501,58 @@ components:
           $ref: '#/components/schemas/Link'
       required:
       - self
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Variable_2:
+      type: object
+      required:
+      - name
+      - orgID
+      - arguments
+      properties:
+        links:
+          type: object
+          readOnly: true
+          properties:
+            self:
+              type: string
+              format: uri
+            org:
+              type: string
+              format: uri
+            labels:
+              type: string
+              format: uri
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        selected:
+          type: array
+          items:
+            type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        arguments:
+          $ref: '#/components/schemas/VariableProperties'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
   parameters:
     TraceSpan:
       in: header
@@ -524,6 +566,13 @@ components:
       required: false
       schema:
         type: string
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey
@@ -534,6 +583,9 @@ components:
       type: http
       scheme: basic
       description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-refined-from:
+- influxdata-cloud-openapi-original.yml
+- influxdata-oss-openapi-original.yml
 x-tagGroups:
 - name: Overview
   tags:

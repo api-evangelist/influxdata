@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: InfluxDB OSS API Service Replications API
+  title: InfluxDB OSS API Service Remote Connections API
   version: 2.0.0
   description: The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
   license:
@@ -11,14 +11,14 @@ servers:
 security:
 - TokenAuthentication: []
 tags:
-- name: Replications
+- name: Remote Connections
 paths:
-  /replications:
+  /remotes:
     get:
-      operationId: GetReplications
+      operationId: GetRemoteConnections
       tags:
-      - Replications
-      summary: List all replications
+      - Remote Connections
+      summary: List all remote connections
       parameters:
       - $ref: '#/components/parameters/TraceSpan'
       - in: query
@@ -32,113 +32,92 @@ paths:
         schema:
           type: string
       - in: query
-        name: remoteID
+        name: remoteURL
         schema:
           type: string
-      - in: query
-        name: localBucketID
-        schema:
-          type: string
+          format: uri
       responses:
         '200':
-          description: List of replications
+          description: List of remote connections
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Replications'
+                $ref: '#/components/schemas/RemoteConnections'
         '404':
           $ref: '#/components/responses/GeneralServerError'
         default:
           $ref: '#/components/responses/GeneralServerError'
     post:
-      operationId: PostReplication
+      operationId: PostRemoteConnection
       tags:
-      - Replications
-      summary: Register a new replication
-      parameters:
-      - $ref: '#/components/parameters/TraceSpan'
-      - in: query
-        name: validate
-        description: If true, validate the replication, but don't save it.
-        schema:
-          type: boolean
-          default: false
+      - Remote Connections
+      summary: Register a new remote connection
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReplicationCreationRequest'
+              $ref: '#/components/schemas/RemoteConnectionCreationRequest'
       responses:
         '201':
-          description: Replication saved
+          description: Remote connection saved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Replication'
-        '204':
-          description: Replication validated, but not saved
+                $ref: '#/components/schemas/RemoteConnection'
         '400':
           $ref: '#/components/responses/GeneralServerError'
         default:
           $ref: '#/components/responses/GeneralServerError'
-  /replications/{replicationID}:
+  /remotes/{remoteID}:
     get:
-      operationId: GetReplicationByID
+      operationId: GetRemoteConnectionByID
       tags:
-      - Replications
-      summary: Retrieve a replication
+      - Remote Connections
+      summary: Retrieve a remote connection
       parameters:
       - $ref: '#/components/parameters/TraceSpan'
       - in: path
-        name: replicationID
+        name: remoteID
         schema:
           type: string
         required: true
       responses:
         '200':
-          description: Replication
+          description: Remote connection
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Replication'
+                $ref: '#/components/schemas/RemoteConnection'
         '404':
           $ref: '#/components/responses/GeneralServerError'
         default:
           $ref: '#/components/responses/GeneralServerError'
     patch:
-      operationId: PatchReplicationByID
+      operationId: PatchRemoteConnectionByID
       tags:
-      - Replications
-      summary: Update a replication
+      - Remote Connections
+      summary: Update a remote connection
       parameters:
       - $ref: '#/components/parameters/TraceSpan'
       - in: path
-        name: replicationID
+        name: remoteID
         schema:
           type: string
         required: true
-      - in: query
-        name: validate
-        description: If true, validate the updated information, but don't save it.
-        schema:
-          type: boolean
-          default: false
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReplicationUpdateRequest'
+              $ref: '#/components/schemas/RemoteConnectionUpdateRequest'
       responses:
         '200':
           description: Updated information saved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Replication'
-        '204':
-          description: Updated replication validated, but not saved
+                $ref: '#/components/schemas/RemoteConnection'
         '400':
           $ref: '#/components/responses/GeneralServerError'
         '404':
@@ -146,60 +125,33 @@ paths:
         default:
           $ref: '#/components/responses/GeneralServerError'
     delete:
-      operationId: DeleteReplicationByID
+      operationId: DeleteRemoteConnectionByID
       tags:
-      - Replications
-      summary: Delete a replication
+      - Remote Connections
+      summary: Delete a remote connection
       parameters:
       - $ref: '#/components/parameters/TraceSpan'
       - in: path
-        name: replicationID
+        name: remoteID
         schema:
           type: string
         required: true
       responses:
         '204':
-          description: Replication deleted.
+          description: Remote connection info deleted.
         '404':
           $ref: '#/components/responses/GeneralServerError'
         default:
           $ref: '#/components/responses/GeneralServerError'
-  /replications/{replicationID}/validate:
-    post:
-      operationId: PostValidateReplicationByID
-      tags:
-      - Replications
-      summary: Validate a replication
-      parameters:
-      - $ref: '#/components/parameters/TraceSpan'
-      - in: path
-        name: replicationID
-        schema:
-          type: string
-        required: true
-      responses:
-        '204':
-          description: Replication is valid
-        '400':
-          description: Replication failed validation
-          $ref: '#/components/responses/GeneralServerError'
-        default:
-          $ref: '#/components/responses/GeneralServerError'
 components:
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
   schemas:
+    RemoteConnections:
+      type: object
+      properties:
+        remotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RemoteConnection'
     Error:
       properties:
         code:
@@ -235,78 +187,49 @@ components:
           type: string
       required:
       - code
-    Replications:
-      type: object
-      properties:
-        replications:
-          type: array
-          items:
-            $ref: '#/components/schemas/Replication'
-    ReplicationUpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        remoteID:
-          type: string
-        remoteBucketID:
-          type: string
-        remoteBucketName:
-          type: string
-        maxQueueSizeBytes:
-          type: integer
-          format: int64
-          minimum: 33554430
-        dropNonRetryableData:
-          type: boolean
-        maxAgeSeconds:
-          type: integer
-          format: int64
-          minimum: 0
-    Replication:
+    RemoteConnection:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
-        description:
-          type: string
         orgID:
           type: string
-        remoteID:
+        description:
           type: string
-        localBucketID:
+        remoteURL:
           type: string
-        remoteBucketID:
+          format: uri
+        remoteOrgID:
           type: string
-        remoteBucketName:
-          type: string
-        maxQueueSizeBytes:
-          type: integer
-          format: int64
-        currentQueueSizeBytes:
-          type: integer
-          format: int64
-        remainingBytesToBeSynced:
-          type: integer
-          format: int64
-        latestResponseCode:
-          type: integer
-        latestErrorMessage:
-          type: string
-        dropNonRetryableData:
+        allowInsecureTLS:
           type: boolean
+          default: false
       required:
       - id
       - name
-      - remoteID
       - orgID
-      - localBucketID
-      - maxQueueSizeBytes
-    ReplicationCreationRequest:
+      - remoteURL
+      - allowInsecureTLS
+    RemoteConnectionUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        remoteURL:
+          type: string
+          format: uri
+        remoteAPIToken:
+          type: string
+        remoteOrgID:
+          type: string
+        allowInsecureTLS:
+          type: boolean
+          default: false
+    RemoteConnectionCreationRequest:
       type: object
       properties:
         name:
@@ -315,34 +238,35 @@ components:
           type: string
         orgID:
           type: string
-        remoteID:
+        remoteURL:
           type: string
-        localBucketID:
+          format: uri
+        remoteAPIToken:
           type: string
-        remoteBucketID:
+        remoteOrgID:
           type: string
-        remoteBucketName:
-          type: string
-        maxQueueSizeBytes:
-          type: integer
-          format: int64
-          minimum: 33554430
-          default: 67108860
-        dropNonRetryableData:
+        allowInsecureTLS:
           type: boolean
           default: false
-        maxAgeSeconds:
-          type: integer
-          format: int64
-          minimum: 0
-          default: 604800
       required:
       - name
       - orgID
-      - remoteID
-      - localBucketID
-      - maxQueueSizeBytes
-      - maxAgeSeconds
+      - remoteURL
+      - remoteAPIToken
+      - allowInsecureTLS
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   responses:
     GeneralServerError:
       description: Non 2XX error response from server.

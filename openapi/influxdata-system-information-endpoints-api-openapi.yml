@@ -1,13 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: InfluxDB Cloud API Service Authorizations (API tokens) Authorizations (API tokens) System information endpoints API
-  version: 2.0.1
-  description: 'The InfluxDB v2 API provides a programmatic interface for all interactions with InfluxDB. Access the InfluxDB API using the `/api/v2/` endpoint.
-
-    '
+  title: Influxdata System information endpoints API
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+  version: '1.0'
+  description: 'Operations tagged System information endpoints across 2 of this provider''s published API definitions: influxdata-cloud-openapi-original.yml, influxdata-oss-openapi-original.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: /api/v2
 security:
@@ -36,9 +34,7 @@ paths:
         #### Related guides
 
 
-        - [Influx ping](https://docs.influxdata.com/influxdb/cloud/reference/cli/influx/ping/)
-
-        '
+        - Influx ping'
       servers:
       - url: ''
       tags:
@@ -67,6 +63,8 @@ paths:
         source: 'curl --request GET "http://localhost:8086/ping"
 
           '
+    servers:
+    - url: /api/v2
   /:
     get:
       operationId: GetRoutes
@@ -81,9 +79,7 @@ paths:
 
         `"tasks":"/api/v2/tasks"`, and doesn''t contain resource-specific routes
 
-        for tasks (`/api/v2/tasks/TASK_ID/...`).
-
-        '
+        for tasks (`/api/v2/tasks/TASK_ID/...`).'
       tags:
       - System information endpoints
       parameters:
@@ -101,6 +97,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Routes'
+    servers:
+    - url: /api/v2
   /resources:
     get:
       operationId: GetResources
@@ -124,13 +122,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: /api/v2
   /debug/pprof/all:
     get:
       operationId: GetDebugPprofAllProfiles
       tags:
       - System information endpoints
       summary: Retrieve all runtime profiles
-      description: "Collects samples and returns reports for the following [Go runtime profiles](https://pkg.go.dev/runtime/pprof):\n\n- **allocs**: All past memory allocations\n- **block**: Stack traces that led to blocking on synchronization primitives\n- **cpu**: (Optional) Program counters sampled from the executing stack.\n  Include by passing the `cpu` query parameter with a [duration](https://docs.influxdata.com/influxdb/latest/reference/glossary/#duration) value.\n  Equivalent to the report from [`GET /debug/pprof/profile?seconds=NUMBER_OF_SECONDS`](#operation/GetDebugPprofProfile).\n- **goroutine**: All current goroutines\n- **heap**: Memory allocations for live objects\n- **mutex**: Holders of contended mutexes\n- **threadcreate**: Stack traces that led to the creation of new OS threads\n"
+      description: 'Collects samples and returns reports for the following Go runtime profiles:
+
+
+        - **allocs**: All past memory allocations
+
+        - **block**: Stack traces that led to blocking on synchronization primitives
+
+        - **cpu**: (Optional) Program counters sampled from the executing stack.
+
+        Include by passing the `cpu` query parameter with a duration value.
+
+        Equivalent to the report from `GET /debug/pprof/profile?seconds=NUMBER_OF_SECONDS`.
+
+        - **goroutine**: All current goroutines
+
+        - **heap**: Memory allocations for live objects
+
+        - **mutex**: Holders of contended mutexes
+
+        - **threadcreate**: Stack traces that led to the creation of new OS threads'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: Get all profiles'
@@ -224,25 +243,25 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/allocs:
     get:
       operationId: GetDebugPprofAllocs
       tags:
       - System information endpoints
       summary: Retrieve the memory allocations runtime profile
-      description: 'Returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof) report of
+      description: 'Returns a Go runtime profile report of
 
         all past memory allocations.
 
         **allocs** is the same as the **heap** profile,
 
-        but changes the default [pprof](https://pkg.go.dev/runtime/pprof)
+        but changes the default pprof
 
         display to __-alloc_space__,
 
-        the total number of bytes allocated since the program began (including garbage-collected bytes).
-
-        '
+        the total number of bytes allocated since the program began (including garbage-collected bytes).'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -326,17 +345,17 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/block:
     get:
       operationId: GetDebugPprofBlock
       tags:
       - System information endpoints
       summary: Retrieve the block runtime profile
-      description: 'Collects samples and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)
+      description: 'Collects samples and returns a Go runtime profile
 
-        report of stack traces that led to blocking on synchronization primitives.
-
-        '
+        report of stack traces that led to blocking on synchronization primitives.'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -420,15 +439,15 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/cmdline:
     get:
       operationId: GetDebugPprofCmdline
       tags:
       - System information endpoints
       summary: Retrieve the command line invocation
-      description: 'Returns the command line that invoked InfluxDB.
-
-        '
+      description: Returns the command line that invoked InfluxDB.
       servers:
       - url: ''
       parameters:
@@ -444,17 +463,17 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/goroutine:
     get:
       operationId: GetDebugPprofGoroutine
       tags:
       - System information endpoints
       summary: Retrieve the goroutines runtime profile
-      description: 'Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)
+      description: 'Collects statistics and returns a Go runtime profile
 
-        report of all current goroutines.
-
-        '
+        report of all current goroutines.'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -538,22 +557,22 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/heap:
     get:
       operationId: GetDebugPprofHeap
       tags:
       - System information endpoints
       summary: Retrieve the heap runtime profile
-      description: 'Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)
+      description: 'Collects statistics and returns a Go runtime profile
 
         report of memory allocations for live objects.
 
 
         To run **garbage collection** before sampling,
 
-        pass the `gc` query parameter with a value of `1`.
-
-        '
+        pass the `gc` query parameter with a value of `1`.'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -663,19 +682,19 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/mutex:
     get:
       operationId: GetDebugPprofMutex
       tags:
       - System information endpoints
       summary: Retrieve the mutual exclusion (mutex) runtime profile
-      description: 'Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof) report of
+      description: 'Collects statistics and returns a Go runtime profile report of
 
         lock contentions.
 
-        The profile contains stack traces of holders of contended mutual exclusions (mutexes).
-
-        '
+        The profile contains stack traces of holders of contended mutual exclusions (mutexes).'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -759,17 +778,17 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/profile:
     get:
       operationId: GetDebugPprofProfile
       tags:
       - System information endpoints
       summary: Retrieve the CPU runtime profile
-      description: 'Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)
+      description: 'Collects statistics and returns a Go runtime profile
 
-        report of program counters on the executing stack.
-
-        '
+        report of program counters on the executing stack.'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -824,17 +843,17 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/threadcreate:
     get:
       operationId: GetDebugPprofThreadCreate
       tags:
       - System information endpoints
       summary: Retrieve the threadcreate runtime profile
-      description: 'Collects statistics and returns a [Go runtime profile](https://pkg.go.dev/runtime/pprof)
+      description: 'Collects statistics and returns a Go runtime profile
 
-        report of stack traces that led to the creation of new OS threads.
-
-        '
+        report of stack traces that led to the creation of new OS threads.'
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool pprof'
@@ -922,15 +941,15 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /debug/pprof/trace:
     get:
       operationId: GetDebugPprofTrace
       tags:
       - System information endpoints
       summary: Retrieve the runtime execution trace
-      description: 'Collects profile data and returns trace execution events for the current program.
-
-        '
+      description: Collects profile data and returns trace execution events for the current program.
       x-codeSamples:
       - lang: Shell
         label: 'Shell: go tool trace'
@@ -974,6 +993,8 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /health:
     get:
       operationId: GetHealth
@@ -1005,6 +1026,8 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /metrics:
     get:
       operationId: GetMetrics
@@ -1020,13 +1043,11 @@ paths:
         #### Related guides
 
 
-        - For the list of metrics categories, see [InfluxDB OSS metrics](https://docs.influxdata.com/influxdb/latest/reference/internals/metrics/).
+        - For the list of metrics categories, see InfluxDB OSS metrics.
 
-        - Learn how to use InfluxDB to [scrape Prometheus metrics](https://docs.influxdata.com/influxdb/latest/write-data/developer-tools/scrape-prometheus-metrics/).
+        - Learn how to use InfluxDB to scrape Prometheus metrics.
 
-        - Learn how InfluxDB [parses the Prometheus exposition format](https://docs.influxdata.com/influxdb/latest/reference/prometheus-metrics/).
-
-        '
+        - Learn how InfluxDB parses the Prometheus exposition format.'
       servers:
       - url: ''
       parameters:
@@ -1079,6 +1100,8 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /ready:
     get:
       operationId: GetReady
@@ -1099,6 +1122,8 @@ paths:
         default:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
   /config:
     get:
       operationId: GetConfig
@@ -1116,9 +1141,7 @@ paths:
         #### Related guides
 
 
-        - [View your runtime server configuration](https://docs.influxdata.com/influxdb/latest/reference/config-options/#view-your-runtime-server-configuration)
-
-        '
+        - View your runtime server configuration'
       parameters:
       - $ref: '#/components/parameters/TraceSpan'
       responses:
@@ -1136,31 +1159,45 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
         default:
           $ref: '#/components/responses/GeneralServerError'
+    servers:
+    - url: /api/v2
 components:
   schemas:
-    HealthCheck:
-      type: object
-      required:
-      - name
-      - status
+    Error:
       properties:
-        name:
-          type: string
-        message:
-          type: string
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/HealthCheck'
-        status:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
           type: string
           enum:
-          - pass
-          - fail
-        version:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
           type: string
-        commit:
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
           type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     Routes:
       properties:
         authorizations:
@@ -1241,11 +1278,6 @@ components:
         write:
           type: string
           format: uri
-    Config:
-      type: object
-      properties:
-        config:
-          type: object
     Ready:
       type: object
       properties:
@@ -1260,48 +1292,34 @@ components:
         up:
           type: string
           example: 14m45.911966424s
-    Error:
+    Config:
+      type: object
       properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
+        config:
+          type: object
+    HealthCheck:
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthCheck'
+        status:
           type: string
           enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
+          - pass
+          - fail
+        version:
           type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
+        commit:
           type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -1315,6 +1333,13 @@ components:
       required: false
       schema:
         type: string
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey
@@ -1325,6 +1350,9 @@ components:
       type: http
       scheme: basic
       description: "### Basic authentication scheme\n\nUse the HTTP Basic authentication scheme for InfluxDB `/api/v2` API operations that support it:\n\n### Syntax\n\n`Authorization: Basic BASE64_ENCODED_CREDENTIALS`\n\nTo construct the `BASE64_ENCODED_CREDENTIALS`, combine the username and\nthe password with a colon (`USERNAME:PASSWORD`), and then encode the\nresulting string in [base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64).\nMany HTTP clients encode the credentials for you before sending the\nrequest.\n\n_**Warning**: Base64-encoding can easily be reversed to obtain the original\nusername and password. It is used to keep the data intact and does not provide\nsecurity. You should always use HTTPS when authenticating or sending a request with\nsensitive information._\n\n### Examples\n\nIn the examples, replace the following:\n\n- **`EMAIL_ADDRESS`**: InfluxDB Cloud username (the email address the user signed up with)\n- **`PASSWORD`**: InfluxDB Cloud [API token](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#token)\n- **`INFLUX_URL`**: your InfluxDB Cloud URL\n\n#### Encode credentials with cURL\n\nThe following example shows how to use cURL to send an API request that uses Basic authentication.\nWith the `--user` option, cURL encodes the credentials and passes them\nin the `Authorization: Basic` header.\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --user \"EMAIL_ADDRESS\":\"PASSWORD\"\n```\n\n#### Encode credentials with Flux\n\nThe Flux [`http.basicAuth()` function](https://docs.influxdata.com/flux/v0.x/stdlib/http/basicauth/) returns a Base64-encoded\nbasic authentication header using a specified username and password combination.\n\n#### Encode credentials with JavaScript\n\nThe following example shows how to use the JavaScript `btoa()` function\nto create a Base64-encoded string:\n\n```js\nbtoa('EMAIL_ADDRESS:PASSWORD')\n```\n\nThe output is the following:\n\n```js\n'VVNFUk5BTUU6UEFTU1dPUkQ='\n```\n\nOnce you have the Base64-encoded credentials, you can pass them in the\n`Authorization` header--for example:\n\n```sh\ncurl --get \"INFLUX_URL/api/v2/signin\"\n    --header \"Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=\"\n```\n\nTo learn more about HTTP authentication, see\n[Mozilla Developer Network (MDN) Web Docs, HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)._\n"
+x-refined-from:
+- influxdata-cloud-openapi-original.yml
+- influxdata-oss-openapi-original.yml
 x-tagGroups:
 - name: Overview
   tags:
