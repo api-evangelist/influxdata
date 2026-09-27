@@ -346,344 +346,6 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    GreaterThreshold:
-      allOf:
-      - $ref: '#/components/schemas/ThresholdBase'
-      - type: object
-        required:
-        - type
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - greater
-          value:
-            type: number
-            format: float
-    BuilderAggregateFunctionType:
-      type: string
-      enum:
-      - filter
-      - group
-    ThresholdCheck:
-      allOf:
-      - $ref: '#/components/schemas/CheckBase'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - threshold
-          thresholds:
-            type: array
-            items:
-              $ref: '#/components/schemas/Threshold'
-          every:
-            description: Check repetition interval.
-            type: string
-          offset:
-            description: Duration to delay after the schedule, before executing check.
-            type: string
-          tags:
-            description: List of tags to write to each status.
-            type: array
-            items:
-              type: object
-              properties:
-                key:
-                  type: string
-                value:
-                  type: string
-          statusMessageTemplate:
-            description: The template used to generate and write a status message.
-            type: string
-    CheckDiscriminator:
-      oneOf:
-      - $ref: '#/components/schemas/DeadmanCheck'
-      - $ref: '#/components/schemas/ThresholdCheck'
-      - $ref: '#/components/schemas/CustomCheck'
-      discriminator:
-        propertyName: type
-        mapping:
-          deadman: '#/components/schemas/DeadmanCheck'
-          threshold: '#/components/schemas/ThresholdCheck'
-          custom: '#/components/schemas/CustomCheck'
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    ThresholdBase:
-      properties:
-        level:
-          $ref: '#/components/schemas/CheckStatusLevel'
-        allValues:
-          description: If true, only alert if all values meet threshold.
-          type: boolean
-    BuilderConfig:
-      type: object
-      properties:
-        buckets:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/BuilderTagsType'
-        functions:
-          type: array
-          items:
-            $ref: '#/components/schemas/BuilderFunctionsType'
-        aggregateWindow:
-          type: object
-          properties:
-            period:
-              type: string
-            fillValues:
-              type: boolean
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    CustomCheck:
-      allOf:
-      - $ref: '#/components/schemas/CheckBase'
-      - type: object
-        properties:
-          type:
-            type: string
-            enum:
-            - custom
-        required:
-        - type
-    Threshold:
-      oneOf:
-      - $ref: '#/components/schemas/GreaterThreshold'
-      - $ref: '#/components/schemas/LesserThreshold'
-      - $ref: '#/components/schemas/RangeThreshold'
-      discriminator:
-        propertyName: type
-        mapping:
-          greater: '#/components/schemas/GreaterThreshold'
-          lesser: '#/components/schemas/LesserThreshold'
-          range: '#/components/schemas/RangeThreshold'
-    CheckStatusLevel:
-      description: The state to record if check matches a criteria.
-      type: string
-      enum:
-      - UNKNOWN
-      - OK
-      - INFO
-      - CRIT
-      - WARN
-    Checks:
-      properties:
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Check'
-        links:
-          $ref: '#/components/schemas/Links'
-    Check:
-      allOf:
-      - $ref: '#/components/schemas/CheckDiscriminator'
-    TaskStatusType:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
-
-        '
-    CheckPatch:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-    BuilderTagsType:
-      type: object
-      properties:
-        key:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-        aggregateFunctionType:
-          $ref: '#/components/schemas/BuilderAggregateFunctionType'
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    DeadmanCheck:
-      allOf:
-      - $ref: '#/components/schemas/CheckBase'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - deadman
-          timeSince:
-            description: String duration before deadman triggers.
-            type: string
-          staleTime:
-            description: String duration for time that a series is considered stale and should not trigger deadman.
-            type: string
-          reportZero:
-            description: If only zero values reported since time, trigger an alert
-            type: boolean
-          level:
-            $ref: '#/components/schemas/CheckStatusLevel'
-          every:
-            description: Check repetition interval.
-            type: string
-          offset:
-            description: Duration to delay after the schedule, before executing check.
-            type: string
-          tags:
-            description: List of tags to write to each status.
-            type: array
-            items:
-              type: object
-              properties:
-                key:
-                  type: string
-                value:
-                  type: string
-          statusMessageTemplate:
-            description: The template used to generate and write a status message.
-            type: string
-    PostCheck:
-      allOf:
-      - $ref: '#/components/schemas/CheckDiscriminator'
-    FluxResponse:
-      description: Rendered flux that backs the check or notification.
-      properties:
-        flux:
-          type: string
-    LesserThreshold:
-      allOf:
-      - $ref: '#/components/schemas/ThresholdBase'
-      - type: object
-        required:
-        - type
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - lesser
-          value:
-            type: number
-            format: float
-    RangeThreshold:
-      allOf:
-      - $ref: '#/components/schemas/ThresholdBase'
-      - type: object
-        required:
-        - type
-        - min
-        - max
-        - within
-        properties:
-          type:
-            type: string
-            enum:
-            - range
-          min:
-            type: number
-            format: float
-          max:
-            type: number
-            format: float
-          within:
-            type: boolean
-    BuilderFunctionsType:
-      type: object
-      properties:
-        name:
-          type: string
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    DashboardQuery:
-      type: object
-      properties:
-        text:
-          type: string
-          description: The text of the Flux query.
-        editMode:
-          $ref: '#/components/schemas/QueryEditMode'
-        name:
-          type: string
-        builderConfig:
-          $ref: '#/components/schemas/BuilderConfig'
     CheckBase:
       properties:
         id:
@@ -762,6 +424,228 @@ components:
       - name
       - orgID
       - query
+    ThresholdBase:
+      properties:
+        level:
+          $ref: '#/components/schemas/CheckStatusLevel'
+        allValues:
+          description: If true, only alert if all values meet threshold.
+          type: boolean
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    BuilderTagsType:
+      type: object
+      properties:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        aggregateFunctionType:
+          $ref: '#/components/schemas/BuilderAggregateFunctionType'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    Check:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
+    CustomCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - custom
+        required:
+        - type
+    ThresholdCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - threshold
+          thresholds:
+            type: array
+            items:
+              $ref: '#/components/schemas/Threshold'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    DeadmanCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - deadman
+          timeSince:
+            description: String duration before deadman triggers.
+            type: string
+          staleTime:
+            description: String duration for time that a series is considered stale and should not trigger deadman.
+            type: string
+          reportZero:
+            description: If only zero values reported since time, trigger an alert
+            type: boolean
+          level:
+            $ref: '#/components/schemas/CheckStatusLevel'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    BuilderAggregateFunctionType:
+      type: string
+      enum:
+      - filter
+      - group
+    CheckPatch:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    CheckDiscriminator:
+      oneOf:
+      - $ref: '#/components/schemas/DeadmanCheck'
+      - $ref: '#/components/schemas/ThresholdCheck'
+      - $ref: '#/components/schemas/CustomCheck'
+      discriminator:
+        propertyName: type
+        mapping:
+          deadman: '#/components/schemas/DeadmanCheck'
+          threshold: '#/components/schemas/ThresholdCheck'
+          custom: '#/components/schemas/CustomCheck'
+    Checks:
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Check'
+        links:
+          $ref: '#/components/schemas/Links'
+    FluxResponse:
+      description: Rendered flux that backs the check or notification.
+      properties:
+        flux:
+          type: string
+    Threshold:
+      oneOf:
+      - $ref: '#/components/schemas/GreaterThreshold'
+      - $ref: '#/components/schemas/LesserThreshold'
+      - $ref: '#/components/schemas/RangeThreshold'
+      discriminator:
+        propertyName: type
+        mapping:
+          greater: '#/components/schemas/GreaterThreshold'
+          lesser: '#/components/schemas/LesserThreshold'
+          range: '#/components/schemas/RangeThreshold'
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    GreaterThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - greater
+          value:
+            type: number
+            format: float
+    PostCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
     Error:
       properties:
         code:
@@ -797,16 +681,132 @@ components:
           type: string
       required:
       - code
-    QueryEditMode:
-      type: string
-      enum:
-      - builder
-      - advanced
+    BuilderConfig:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderTagsType'
+        functions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderFunctionsType'
+        aggregateWindow:
+          type: object
+          properties:
+            period:
+              type: string
+            fillValues:
+              type: boolean
+    LesserThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - lesser
+          value:
+            type: number
+            format: float
+    DashboardQuery:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text of the Flux query.
+        editMode:
+          $ref: '#/components/schemas/QueryEditMode'
+        name:
+          type: string
+        builderConfig:
+          $ref: '#/components/schemas/BuilderConfig'
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    QueryEditMode:
+      type: string
+      enum:
+      - builder
+      - advanced
+    RangeThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - min
+        - max
+        - within
+        properties:
+          type:
+            type: string
+            enum:
+            - range
+          min:
+            type: number
+            format: float
+          max:
+            type: number
+            format: float
+          within:
+            type: boolean
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
+    CheckStatusLevel:
+      description: The state to record if check matches a criteria.
+      type: string
+      enum:
+      - UNKNOWN
+      - OK
+      - INFO
+      - CRIT
+      - WARN
+    BuilderFunctionsType:
+      type: object
+      properties:
+        name:
+          type: string
     CheckBase_2:
       properties:
         id:
@@ -886,18 +886,6 @@ components:
       - orgID
       - query
   parameters:
-    Limit:
-      in: query
-      name: limit
-      required: false
-      description: 'Limits the number of records returned. Default is `20`.
-
-        '
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
     TraceSpan:
       in: header
       name: Zap-Trace-Span
@@ -910,6 +898,18 @@ components:
       required: false
       schema:
         type: string
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
     Offset:
       in: query
       name: offset

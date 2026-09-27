@@ -461,6 +461,30 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
     TelegrafPluginRequest:
       type: object
       properties:
@@ -494,184 +518,6 @@ components:
           type: string
         orgID:
           type: string
-    ResourceOwners:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceOwner'
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    Telegrafs:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Telegraf'
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
     ResourceMembers:
       type: object
       properties:
@@ -732,6 +578,145 @@ components:
           labels:
             readOnly: true
             $ref: '#/components/schemas/Labels'
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Telegrafs:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Telegraf'
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
     AddResourceMemberRequestBody:
       type: object
       properties:
@@ -747,11 +732,26 @@ components:
             '
       required:
       - id
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
   parameters:
     TraceSpan:
       in: header

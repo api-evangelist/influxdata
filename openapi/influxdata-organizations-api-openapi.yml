@@ -980,91 +980,6 @@ paths:
     servers:
     - url: /api/v2
 components:
-  responses:
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    AuthorizationError:
-      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
-      content:
-        application/json:
-          schema:
-            properties:
-              code:
-                description: 'The HTTP status code description. Default is `unauthorized`.
-
-                  '
-                readOnly: true
-                type: string
-                enum:
-                - unauthorized
-              message:
-                readOnly: true
-                description: A human-readable message that may contain detail about the error.
-                type: string
-          examples:
-            tokenNotAuthorized:
-              summary: Token is not authorized to access a resource
-              value:
-                code: unauthorized
-                message: unauthorized access
   schemas:
     ResourceOwners:
       type: object
@@ -1079,115 +994,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceOwner'
-    PatchOrganizationRequest:
-      type: object
-      description: 'An object that contains updated organization properties to apply.
-
-        '
-      properties:
-        name:
-          type: string
-          description: 'The name of the organization.
-
-            '
-        description:
-          type: string
-          description: 'The description of the organization.
-
-            '
-    Organizations:
-      type: object
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        orgs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Organization'
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    PostOrganizationRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'The name of the organization.
-
-            '
-        description:
-          type: string
-          description: 'The description of the organization.
-
-            '
-      required:
-      - name
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
     Organization:
       properties:
         links:
@@ -1249,6 +1055,84 @@ components:
           - inactive
       required:
       - name
+    PatchOrganizationRequest:
+      type: object
+      description: 'An object that contains updated organization properties to apply.
+
+        '
+      properties:
+        name:
+          type: string
+          description: 'The name of the organization.
+
+            '
+        description:
+          type: string
+          description: 'The description of the organization.
+
+            '
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Error:
       properties:
         code:
@@ -1284,19 +1168,20 @@ components:
           type: string
       required:
       - code
-    ResourceMembers:
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Organizations:
       type: object
       properties:
         links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
+          $ref: '#/components/schemas/Links'
+        orgs:
           type: array
           items:
-            $ref: '#/components/schemas/ResourceMember'
+            $ref: '#/components/schemas/Organization'
     AddResourceMemberRequestBody:
       type: object
       properties:
@@ -1312,24 +1197,134 @@ components:
             '
       required:
       - id
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-  parameters:
-    Limit:
-      in: query
-      name: limit
-      required: false
-      description: 'Limits the number of records returned. Default is `20`.
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    PostOrganizationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'The name of the organization.
+
+            '
+        description:
+          type: string
+          description: 'The description of the organization.
+
+            '
+      required:
+      - name
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
+  responses:
+    AuthorizationError:
+      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'The HTTP status code description. Default is `unauthorized`.
+
+                  '
+                readOnly: true
+                type: string
+                enum:
+                - unauthorized
+              message:
+                readOnly: true
+                description: A human-readable message that may contain detail about the error.
+                type: string
+          examples:
+            tokenNotAuthorized:
+              summary: Token is not authorized to access a resource
+              value:
+                code: unauthorized
+                message: unauthorized access
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequestError:
+      description: 'Bad request.
+
+        The response body contains detail about the error.
+
+
+        #### InfluxDB OSS
+
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
 
         '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Descending:
+      in: query
+      name: descending
+      required: false
       schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
+        type: boolean
+        default: false
     TraceSpan:
       in: header
       name: Zap-Trace-Span
@@ -1342,6 +1337,18 @@ components:
       required: false
       schema:
         type: string
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
     Offset:
       in: query
       name: offset
@@ -1357,13 +1364,6 @@ components:
       schema:
         type: integer
         minimum: 0
-    Descending:
-      in: query
-      name: descending
-      required: false
-      schema:
-        type: boolean
-        default: false
     Offset_2:
       in: query
       name: offset

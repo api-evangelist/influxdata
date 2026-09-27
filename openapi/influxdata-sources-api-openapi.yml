@@ -239,64 +239,68 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Label:
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    Sources:
       type: object
       properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
+        links:
           type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    Error:
+          properties:
+            self:
+              type: string
+              format: uri
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+    Buckets:
+      type: object
       properties:
-        code:
-          description: code is the machine-readable error code.
+        links:
           readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
+          $ref: '#/components/schemas/Links'
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
     Bucket:
       properties:
         links:
@@ -364,78 +368,46 @@ components:
       required:
       - name
       - retentionRules
-    Buckets:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        buckets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bucket'
-    RetentionRules:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule'
-    Sources:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source'
-    HealthCheck:
-      type: object
-      required:
-      - name
-      - status
-      properties:
-        name:
-          type: string
-        message:
-          type: string
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/HealthCheck'
-        status:
-          type: string
-          enum:
-          - pass
-          - fail
-        version:
-          type: string
-        commit:
-          type: string
     SchemaType:
       type: string
       enum:
       - implicit
       - explicit
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     RetentionRule:
       type: object
       properties:
@@ -537,29 +509,57 @@ components:
             enum:
             - flux
             - influxql
-    Links:
+    HealthCheck:
       type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
       required:
-      - self
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
+      - name
+      - status
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthCheck'
+        status:
+          type: string
+          enum:
+          - pass
+          - fail
+        version:
+          type: string
+        commit:
+          type: string
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
   parameters:
     TraceSpan:
       in: header

@@ -45,7 +45,37 @@ paths:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
 components:
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    HealthCheck:
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthCheck'
+        status:
+          type: string
+          enum:
+          - pass
+          - fail
+        version:
+          type: string
+        commit:
+          type: string
     Error:
       properties:
         code:
@@ -81,36 +111,6 @@ components:
           type: string
       required:
       - code
-    HealthCheck:
-      type: object
-      required:
-      - name
-      - status
-      properties:
-        name:
-          type: string
-        message:
-          type: string
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/HealthCheck'
-        status:
-          type: string
-          enum:
-          - pass
-          - fail
-        version:
-          type: string
-        commit:
-          type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

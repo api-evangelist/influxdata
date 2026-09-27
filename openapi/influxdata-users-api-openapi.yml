@@ -635,115 +635,20 @@ paths:
     servers:
     - url: /api/v2
 components:
-  responses:
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    AuthorizationError:
-      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
-      content:
-        application/json:
-          schema:
-            properties:
-              code:
-                description: 'The HTTP status code description. Default is `unauthorized`.
-
-                  '
-                readOnly: true
-                type: string
-                enum:
-                - unauthorized
-              message:
-                readOnly: true
-                description: A human-readable message that may contain detail about the error.
-                type: string
-          examples:
-            tokenNotAuthorized:
-              summary: Token is not authorized to access a resource
-              value:
-                code: unauthorized
-                message: unauthorized access
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    User:
+    Users:
+      type: object
       properties:
-        id:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        status:
-          description: If inactive the user is inactive.
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        role:
-          type: string
-          enum:
-          - owner
-          - member
-        org_id:
-          type: string
-      required:
-      - name
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
     UserResponse:
       properties:
         id:
@@ -779,6 +684,35 @@ components:
               format: uri
       required:
       - name
+    User:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        status:
+          description: If inactive the user is inactive.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        role:
+          type: string
+          enum:
+          - owner
+          - member
+        org_id:
+          type: string
+      required:
+      - name
+    PasswordResetBody:
+      properties:
+        password:
+          type: string
+      required:
+      - password
     Error:
       properties:
         code:
@@ -814,25 +748,6 @@ components:
           type: string
       required:
       - code
-    PasswordResetBody:
-      properties:
-        password:
-          type: string
-      required:
-      - password
-    Users:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserResponse'
     User_2:
       properties:
         id:
@@ -855,6 +770,91 @@ components:
           - inactive
       required:
       - name
+  responses:
+    AuthorizationError:
+      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'The HTTP status code description. Default is `unauthorized`.
+
+                  '
+                readOnly: true
+                type: string
+                enum:
+                - unauthorized
+              message:
+                readOnly: true
+                description: A human-readable message that may contain detail about the error.
+                type: string
+          examples:
+            tokenNotAuthorized:
+              summary: Token is not authorized to access a resource
+              value:
+                code: unauthorized
+                message: unauthorized access
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequestError:
+      description: 'Bad request.
+
+        The response body contains detail about the error.
+
+
+        #### InfluxDB OSS
+
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -868,6 +868,33 @@ components:
       required: false
       schema:
         type: string
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Offset:
+      in: query
+      name: offset
+      required: false
+      description: 'The offset for pagination.
+
+        The number of records to skip.
+
+
+        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
     After:
       in: query
       name: after
@@ -886,33 +913,6 @@ components:
         For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
 
         '
-    Offset:
-      in: query
-      name: offset
-      required: false
-      description: 'The offset for pagination.
-
-        The number of records to skip.
-
-
-        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
-
-        '
-      schema:
-        type: integer
-        minimum: 0
-    Limit:
-      in: query
-      name: limit
-      required: false
-      description: 'Limits the number of records returned. Default is `20`.
-
-        '
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
   securitySchemes:
     TokenAuthentication:
       type: apiKey

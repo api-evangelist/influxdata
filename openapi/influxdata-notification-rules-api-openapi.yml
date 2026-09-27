@@ -317,6 +317,39 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    NotificationRuleUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    RuleStatusLevel:
+      description: The state to record if check matches a criteria.
+      type: string
+      enum:
+      - UNKNOWN
+      - OK
+      - INFO
+      - CRIT
+      - WARN
+      - ANY
     SlackNotificationRuleBase:
       type: object
       required:
@@ -331,9 +364,42 @@ components:
           type: string
         messageTemplate:
           type: string
-    NotificationRule:
+    TelegramNotificationRuleBase:
+      type: object
+      required:
+      - type
+      - messageTemplate
+      - channel
+      properties:
+        type:
+          description: The discriminator between other types of notification rules is "telegram".
+          type: string
+          enum:
+          - telegram
+        messageTemplate:
+          description: The message template as a flux interpolated string.
+          type: string
+        parseMode:
+          description: Parse mode of the message text per https://core.telegram.org/bots/api#formatting-options. Defaults to "MarkdownV2".
+          type: string
+          enum:
+          - MarkdownV2
+          - HTML
+          - Markdown
+        disableWebPagePreview:
+          description: Disables preview of web links in the sent messages when "true". Defaults to "false".
+          type: boolean
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    TelegramNotificationRule:
       allOf:
-      - $ref: '#/components/schemas/NotificationRuleDiscriminator'
+      - $ref: '#/components/schemas/NotificationRuleBase'
+      - $ref: '#/components/schemas/TelegramNotificationRuleBase'
     PagerDutyNotificationRuleBase:
       type: object
       required:
@@ -346,115 +412,7 @@ components:
           - pagerduty
         messageTemplate:
           type: string
-    HTTPNotificationRule:
-      allOf:
-      - $ref: '#/components/schemas/NotificationRuleBase'
-      - $ref: '#/components/schemas/HTTPNotificationRuleBase'
-    NotificationRuleUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    StatusRule:
-      type: object
-      properties:
-        currentLevel:
-          $ref: '#/components/schemas/RuleStatusLevel'
-        previousLevel:
-          $ref: '#/components/schemas/RuleStatusLevel'
-        count:
-          type: integer
-        period:
-          type: string
-    TelegramNotificationRule:
-      allOf:
-      - $ref: '#/components/schemas/NotificationRuleBase'
-      - $ref: '#/components/schemas/TelegramNotificationRuleBase'
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    SMTPNotificationRule:
-      allOf:
-      - $ref: '#/components/schemas/NotificationRuleBase'
-      - $ref: '#/components/schemas/SMTPNotificationRuleBase'
-    TaskStatusType:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
-
-        '
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    SMTPNotificationRuleBase:
-      type: object
-      required:
-      - type
-      - subjectTemplate
-      - to
-      properties:
-        type:
-          type: string
-          enum:
-          - smtp
-        subjectTemplate:
-          type: string
-        bodyTemplate:
-          type: string
-        to:
-          type: string
-    PostNotificationRule:
+    NotificationRule:
       allOf:
       - $ref: '#/components/schemas/NotificationRuleDiscriminator'
     NotificationRuleBase:
@@ -581,32 +539,23 @@ components:
           pagerduty: '#/components/schemas/PagerDutyNotificationRule'
           http: '#/components/schemas/HTTPNotificationRule'
           telegram: '#/components/schemas/TelegramNotificationRule'
-    TagRule:
+    Links:
       type: object
+      description: 'URI pointers for additional paged results.
+
+        '
       properties:
-        key:
-          type: string
-        value:
-          type: string
-        operator:
-          type: string
-          enum:
-          - equal
-          - notequal
-          - equalregex
-          - notequalregex
-    NotificationRules:
-      properties:
-        notificationRules:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationRule'
-        links:
-          $ref: '#/components/schemas/Links'
-    SlackNotificationRule:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    PostNotificationRule:
       allOf:
-      - $ref: '#/components/schemas/NotificationRuleBase'
-      - $ref: '#/components/schemas/SlackNotificationRuleBase'
+      - $ref: '#/components/schemas/NotificationRuleDiscriminator'
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -620,34 +569,6 @@ components:
           type: string
       required:
       - labelID
-    RuleStatusLevel:
-      description: The state to record if check matches a criteria.
-      type: string
-      enum:
-      - UNKNOWN
-      - OK
-      - INFO
-      - CRIT
-      - WARN
-      - ANY
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    HTTPNotificationRuleBase:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          enum:
-          - http
-        url:
-          type: string
     Error:
       properties:
         code:
@@ -683,40 +604,119 @@ components:
           type: string
       required:
       - code
-    TelegramNotificationRuleBase:
-      type: object
-      required:
-      - type
-      - messageTemplate
-      - channel
-      properties:
-        type:
-          description: The discriminator between other types of notification rules is "telegram".
-          type: string
-          enum:
-          - telegram
-        messageTemplate:
-          description: The message template as a flux interpolated string.
-          type: string
-        parseMode:
-          description: Parse mode of the message text per https://core.telegram.org/bots/api#formatting-options. Defaults to "MarkdownV2".
-          type: string
-          enum:
-          - MarkdownV2
-          - HTML
-          - Markdown
-        disableWebPagePreview:
-          description: Disables preview of web links in the sent messages when "true". Defaults to "false".
-          type: boolean
     PagerDutyNotificationRule:
       allOf:
       - $ref: '#/components/schemas/NotificationRuleBase'
       - $ref: '#/components/schemas/PagerDutyNotificationRuleBase'
+    HTTPNotificationRule:
+      allOf:
+      - $ref: '#/components/schemas/NotificationRuleBase'
+      - $ref: '#/components/schemas/HTTPNotificationRuleBase'
+    TagRule:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        operator:
+          type: string
+          enum:
+          - equal
+          - notequal
+          - equalregex
+          - notequalregex
+    HTTPNotificationRuleBase:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - http
+        url:
+          type: string
+    NotificationRules:
+      properties:
+        notificationRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationRule'
+        links:
+          $ref: '#/components/schemas/Links'
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    SMTPNotificationRule:
+      allOf:
+      - $ref: '#/components/schemas/NotificationRuleBase'
+      - $ref: '#/components/schemas/SMTPNotificationRuleBase'
+    StatusRule:
+      type: object
+      properties:
+        currentLevel:
+          $ref: '#/components/schemas/RuleStatusLevel'
+        previousLevel:
+          $ref: '#/components/schemas/RuleStatusLevel'
+        count:
+          type: integer
+        period:
+          type: string
+    SlackNotificationRule:
+      allOf:
+      - $ref: '#/components/schemas/NotificationRuleBase'
+      - $ref: '#/components/schemas/SlackNotificationRuleBase'
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
+    SMTPNotificationRuleBase:
+      type: object
+      required:
+      - type
+      - subjectTemplate
+      - to
+      properties:
+        type:
+          type: string
+          enum:
+          - smtp
+        subjectTemplate:
+          type: string
+        bodyTemplate:
+          type: string
+        to:
+          type: string
     NotificationRuleBase_2:
       type: object
       required:
@@ -827,18 +827,6 @@ components:
               description: The URL to retrieve the Flux script for this notification rule.
               $ref: '#/components/schemas/Link'
   parameters:
-    Limit:
-      in: query
-      name: limit
-      required: false
-      description: 'Limits the number of records returned. Default is `20`.
-
-        '
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
     TraceSpan:
       in: header
       name: Zap-Trace-Span
@@ -851,6 +839,18 @@ components:
       required: false
       schema:
         type: string
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
     Offset:
       in: query
       name: offset

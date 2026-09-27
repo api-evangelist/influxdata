@@ -84,106 +84,92 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    OnboardingResponse:
-      type: object
+    Organization:
       properties:
-        user:
-          $ref: '#/components/schemas/UserResponse'
-        org:
-          $ref: '#/components/schemas/Organization'
-        bucket:
-          $ref: '#/components/schemas/Bucket'
-        auth:
-          $ref: '#/components/schemas/Authorization'
-    SchemaType:
-      type: string
-      enum:
-      - implicit
-      - explicit
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    UserResponse:
-      properties:
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/orgs/1
+            members: /api/v2/orgs/1/members
+            owners: /api/v2/orgs/1/owners
+            labels: /api/v2/orgs/1/labels
+            secrets: /api/v2/orgs/1/secrets
+            buckets: /api/v2/buckets?org=myorg
+            tasks: /api/v2/tasks?org=myorg
+            dashboards: /api/v2/dashboards?org=myorg
+          properties:
+            self:
+              $ref: '#/components/schemas/Link'
+            members:
+              $ref: '#/components/schemas/Link'
+            owners:
+              $ref: '#/components/schemas/Link'
+            labels:
+              $ref: '#/components/schemas/Link'
+            secrets:
+              $ref: '#/components/schemas/Link'
+            buckets:
+              $ref: '#/components/schemas/Link'
+            tasks:
+              $ref: '#/components/schemas/Link'
+            dashboards:
+              $ref: '#/components/schemas/Link'
         id:
           readOnly: true
           type: string
-          description: 'The user ID.
-
-            '
         name:
           type: string
-          description: 'The user name.
-
-            '
+        defaultStorageType:
+          description: Discloses whether the organization uses TSM or IOx.
+          type: string
+          enum:
+          - tsm
+          - iox
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
         status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
+          description: If inactive, the organization is inactive.
           default: active
           type: string
           enum:
           - active
           - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
       required:
       - name
-    RetentionRule:
-      type: object
-      properties:
-        type:
-          type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The duration in seconds for how long data will be kept in the database.
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
 
-            The default duration is 2592000 (30 days).
-
-            0 represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The shard group duration.
-
-            The duration or interval (in seconds) that each shard group covers.
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
 
 
-            #### InfluxDB Cloud
+        #### InfluxDB Cloud
 
 
-            - Does not use `shardGroupDurationsSeconds`.
+        - `retentionRules` is required.
 
 
-            #### InfluxDB OSS
+        #### InfluxDB OSS
 
 
-            - Default value depends on the
+        - `retentionRules` isn''t required.
 
-            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
-
-            '
-      required:
-      - everySeconds
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
     Resource:
       type: object
       required:
@@ -251,29 +237,6 @@ components:
             The organization that owns the resource.
 
             '
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
     IsOnboarding:
       type: object
       properties:
@@ -284,112 +247,11 @@ components:
 
             '
           type: boolean
-    RetentionRules:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule'
-    Organization:
-      properties:
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/orgs/1
-            members: /api/v2/orgs/1/members
-            owners: /api/v2/orgs/1/owners
-            labels: /api/v2/orgs/1/labels
-            secrets: /api/v2/orgs/1/secrets
-            buckets: /api/v2/buckets?org=myorg
-            tasks: /api/v2/tasks?org=myorg
-            dashboards: /api/v2/dashboards?org=myorg
-          properties:
-            self:
-              $ref: '#/components/schemas/Link'
-            members:
-              $ref: '#/components/schemas/Link'
-            owners:
-              $ref: '#/components/schemas/Link'
-            labels:
-              $ref: '#/components/schemas/Link'
-            secrets:
-              $ref: '#/components/schemas/Link'
-            buckets:
-              $ref: '#/components/schemas/Link'
-            tasks:
-              $ref: '#/components/schemas/Link'
-            dashboards:
-              $ref: '#/components/schemas/Link'
-        id:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        defaultStorageType:
-          description: Discloses whether the organization uses TSM or IOx.
-          type: string
-          enum:
-          - tsm
-          - iox
-        description:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        status:
-          description: If inactive, the organization is inactive.
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-      required:
-      - name
-    AuthorizationUpdateRequest:
-      properties:
-        status:
-          description: Status of the token. If `inactive`, InfluxDB rejects requests that use the token.
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        description:
-          type: string
-          description: A description of the token.
-    Permission:
-      required:
-      - action
-      - resource
-      properties:
-        action:
-          type: string
-          enum:
-          - read
-          - write
-        resource:
-          $ref: '#/components/schemas/Resource'
+    SchemaType:
+      type: string
+      enum:
+      - implicit
+      - explicit
     Authorization:
       required:
       - orgID
@@ -482,130 +344,98 @@ components:
               user:
                 readOnly: true
                 $ref: '#/components/schemas/Link'
-    OnboardingRequest:
+    RetentionRule:
       type: object
       properties:
-        username:
+        type:
           type: string
-        password:
-          type: string
-        org:
-          type: string
-        bucket:
-          type: string
-        retentionPeriodHrs:
+          default: expire
+          enum:
+          - expire
+        everySeconds:
           type: integer
-          deprecated: true
-        retentionPeriodSeconds:
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
           type: integer
-        limit:
-          $ref: '#/components/schemas/Limit'
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+            '
       required:
-      - username
-      - org
-      - bucket
-    Error:
+      - everySeconds
+    Permission:
+      required:
+      - action
+      - resource
       properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
+        action:
           type: string
           enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    Bucket:
+          - read
+          - write
+        resource:
+          $ref: '#/components/schemas/Resource'
+    UserResponse:
       properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
         links:
           type: object
           readOnly: true
           example:
-            labels: /api/v2/buckets/1/labels
-            members: /api/v2/buckets/1/members
-            org: /api/v2/orgs/2
-            owners: /api/v2/buckets/1/owners
-            self: /api/v2/buckets/1
-            write: /api/v2/write?org=2&bucket=1
+            self: /api/v2/users/1
           properties:
-            labels:
-              description: The URL to retrieve labels for this bucket.
-              $ref: '#/components/schemas/Link'
-            members:
-              description: The URL to retrieve members that can read this bucket.
-              $ref: '#/components/schemas/Link'
-            org:
-              description: The URL to retrieve parent organization for this bucket.
-              $ref: '#/components/schemas/Link'
-            owners:
-              description: The URL to retrieve owners that can read and write to this bucket.
-              $ref: '#/components/schemas/Link'
             self:
-              description: The URL for this bucket.
-              $ref: '#/components/schemas/Link'
-            write:
-              description: The URL to write line protocol to this bucket.
-              $ref: '#/components/schemas/Link'
-        id:
-          readOnly: true
-          type: string
-        type:
-          readOnly: true
-          type: string
-          default: user
-          enum:
-          - user
-          - system
-        name:
-          type: string
-        description:
-          type: string
-        orgID:
-          type: string
-        rp:
-          type: string
-        schemaType:
-          $ref: '#/components/schemas/SchemaType'
-          default: implicit
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        retentionRules:
-          $ref: '#/components/schemas/RetentionRules'
-        labels:
-          $ref: '#/components/schemas/Labels'
+              type: string
+              format: uri
       required:
       - name
-      - retentionRules
     Limit:
       type: object
       description: These are org limits similar to those configured in/by quartz.
@@ -740,56 +570,181 @@ components:
       - check
       - notificationRule
       - notificationEndpoint
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    Bucket:
+      properties:
+        links:
+          type: object
+          readOnly: true
+          example:
+            labels: /api/v2/buckets/1/labels
+            members: /api/v2/buckets/1/members
+            org: /api/v2/orgs/2
+            owners: /api/v2/buckets/1/owners
+            self: /api/v2/buckets/1
+            write: /api/v2/write?org=2&bucket=1
+          properties:
+            labels:
+              description: The URL to retrieve labels for this bucket.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members that can read this bucket.
+              $ref: '#/components/schemas/Link'
+            org:
+              description: The URL to retrieve parent organization for this bucket.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners that can read and write to this bucket.
+              $ref: '#/components/schemas/Link'
+            self:
+              description: The URL for this bucket.
+              $ref: '#/components/schemas/Link'
+            write:
+              description: The URL to write line protocol to this bucket.
+              $ref: '#/components/schemas/Link'
+        id:
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+          default: user
+          enum:
+          - user
+          - system
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        rp:
+          type: string
+        schemaType:
+          $ref: '#/components/schemas/SchemaType'
+          default: implicit
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        retentionRules:
+          $ref: '#/components/schemas/RetentionRules'
+        labels:
+          $ref: '#/components/schemas/Labels'
+      required:
+      - name
+      - retentionRules
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
-    RetentionRule_2:
+    Label:
       type: object
       properties:
-        type:
+        id:
+          readOnly: true
           type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The duration in seconds for how long data will be kept in the database.
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
 
-            The default duration is 2592000 (30 days).
-
-            0 represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The shard group duration.
-
-            The duration or interval (in seconds) that each shard group covers.
-
-
-            #### InfluxDB Cloud
-
-
-            - Does not use `shardGroupDurationsSeconds`.
-
-
-            #### InfluxDB OSS
-
-
-            - Default value depends on the
-
-            [bucket retention period](https://docs.influxdata.com/influxdb/latest/reference/internals/shards/#shard-group-duration).
+            To remove a property, send an update with an empty value (`""`) for the key.
 
             '
+          example:
+            color: ffb3b3
+            description: this is a description
+    OnboardingRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        org:
+          type: string
+        bucket:
+          type: string
+        retentionPeriodHrs:
+          type: integer
+          deprecated: true
+        retentionPeriodSeconds:
+          type: integer
+        limit:
+          $ref: '#/components/schemas/Limit'
       required:
-      - everySeconds
+      - username
+      - org
+      - bucket
+    AuthorizationUpdateRequest:
+      properties:
+        status:
+          description: Status of the token. If `inactive`, InfluxDB rejects requests that use the token.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        description:
+          type: string
+          description: A description of the token.
+    OnboardingResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserResponse'
+        org:
+          $ref: '#/components/schemas/Organization'
+        bucket:
+          $ref: '#/components/schemas/Bucket'
+        auth:
+          $ref: '#/components/schemas/Authorization'
     RetentionRules_2:
       type: array
       description: 'Retention rules to expire or retain data.
@@ -811,35 +766,6 @@ components:
         '
       items:
         $ref: '#/components/schemas/RetentionRule_2'
-    OnboardingRequest_2:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-        org:
-          type: string
-        bucket:
-          type: string
-        retentionPeriodSeconds:
-          type: integer
-          format: int64
-        retentionPeriodHrs:
-          type: integer
-          deprecated: true
-          description: 'Retention period *in nanoseconds* for the new bucket. This key''s name has been misleading since OSS 2.0 GA, please transition to use `retentionPeriodSeconds`
-
-            '
-        token:
-          type: string
-          description: 'Authentication token to set on the initial user. If not specified, the server will generate a token.
-
-            '
-      required:
-      - username
-      - org
-      - bucket
     Authorization_2:
       required:
       - orgID
@@ -932,6 +858,87 @@ components:
               user:
                 readOnly: true
                 $ref: '#/components/schemas/Link'
+    RetentionRule_2:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/latest/reference/internals/shards/#shard-group-duration).
+
+            '
+      required:
+      - everySeconds
+    OnboardingRequest_2:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        org:
+          type: string
+        bucket:
+          type: string
+        retentionPeriodSeconds:
+          type: integer
+          format: int64
+        retentionPeriodHrs:
+          type: integer
+          deprecated: true
+          description: 'Retention period *in nanoseconds* for the new bucket. This key''s name has been misleading since OSS 2.0 GA, please transition to use `retentionPeriodSeconds`
+
+            '
+        token:
+          type: string
+          description: 'Authentication token to set on the initial user. If not specified, the server will generate a token.
+
+            '
+      required:
+      - username
+      - org
+      - bucket
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -945,13 +952,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

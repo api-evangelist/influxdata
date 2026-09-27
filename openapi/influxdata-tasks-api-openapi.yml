@@ -1537,91 +1537,6 @@ paths:
     servers:
     - url: /api/v2
 components:
-  responses:
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    AuthorizationError:
-      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
-      content:
-        application/json:
-          schema:
-            properties:
-              code:
-                description: 'The HTTP status code description. Default is `unauthorized`.
-
-                  '
-                readOnly: true
-                type: string
-                enum:
-                - unauthorized
-              message:
-                readOnly: true
-                description: A human-readable message that may contain detail about the error.
-                type: string
-          examples:
-            tokenNotAuthorized:
-              summary: Token is not authorized to access a resource
-              value:
-                code: unauthorized
-                message: unauthorized access
   schemas:
     ResourceOwners:
       type: object
@@ -1636,10 +1551,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceOwner'
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
     Task:
       type: object
       properties:
@@ -1801,240 +1712,10 @@ components:
       - id
       - name
       - orgID
-    Logs:
-      type: object
-      properties:
-        events:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LogEvent'
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    RunManually:
-      properties:
-        scheduledFor:
-          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)
-
-            used for the run''s `now` option.
-
-            Default is the server _now_ time.
-
-            '
-          type:
-          - string
-          - 'null'
-          format: date-time
-    TaskStatusType:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
-
-        '
-    TaskUpdateRequest:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/TaskStatusType'
-        flux:
-          description: Update the Flux script that the task runs.
-          type: string
-        name:
-          description: Update the 'name' option in the flux script.
-          type: string
-        every:
-          description: Update the 'every' option in the flux script.
-          type: string
-        cron:
-          description: Update the 'cron' option in the flux script.
-          type: string
-        offset:
-          description: Update the 'offset' option in the flux script.
-          type: string
-        description:
-          description: Update the description of the task.
-          type: string
-        scriptID:
-          description: Update the 'scriptID' of the task.
-          type: string
-        scriptParameters:
-          description: Update the 'scriptParameters' of the task.
-          type: object
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    TaskCreateRequest:
-      type: object
-      properties:
-        orgID:
-          description: The ID of the organization that owns the task.
-          type: string
-        org:
-          description: The name of the organization that owns the task.
-          type: string
-        status:
-          $ref: '#/components/schemas/TaskStatusType'
-        flux:
-          description: 'The Flux script that the task runs.
-
-
-            #### Limitations
-
-
-            - If you use the `flux` property, you can''t use the `scriptID` and `scriptParameters` properties.
-
-            '
-          type: string
-        description:
-          description: The description of the task.
-          type: string
-        scriptID:
-          description: 'The ID of the script that the task runs.
-
-
-            #### Limitations
-
-
-            - If you use the `scriptID` property, you can''t use the `flux` property.
-
-            '
-          type: string
-        scriptParameters:
-          description: 'The parameter key-value pairs passed to the script (referenced by `scriptID`) during the task run.
-
-
-            #### Limitations
-
-
-            - `scriptParameters` requires `scriptID`.
-
-            - If you use the `scriptID` and `scriptParameters` properties, you can''t use the `flux` property.
-
-            '
-          type: object
-        name:
-          description: The name of the task
-          type: string
-        every:
-          description: 'The interval ([duration literal](https://docs.influxdata.com/flux/v0.x/spec/lexical-elements/#duration-literals))) at which the task runs.
-
-            `every` also determines when the task first runs, depending on the specified time.
-
-            '
-          type: string
-        cron:
-          description: A [Cron expression](https://en.wikipedia.org/wiki/Cron#Overview) that defines the schedule on which the task runs. InfluxDB bases cron runs on the system time.
-          type: string
-        offset:
-          description: A [duration](https://docs.influxdata.com/flux/v0.x/spec/lexical-elements/#duration-literals) to delay execution of the task after the scheduled time has elapsed. `0` removes the offset.
-          type: string
-          format: duration
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
-    Tasks:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Task'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
     Run:
       properties:
         id:
@@ -2101,33 +1782,158 @@ components:
             retry:
               type: string
               format: uri
-    Runs:
+    TaskCreateRequest:
+      type: object
+      properties:
+        orgID:
+          description: The ID of the organization that owns the task.
+          type: string
+        org:
+          description: The name of the organization that owns the task.
+          type: string
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        flux:
+          description: 'The Flux script that the task runs.
+
+
+            #### Limitations
+
+
+            - If you use the `flux` property, you can''t use the `scriptID` and `scriptParameters` properties.
+
+            '
+          type: string
+        description:
+          description: The description of the task.
+          type: string
+        scriptID:
+          description: 'The ID of the script that the task runs.
+
+
+            #### Limitations
+
+
+            - If you use the `scriptID` property, you can''t use the `flux` property.
+
+            '
+          type: string
+        scriptParameters:
+          description: 'The parameter key-value pairs passed to the script (referenced by `scriptID`) during the task run.
+
+
+            #### Limitations
+
+
+            - `scriptParameters` requires `scriptID`.
+
+            - If you use the `scriptID` and `scriptParameters` properties, you can''t use the `flux` property.
+
+            '
+          type: object
+        name:
+          description: The name of the task
+          type: string
+        every:
+          description: 'The interval ([duration literal](https://docs.influxdata.com/flux/v0.x/spec/lexical-elements/#duration-literals))) at which the task runs.
+
+            `every` also determines when the task first runs, depending on the specified time.
+
+            '
+          type: string
+        cron:
+          description: A [Cron expression](https://en.wikipedia.org/wiki/Cron#Overview) that defines the schedule on which the task runs. InfluxDB bases cron runs on the system time.
+          type: string
+        offset:
+          description: A [duration](https://docs.influxdata.com/flux/v0.x/spec/lexical-elements/#duration-literals) to delay execution of the task after the scheduled time has elapsed. `0` removes the offset.
+          type: string
+          format: duration
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    ResourceMembers:
       type: object
       properties:
         links:
-          $ref: '#/components/schemas/Links'
-        runs:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
           type: array
           items:
-            $ref: '#/components/schemas/Run'
-    LogEvent:
+            $ref: '#/components/schemas/ResourceMember'
+    LabelResponse:
       type: object
       properties:
-        time:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    Tasks:
+      type: object
+      properties:
+        links:
           readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        message:
+          $ref: '#/components/schemas/Links'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    UserResponse:
+      properties:
+        id:
           readOnly: true
-          description: A description of the event that occurred.
           type: string
-          example: Halt and catch fire
-        runID:
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
           readOnly: true
-          description: The ID of the task run that generated the event.
-          type: string
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -2141,13 +1947,6 @@ components:
           type: string
       required:
       - labelID
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
     Error:
       properties:
         code:
@@ -2183,19 +1982,120 @@ components:
           type: string
       required:
       - code
-    ResourceMembers:
+    Logs:
+      type: object
+      properties:
+        events:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/LogEvent'
+    RunManually:
+      properties:
+        scheduledFor:
+          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)
+
+            used for the run''s `now` option.
+
+            Default is the server _now_ time.
+
+            '
+          type:
+          - string
+          - 'null'
+          format: date-time
+    LogEvent:
+      type: object
+      properties:
+        time:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        message:
+          readOnly: true
+          description: A description of the event that occurred.
+          type: string
+          example: Halt and catch fire
+        runID:
+          readOnly: true
+          description: The ID of the task run that generated the event.
+          type: string
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    TaskUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        flux:
+          description: Update the Flux script that the task runs.
+          type: string
+        name:
+          description: Update the 'name' option in the flux script.
+          type: string
+        every:
+          description: Update the 'every' option in the flux script.
+          type: string
+        cron:
+          description: Update the 'cron' option in the flux script.
+          type: string
+        offset:
+          description: Update the 'offset' option in the flux script.
+          type: string
+        description:
+          description: Update the description of the task.
+          type: string
+        scriptID:
+          description: Update the 'scriptID' of the task.
+          type: string
+        scriptParameters:
+          description: Update the 'scriptParameters' of the task.
+          type: object
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    Runs:
       type: object
       properties:
         links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
+          $ref: '#/components/schemas/Links'
+        runs:
           type: array
           items:
-            $ref: '#/components/schemas/ResourceMember'
+            $ref: '#/components/schemas/Run'
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
     AddResourceMemberRequestBody:
       type: object
       properties:
@@ -2211,11 +2111,26 @@ components:
             '
       required:
       - id
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
     Task_2:
       type: object
       properties:
@@ -2340,62 +2255,6 @@ components:
       - name
       - orgID
       - flux
-    RunManually_2:
-      properties:
-        scheduledFor:
-          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)
-
-            used for the run''s `now` option.
-
-            Default is the server _now_ time.
-
-            '
-          type:
-          - string
-          - 'null'
-          format: date-time
-    TaskUpdateRequest_2:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/TaskStatusType'
-        flux:
-          description: The Flux script that the task runs.
-          type: string
-        name:
-          description: Update the 'name' option in the flux script.
-          type: string
-        every:
-          description: Update the 'every' option in the flux script.
-          type: string
-        cron:
-          description: Update the 'cron' option in the flux script.
-          type: string
-        offset:
-          description: Update the 'offset' option in the flux script.
-          type: string
-        description:
-          description: Update the description of the task.
-          type: string
-    TaskCreateRequest_2:
-      type: object
-      properties:
-        orgID:
-          description: The ID of the organization that owns this Task.
-          type: string
-        org:
-          description: The name of the organization that owns this Task.
-          type: string
-        status:
-          $ref: '#/components/schemas/TaskStatusType'
-        flux:
-          description: The Flux script to run for this task.
-          type: string
-        description:
-          description: An optional description of the task.
-          type: string
-      required:
-      - flux
     Run_2:
       properties:
         id:
@@ -2462,6 +2321,39 @@ components:
             retry:
               type: string
               format: uri
+    TaskCreateRequest_2:
+      type: object
+      properties:
+        orgID:
+          description: The ID of the organization that owns this Task.
+          type: string
+        org:
+          description: The name of the organization that owns this Task.
+          type: string
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        flux:
+          description: The Flux script to run for this task.
+          type: string
+        description:
+          description: An optional description of the task.
+          type: string
+      required:
+      - flux
+    RunManually_2:
+      properties:
+        scheduledFor:
+          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)
+
+            used for the run''s `now` option.
+
+            Default is the server _now_ time.
+
+            '
+          type:
+          - string
+          - 'null'
+          format: date-time
     LogEvent_2:
       type: object
       properties:
@@ -2480,6 +2372,114 @@ components:
           readOnly: true
           description: The ID of the task run that generated the event.
           type: string
+    TaskUpdateRequest_2:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        flux:
+          description: The Flux script that the task runs.
+          type: string
+        name:
+          description: Update the 'name' option in the flux script.
+          type: string
+        every:
+          description: Update the 'every' option in the flux script.
+          type: string
+        cron:
+          description: Update the 'cron' option in the flux script.
+          type: string
+        offset:
+          description: Update the 'offset' option in the flux script.
+          type: string
+        description:
+          description: Update the description of the task.
+          type: string
+  responses:
+    AuthorizationError:
+      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'The HTTP status code description. Default is `unauthorized`.
+
+                  '
+                readOnly: true
+                type: string
+                enum:
+                - unauthorized
+              message:
+                readOnly: true
+                description: A human-readable message that may contain detail about the error.
+                type: string
+          examples:
+            tokenNotAuthorized:
+              summary: Token is not authorized to access a resource
+              value:
+                code: unauthorized
+                message: unauthorized access
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequestError:
+      description: 'Bad request.
+
+        The response body contains detail about the error.
+
+
+        #### InfluxDB OSS
+
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

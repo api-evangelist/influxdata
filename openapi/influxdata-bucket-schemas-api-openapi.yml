@@ -417,49 +417,6 @@ paths:
         source: "curl --request PATCH \"INFLUX_URL/api/v2/buckets/BUCKET_ID/schema/measurements \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\" \\\n  --header \"Accept: application/json\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n      \"column\": [\n        {\n          \"type\": \"tag\",\n          \"name\": \"location\"\n        },\n        {\n          \"type\": \"field\",\n          \"name\": \"value\",\n          \"dataType\": \"float\"\n        },\n        {\n          \"type\": \"timestamp\",\n          \"name\": \"time\"\n        }\n      ]\n    }'\n"
 components:
   schemas:
-    ColumnDataType:
-      type: string
-      enum:
-      - integer
-      - float
-      - boolean
-      - string
-      - unsigned
-    MeasurementSchemaCreateRequest:
-      description: Create a new measurement schema.
-      type: object
-      example:
-        name: cpu
-        columns:
-        - name: time
-          type: integer
-          format: unix timestamp
-        - name: host
-          type: tag
-        - name: region
-          type: tag
-        - name: usage_user
-          type: field
-          dataType: float
-        - name: usage_user
-          type: field
-          dataType: float
-      required:
-      - name
-      - columns
-      properties:
-        name:
-          description: 'The [measurement](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#measurement)
-
-            name.
-
-            '
-          type: string
-        columns:
-          description: Ordered collection of column definitions.
-          type: array
-          items:
-            $ref: '#/components/schemas/MeasurementSchemaColumn'
     MeasurementSchema:
       description: Definition of a measurement schema.
       type: object
@@ -556,49 +513,6 @@ components:
       - timestamp
       - tag
       - field
-    MeasurementSchemaColumn:
-      description: Definition of a measurement schema column.
-      example:
-        name: time
-        type: integer
-        format: unix timestamp
-      type: object
-      required:
-      - name
-      - type
-      properties:
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/ColumnSemanticType'
-        dataType:
-          $ref: '#/components/schemas/ColumnDataType'
-    MeasurementSchemaUpdateRequest:
-      description: Update an existing measurement schema
-      type: object
-      example:
-        columns:
-        - name: time
-          type: integer
-          format: unix timestamp
-        - name: host
-          type: tag
-        - name: region
-          type: tag
-        - name: usage_user
-          type: field
-          dataType: float
-        - name: usage_user
-          type: field
-          dataType: float
-      required:
-      - columns
-      properties:
-        columns:
-          description: An ordered collection of column definitions
-          type: array
-          items:
-            $ref: '#/components/schemas/MeasurementSchemaColumn'
     MeasurementSchemaList:
       description: A list of measurement schemas returning summary information
       example:
@@ -629,29 +543,103 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementSchema'
+    MeasurementSchemaUpdateRequest:
+      description: Update an existing measurement schema
+      type: object
+      example:
+        columns:
+        - name: time
+          type: integer
+          format: unix timestamp
+        - name: host
+          type: tag
+        - name: region
+          type: tag
+        - name: usage_user
+          type: field
+          dataType: float
+        - name: usage_user
+          type: field
+          dataType: float
+      required:
+      - columns
+      properties:
+        columns:
+          description: An ordered collection of column definitions
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementSchemaColumn'
+    MeasurementSchemaColumn:
+      description: Definition of a measurement schema column.
+      example:
+        name: time
+        type: integer
+        format: unix timestamp
+      type: object
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ColumnSemanticType'
+        dataType:
+          $ref: '#/components/schemas/ColumnDataType'
+    MeasurementSchemaCreateRequest:
+      description: Create a new measurement schema.
+      type: object
+      example:
+        name: cpu
+        columns:
+        - name: time
+          type: integer
+          format: unix timestamp
+        - name: host
+          type: tag
+        - name: region
+          type: tag
+        - name: usage_user
+          type: field
+          dataType: float
+        - name: usage_user
+          type: field
+          dataType: float
+      required:
+      - name
+      - columns
+      properties:
+        name:
+          description: 'The [measurement](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#measurement)
+
+            name.
+
+            '
+          type: string
+        columns:
+          description: Ordered collection of column definitions.
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementSchemaColumn'
+    ColumnDataType:
+      type: string
+      enum:
+      - integer
+      - float
+      - boolean
+      - string
+      - unsigned
   responses:
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -676,16 +664,28 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
   securitySchemes:
     TokenAuthentication:
       type: apiKey

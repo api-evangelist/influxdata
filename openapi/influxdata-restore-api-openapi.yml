@@ -225,60 +225,45 @@ paths:
           description: Unexpected error
           $ref: '#/components/responses/GeneralServerError'
 components:
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   schemas:
-    BucketShardMapping:
+    ShardGroupManifest:
       type: object
       properties:
-        oldId:
+        id:
           type: integer
           format: int64
-        newId:
-          type: integer
-          format: int64
-      required:
-      - oldId
-      - newId
-    RetentionPolicyManifest:
-      type: object
-      properties:
-        name:
+        startTime:
           type: string
-        replicaN:
-          type: integer
-        duration:
-          type: integer
-          format: int64
-        shardGroupDuration:
-          type: integer
-          format: int64
-        shardGroups:
-          $ref: '#/components/schemas/ShardGroupManifests'
-        subscriptions:
-          $ref: '#/components/schemas/SubscriptionManifests'
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+        truncatedAt:
+          type: string
+          format: date-time
+        shards:
+          $ref: '#/components/schemas/ShardManifests'
       required:
-      - name
-      - replicaN
-      - duration
-      - shardGroupDuration
-      - shardGroups
-      - subscriptions
-    ShardManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardManifest'
-    ShardOwner:
-      type: object
-      properties:
-        nodeID:
-          type: integer
-          format: int64
-          description: The ID of the node that owns the shard.
-      required:
-      - nodeID
-    BucketShardMappings:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketShardMapping'
+      - id
+      - startTime
+      - endTime
+      - shards
     Error:
       properties:
         code:
@@ -314,6 +299,32 @@ components:
           type: string
       required:
       - code
+    RetentionPolicyManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/RetentionPolicyManifest'
+    ShardManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardManifest'
+    ShardOwners:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardOwner'
+    RestoredBucketMappings:
+      type: object
+      properties:
+        id:
+          description: New ID of the restored bucket
+          type: string
+        name:
+          type: string
+        shardMappings:
+          $ref: '#/components/schemas/BucketShardMappings'
+      required:
+      - id
+      - name
+      - shardMappings
     BucketMetadataManifest:
       type: object
       properties:
@@ -338,24 +349,30 @@ components:
       - bucketName
       - defaultRetentionPolicy
       - retentionPolicies
-    RestoredBucketMappings:
+    RetentionPolicyManifest:
       type: object
       properties:
-        id:
-          description: New ID of the restored bucket
-          type: string
         name:
           type: string
-        shardMappings:
-          $ref: '#/components/schemas/BucketShardMappings'
+        replicaN:
+          type: integer
+        duration:
+          type: integer
+          format: int64
+        shardGroupDuration:
+          type: integer
+          format: int64
+        shardGroups:
+          $ref: '#/components/schemas/ShardGroupManifests'
+        subscriptions:
+          $ref: '#/components/schemas/SubscriptionManifests'
       required:
-      - id
       - name
-      - shardMappings
-    ShardOwners:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardOwner'
+      - replicaN
+      - duration
+      - shardGroupDuration
+      - shardGroups
+      - subscriptions
     SubscriptionManifest:
       type: object
       properties:
@@ -371,10 +388,35 @@ components:
       - name
       - mode
       - destinations
-    SubscriptionManifests:
+    ShardGroupManifests:
       type: array
       items:
-        $ref: '#/components/schemas/SubscriptionManifest'
+        $ref: '#/components/schemas/ShardGroupManifest'
+    BucketShardMappings:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketShardMapping'
+    ShardOwner:
+      type: object
+      properties:
+        nodeID:
+          type: integer
+          format: int64
+          description: The ID of the node that owns the shard.
+      required:
+      - nodeID
+    BucketShardMapping:
+      type: object
+      properties:
+        oldId:
+          type: integer
+          format: int64
+        newId:
+          type: integer
+          format: int64
+      required:
+      - oldId
+      - newId
     ShardManifest:
       type: object
       properties:
@@ -386,52 +428,10 @@ components:
       required:
       - id
       - shardOwners
-    ShardGroupManifests:
+    SubscriptionManifests:
       type: array
       items:
-        $ref: '#/components/schemas/ShardGroupManifest'
-    ShardGroupManifest:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        deletedAt:
-          type: string
-          format: date-time
-        truncatedAt:
-          type: string
-          format: date-time
-        shards:
-          $ref: '#/components/schemas/ShardManifests'
-      required:
-      - id
-      - startTime
-      - endTime
-      - shards
-    RetentionPolicyManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/RetentionPolicyManifest'
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
+        $ref: '#/components/schemas/SubscriptionManifest'
   responses:
     GeneralServerError:
       description: Non 2XX error response from server.

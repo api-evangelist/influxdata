@@ -43,28 +43,6 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    TelegrafPlugin:
-      type: object
-      properties:
-        type:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        config:
-          type: string
-    TelegrafPlugins:
-      type: object
-      properties:
-        version:
-          type: string
-        os:
-          type: string
-        plugins:
-          type: array
-          items:
-            $ref: '#/components/schemas/TelegrafPlugin'
     Error:
       properties:
         code:
@@ -100,6 +78,28 @@ components:
           type: string
       required:
       - code
+    TelegrafPlugin:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        config:
+          type: string
+    TelegrafPlugins:
+      type: object
+      properties:
+        version:
+          type: string
+        os:
+          type: string
+        plugins:
+          type: array
+          items:
+            $ref: '#/components/schemas/TelegrafPlugin'
   parameters:
     TraceSpan:
       in: header

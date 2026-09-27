@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Influxdata DBR Ps API
+  title: Influxdata DBRPs API
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -487,6 +487,134 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    DBRPs:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/DBRP'
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    DBRPCreate:
+      type: object
+      properties:
+        org:
+          type: string
+          description: 'An organization name.
+
+            Identifies the [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) that owns the mapping.
+
+            '
+        orgID:
+          type: string
+          description: 'An organization ID.
+
+            Identifies the [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) that owns the mapping.
+
+            '
+        bucketID:
+          type: string
+          description: 'A bucket ID.
+
+            Identifies the bucket used as the target for the translation.
+
+            '
+        database:
+          type: string
+          description: 'A database name.
+
+            Identifies the InfluxDB v1 database.
+
+            '
+        retention_policy:
+          type: string
+          description: 'A [retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp) name.
+
+            Identifies the InfluxDB v1 retention policy mapping.
+
+            '
+        default:
+          type: boolean
+          description: 'Set to `true` to use this DBRP mapping as the default retention policy
+
+            for the database (specified by the `database` property''s value).
+
+            '
+      required:
+      - bucketID
+      - database
+      - retention_policy
+    DBRPGet:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DBRP'
+          required: true
+    DBRPUpdate:
+      properties:
+        retention_policy:
+          type: string
+          description: 'A [retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp) name.
+
+            Identifies the InfluxDB v1 retention policy mapping.
+
+            '
+        default:
+          type: boolean
+          description: 'Set to `true` to use this DBRP mapping as the default retention policy
+
+            for the database (specified by the `database` property''s value).
+
+            To remove the default mapping, set to `false`.
+
+            '
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     DBRP:
       type: object
       properties:
@@ -543,100 +671,26 @@ components:
       - database
       - retention_policy
       - default
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    DBRPGet:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/DBRP'
-          required: true
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    DBRPUpdate:
-      properties:
-        retention_policy:
-          type: string
-          description: 'A [retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp) name.
-
-            Identifies the InfluxDB v1 retention policy mapping.
-
-            '
-        default:
-          type: boolean
-          description: 'Set to `true` to use this DBRP mapping as the default retention policy
-
-            for the database (specified by the `database` property''s value).
-
-            To remove the default mapping, set to `false`.
-
-            '
-    DBRPs:
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/DBRP'
-    DBRPCreate:
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    DBRPCreate_2:
       type: object
       properties:
         org:
           type: string
           description: 'An organization name.
 
-            Identifies the [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) that owns the mapping.
+            Identifies the [organization](https://docs.influxdata.com/influxdb/latest/reference/glossary/#organization) that owns the mapping.
 
             '
         orgID:
           type: string
           description: 'An organization ID.
 
-            Identifies the [organization](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#organization) that owns the mapping.
+            Identifies the [organization](https://docs.influxdata.com/influxdb/latest/reference/glossary/#organization) that owns the mapping.
 
             '
         bucketID:
@@ -671,11 +725,6 @@ components:
       - bucketID
       - database
       - retention_policy
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
     DBRP_2:
       type: object
       properties:
@@ -732,78 +781,20 @@ components:
       - database
       - retention_policy
       - default
-    DBRPCreate_2:
-      type: object
-      properties:
-        org:
-          type: string
-          description: 'An organization name.
-
-            Identifies the [organization](https://docs.influxdata.com/influxdb/latest/reference/glossary/#organization) that owns the mapping.
-
-            '
-        orgID:
-          type: string
-          description: 'An organization ID.
-
-            Identifies the [organization](https://docs.influxdata.com/influxdb/latest/reference/glossary/#organization) that owns the mapping.
-
-            '
-        bucketID:
-          type: string
-          description: 'A bucket ID.
-
-            Identifies the bucket used as the target for the translation.
-
-            '
-        database:
-          type: string
-          description: 'A database name.
-
-            Identifies the InfluxDB v1 database.
-
-            '
-        retention_policy:
-          type: string
-          description: 'A [retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp) name.
-
-            Identifies the InfluxDB v1 retention policy mapping.
-
-            '
-        default:
-          type: boolean
-          description: 'Set to `true` to use this DBRP mapping as the default retention policy
-
-            for the database (specified by the `database` property''s value).
-
-            '
-      required:
-      - bucketID
-      - database
-      - retention_policy
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   responses:
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -838,19 +829,28 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
   securitySchemes:
     TokenAuthentication:
       type: apiKey

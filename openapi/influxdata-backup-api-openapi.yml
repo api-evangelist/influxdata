@@ -154,10 +154,6 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
-    BucketMetadataManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketMetadataManifest'
     MetadataBackup:
       type: object
       properties:
@@ -173,43 +169,31 @@ components:
       - kv
       - sql
       - buckets
-    RetentionPolicyManifest:
+    ShardGroupManifest:
       type: object
       properties:
-        name:
+        id:
+          type: integer
+          format: int64
+        startTime:
           type: string
-        replicaN:
-          type: integer
-        duration:
-          type: integer
-          format: int64
-        shardGroupDuration:
-          type: integer
-          format: int64
-        shardGroups:
-          $ref: '#/components/schemas/ShardGroupManifests'
-        subscriptions:
-          $ref: '#/components/schemas/SubscriptionManifests'
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+        truncatedAt:
+          type: string
+          format: date-time
+        shards:
+          $ref: '#/components/schemas/ShardManifests'
       required:
-      - name
-      - replicaN
-      - duration
-      - shardGroupDuration
-      - shardGroups
-      - subscriptions
-    ShardManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardManifest'
-    ShardOwner:
-      type: object
-      properties:
-        nodeID:
-          type: integer
-          format: int64
-          description: The ID of the node that owns the shard.
-      required:
-      - nodeID
+      - id
+      - startTime
+      - endTime
+      - shards
     Error:
       properties:
         code:
@@ -245,6 +229,18 @@ components:
           type: string
       required:
       - code
+    RetentionPolicyManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/RetentionPolicyManifest'
+    ShardManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardManifest'
+    ShardOwners:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardOwner'
     BucketMetadataManifest:
       type: object
       properties:
@@ -269,10 +265,30 @@ components:
       - bucketName
       - defaultRetentionPolicy
       - retentionPolicies
-    ShardOwners:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardOwner'
+    RetentionPolicyManifest:
+      type: object
+      properties:
+        name:
+          type: string
+        replicaN:
+          type: integer
+        duration:
+          type: integer
+          format: int64
+        shardGroupDuration:
+          type: integer
+          format: int64
+        shardGroups:
+          $ref: '#/components/schemas/ShardGroupManifests'
+        subscriptions:
+          $ref: '#/components/schemas/SubscriptionManifests'
+      required:
+      - name
+      - replicaN
+      - duration
+      - shardGroupDuration
+      - shardGroups
+      - subscriptions
     SubscriptionManifest:
       type: object
       properties:
@@ -288,10 +304,23 @@ components:
       - name
       - mode
       - destinations
-    SubscriptionManifests:
+    ShardGroupManifests:
       type: array
       items:
-        $ref: '#/components/schemas/SubscriptionManifest'
+        $ref: '#/components/schemas/ShardGroupManifest'
+    ShardOwner:
+      type: object
+      properties:
+        nodeID:
+          type: integer
+          format: int64
+          description: The ID of the node that owns the shard.
+      required:
+      - nodeID
+    BucketMetadataManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketMetadataManifest'
     ShardManifest:
       type: object
       properties:
@@ -303,39 +332,10 @@ components:
       required:
       - id
       - shardOwners
-    ShardGroupManifests:
+    SubscriptionManifests:
       type: array
       items:
-        $ref: '#/components/schemas/ShardGroupManifest'
-    ShardGroupManifest:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        deletedAt:
-          type: string
-          format: date-time
-        truncatedAt:
-          type: string
-          format: date-time
-        shards:
-          $ref: '#/components/schemas/ShardManifests'
-      required:
-      - id
-      - startTime
-      - endTime
-      - shards
-    RetentionPolicyManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/RetentionPolicyManifest'
+        $ref: '#/components/schemas/SubscriptionManifest'
   parameters:
     TraceSpan:
       in: header

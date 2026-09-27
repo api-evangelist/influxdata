@@ -235,13 +235,6 @@ components:
           type: string
       required:
       - code
-    Replications:
-      type: object
-      properties:
-        replications:
-          type: array
-          items:
-            $ref: '#/components/schemas/Replication'
     ReplicationUpdateRequest:
       type: object
       properties:
@@ -265,6 +258,50 @@ components:
           type: integer
           format: int64
           minimum: 0
+    ReplicationCreationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        remoteID:
+          type: string
+        localBucketID:
+          type: string
+        remoteBucketID:
+          type: string
+        remoteBucketName:
+          type: string
+        maxQueueSizeBytes:
+          type: integer
+          format: int64
+          minimum: 33554430
+          default: 67108860
+        dropNonRetryableData:
+          type: boolean
+          default: false
+        maxAgeSeconds:
+          type: integer
+          format: int64
+          minimum: 0
+          default: 604800
+      required:
+      - name
+      - orgID
+      - remoteID
+      - localBucketID
+      - maxQueueSizeBytes
+      - maxAgeSeconds
+    Replications:
+      type: object
+      properties:
+        replications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Replication'
     Replication:
       type: object
       properties:
@@ -306,43 +343,6 @@ components:
       - orgID
       - localBucketID
       - maxQueueSizeBytes
-    ReplicationCreationRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        orgID:
-          type: string
-        remoteID:
-          type: string
-        localBucketID:
-          type: string
-        remoteBucketID:
-          type: string
-        remoteBucketName:
-          type: string
-        maxQueueSizeBytes:
-          type: integer
-          format: int64
-          minimum: 33554430
-          default: 67108860
-        dropNonRetryableData:
-          type: boolean
-          default: false
-        maxAgeSeconds:
-          type: integer
-          format: int64
-          minimum: 0
-          default: 604800
-      required:
-      - name
-      - orgID
-      - remoteID
-      - localBucketID
-      - maxQueueSizeBytes
-      - maxAgeSeconds
   responses:
     GeneralServerError:
       description: Non 2XX error response from server.

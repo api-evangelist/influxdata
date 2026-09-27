@@ -1292,11 +1292,6 @@ components:
         up:
           type: string
           example: 14m45.911966424s
-    Config:
-      type: object
-      properties:
-        config:
-          type: object
     HealthCheck:
       type: object
       required:
@@ -1320,6 +1315,11 @@ components:
           type: string
         commit:
           type: string
+    Config:
+      type: object
+      properties:
+        config:
+          type: object
   parameters:
     TraceSpan:
       in: header

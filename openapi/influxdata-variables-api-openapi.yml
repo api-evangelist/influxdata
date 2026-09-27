@@ -279,16 +279,40 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    ConstantVariableProperties:
+    QueryVariableProperties:
       properties:
         type:
           type: string
           enum:
-          - constant
+          - query
         values:
-          type: array
-          items:
-            type: string
+          type: object
+          properties:
+            query:
+              type: string
+            language:
+              type: string
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -302,49 +326,16 @@ components:
           type: string
       required:
       - labelID
-    LabelResponse:
-      type: object
+    MapVariableProperties:
       properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
+        type:
           type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
+          enum:
+          - map
+        values:
           type: object
           additionalProperties:
             type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    VariableProperties:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/QueryVariableProperties'
-      - $ref: '#/components/schemas/ConstantVariableProperties'
-      - $ref: '#/components/schemas/MapVariableProperties'
     Error:
       properties:
         code:
@@ -380,6 +371,10 @@ components:
           type: string
       required:
       - code
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
     Variables:
       type: object
       example:
@@ -419,28 +414,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Variable'
-    QueryVariableProperties:
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    ConstantVariableProperties:
       properties:
         type:
           type: string
           enum:
-          - query
+          - constant
         values:
-          type: object
-          properties:
-            query:
-              type: string
-            language:
-              type: string
-    MapVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - map
-        values:
-          type: object
-          additionalProperties:
+          type: array
+          items:
             type: string
     Variable:
       type: object
@@ -487,29 +476,40 @@ components:
         updatedAt:
           type: string
           format: date-time
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    VariableProperties:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/QueryVariableProperties'
+      - $ref: '#/components/schemas/ConstantVariableProperties'
+      - $ref: '#/components/schemas/MapVariableProperties'
     Variable_2:
       type: object
       required:

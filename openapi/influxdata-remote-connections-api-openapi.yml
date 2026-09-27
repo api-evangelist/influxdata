@@ -145,13 +145,23 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
-    RemoteConnections:
+    RemoteConnectionUpdateRequest:
       type: object
       properties:
-        remotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/RemoteConnection'
+        name:
+          type: string
+        description:
+          type: string
+        remoteURL:
+          type: string
+          format: uri
+        remoteAPIToken:
+          type: string
+        remoteOrgID:
+          type: string
+        allowInsecureTLS:
+          type: boolean
+          default: false
     Error:
       properties:
         code:
@@ -187,48 +197,6 @@ components:
           type: string
       required:
       - code
-    RemoteConnection:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        orgID:
-          type: string
-        description:
-          type: string
-        remoteURL:
-          type: string
-          format: uri
-        remoteOrgID:
-          type: string
-        allowInsecureTLS:
-          type: boolean
-          default: false
-      required:
-      - id
-      - name
-      - orgID
-      - remoteURL
-      - allowInsecureTLS
-    RemoteConnectionUpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        remoteURL:
-          type: string
-          format: uri
-        remoteAPIToken:
-          type: string
-        remoteOrgID:
-          type: string
-        allowInsecureTLS:
-          type: boolean
-          default: false
     RemoteConnectionCreationRequest:
       type: object
       properties:
@@ -253,6 +221,38 @@ components:
       - orgID
       - remoteURL
       - remoteAPIToken
+      - allowInsecureTLS
+    RemoteConnections:
+      type: object
+      properties:
+        remotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RemoteConnection'
+    RemoteConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        orgID:
+          type: string
+        description:
+          type: string
+        remoteURL:
+          type: string
+          format: uri
+        remoteOrgID:
+          type: string
+        allowInsecureTLS:
+          type: boolean
+          default: false
+      required:
+      - id
+      - name
+      - orgID
+      - remoteURL
       - allowInsecureTLS
   parameters:
     TraceSpan:
