@@ -1158,6 +1158,140 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    ObjectExpression:
+      description: Allows the declaration of an anonymous object within a declaration
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        properties:
+          description: Object properties
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    VariableAssignment:
+      description: Represents the declaration of a variable
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        id:
+          $ref: '#/components/schemas/Identifier'
+        init:
+          $ref: '#/components/schemas/Expression'
+    Block:
+      description: A set of statements
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        body:
+          description: Block body
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    PackageClause:
+      description: Defines a package identifier
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        name:
+          $ref: '#/components/schemas/Identifier'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Statement:
+      oneOf:
+      - $ref: '#/components/schemas/BadStatement'
+      - $ref: '#/components/schemas/VariableAssignment'
+      - $ref: '#/components/schemas/MemberAssignment'
+      - $ref: '#/components/schemas/ExpressionStatement'
+      - $ref: '#/components/schemas/ReturnStatement'
+      - $ref: '#/components/schemas/OptionStatement'
+      - $ref: '#/components/schemas/BuiltinStatement'
+      - $ref: '#/components/schemas/TestStatement'
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    FloatLiteral:
+      description: Represents floating point numbers according to the double representations defined by the IEEE-754-1985
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: number
+    PipeExpression:
+      description: Call expression with pipe argument
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        argument:
+          $ref: '#/components/schemas/Expression'
+        call:
+          $ref: '#/components/schemas/CallExpression'
+    ReturnStatement:
+      description: Defines an expression to return
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        argument:
+          $ref: '#/components/schemas/Expression'
+    BuiltinStatement:
+      description: Declares a builtin identifier and its type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        id:
+          $ref: '#/components/schemas/Identifier'
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    PropertyKey:
+      oneOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/StringLiteral'
     Query:
       description: Query InfluxDB with the Flux language
       type: object
@@ -1188,25 +1322,183 @@ components:
             '
           type: string
           format: date-time
-    Property:
-      description: The value associated with a key
+    MemberExpression:
+      description: Represents accessing a property of an object
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        object:
+          $ref: '#/components/schemas/Expression'
+        property:
+          $ref: '#/components/schemas/PropertyKey'
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    BadStatement:
+      description: A placeholder for statements for which no correct statement nodes can be created
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        text:
+          description: Raw source text
+          type: string
+    ConditionalExpression:
+      description: Selects one of two expressions, `Alternate` or `Consequent`, depending on a third boolean expression, `Test`
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        test:
+          $ref: '#/components/schemas/Expression'
+        alternate:
+          $ref: '#/components/schemas/Expression'
+        consequent:
+          $ref: '#/components/schemas/Expression'
+    TestStatement:
+      description: Declares a Flux test case
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        assignment:
+          $ref: '#/components/schemas/VariableAssignment'
+    LineProtocolError:
+      properties:
+        code:
+          description: Code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not found
+          - conflict
+          - invalid
+          - empty value
+          - unavailable
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+        line:
+          readOnly: true
+          description: First line in the request body that contains malformed data.
+          type: integer
+          format: int32
+      required:
+      - code
+    DictItem:
+      description: A key-value pair in a dictionary.
       type: object
       properties:
         type:
           $ref: '#/components/schemas/NodeType'
         key:
-          $ref: '#/components/schemas/PropertyKey'
-        value:
           $ref: '#/components/schemas/Expression'
-    DateTimeLiteral:
-      description: Represents an instant in time with nanosecond precision in [RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp).
+        val:
+          $ref: '#/components/schemas/Expression'
+    Identifier:
+      description: A valid Flux identifier
       type: object
       properties:
         type:
           $ref: '#/components/schemas/NodeType'
-        value:
+        name:
+          type: string
+    Tasks:
+      type: object
+      properties:
+        links:
+          readOnly: true
+          $ref: '#/components/schemas/Links'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    RunManually:
+      properties:
+        scheduledFor:
+          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)
+
+            used for the run''s `now` option.
+
+            Default is the server _now_ time.
+
+            '
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DeletePredicateRequest:
+      description: The delete predicate request.
+      type: object
+      required:
+      - start
+      - stop
+      properties:
+        start:
+          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)).
+
+            The earliest time to delete from.
+
+            '
           type: string
           format: date-time
+        stop:
+          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)).
+
+            The latest time to delete from.
+
+            '
+          type: string
+          format: date-time
+        predicate:
+          description: 'An expression in [delete predicate syntax](https://docs.influxdata.com/influxdb/cloud/reference/syntax/delete-predicate/).
+
+            '
+          example: tag1="value1" and (tag2="value2" and tag3!="value3")
+          type: string
     ImportDeclaration:
       description: Declares a package import
       type: object
@@ -1217,14 +1509,393 @@ components:
           $ref: '#/components/schemas/Identifier'
         path:
           $ref: '#/components/schemas/StringLiteral'
-    PackageClause:
-      description: Defines a package identifier
+    MemberAssignment:
+      description: Object property assignment
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        member:
+          $ref: '#/components/schemas/MemberExpression'
+        init:
+          $ref: '#/components/schemas/Expression'
+    Expression:
+      oneOf:
+      - $ref: '#/components/schemas/ArrayExpression'
+      - $ref: '#/components/schemas/DictExpression'
+      - $ref: '#/components/schemas/FunctionExpression'
+      - $ref: '#/components/schemas/BinaryExpression'
+      - $ref: '#/components/schemas/CallExpression'
+      - $ref: '#/components/schemas/ConditionalExpression'
+      - $ref: '#/components/schemas/LogicalExpression'
+      - $ref: '#/components/schemas/MemberExpression'
+      - $ref: '#/components/schemas/IndexExpression'
+      - $ref: '#/components/schemas/ObjectExpression'
+      - $ref: '#/components/schemas/ParenExpression'
+      - $ref: '#/components/schemas/PipeExpression'
+      - $ref: '#/components/schemas/UnaryExpression'
+      - $ref: '#/components/schemas/BooleanLiteral'
+      - $ref: '#/components/schemas/DateTimeLiteral'
+      - $ref: '#/components/schemas/DurationLiteral'
+      - $ref: '#/components/schemas/FloatLiteral'
+      - $ref: '#/components/schemas/IntegerLiteral'
+      - $ref: '#/components/schemas/PipeLiteral'
+      - $ref: '#/components/schemas/RegexpLiteral'
+      - $ref: '#/components/schemas/StringLiteral'
+      - $ref: '#/components/schemas/UnsignedIntegerLiteral'
+      - $ref: '#/components/schemas/Identifier'
+    UnsignedIntegerLiteral:
+      description: Represents integer numbers
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    CallExpression:
+      description: Represents a function call
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        callee:
+          $ref: '#/components/schemas/Expression'
+        arguments:
+          description: Function arguments
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+    IntegerLiteral:
+      description: Represents integer numbers
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    File:
+      description: Represents a source from a single file
       type: object
       properties:
         type:
           $ref: '#/components/schemas/NodeType'
         name:
-          $ref: '#/components/schemas/Identifier'
+          description: The name of the file.
+          type: string
+        package:
+          $ref: '#/components/schemas/PackageClause'
+        imports:
+          description: A list of package imports
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportDeclaration'
+        body:
+          description: List of Flux statements
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+    Run:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        taskID:
+          readOnly: true
+          type: string
+        status:
+          readOnly: true
+          type: string
+          enum:
+          - scheduled
+          - started
+          - failed
+          - success
+          - canceled
+        scheduledFor:
+          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
+          type: string
+          format: date-time
+        log:
+          description: An array of logs associated with the run.
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/LogEvent'
+        flux:
+          description: Flux used for the task
+          type: string
+          readOnly: true
+        startedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        finishedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        requestedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/tasks/1/runs/1
+            task: /api/v2/tasks/1
+            retry: /api/v2/tasks/1/runs/1/retry
+          properties:
+            self:
+              type: string
+              format: uri
+            task:
+              type: string
+              format: uri
+            retry:
+              type: string
+              format: uri
+    Duration:
+      description: A pair consisting of length of time and the unit of time measured. It is the atomic unit from which all duration literals are composed.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        magnitude:
+          type: integer
+        unit:
+          type: string
+    FunctionExpression:
+      description: Function expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        params:
+          description: Function parameters
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        body:
+          $ref: '#/components/schemas/Node'
+    BooleanLiteral:
+      description: Represents boolean values
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: boolean
+    ParenExpression:
+      description: Represents an expression wrapped in parenthesis
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        expression:
+          $ref: '#/components/schemas/Expression'
+    Property:
+      description: The value associated with a key
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        key:
+          $ref: '#/components/schemas/PropertyKey'
+        value:
+          $ref: '#/components/schemas/Expression'
+    RegexpLiteral:
+      description: Expressions begin and end with `/` and are regular expressions with syntax accepted by RE2
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+    PipeLiteral:
+      description: Represents a specialized literal value, indicating the left hand value of a pipe expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+    ArrayExpression:
+      description: Used to create and directly specify the elements of an array object
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        elements:
+          description: Elements of the array
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+    NodeType:
+      description: Type of AST node
+      type: string
+    ExpressionStatement:
+      description: May consist of an expression that doesn't return a value and is executed solely for its side-effects
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        expression:
+          $ref: '#/components/schemas/Expression'
+    DateTimeLiteral:
+      description: Represents an instant in time with nanosecond precision in [RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp).
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        value:
+          type: string
+          format: date-time
+    BinaryExpression:
+      description: uses binary operators to act on two operands in an expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        operator:
+          type: string
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+    Dialect:
+      description: 'Options for tabular data output.
+
+        Default output is [annotated CSV](https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/#csv-response-format) with headers.
+
+
+        For more information about tabular data **dialect**,
+
+        see [W3 metadata vocabulary for tabular data](https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#dialect-descriptions).
+
+        '
+      type: object
+      properties:
+        header:
+          description: If true, the results contain a header row.
+          type: boolean
+          default: true
+        delimiter:
+          description: The separator used between cells. Default is a comma (`,`).
+          type: string
+          default: ','
+          maxLength: 1
+          minLength: 1
+        annotations:
+          description: 'Annotation rows to include in the results.
+
+            An _annotation_ is metadata associated with an object (column) in the data model.
+
+
+            #### Related guides
+
+
+            - See [Annotated CSV annotations](https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/#annotations) for examples and more information.
+
+
+            For more information about **annotations** in tabular data,
+
+            see [W3 metadata vocabulary for tabular data](https://www.w3.org/TR/2015/REC-tabular-data-model-20151217/#columns).
+
+            '
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - group
+            - datatype
+            - default
+        commentPrefix:
+          description: The character prefixed to comment strings. Default is a number sign (`#`).
+          type: string
+          default: '#'
+          maxLength: 1
+          minLength: 0
+        dateTimeFormat:
+          description: 'The format for timestamps in results.
+
+            Default is [`RFC3339` date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp).
+
+            To include nanoseconds in timestamps, use `RFC3339Nano`.
+
+
+            #### Example formatted date/time values
+
+
+            | Format      | Value                       |
+
+            |:------------|:----------------------------|
+
+            | `RFC3339`    | `"2006-01-02T15:04:05Z07:00"` |
+
+            | `RFC3339Nano` | `"2006-01-02T15:04:05.999999999Z07:00"` |
+
+            '
+          type: string
+          default: RFC3339
+          enum:
+          - RFC3339
+          - RFC3339Nano
+    WritePrecision:
+      type: string
+      enum:
+      - ms
+      - s
+      - us
+      - ns
+    LogEvent:
+      type: object
+      properties:
+        time:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        message:
+          readOnly: true
+          description: A description of the event that occurred.
+          type: string
+          example: Halt and catch fire
+        runID:
+          readOnly: true
+          description: The ID of the task run that generated the event.
+          type: string
+    Node:
+      oneOf:
+      - $ref: '#/components/schemas/Expression'
+      - $ref: '#/components/schemas/Block'
+    LogicalExpression:
+      description: Represents the rule conditions that collectively evaluate to either true or false
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        operator:
+          type: string
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+    UnaryExpression:
+      description: Uses operators to act on a single operand in an expression
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        operator:
+          type: string
+        argument:
+          $ref: '#/components/schemas/Expression'
     Task:
       type: object
       properties:
@@ -1386,76 +2057,6 @@ components:
       - id
       - name
       - orgID
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    Run:
-      properties:
-        id:
-          readOnly: true
-          type: string
-        taskID:
-          readOnly: true
-          type: string
-        status:
-          readOnly: true
-          type: string
-          enum:
-          - scheduled
-          - started
-          - failed
-          - success
-          - canceled
-        scheduledFor:
-          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
-          type: string
-          format: date-time
-        log:
-          description: An array of logs associated with the run.
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/LogEvent'
-        flux:
-          description: Flux used for the task
-          type: string
-          readOnly: true
-        startedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        finishedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        requestedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/tasks/1/runs/1
-            task: /api/v2/tasks/1
-            retry: /api/v2/tasks/1/runs/1/retry
-          properties:
-            self:
-              type: string
-              format: uri
-            task:
-              type: string
-              format: uri
-            retry:
-              type: string
-              format: uri
     TaskCreateRequest:
       type: object
       properties:
@@ -1522,38 +2123,6 @@ components:
           description: A [duration](https://docs.influxdata.com/flux/v0.x/spec/lexical-elements/#duration-literals) to delay execution of the task after the scheduled time has elapsed. `0` removes the offset.
           type: string
           format: duration
-    NodeType:
-      description: Type of AST node
-      type: string
-    DeletePredicateRequest:
-      description: The delete predicate request.
-      type: object
-      required:
-      - start
-      - stop
-      properties:
-        start:
-          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)).
-
-            The earliest time to delete from.
-
-            '
-          type: string
-          format: date-time
-        stop:
-          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)).
-
-            The latest time to delete from.
-
-            '
-          type: string
-          format: date-time
-        predicate:
-          description: 'An expression in [delete predicate syntax](https://docs.influxdata.com/influxdb/cloud/reference/syntax/delete-predicate/).
-
-            '
-          example: tag1="value1" and (tag2="value2" and tag3!="value3")
-          type: string
     DurationLiteral:
       description: Represents the elapsed time between two instants as an int64 nanosecond count with syntax of golang's time.Duration
       type: object
@@ -1565,78 +2134,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Duration'
-    ReturnStatement:
-      description: Defines an expression to return
+    IndexExpression:
+      description: Represents indexing into an array
       type: object
       properties:
         type:
           $ref: '#/components/schemas/NodeType'
-        argument:
+        array:
           $ref: '#/components/schemas/Expression'
-    ExpressionStatement:
-      description: May consist of an expression that doesn't return a value and is executed solely for its side-effects
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        expression:
+        index:
           $ref: '#/components/schemas/Expression'
-    BuiltinStatement:
-      description: Declares a builtin identifier and its type
-      type: object
+    LineProtocolLengthError:
       properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        id:
-          $ref: '#/components/schemas/Identifier'
-    IntegerLiteral:
-      description: Represents integer numbers
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        value:
+        code:
+          description: Code is the machine-readable error code.
+          readOnly: true
           type: string
-    ConditionalExpression:
-      description: Selects one of two expressions, `Alternate` or `Consequent`, depending on a third boolean expression, `Test`
+          enum:
+          - invalid
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+      required:
+      - code
+      - message
+    OptionStatement:
+      description: A single variable declaration
       type: object
       properties:
         type:
           $ref: '#/components/schemas/NodeType'
-        test:
-          $ref: '#/components/schemas/Expression'
-        alternate:
-          $ref: '#/components/schemas/Expression'
-        consequent:
-          $ref: '#/components/schemas/Expression'
-    WritePrecision:
+        assignment:
+          oneOf:
+          - $ref: '#/components/schemas/VariableAssignment'
+          - $ref: '#/components/schemas/MemberAssignment'
+    DictExpression:
+      description: Used to create and directly specify the elements of a dictionary
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NodeType'
+        elements:
+          description: Elements of the dictionary
+          type: array
+          items:
+            $ref: '#/components/schemas/DictItem'
+    TaskStatusType:
       type: string
       enum:
-      - ms
-      - s
-      - us
-      - ns
-    File:
-      description: Represents a source from a single file
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        name:
-          description: The name of the file.
-          type: string
-        package:
-          $ref: '#/components/schemas/PackageClause'
-        imports:
-          description: A list of package imports
-          type: array
-          items:
-            $ref: '#/components/schemas/ImportDeclaration'
-        body:
-          description: List of Flux statements
-          type: array
-          items:
-            $ref: '#/components/schemas/Statement'
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+
+        '
     StringLiteral:
       description: Expressions begin and end with double quote marks
       type: object
@@ -1645,18 +2196,128 @@ components:
           $ref: '#/components/schemas/NodeType'
         value:
           type: string
-    BooleanLiteral:
-      description: Represents boolean values
+    RunManually_2:
+      properties:
+        scheduledFor:
+          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)
+
+            used for the run''s `now` option.
+
+            Default is the server _now_ time.
+
+            '
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DeletePredicateRequest_2:
+      description: The delete predicate request.
+      type: object
+      required:
+      - start
+      - stop
+      properties:
+        start:
+          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)).
+
+            The earliest time to delete from.
+
+            '
+          type: string
+          format: date-time
+        stop:
+          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)).
+
+            The latest time to delete from.
+
+            '
+          type: string
+          format: date-time
+        predicate:
+          description: 'An expression in [delete predicate syntax](https://docs.influxdata.com/influxdb/latest/reference/syntax/delete-predicate/).
+
+            '
+          example: tag1="value1" and (tag2="value2" and tag3!="value3")
+          type: string
+    Run_2:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        taskID:
+          readOnly: true
+          type: string
+        status:
+          readOnly: true
+          type: string
+          enum:
+          - scheduled
+          - started
+          - failed
+          - success
+          - canceled
+        scheduledFor:
+          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
+          type: string
+          format: date-time
+        log:
+          description: An array of logs associated with the run.
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/LogEvent_2'
+        flux:
+          description: Flux used for the task
+          type: string
+          readOnly: true
+        startedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        finishedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        requestedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/tasks/1/runs/1
+            task: /api/v2/tasks/1
+            retry: /api/v2/tasks/1/runs/1/retry
+          properties:
+            self:
+              type: string
+              format: uri
+            task:
+              type: string
+              format: uri
+            retry:
+              type: string
+              format: uri
+    DateTimeLiteral_2:
+      description: Represents an instant in time with nanosecond precision in [RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp).
       type: object
       properties:
         type:
           $ref: '#/components/schemas/NodeType'
         value:
-          type: boolean
-    Dialect:
+          type: string
+          format: date-time
+    Dialect_2:
       description: 'Options for tabular data output.
 
-        Default output is [annotated CSV](https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/#csv-response-format) with headers.
+        Default output is [annotated CSV](https://docs.influxdata.com/influxdb/latest/reference/syntax/annotated-csv/#csv-response-format) with headers.
 
 
         For more information about tabular data **dialect**,
@@ -1685,7 +2346,7 @@ components:
             #### Related guides
 
 
-            - See [Annotated CSV annotations](https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/#annotations) for examples and more information.
+            - See [Annotated CSV annotations](https://docs.influxdata.com/influxdb/latest/reference/syntax/annotated-csv/#annotations) for examples and more information.
 
 
             For more information about **annotations** in tabular data,
@@ -1710,7 +2371,7 @@ components:
         dateTimeFormat:
           description: 'The format for timestamps in results.
 
-            Default is [`RFC3339` date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp).
+            Default is [`RFC3339` date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp).
 
             To include nanoseconds in timestamps, use `RFC3339Nano`.
 
@@ -1732,243 +2393,12 @@ components:
           enum:
           - RFC3339
           - RFC3339Nano
-    Tasks:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Task'
-    PipeLiteral:
-      description: Represents a specialized literal value, indicating the left hand value of a pipe expression
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-    RegexpLiteral:
-      description: Expressions begin and end with `/` and are regular expressions with syntax accepted by RE2
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        value:
-          type: string
-    CallExpression:
-      description: Represents a function call
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        callee:
-          $ref: '#/components/schemas/Expression'
-        arguments:
-          description: Function arguments
-          type: array
-          items:
-            $ref: '#/components/schemas/Expression'
-    Block:
-      description: A set of statements
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        body:
-          description: Block body
-          type: array
-          items:
-            $ref: '#/components/schemas/Statement'
-    FloatLiteral:
-      description: Represents floating point numbers according to the double representations defined by the IEEE-754-1985
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        value:
-          type: number
-    PropertyKey:
-      oneOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/StringLiteral'
-    ParenExpression:
-      description: Represents an expression wrapped in parenthesis
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        expression:
-          $ref: '#/components/schemas/Expression'
-    FunctionExpression:
-      description: Function expression
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        params:
-          description: Function parameters
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        body:
-          $ref: '#/components/schemas/Node'
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    UnaryExpression:
-      description: Uses operators to act on a single operand in an expression
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        operator:
-          type: string
-        argument:
-          $ref: '#/components/schemas/Expression'
-    UnsignedIntegerLiteral:
-      description: Represents integer numbers
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        value:
-          type: string
-    ObjectExpression:
-      description: Allows the declaration of an anonymous object within a declaration
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        properties:
-          description: Object properties
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-    VariableAssignment:
-      description: Represents the declaration of a variable
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        id:
-          $ref: '#/components/schemas/Identifier'
-        init:
-          $ref: '#/components/schemas/Expression'
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    TestStatement:
-      description: Declares a Flux test case
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        assignment:
-          $ref: '#/components/schemas/VariableAssignment'
-    Expression:
-      oneOf:
-      - $ref: '#/components/schemas/ArrayExpression'
-      - $ref: '#/components/schemas/DictExpression'
-      - $ref: '#/components/schemas/FunctionExpression'
-      - $ref: '#/components/schemas/BinaryExpression'
-      - $ref: '#/components/schemas/CallExpression'
-      - $ref: '#/components/schemas/ConditionalExpression'
-      - $ref: '#/components/schemas/LogicalExpression'
-      - $ref: '#/components/schemas/MemberExpression'
-      - $ref: '#/components/schemas/IndexExpression'
-      - $ref: '#/components/schemas/ObjectExpression'
-      - $ref: '#/components/schemas/ParenExpression'
-      - $ref: '#/components/schemas/PipeExpression'
-      - $ref: '#/components/schemas/UnaryExpression'
-      - $ref: '#/components/schemas/BooleanLiteral'
-      - $ref: '#/components/schemas/DateTimeLiteral'
-      - $ref: '#/components/schemas/DurationLiteral'
-      - $ref: '#/components/schemas/FloatLiteral'
-      - $ref: '#/components/schemas/IntegerLiteral'
-      - $ref: '#/components/schemas/PipeLiteral'
-      - $ref: '#/components/schemas/RegexpLiteral'
-      - $ref: '#/components/schemas/StringLiteral'
-      - $ref: '#/components/schemas/UnsignedIntegerLiteral'
-      - $ref: '#/components/schemas/Identifier'
-    LineProtocolLengthError:
-      properties:
-        code:
-          description: Code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - invalid
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-      required:
-      - code
-      - message
-    RunManually:
-      properties:
-        scheduledFor:
-          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)
-
-            used for the run''s `now` option.
-
-            Default is the server _now_ time.
-
-            '
-          type:
-          - string
-          - 'null'
-          format: date-time
-    LogEvent:
+    LogEvent_2:
       type: object
       properties:
         time:
           readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
           type: string
           format: date-time
           example: 2006-01-02T15:04:05.999999999Z07:00
@@ -1981,230 +2411,6 @@ components:
           readOnly: true
           description: The ID of the task run that generated the event.
           type: string
-    OptionStatement:
-      description: A single variable declaration
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        assignment:
-          oneOf:
-          - $ref: '#/components/schemas/VariableAssignment'
-          - $ref: '#/components/schemas/MemberAssignment'
-    IndexExpression:
-      description: Represents indexing into an array
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        array:
-          $ref: '#/components/schemas/Expression'
-        index:
-          $ref: '#/components/schemas/Expression'
-    PipeExpression:
-      description: Call expression with pipe argument
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        argument:
-          $ref: '#/components/schemas/Expression'
-        call:
-          $ref: '#/components/schemas/CallExpression'
-    DictItem:
-      description: A key-value pair in a dictionary.
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        key:
-          $ref: '#/components/schemas/Expression'
-        val:
-          $ref: '#/components/schemas/Expression'
-    Identifier:
-      description: A valid Flux identifier
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        name:
-          type: string
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    Statement:
-      oneOf:
-      - $ref: '#/components/schemas/BadStatement'
-      - $ref: '#/components/schemas/VariableAssignment'
-      - $ref: '#/components/schemas/MemberAssignment'
-      - $ref: '#/components/schemas/ExpressionStatement'
-      - $ref: '#/components/schemas/ReturnStatement'
-      - $ref: '#/components/schemas/OptionStatement'
-      - $ref: '#/components/schemas/BuiltinStatement'
-      - $ref: '#/components/schemas/TestStatement'
-    Duration:
-      description: A pair consisting of length of time and the unit of time measured. It is the atomic unit from which all duration literals are composed.
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        magnitude:
-          type: integer
-        unit:
-          type: string
-    Node:
-      oneOf:
-      - $ref: '#/components/schemas/Expression'
-      - $ref: '#/components/schemas/Block'
-    MemberAssignment:
-      description: Object property assignment
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        member:
-          $ref: '#/components/schemas/MemberExpression'
-        init:
-          $ref: '#/components/schemas/Expression'
-    ArrayExpression:
-      description: Used to create and directly specify the elements of an array object
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        elements:
-          description: Elements of the array
-          type: array
-          items:
-            $ref: '#/components/schemas/Expression'
-    MemberExpression:
-      description: Represents accessing a property of an object
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        object:
-          $ref: '#/components/schemas/Expression'
-        property:
-          $ref: '#/components/schemas/PropertyKey'
-    LogicalExpression:
-      description: Represents the rule conditions that collectively evaluate to either true or false
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        operator:
-          type: string
-        left:
-          $ref: '#/components/schemas/Expression'
-        right:
-          $ref: '#/components/schemas/Expression'
-    BinaryExpression:
-      description: uses binary operators to act on two operands in an expression
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        operator:
-          type: string
-        left:
-          $ref: '#/components/schemas/Expression'
-        right:
-          $ref: '#/components/schemas/Expression'
-    DictExpression:
-      description: Used to create and directly specify the elements of a dictionary
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        elements:
-          description: Elements of the dictionary
-          type: array
-          items:
-            $ref: '#/components/schemas/DictItem'
-    TaskStatusType:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
-
-        '
-    BadStatement:
-      description: A placeholder for statements for which no correct statement nodes can be created
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        text:
-          description: Raw source text
-          type: string
-    LineProtocolError:
-      properties:
-        code:
-          description: Code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not found
-          - conflict
-          - invalid
-          - empty value
-          - unavailable
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-        line:
-          readOnly: true
-          description: First line in the request body that contains malformed data.
-          type: integer
-          format: int32
-      required:
-      - code
-    DateTimeLiteral_2:
-      description: Represents an instant in time with nanosecond precision in [RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp).
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/NodeType'
-        value:
-          type: string
-          format: date-time
     Task_2:
       type: object
       properties:
@@ -2329,72 +2535,6 @@ components:
       - name
       - orgID
       - flux
-    Run_2:
-      properties:
-        id:
-          readOnly: true
-          type: string
-        taskID:
-          readOnly: true
-          type: string
-        status:
-          readOnly: true
-          type: string
-          enum:
-          - scheduled
-          - started
-          - failed
-          - success
-          - canceled
-        scheduledFor:
-          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
-          type: string
-          format: date-time
-        log:
-          description: An array of logs associated with the run.
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/LogEvent_2'
-        flux:
-          description: Flux used for the task
-          type: string
-          readOnly: true
-        startedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        finishedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        requestedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/tasks/1/runs/1
-            task: /api/v2/tasks/1
-            retry: /api/v2/tasks/1/runs/1/retry
-          properties:
-            self:
-              type: string
-              format: uri
-            task:
-              type: string
-              format: uri
-            retry:
-              type: string
-              format: uri
     TaskCreateRequest_2:
       type: object
       properties:
@@ -2414,147 +2554,45 @@ components:
           type: string
       required:
       - flux
-    DeletePredicateRequest_2:
-      description: The delete predicate request.
-      type: object
-      required:
-      - start
-      - stop
-      properties:
-        start:
-          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)).
+  responses:
+    BadRequestError:
+      description: 'Bad request.
 
-            The earliest time to delete from.
-
-            '
-          type: string
-          format: date-time
-        stop:
-          description: 'A timestamp ([RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)).
-
-            The latest time to delete from.
-
-            '
-          type: string
-          format: date-time
-        predicate:
-          description: 'An expression in [delete predicate syntax](https://docs.influxdata.com/influxdb/latest/reference/syntax/delete-predicate/).
-
-            '
-          example: tag1="value1" and (tag2="value2" and tag3!="value3")
-          type: string
-    Dialect_2:
-      description: 'Options for tabular data output.
-
-        Default output is [annotated CSV](https://docs.influxdata.com/influxdb/latest/reference/syntax/annotated-csv/#csv-response-format) with headers.
+        The response body contains detail about the error.
 
 
-        For more information about tabular data **dialect**,
+        #### InfluxDB OSS
 
-        see [W3 metadata vocabulary for tabular data](https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#dialect-descriptions).
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
 
         '
-      type: object
-      properties:
-        header:
-          description: If true, the results contain a header row.
-          type: boolean
-          default: true
-        delimiter:
-          description: The separator used between cells. Default is a comma (`,`).
-          type: string
-          default: ','
-          maxLength: 1
-          minLength: 1
-        annotations:
-          description: 'Annotation rows to include in the results.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    InternalServerError:
+      description: 'Internal server error.
 
-            An _annotation_ is metadata associated with an object (column) in the data model.
+        The server encountered an unexpected situation.
 
-
-            #### Related guides
-
-
-            - See [Annotated CSV annotations](https://docs.influxdata.com/influxdb/latest/reference/syntax/annotated-csv/#annotations) for examples and more information.
-
-
-            For more information about **annotations** in tabular data,
-
-            see [W3 metadata vocabulary for tabular data](https://www.w3.org/TR/2015/REC-tabular-data-model-20151217/#columns).
-
-            '
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-            - group
-            - datatype
-            - default
-        commentPrefix:
-          description: The character prefixed to comment strings. Default is a number sign (`#`).
-          type: string
-          default: '#'
-          maxLength: 1
-          minLength: 0
-        dateTimeFormat:
-          description: 'The format for timestamps in results.
-
-            Default is [`RFC3339` date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp).
-
-            To include nanoseconds in timestamps, use `RFC3339Nano`.
-
-
-            #### Example formatted date/time values
-
-
-            | Format      | Value                       |
-
-            |:------------|:----------------------------|
-
-            | `RFC3339`    | `"2006-01-02T15:04:05Z07:00"` |
-
-            | `RFC3339Nano` | `"2006-01-02T15:04:05.999999999Z07:00"` |
-
-            '
-          type: string
-          default: RFC3339
-          enum:
-          - RFC3339
-          - RFC3339Nano
-    RunManually_2:
-      properties:
-        scheduledFor:
-          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)
-
-            used for the run''s `now` option.
-
-            Default is the server _now_ time.
-
-            '
-          type:
-          - string
-          - 'null'
-          format: date-time
-    LogEvent_2:
-      type: object
-      properties:
-        time:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        message:
-          readOnly: true
-          description: A description of the event that occurred.
-          type: string
-          example: Halt and catch fire
-        runID:
-          readOnly: true
-          description: The ID of the task run that generated the event.
-          type: string
-  responses:
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -2579,34 +2617,6 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -2629,16 +2639,6 @@ components:
               value:
                 code: not found
                 message: organization not found
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

@@ -150,20 +150,6 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
     LabelResponse:
       type: object
       properties:
@@ -171,29 +157,6 @@ components:
           $ref: '#/components/schemas/Label'
         links:
           $ref: '#/components/schemas/Links'
-    LabelCreateRequest:
-      type: object
-      required:
-      - orgID
-      - name
-      properties:
-        orgID:
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
     Error:
       properties:
         code:
@@ -233,6 +196,48 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Label'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    LabelCreateRequest:
+      type: object
+      required:
+      - orgID
+      - name
+      properties:
+        orgID:
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     LabelUpdate:
       type: object
       properties:
@@ -258,11 +263,6 @@ components:
           $ref: '#/components/schemas/Labels'
         links:
           $ref: '#/components/schemas/Links'
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
     Label:
       type: object
       properties:
@@ -287,16 +287,6 @@ components:
             color: ffb3b3
             description: this is a description
   responses:
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -321,6 +311,22 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -343,12 +349,6 @@ components:
               value:
                 code: not found
                 message: organization not found
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

@@ -145,23 +145,6 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
-    RemoteConnectionUpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        remoteURL:
-          type: string
-          format: uri
-        remoteAPIToken:
-          type: string
-        remoteOrgID:
-          type: string
-        allowInsecureTLS:
-          type: boolean
-          default: false
     Error:
       properties:
         code:
@@ -197,6 +180,23 @@ components:
           type: string
       required:
       - code
+    RemoteConnectionUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        remoteURL:
+          type: string
+          format: uri
+        remoteAPIToken:
+          type: string
+        remoteOrgID:
+          type: string
+        allowInsecureTLS:
+          type: boolean
+          default: false
     RemoteConnectionCreationRequest:
       type: object
       properties:

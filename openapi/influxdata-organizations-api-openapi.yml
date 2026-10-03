@@ -981,19 +981,60 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    ResourceOwners:
-      type: object
+    UserResponse:
       properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
         links:
           type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
           properties:
             self:
               type: string
               format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceOwner'
+      required:
+      - name
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Organization:
       properties:
         links:
@@ -1055,84 +1096,21 @@ components:
           - inactive
       required:
       - name
-    PatchOrganizationRequest:
+    AddResourceMemberRequestBody:
       type: object
-      description: 'An object that contains updated organization properties to apply.
-
-        '
-      properties:
-        name:
-          type: string
-          description: 'The name of the organization.
-
-            '
-        description:
-          type: string
-          description: 'The description of the organization.
-
-            '
-    ResourceMembers:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceMember'
-    UserResponse:
       properties:
         id:
-          readOnly: true
           type: string
-          description: 'The user ID.
+          description: 'The ID of the user to add to the resource.
 
             '
         name:
           type: string
-          description: 'The user name.
+          description: 'The name of the user to add to the resource.
 
             '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
       required:
-      - name
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
+      - id
     Error:
       properties:
         code:
@@ -1168,11 +1146,29 @@ components:
           type: string
       required:
       - code
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
     Organizations:
       type: object
       properties:
@@ -1182,31 +1178,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Organization'
-    AddResourceMemberRequestBody:
-      type: object
-      properties:
-        id:
-          type: string
-          description: 'The ID of the user to add to the resource.
-
-            '
-        name:
-          type: string
-          description: 'The name of the user to add to the resource.
-
-            '
-      required:
-      - id
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
     PostOrganizationRequest:
       type: object
       properties:
@@ -1222,17 +1193,84 @@ components:
             '
       required:
       - name
-    ResourceOwner:
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    PatchOrganizationRequest:
+      type: object
+      description: 'An object that contains updated organization properties to apply.
+
+        '
+      properties:
+        name:
+          type: string
+          description: 'The name of the organization.
+
+            '
+        description:
+          type: string
+          description: 'The description of the organization.
+
+            '
+    ResourceMember:
       allOf:
       - $ref: '#/components/schemas/UserResponse'
       - type: object
         properties:
           role:
             type: string
-            default: owner
+            default: member
             enum:
-            - owner
+            - member
   responses:
+    BadRequestError:
+      description: 'Bad request.
+
+        The response body contains detail about the error.
+
+
+        #### InfluxDB OSS
+
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -1257,34 +1295,6 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -1307,16 +1317,6 @@ components:
               value:
                 code: not found
                 message: organization not found
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     Descending:
       in: query

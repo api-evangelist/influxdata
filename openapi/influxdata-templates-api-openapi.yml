@@ -662,634 +662,43 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    MapVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - map
-        values:
-          type: object
-          additionalProperties:
-            type: string
-    Check:
+    GeoPointMapViewLayer:
       allOf:
-      - $ref: '#/components/schemas/CheckDiscriminator'
-    TemplateEnvReferences:
-      type: array
-      items:
-        type: object
-        properties:
-          resourceField:
-            type: string
-            description: Field the environment reference corresponds too
-          envRefKey:
-            type: string
-            description: Key identified as environment reference and is the key identified in the template
-          value:
-            description: Value provided to fulfill reference
-            oneOf:
-            - type: string
-            - type: integer
-            - type: number
-            - type: boolean
-          defaultValue:
-            description: Default value that will be provided for the reference when no value is provided
-            oneOf:
-            - type: string
-            - type: integer
-            - type: number
-            - type: boolean
-        required:
-        - resourceField
-        - envRefKey
-    VariableProperties:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/QueryVariableProperties'
-      - $ref: '#/components/schemas/ConstantVariableProperties'
-      - $ref: '#/components/schemas/MapVariableProperties'
-    DashboardColor:
-      type: object
-      description: Defines an encoding of data value into color space.
-      required:
-      - id
-      - type
-      - hex
-      - name
-      - value
-      properties:
-        id:
-          description: The unique ID of the view color.
-          type: string
-        type:
-          description: Type is how the color is used.
-          type: string
-          enum:
-          - min
-          - max
-          - threshold
-          - scale
-          - text
-          - background
-        hex:
-          description: The hex number of the color
-          type: string
-          maxLength: 7
-          minLength: 7
-        name:
-          description: The user-facing name of the hex color.
-          type: string
-        value:
-          description: The data value mapped to this color.
-          type: number
-          format: float
-    TemplateKind:
-      type: string
-      enum:
-      - Bucket
-      - Check
-      - CheckDeadman
-      - CheckThreshold
-      - Dashboard
-      - Label
-      - NotificationEndpoint
-      - NotificationEndpointHTTP
-      - NotificationEndpointPagerDuty
-      - NotificationEndpointSlack
-      - NotificationRule
-      - Task
-      - Telegraf
-      - Variable
-    PagerDutyNotificationEndpoint:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
       - type: object
         required:
-        - routingKey
+        - colorField
+        - colorDimension
+        - colors
         properties:
-          clientURL:
+          colorField:
             type: string
-          routingKey:
-            type: string
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    Axes:
-      description: The viewport for a View's visualizations
-      type: object
-      required:
-      - x
-      - y
-      properties:
-        x:
-          $ref: '#/components/schemas/Axis'
-        y:
-          $ref: '#/components/schemas/Axis'
-    LesserThreshold:
-      allOf:
-      - $ref: '#/components/schemas/ThresholdBase'
-      - type: object
-        required:
-        - type
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - lesser
-          value:
-            type: number
-            format: float
-    DecimalPlaces:
-      description: Indicates whether decimal places should be enforced, and how many digits it should show.
-      type: object
-      properties:
-        isEnforced:
-          description: Indicates whether decimal point setting should be enforced
-          type: boolean
-        digits:
-          description: The number of digits after decimal to display
-          type: integer
-          format: int32
-    DashboardQuery:
-      type: object
-      properties:
-        text:
-          type: string
-          description: The text of the Flux query.
-        editMode:
-          $ref: '#/components/schemas/QueryEditMode'
-        name:
-          type: string
-        builderConfig:
-          $ref: '#/components/schemas/BuilderConfig'
-    Axis:
-      type: object
-      description: Axis used in a visualization.
-      properties:
-        bounds:
-          type: array
-          minItems: 0
-          maxItems: 2
-          description: The extents of the axis in the form [lower, upper]. Clients determine whether bounds are inclusive or exclusive of their limits.
-          items:
-            type: string
-        label:
-          description: Description of the axis.
-          type: string
-        prefix:
-          description: Label prefix for formatting axis values.
-          type: string
-        suffix:
-          description: Label suffix for formatting axis values.
-          type: string
-        base:
-          description: Radix for formatting axis values.
-          type: string
-          enum:
-          - ''
-          - '2'
-          - '10'
-        scale:
-          $ref: '#/components/schemas/AxisScale'
-    ScatterViewProperties:
-      type: object
-      required:
-      - type
-      - queries
-      - colors
-      - shape
-      - note
-      - showNoteWhenEmpty
-      - xColumn
-      - yColumn
-      - fillColumns
-      - symbolColumns
-      - xDomain
-      - yDomain
-      - xAxisLabel
-      - yAxisLabel
-      - xPrefix
-      - yPrefix
-      - xSuffix
-      - ySuffix
-      properties:
-        adaptiveZoomHide:
-          type: boolean
-        timeFormat:
-          type: string
-        type:
-          type: string
-          enum:
-          - scatter
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            type: string
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        xColumn:
-          type: string
-        generateXAxisTicks:
-          type: array
-          items:
-            type: string
-        xTotalTicks:
-          type: integer
-        xTickStart:
-          type: number
-          format: float
-        xTickStep:
-          type: number
-          format: float
-        yColumn:
-          type: string
-        generateYAxisTicks:
-          type: array
-          items:
-            type: string
-        yTotalTicks:
-          type: integer
-        yTickStart:
-          type: number
-          format: float
-        yTickStep:
-          type: number
-          format: float
-        fillColumns:
-          type: array
-          items:
-            type: string
-        symbolColumns:
-          type: array
-          items:
-            type: string
-        xDomain:
-          type: array
-          items:
-            type: number
-          maxItems: 2
-        yDomain:
-          type: array
-          items:
-            type: number
-          maxItems: 2
-        xAxisLabel:
-          type: string
-        yAxisLabel:
-          type: string
-        xPrefix:
-          type: string
-        xSuffix:
-          type: string
-        yPrefix:
-          type: string
-        ySuffix:
-          type: string
-        legendColorizeRows:
-          type: boolean
-        legendHide:
-          type: boolean
-        legendOpacity:
-          type: number
-          format: float
-        legendOrientationThreshold:
-          type: integer
-    SingleStatViewProperties:
-      type: object
-      required:
-      - type
-      - queries
-      - colors
-      - shape
-      - note
-      - showNoteWhenEmpty
-      - prefix
-      - tickPrefix
-      - suffix
-      - tickSuffix
-      - decimalPlaces
-      properties:
-        type:
-          type: string
-          enum:
-          - single-stat
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        prefix:
-          type: string
-        tickPrefix:
-          type: string
-        suffix:
-          type: string
-        tickSuffix:
-          type: string
-        staticLegend:
-          $ref: '#/components/schemas/StaticLegend'
-        decimalPlaces:
-          $ref: '#/components/schemas/DecimalPlaces'
-    StaticLegend:
-      description: StaticLegend represents the options specific to the static legend
-      type: object
-      properties:
-        colorizeRows:
-          type: boolean
-        heightRatio:
-          type: number
-          format: float
-        show:
-          type: boolean
-        opacity:
-          type: number
-          format: float
-        orientationThreshold:
-          type: integer
-        valueAxis:
-          type: string
-        widthRatio:
-          type: number
-          format: float
-    MarkdownViewProperties:
-      type: object
-      required:
-      - type
-      - shape
-      - note
-      properties:
-        type:
-          type: string
-          enum:
-          - markdown
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-    CheckStatusLevel:
-      description: The state to record if check matches a criteria.
+            description: Marker color field
+          colorDimension:
+            $ref: '#/components/schemas/Axis'
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+          isClustered:
+            description: Cluster close markers together
+            type: boolean
+          tooltipColumns:
+            description: An array for which columns to display in tooltip
+            type: array
+            items:
+              type: string
+    XYGeom:
       type: string
       enum:
-      - UNKNOWN
-      - OK
-      - INFO
-      - CRIT
-      - WARN
-    RenamableField:
-      description: Describes a field that can be renamed and made visible or invisible.
-      type: object
-      properties:
-        internalName:
-          description: The calculated name of a field.
-          readOnly: true
-          type: string
-        displayName:
-          description: The name that a field is renamed to by the user.
-          type: string
-        visible:
-          description: Indicates whether this field should be visible on the table.
-          type: boolean
-    RetentionRules:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule'
-    CheckViewProperties:
-      type: object
-      required:
-      - type
-      - shape
-      - checkID
-      - queries
-      - colors
-      properties:
-        adaptiveZoomHide:
-          type: boolean
-        type:
-          type: string
-          enum:
-          - check
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        checkID:
-          type: string
-        check:
-          $ref: '#/components/schemas/Check'
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        legendColorizeRows:
-          type: boolean
-        legendHide:
-          type: boolean
-        legendOpacity:
-          type: number
-          format: float
-        legendOrientationThreshold:
-          type: integer
-    BuilderAggregateFunctionType:
-      type: string
-      enum:
-      - filter
-      - group
-    BandViewProperties:
-      type: object
-      required:
-      - type
-      - geom
-      - queries
-      - shape
-      - axes
-      - colors
-      - note
-      - showNoteWhenEmpty
-      properties:
-        adaptiveZoomHide:
-          type: boolean
-        timeFormat:
-          type: string
-        type:
-          type: string
-          enum:
-          - band
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        axes:
-          $ref: '#/components/schemas/Axes'
-        staticLegend:
-          $ref: '#/components/schemas/StaticLegend'
-        xColumn:
-          type: string
-        generateXAxisTicks:
-          type: array
-          items:
-            type: string
-        xTotalTicks:
-          type: integer
-        xTickStart:
-          type: number
-          format: float
-        xTickStep:
-          type: number
-          format: float
-        yColumn:
-          type: string
-        generateYAxisTicks:
-          type: array
-          items:
-            type: string
-        yTotalTicks:
-          type: integer
-        yTickStart:
-          type: number
-          format: float
-        yTickStep:
-          type: number
-          format: float
-        upperColumn:
-          type: string
-        mainColumn:
-          type: string
-        lowerColumn:
-          type: string
-        hoverDimension:
-          type: string
-          enum:
-          - auto
-          - x
-          - y
-          - xy
-        geom:
-          $ref: '#/components/schemas/XYGeom'
-        legendColorizeRows:
-          type: boolean
-        legendHide:
-          type: boolean
-        legendOpacity:
-          type: number
-          format: float
-        legendOrientationThreshold:
-          type: integer
-    TelegrafRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        metadata:
-          type: object
-          properties:
-            buckets:
-              type: array
-              items:
-                type: string
-        config:
-          type: string
-        orgID:
-          type: string
+      - line
+      - step
+      - stacked
+      - bar
+      - monotoneX
+      - stepBefore
+      - stepAfter
     GeoViewLayerProperties:
       type: object
       required:
@@ -1302,6 +711,20 @@ components:
           - circleMap
           - pointMap
           - trackMap
+    CheckDiscriminator:
+      oneOf:
+      - $ref: '#/components/schemas/DeadmanCheck'
+      - $ref: '#/components/schemas/ThresholdCheck'
+      - $ref: '#/components/schemas/CustomCheck'
+      discriminator:
+        propertyName: type
+        mapping:
+          deadman: '#/components/schemas/DeadmanCheck'
+          threshold: '#/components/schemas/ThresholdCheck'
+          custom: '#/components/schemas/CustomCheck'
+    Check:
+      allOf:
+      - $ref: '#/components/schemas/CheckDiscriminator'
     TableViewProperties:
       type: object
       required:
@@ -1366,33 +789,36 @@ components:
           type: string
         decimalPlaces:
           $ref: '#/components/schemas/DecimalPlaces'
-    GeoHeatMapViewLayer:
-      allOf:
-      - $ref: '#/components/schemas/GeoViewLayerProperties'
-      - type: object
-        required:
-        - intensityField
-        - intensityDimension
-        - radius
-        - blur
-        - colors
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
         properties:
-          intensityField:
+          type: object
+          additionalProperties:
             type: string
-            description: Intensity field
-          intensityDimension:
-            $ref: '#/components/schemas/Axis'
-          radius:
-            description: Radius size in pixels
-            type: integer
-          blur:
-            description: Blur for heatmap points
-            type: integer
-          colors:
-            description: Colors define color encoding of data into a visualization
-            type: array
-            items:
-              $ref: '#/components/schemas/DashboardColor'
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    ThresholdBase:
+      properties:
+        level:
+          $ref: '#/components/schemas/CheckStatusLevel'
+        allValues:
+          description: If true, only alert if all values meet threshold.
+          type: boolean
     RetentionRule:
       type: object
       properties:
@@ -1438,198 +864,28 @@ components:
             '
       required:
       - everySeconds
-    GeoPointMapViewLayer:
-      allOf:
-      - $ref: '#/components/schemas/GeoViewLayerProperties'
-      - type: object
-        required:
-        - colorField
-        - colorDimension
-        - colors
-        properties:
-          colorField:
-            type: string
-            description: Marker color field
-          colorDimension:
-            $ref: '#/components/schemas/Axis'
-          colors:
-            description: Colors define color encoding of data into a visualization
-            type: array
-            items:
-              $ref: '#/components/schemas/DashboardColor'
-          isClustered:
-            description: Cluster close markers together
-            type: boolean
-          tooltipColumns:
-            description: An array for which columns to display in tooltip
-            type: array
-            items:
-              type: string
-    LinePlusSingleStatProperties:
-      type: object
-      required:
-      - type
-      - queries
-      - shape
-      - axes
-      - colors
-      - note
-      - showNoteWhenEmpty
-      - prefix
-      - suffix
-      - decimalPlaces
-      - position
-      properties:
-        adaptiveZoomHide:
-          type: boolean
-        timeFormat:
-          type: string
-        type:
-          type: string
-          enum:
-          - line-plus-single-stat
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        axes:
-          $ref: '#/components/schemas/Axes'
-        staticLegend:
-          $ref: '#/components/schemas/StaticLegend'
-        xColumn:
-          type: string
-        generateXAxisTicks:
-          type: array
-          items:
-            type: string
-        xTotalTicks:
-          type: integer
-        xTickStart:
-          type: number
-          format: float
-        xTickStep:
-          type: number
-          format: float
-        yColumn:
-          type: string
-        generateYAxisTicks:
-          type: array
-          items:
-            type: string
-        yTotalTicks:
-          type: integer
-        yTickStart:
-          type: number
-          format: float
-        yTickStep:
-          type: number
-          format: float
-        shadeBelow:
-          type: boolean
-        hoverDimension:
-          type: string
-          enum:
-          - auto
-          - x
-          - y
-          - xy
-        position:
-          type: string
-          enum:
-          - overlaid
-          - stacked
-        prefix:
-          type: string
-        suffix:
-          type: string
-        decimalPlaces:
-          $ref: '#/components/schemas/DecimalPlaces'
-        legendColorizeRows:
-          type: boolean
-        legendHide:
-          type: boolean
-        legendOpacity:
-          type: number
-          format: float
-        legendOrientationThreshold:
-          type: integer
-    TemplateChart:
+    DashboardQuery:
       type: object
       properties:
-        xPos:
-          type: integer
-        yPos:
-          type: integer
-        height:
-          type: integer
-        width:
-          type: integer
-        properties:
-          $ref: '#/components/schemas/ViewProperties'
-    BuilderConfig:
-      type: object
-      properties:
-        buckets:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/BuilderTagsType'
-        functions:
-          type: array
-          items:
-            $ref: '#/components/schemas/BuilderFunctionsType'
-        aggregateWindow:
-          type: object
-          properties:
-            period:
-              type: string
-            fillValues:
-              type: boolean
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
+        text:
           type: string
-        orgID:
-          readOnly: true
-          type: string
+          description: The text of the Flux query.
+        editMode:
+          $ref: '#/components/schemas/QueryEditMode'
         name:
           type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    QueryEditMode:
+        builderConfig:
+          $ref: '#/components/schemas/BuilderConfig'
+    BuilderFunctionsType:
+      type: object
+      properties:
+        name:
+          type: string
+    BuilderAggregateFunctionType:
       type: string
       enum:
-      - builder
-      - advanced
+      - filter
+      - group
     TemplateApply:
       type: object
       properties:
@@ -1797,6 +1053,131 @@ components:
                   required:
                   - kind
                   - resourceTemplateName
+    LinePlusSingleStatProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - suffix
+      - decimalPlaces
+      - position
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - line-plus-single-stat
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        shadeBelow:
+          type: boolean
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        prefix:
+          type: string
+        suffix:
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    Axes:
+      description: The viewport for a View's visualizations
+      type: object
+      required:
+      - x
+      - y
+      properties:
+        x:
+          $ref: '#/components/schemas/Axis'
+        y:
+          $ref: '#/components/schemas/Axis'
+    SlackNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        properties:
+          url:
+            description: Specifies the URL of the Slack endpoint. Specify either `URL` or `Token`.
+            type: string
+          token:
+            description: Specifies the API token string. Specify either `URL` or `Token`.
+            type: string
     RangeThreshold:
       allOf:
       - $ref: '#/components/schemas/ThresholdBase'
@@ -1819,29 +1200,188 @@ components:
             format: float
           within:
             type: boolean
-    ConstantVariableProperties:
+    TemplateExportByName:
+      type: object
       properties:
+        stackID:
+          type: string
+        orgIDs:
+          type: array
+          items:
+            type: object
+            properties:
+              orgID:
+                type: string
+              resourceFilters:
+                type: object
+                properties:
+                  byLabel:
+                    type: array
+                    items:
+                      type: string
+                  byResourceKind:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateKind'
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              kind:
+                $ref: '#/components/schemas/TemplateKind'
+              name:
+                type: string
+            required:
+            - name
+            - kind
+    GeoCircleViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - radiusField
+        - radiusDimension
+        - colorField
+        - colorDimension
+        - colors
+        properties:
+          radiusField:
+            type: string
+            description: Radius field
+          radiusDimension:
+            $ref: '#/components/schemas/Axis'
+          colorField:
+            type: string
+            description: Circle color field
+          colorDimension:
+            $ref: '#/components/schemas/Axis'
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+          radius:
+            description: Maximum radius size in pixels
+            type: integer
+          interpolateColors:
+            description: Interpolate circle color based on displayed value
+            type: boolean
+    BandViewProperties:
+      type: object
+      required:
+      - type
+      - geom
+      - queries
+      - shape
+      - axes
+      - colors
+      - note
+      - showNoteWhenEmpty
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
         type:
           type: string
           enum:
-          - constant
-        values:
+          - band
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        axes:
+          $ref: '#/components/schemas/Axes'
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        xColumn:
+          type: string
+        generateXAxisTicks:
           type: array
           items:
             type: string
-    TaskStatusType:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        upperColumn:
+          type: string
+        mainColumn:
+          type: string
+        lowerColumn:
+          type: string
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        geom:
+          $ref: '#/components/schemas/XYGeom'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
 
         '
-    BuilderFunctionsType:
-      type: object
-      properties:
-        name:
-          type: string
+      items:
+        $ref: '#/components/schemas/RetentionRule'
     CheckBase:
       properties:
         id:
@@ -1920,6 +1460,747 @@ components:
       - name
       - orgID
       - query
+    ColorMapping:
+      type: object
+      description: A color mapping is an object that maps time series data to a UI color scheme to allow the UI to render graphs consistent colors across reloads.
+      additionalProperties:
+        type: string
+      example:
+        series_id_1: '#edf529'
+        series_id_2: '#edf529'
+        measurement_birdmigration_europe: '#663cd0'
+        configcat_deployments-autopromotionblocker: '#663cd0'
+    HeatmapViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - yColumn
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      - binSize
+      properties:
+        adaptiveZoomHide:
+          type: boolean
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - heatmap
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yColumn:
+          type: string
+        generateYAxisTicks:
+          type: array
+          items:
+            type: string
+        yTotalTicks:
+          type: integer
+        yTickStart:
+          type: number
+          format: float
+        yTickStep:
+          type: number
+          format: float
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        binSize:
+          type: number
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    TemplateSummaryLabel:
+      type: object
+      properties:
+        id:
+          type: string
+        orgID:
+          type: string
+        kind:
+          $ref: '#/components/schemas/TemplateKind'
+        templateMetaName:
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          properties:
+            color:
+              type: string
+            description:
+              type: string
+        envReferences:
+          $ref: '#/components/schemas/TemplateEnvReferences'
+    TemplateChart:
+      type: object
+      properties:
+        xPos:
+          type: integer
+        yPos:
+          type: integer
+        height:
+          type: integer
+        width:
+          type: integer
+        properties:
+          $ref: '#/components/schemas/ViewProperties'
+    DashboardColor:
+      type: object
+      description: Defines an encoding of data value into color space.
+      required:
+      - id
+      - type
+      - hex
+      - name
+      - value
+      properties:
+        id:
+          description: The unique ID of the view color.
+          type: string
+        type:
+          description: Type is how the color is used.
+          type: string
+          enum:
+          - min
+          - max
+          - threshold
+          - scale
+          - text
+          - background
+        hex:
+          description: The hex number of the color
+          type: string
+          maxLength: 7
+          minLength: 7
+        name:
+          description: The user-facing name of the hex color.
+          type: string
+        value:
+          description: The data value mapped to this color.
+          type: number
+          format: float
+    LesserThreshold:
+      allOf:
+      - $ref: '#/components/schemas/ThresholdBase'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - lesser
+          value:
+            type: number
+            format: float
+    BuilderTagsType:
+      type: object
+      properties:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        aggregateFunctionType:
+          $ref: '#/components/schemas/BuilderAggregateFunctionType'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    AxisScale:
+      description: 'Scale is the axis formatting scale. Supported: "log", "linear"'
+      type: string
+      enum:
+      - log
+      - linear
+    LatLonColumns:
+      description: Object type to define lat/lon columns
+      type: object
+      required:
+      - lat
+      - lon
+      properties:
+        lat:
+          $ref: '#/components/schemas/LatLonColumn'
+        lon:
+          $ref: '#/components/schemas/LatLonColumn'
+    GeoTrackMapViewLayer:
+      allOf:
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - type: object
+        required:
+        - trackWidth
+        - speed
+        - randomColors
+        - trackPointVisualization
+      properties:
+        trackWidth:
+          description: Width of the track
+          type: integer
+        speed:
+          description: Speed of the track animation
+          type: integer
+        randomColors:
+          description: Assign different colors to different tracks
+          type: boolean
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+    DecimalPlaces:
+      description: Indicates whether decimal places should be enforced, and how many digits it should show.
+      type: object
+      properties:
+        isEnforced:
+          description: Indicates whether decimal point setting should be enforced
+          type: boolean
+        digits:
+          description: The number of digits after decimal to display
+          type: integer
+          format: int32
+    VariableProperties:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/QueryVariableProperties'
+      - $ref: '#/components/schemas/ConstantVariableProperties'
+      - $ref: '#/components/schemas/MapVariableProperties'
+    PagerDutyNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - routingKey
+        properties:
+          clientURL:
+            type: string
+          routingKey:
+            type: string
+    ThresholdCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - threshold
+          thresholds:
+            type: array
+            items:
+              $ref: '#/components/schemas/Threshold'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    StaticLegend:
+      description: StaticLegend represents the options specific to the static legend
+      type: object
+      properties:
+        colorizeRows:
+          type: boolean
+        heightRatio:
+          type: number
+          format: float
+        show:
+          type: boolean
+        opacity:
+          type: number
+          format: float
+        orientationThreshold:
+          type: integer
+        valueAxis:
+          type: string
+        widthRatio:
+          type: number
+          format: float
+    QueryEditMode:
+      type: string
+      enum:
+      - builder
+      - advanced
+    Axis:
+      type: object
+      description: Axis used in a visualization.
+      properties:
+        bounds:
+          type: array
+          minItems: 0
+          maxItems: 2
+          description: The extents of the axis in the form [lower, upper]. Clients determine whether bounds are inclusive or exclusive of their limits.
+          items:
+            type: string
+        label:
+          description: Description of the axis.
+          type: string
+        prefix:
+          description: Label prefix for formatting axis values.
+          type: string
+        suffix:
+          description: Label suffix for formatting axis values.
+          type: string
+        base:
+          description: Radix for formatting axis values.
+          type: string
+          enum:
+          - ''
+          - '2'
+          - '10'
+        scale:
+          $ref: '#/components/schemas/AxisScale'
+    SimpleTableViewProperties:
+      type: object
+      required:
+      - type
+      - showAll
+      - queries
+      - shape
+      - note
+      - showNoteWhenEmpty
+      properties:
+        type:
+          type: string
+          enum:
+          - simple-table
+        showAll:
+          type: boolean
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+    GeoViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - queries
+      - note
+      - showNoteWhenEmpty
+      - center
+      - zoom
+      - allowPanAndZoom
+      - detectCoordinateFields
+      - layers
+      properties:
+        type:
+          type: string
+          enum:
+          - geo
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        center:
+          description: Coordinates of the center of the map
+          type: object
+          required:
+          - lat
+          - lon
+          properties:
+            lat:
+              description: Latitude of the center of the map
+              type: number
+              format: double
+            lon:
+              description: Longitude of the center of the map
+              type: number
+              format: double
+        zoom:
+          description: Zoom level used for initial display of the map
+          type: number
+          format: double
+          minimum: 1
+          maximum: 28
+        allowPanAndZoom:
+          description: If true, map zoom and pan controls are enabled on the dashboard view
+          type: boolean
+          default: true
+        detectCoordinateFields:
+          description: If true, search results get automatically regroupped so that lon,lat and value are treated as columns
+          type: boolean
+          default: true
+        useS2CellID:
+          description: If true, S2 column is used to calculate lat/lon
+          type: boolean
+        s2Column:
+          description: String to define the column
+          type: string
+        latLonColumns:
+          $ref: '#/components/schemas/LatLonColumns'
+        mapStyle:
+          description: Define map type - regular, satellite etc.
+          type: string
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        layers:
+          description: List of individual layers shown in the map
+          type: array
+          items:
+            $ref: '#/components/schemas/GeoViewLayer'
+    SingleStatViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - tickPrefix
+      - suffix
+      - tickSuffix
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - single-stat
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        prefix:
+          type: string
+        tickPrefix:
+          type: string
+        suffix:
+          type: string
+        tickSuffix:
+          type: string
+        staticLegend:
+          $ref: '#/components/schemas/StaticLegend'
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    ViewProperties:
+      oneOf:
+      - $ref: '#/components/schemas/LinePlusSingleStatProperties'
+      - $ref: '#/components/schemas/XYViewProperties'
+      - $ref: '#/components/schemas/SingleStatViewProperties'
+      - $ref: '#/components/schemas/HistogramViewProperties'
+      - $ref: '#/components/schemas/GaugeViewProperties'
+      - $ref: '#/components/schemas/TableViewProperties'
+      - $ref: '#/components/schemas/SimpleTableViewProperties'
+      - $ref: '#/components/schemas/MarkdownViewProperties'
+      - $ref: '#/components/schemas/CheckViewProperties'
+      - $ref: '#/components/schemas/ScatterViewProperties'
+      - $ref: '#/components/schemas/HeatmapViewProperties'
+      - $ref: '#/components/schemas/MosaicViewProperties'
+      - $ref: '#/components/schemas/BandViewProperties'
+      - $ref: '#/components/schemas/GeoViewProperties'
+    HistogramViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - fillColumns
+      - xDomain
+      - xAxisLabel
+      - position
+      - binCount
+      properties:
+        type:
+          type: string
+          enum:
+          - histogram
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        fillColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+            format: float
+        xAxisLabel:
+          type: string
+        position:
+          type: string
+          enum:
+          - overlaid
+          - stacked
+        binCount:
+          type: integer
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    NotificationEndpointType:
+      type: string
+      enum:
+      - slack
+      - pagerduty
+      - http
+      - telegram
+    QueryVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - query
+        values:
+          type: object
+          properties:
+            query:
+              type: string
+            language:
+              type: string
+    GaugeViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - prefix
+      - tickPrefix
+      - suffix
+      - tickSuffix
+      - decimalPlaces
+      properties:
+        type:
+          type: string
+          enum:
+          - gauge
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        prefix:
+          type: string
+        tickPrefix:
+          type: string
+        suffix:
+          type: string
+        tickSuffix:
+          type: string
+        decimalPlaces:
+          $ref: '#/components/schemas/DecimalPlaces'
+    DeadmanCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - deadman
+          timeSince:
+            description: String duration before deadman triggers.
+            type: string
+          staleTime:
+            description: String duration for time that a series is considered stale and should not trigger deadman.
+            type: string
+          reportZero:
+            description: If only zero values reported since time, trigger an alert
+            type: boolean
+          level:
+            $ref: '#/components/schemas/CheckStatusLevel'
+          every:
+            description: Check repetition interval.
+            type: string
+          offset:
+            description: Duration to delay after the schedule, before executing check.
+            type: string
+          tags:
+            description: List of tags to write to each status.
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+          statusMessageTemplate:
+            description: The template used to generate and write a status message.
+            type: string
+    LatLonColumn:
+      description: Object type for key and column definitions
+      type: object
+      required:
+      - key
+      - column
+      properties:
+        key:
+          description: Key to determine whether the column is tag/field
+          type: string
+        column:
+          description: Column to look up Lat/Lon
+          type: string
     XYViewProperties:
       type: object
       required:
@@ -2019,118 +2300,449 @@ components:
           format: float
         legendOrientationThreshold:
           type: integer
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    TemplateSummaryLabel:
+    Threshold:
+      oneOf:
+      - $ref: '#/components/schemas/GreaterThreshold'
+      - $ref: '#/components/schemas/LesserThreshold'
+      - $ref: '#/components/schemas/RangeThreshold'
+      discriminator:
+        propertyName: type
+        mapping:
+          greater: '#/components/schemas/GreaterThreshold'
+          lesser: '#/components/schemas/LesserThreshold'
+          range: '#/components/schemas/RangeThreshold'
+    GeoViewLayer:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/GeoCircleViewLayer'
+      - $ref: '#/components/schemas/GeoHeatMapViewLayer'
+      - $ref: '#/components/schemas/GeoPointMapViewLayer'
+      - $ref: '#/components/schemas/GeoTrackMapViewLayer'
+    TemplateKind:
+      type: string
+      enum:
+      - Bucket
+      - Check
+      - CheckDeadman
+      - CheckThreshold
+      - Dashboard
+      - Label
+      - NotificationEndpoint
+      - NotificationEndpointHTTP
+      - NotificationEndpointPagerDuty
+      - NotificationEndpointSlack
+      - NotificationRule
+      - Task
+      - Telegraf
+      - Variable
+    MarkdownViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - note
+      properties:
+        type:
+          type: string
+          enum:
+          - markdown
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+    Stack:
       type: object
       properties:
         id:
           type: string
         orgID:
           type: string
-        kind:
-          $ref: '#/components/schemas/TemplateKind'
-        templateMetaName:
+        createdAt:
           type: string
+          format: date-time
+          readOnly: true
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              eventType:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              sources:
+                type: array
+                items:
+                  type: string
+              resources:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    apiVersion:
+                      type: string
+                    resourceID:
+                      type: string
+                    kind:
+                      $ref: '#/components/schemas/TemplateKind'
+                    templateMetaName:
+                      type: string
+                    associations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          kind:
+                            $ref: '#/components/schemas/TemplateKind'
+                          metaName:
+                            type: string
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+              urls:
+                type: array
+                items:
+                  type: string
+              updatedAt:
+                type: string
+                format: date-time
+                readOnly: true
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    RenamableField:
+      description: Describes a field that can be renamed and made visible or invisible.
+      type: object
+      properties:
+        internalName:
+          description: The calculated name of a field.
+          readOnly: true
+          type: string
+        displayName:
+          description: The name that a field is renamed to by the user.
+          type: string
+        visible:
+          description: Indicates whether this field should be visible on the table.
+          type: boolean
+    TelegrafRequest:
+      type: object
+      properties:
         name:
           type: string
-        properties:
+        description:
+          type: string
+        metadata:
           type: object
           properties:
-            color:
-              type: string
-            description:
-              type: string
-        envReferences:
-          $ref: '#/components/schemas/TemplateEnvReferences'
-    XYGeom:
-      type: string
-      enum:
-      - line
-      - step
-      - stacked
-      - bar
-      - monotoneX
-      - stepBefore
-      - stepAfter
-    ThresholdCheck:
+            buckets:
+              type: array
+              items:
+                type: string
+        config:
+          type: string
+        orgID:
+          type: string
+    GreaterThreshold:
       allOf:
-      - $ref: '#/components/schemas/CheckBase'
+      - $ref: '#/components/schemas/ThresholdBase'
       - type: object
         required:
         - type
+        - value
         properties:
           type:
             type: string
             enum:
-            - threshold
-          thresholds:
-            type: array
-            items:
-              $ref: '#/components/schemas/Threshold'
-          every:
-            description: Check repetition interval.
+            - greater
+          value:
+            type: number
+            format: float
+    Template:
+      type: array
+      items:
+        type: object
+        description: 'A template entry.
+
+          Defines an InfluxDB resource in a template.
+
+          '
+        properties:
+          apiVersion:
             type: string
-          offset:
-            description: Duration to delay after the schedule, before executing check.
-            type: string
-          tags:
-            description: List of tags to write to each status.
-            type: array
-            items:
-              type: object
-              properties:
-                key:
-                  type: string
-                value:
-                  type: string
-          statusMessageTemplate:
-            description: The template used to generate and write a status message.
-            type: string
-    NotificationEndpointType:
-      type: string
-      enum:
-      - slack
-      - pagerduty
-      - http
-      - telegram
-    CheckDiscriminator:
-      oneOf:
-      - $ref: '#/components/schemas/DeadmanCheck'
-      - $ref: '#/components/schemas/ThresholdCheck'
-      - $ref: '#/components/schemas/CustomCheck'
-      discriminator:
-        propertyName: type
-        mapping:
-          deadman: '#/components/schemas/DeadmanCheck'
-          threshold: '#/components/schemas/ThresholdCheck'
-          custom: '#/components/schemas/CustomCheck'
-    GeoTrackMapViewLayer:
+            example: influxdata.com/v2alpha1
+          kind:
+            $ref: '#/components/schemas/TemplateKind'
+          metadata:
+            type: object
+            description: 'Metadata properties used for the resource when the template is applied.
+
+              '
+            properties:
+              name:
+                type: string
+          spec:
+            type: object
+            description: "Configuration properties used for the resource when the template is applied.\nKey-value pairs map to the specification for the resource.\n\nThe following code samples show `spec` configurations for template resources:\n\n- A bucket:\n\n```json\n{ \"spec\": {\n    \"name\": \"iot_center\",\n    \"retentionRules\": [{\n        \"everySeconds\": 2.592e+06,\n        \"type\": \"expire\"\n      }]\n  }\n}\n```\n\n- A variable:\n\n```json\n{ \"spec\": {\n    \"language\": \"flux\",\n    \"name\": \"Node_Service\",\n    \"query\": \"import \\\"influxdata/influxdb/v1\\\"\\r\\nv1.tagValues(bucket: \\\"iot_center\\\",\n        tag: \\\"service\\\")\",\n    \"type\": \"query\"\n  }\n}\n```\n"
+    HTTPNotificationEndpoint:
+      type: object
       allOf:
-      - $ref: '#/components/schemas/GeoViewLayerProperties'
+      - $ref: '#/components/schemas/NotificationEndpointBase'
       - type: object
         required:
-        - trackWidth
-        - speed
-        - randomColors
-        - trackPointVisualization
+        - url
+        - authMethod
+        - method
+        properties:
+          url:
+            type: string
+          username:
+            type: string
+          password:
+            type: string
+          token:
+            type: string
+          method:
+            type: string
+            enum:
+            - POST
+            - GET
+            - PUT
+          authMethod:
+            type: string
+            enum:
+            - none
+            - basic
+            - bearer
+          contentTemplate:
+            type: string
+          headers:
+            type: object
+            description: Customized headers.
+            additionalProperties:
+              type: string
+    Error:
       properties:
-        trackWidth:
-          description: Width of the track
-          type: integer
-        speed:
-          description: Speed of the track animation
-          type: integer
-        randomColors:
-          description: Assign different colors to different tracks
-          type: boolean
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    MosaicViewProperties:
+      type: object
+      required:
+      - type
+      - queries
+      - colors
+      - shape
+      - note
+      - showNoteWhenEmpty
+      - xColumn
+      - ySeriesColumns
+      - fillColumns
+      - xDomain
+      - yDomain
+      - xAxisLabel
+      - yAxisLabel
+      - xPrefix
+      - yPrefix
+      - xSuffix
+      - ySuffix
+      properties:
+        timeFormat:
+          type: string
+        type:
+          type: string
+          enum:
+          - mosaic
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
         colors:
           description: Colors define color encoding of data into a visualization
           type: array
           items:
-            $ref: '#/components/schemas/DashboardColor'
+            type: string
+        shape:
+          type: string
+          enum:
+          - chronograf-v2
+        note:
+          type: string
+        showNoteWhenEmpty:
+          description: If true, will display note when empty
+          type: boolean
+        xColumn:
+          type: string
+        generateXAxisTicks:
+          type: array
+          items:
+            type: string
+        xTotalTicks:
+          type: integer
+        xTickStart:
+          type: number
+          format: float
+        xTickStep:
+          type: number
+          format: float
+        yLabelColumnSeparator:
+          type: string
+        yLabelColumns:
+          type: array
+          items:
+            type: string
+        ySeriesColumns:
+          type: array
+          items:
+            type: string
+        fillColumns:
+          type: array
+          items:
+            type: string
+        xDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        yDomain:
+          type: array
+          items:
+            type: number
+          maxItems: 2
+        xAxisLabel:
+          type: string
+        yAxisLabel:
+          type: string
+        xPrefix:
+          type: string
+        xSuffix:
+          type: string
+        yPrefix:
+          type: string
+        ySuffix:
+          type: string
+        hoverDimension:
+          type: string
+          enum:
+          - auto
+          - x
+          - y
+          - xy
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    ConstantVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - constant
+        values:
+          type: array
+          items:
+            type: string
+    BuilderConfig:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderTagsType'
+        functions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuilderFunctionsType'
+        aggregateWindow:
+          type: object
+          properties:
+            period:
+              type: string
+            fillValues:
+              type: boolean
+    TemplateExportByID:
+      type: object
+      properties:
+        stackID:
+          type: string
+        orgIDs:
+          type: array
+          items:
+            type: object
+            properties:
+              orgID:
+                type: string
+              resourceFilters:
+                type: object
+                properties:
+                  byLabel:
+                    type: array
+                    items:
+                      type: string
+                  byResourceKind:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TemplateKind'
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              kind:
+                $ref: '#/components/schemas/TemplateKind'
+              name:
+                type: string
+                description: if defined with id, name is used for resource exported by id. if defined independently, resources strictly matching name are exported
+            required:
+            - id
+            - kind
     TemplateSummary:
       type: object
       properties:
@@ -2746,330 +3358,62 @@ components:
                 type: array
                 items:
                   type: integer
-    SimpleTableViewProperties:
-      type: object
-      required:
-      - type
-      - showAll
-      - queries
-      - shape
-      - note
-      - showNoteWhenEmpty
-      properties:
-        type:
-          type: string
-          enum:
-          - simple-table
-        showAll:
-          type: boolean
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-    Threshold:
-      oneOf:
-      - $ref: '#/components/schemas/GreaterThreshold'
-      - $ref: '#/components/schemas/LesserThreshold'
-      - $ref: '#/components/schemas/RangeThreshold'
-      discriminator:
-        propertyName: type
-        mapping:
-          greater: '#/components/schemas/GreaterThreshold'
-          lesser: '#/components/schemas/LesserThreshold'
-          range: '#/components/schemas/RangeThreshold'
-    MosaicViewProperties:
-      type: object
-      required:
-      - type
-      - queries
-      - colors
-      - shape
-      - note
-      - showNoteWhenEmpty
-      - xColumn
-      - ySeriesColumns
-      - fillColumns
-      - xDomain
-      - yDomain
-      - xAxisLabel
-      - yAxisLabel
-      - xPrefix
-      - yPrefix
-      - xSuffix
-      - ySuffix
-      properties:
-        timeFormat:
-          type: string
-        type:
-          type: string
-          enum:
-          - mosaic
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
+    TemplateEnvReferences:
+      type: array
+      items:
+        type: object
+        properties:
+          resourceField:
             type: string
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        xColumn:
-          type: string
-        generateXAxisTicks:
-          type: array
-          items:
+            description: Field the environment reference corresponds too
+          envRefKey:
             type: string
-        xTotalTicks:
-          type: integer
-        xTickStart:
-          type: number
-          format: float
-        xTickStep:
-          type: number
-          format: float
-        yLabelColumnSeparator:
-          type: string
-        yLabelColumns:
-          type: array
-          items:
-            type: string
-        ySeriesColumns:
-          type: array
-          items:
-            type: string
-        fillColumns:
-          type: array
-          items:
-            type: string
-        xDomain:
-          type: array
-          items:
-            type: number
-          maxItems: 2
-        yDomain:
-          type: array
-          items:
-            type: number
-          maxItems: 2
-        xAxisLabel:
-          type: string
-        yAxisLabel:
-          type: string
-        xPrefix:
-          type: string
-        xSuffix:
-          type: string
-        yPrefix:
-          type: string
-        ySuffix:
-          type: string
-        hoverDimension:
-          type: string
-          enum:
-          - auto
-          - x
-          - y
-          - xy
-        legendColorizeRows:
-          type: boolean
-        legendHide:
-          type: boolean
-        legendOpacity:
-          type: number
-          format: float
-        legendOrientationThreshold:
-          type: integer
-    GeoViewLayer:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/GeoCircleViewLayer'
-      - $ref: '#/components/schemas/GeoHeatMapViewLayer'
-      - $ref: '#/components/schemas/GeoPointMapViewLayer'
-      - $ref: '#/components/schemas/GeoTrackMapViewLayer'
-    Stack:
-      type: object
-      properties:
-        id:
-          type: string
-        orgID:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        events:
-          type: array
-          items:
-            type: object
-            properties:
-              eventType:
-                type: string
-              name:
-                type: string
-              description:
-                type: string
-              sources:
-                type: array
-                items:
-                  type: string
-              resources:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    apiVersion:
-                      type: string
-                    resourceID:
-                      type: string
-                    kind:
-                      $ref: '#/components/schemas/TemplateKind'
-                    templateMetaName:
-                      type: string
-                    associations:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          kind:
-                            $ref: '#/components/schemas/TemplateKind'
-                          metaName:
-                            type: string
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-              urls:
-                type: array
-                items:
-                  type: string
-              updatedAt:
-                type: string
-                format: date-time
-                readOnly: true
-    HistogramViewProperties:
-      type: object
-      required:
-      - type
-      - queries
-      - colors
-      - shape
-      - note
-      - showNoteWhenEmpty
-      - xColumn
-      - fillColumns
-      - xDomain
-      - xAxisLabel
-      - position
-      - binCount
-      properties:
-        type:
-          type: string
-          enum:
-          - histogram
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        xColumn:
-          type: string
-        fillColumns:
-          type: array
-          items:
-            type: string
-        xDomain:
-          type: array
-          items:
-            type: number
-            format: float
-        xAxisLabel:
-          type: string
-        position:
-          type: string
-          enum:
-          - overlaid
-          - stacked
-        binCount:
-          type: integer
-        legendColorizeRows:
-          type: boolean
-        legendHide:
-          type: boolean
-        legendOpacity:
-          type: number
-          format: float
-        legendOrientationThreshold:
-          type: integer
-    GreaterThreshold:
+            description: Key identified as environment reference and is the key identified in the template
+          value:
+            description: Value provided to fulfill reference
+            oneOf:
+            - type: string
+            - type: integer
+            - type: number
+            - type: boolean
+          defaultValue:
+            description: Default value that will be provided for the reference when no value is provided
+            oneOf:
+            - type: string
+            - type: integer
+            - type: number
+            - type: boolean
+        required:
+        - resourceField
+        - envRefKey
+    GeoHeatMapViewLayer:
       allOf:
-      - $ref: '#/components/schemas/ThresholdBase'
+      - $ref: '#/components/schemas/GeoViewLayerProperties'
       - type: object
         required:
-        - type
-        - value
+        - intensityField
+        - intensityDimension
+        - radius
+        - blur
+        - colors
         properties:
-          type:
+          intensityField:
             type: string
-            enum:
-            - greater
-          value:
-            type: number
-            format: float
-    AxisScale:
-      description: 'Scale is the axis formatting scale. Supported: "log", "linear"'
-      type: string
-      enum:
-      - log
-      - linear
-    ViewProperties:
-      oneOf:
-      - $ref: '#/components/schemas/LinePlusSingleStatProperties'
-      - $ref: '#/components/schemas/XYViewProperties'
-      - $ref: '#/components/schemas/SingleStatViewProperties'
-      - $ref: '#/components/schemas/HistogramViewProperties'
-      - $ref: '#/components/schemas/GaugeViewProperties'
-      - $ref: '#/components/schemas/TableViewProperties'
-      - $ref: '#/components/schemas/SimpleTableViewProperties'
-      - $ref: '#/components/schemas/MarkdownViewProperties'
-      - $ref: '#/components/schemas/CheckViewProperties'
-      - $ref: '#/components/schemas/ScatterViewProperties'
-      - $ref: '#/components/schemas/HeatmapViewProperties'
-      - $ref: '#/components/schemas/MosaicViewProperties'
-      - $ref: '#/components/schemas/BandViewProperties'
-      - $ref: '#/components/schemas/GeoViewProperties'
-    HeatmapViewProperties:
+            description: Intensity field
+          intensityDimension:
+            $ref: '#/components/schemas/Axis'
+          radius:
+            description: Radius size in pixels
+            type: integer
+          blur:
+            description: Blur for heatmap points
+            type: integer
+          colors:
+            description: Colors define color encoding of data into a visualization
+            type: array
+            items:
+              $ref: '#/components/schemas/DashboardColor'
+    ScatterViewProperties:
       type: object
       required:
       - type
@@ -3080,6 +3424,8 @@ components:
       - showNoteWhenEmpty
       - xColumn
       - yColumn
+      - fillColumns
+      - symbolColumns
       - xDomain
       - yDomain
       - xAxisLabel
@@ -3088,7 +3434,6 @@ components:
       - yPrefix
       - xSuffix
       - ySuffix
-      - binSize
       properties:
         adaptiveZoomHide:
           type: boolean
@@ -3097,7 +3442,7 @@ components:
         type:
           type: string
           enum:
-          - heatmap
+          - scatter
         queries:
           type: array
           items:
@@ -3144,6 +3489,14 @@ components:
         yTickStep:
           type: number
           format: float
+        fillColumns:
+          type: array
+          items:
+            type: string
+        symbolColumns:
+          type: array
+          items:
+            type: string
         xDomain:
           type: array
           items:
@@ -3166,8 +3519,6 @@ components:
           type: string
         ySuffix:
           type: string
-        binSize:
-          type: number
         legendColorizeRows:
           type: boolean
         legendHide:
@@ -3177,167 +3528,81 @@ components:
           format: float
         legendOrientationThreshold:
           type: integer
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    QueryVariableProperties:
+    CheckViewProperties:
+      type: object
+      required:
+      - type
+      - shape
+      - checkID
+      - queries
+      - colors
       properties:
+        adaptiveZoomHide:
+          type: boolean
         type:
           type: string
           enum:
-          - query
-        values:
-          type: object
-          properties:
-            query:
-              type: string
-            language:
-              type: string
-    ThresholdBase:
-      properties:
-        level:
-          $ref: '#/components/schemas/CheckStatusLevel'
-        allValues:
-          description: If true, only alert if all values meet threshold.
-          type: boolean
-    BuilderTagsType:
-      type: object
-      properties:
-        key:
+          - check
+        shape:
           type: string
-        values:
+          enum:
+          - chronograf-v2
+        checkID:
+          type: string
+        check:
+          $ref: '#/components/schemas/Check'
+        queries:
           type: array
           items:
-            type: string
-        aggregateFunctionType:
-          $ref: '#/components/schemas/BuilderAggregateFunctionType'
-    CustomCheck:
-      allOf:
-      - $ref: '#/components/schemas/CheckBase'
-      - type: object
-        properties:
-          type:
-            type: string
-            enum:
-            - custom
-        required:
-        - type
-    DeadmanCheck:
-      allOf:
-      - $ref: '#/components/schemas/CheckBase'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - deadman
-          timeSince:
-            description: String duration before deadman triggers.
-            type: string
-          staleTime:
-            description: String duration for time that a series is considered stale and should not trigger deadman.
-            type: string
-          reportZero:
-            description: If only zero values reported since time, trigger an alert
-            type: boolean
-          level:
-            $ref: '#/components/schemas/CheckStatusLevel'
-          every:
-            description: Check repetition interval.
-            type: string
-          offset:
-            description: Duration to delay after the schedule, before executing check.
-            type: string
-          tags:
-            description: List of tags to write to each status.
-            type: array
-            items:
-              type: object
-              properties:
-                key:
-                  type: string
-                value:
-                  type: string
-          statusMessageTemplate:
-            description: The template used to generate and write a status message.
-            type: string
-    Template:
-      type: array
-      items:
-        type: object
-        description: 'A template entry.
-
-          Defines an InfluxDB resource in a template.
-
-          '
-        properties:
-          apiVersion:
-            type: string
-            example: influxdata.com/v2alpha1
-          kind:
-            $ref: '#/components/schemas/TemplateKind'
-          metadata:
-            type: object
-            description: 'Metadata properties used for the resource when the template is applied.
-
-              '
-            properties:
-              name:
-                type: string
-          spec:
-            type: object
-            description: "Configuration properties used for the resource when the template is applied.\nKey-value pairs map to the specification for the resource.\n\nThe following code samples show `spec` configurations for template resources:\n\n- A bucket:\n\n```json\n{ \"spec\": {\n    \"name\": \"iot_center\",\n    \"retentionRules\": [{\n        \"everySeconds\": 2.592e+06,\n        \"type\": \"expire\"\n      }]\n  }\n}\n```\n\n- A variable:\n\n```json\n{ \"spec\": {\n    \"language\": \"flux\",\n    \"name\": \"Node_Service\",\n    \"query\": \"import \\\"influxdata/influxdb/v1\\\"\\r\\nv1.tagValues(bucket: \\\"iot_center\\\",\n        tag: \\\"service\\\")\",\n    \"type\": \"query\"\n  }\n}\n```\n"
-    SlackNotificationEndpoint:
+            $ref: '#/components/schemas/DashboardQuery'
+        colors:
+          description: Colors define color encoding of data into a visualization
+          type: array
+          items:
+            $ref: '#/components/schemas/DashboardColor'
+        legendColorizeRows:
+          type: boolean
+        legendHide:
+          type: boolean
+        legendOpacity:
+          type: number
+          format: float
+        legendOrientationThreshold:
+          type: integer
+    TelegramNotificationEndpoint:
       type: object
       allOf:
       - $ref: '#/components/schemas/NotificationEndpointBase'
       - type: object
+        required:
+        - token
+        - channel
         properties:
-          url:
-            description: Specifies the URL of the Slack endpoint. Specify either `URL` or `Token`.
-            type: string
           token:
-            description: Specifies the API token string. Specify either `URL` or `Token`.
+            description: Specifies the Telegram bot token. See https://core.telegram.org/bots#creating-a-new-bot .
             type: string
-    TemplateExportByName:
-      type: object
+          channel:
+            description: The ID of the telegram channel; a chat_id in https://core.telegram.org/bots/api#sendmessage .
+            type: string
+    MapVariableProperties:
       properties:
-        stackID:
+        type:
           type: string
-        orgIDs:
-          type: array
-          items:
-            type: object
-            properties:
-              orgID:
-                type: string
-              resourceFilters:
-                type: object
-                properties:
-                  byLabel:
-                    type: array
-                    items:
-                      type: string
-                  byResourceKind:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/TemplateKind'
-        resources:
-          type: array
-          items:
-            type: object
-            properties:
-              kind:
-                $ref: '#/components/schemas/TemplateKind'
-              name:
-                type: string
-            required:
-            - name
-            - kind
+          enum:
+          - map
+        values:
+          type: object
+          additionalProperties:
+            type: string
+    CheckStatusLevel:
+      description: The state to record if check matches a criteria.
+      type: string
+      enum:
+      - UNKNOWN
+      - OK
+      - INFO
+      - CRIT
+      - WARN
     NotificationEndpointDiscriminator:
       oneOf:
       - $ref: '#/components/schemas/SlackNotificationEndpoint'
@@ -3351,6 +3616,17 @@ components:
           pagerduty: '#/components/schemas/PagerDutyNotificationEndpoint'
           http: '#/components/schemas/HTTPNotificationEndpoint'
           telegram: '#/components/schemas/TelegramNotificationEndpoint'
+    CustomCheck:
+      allOf:
+      - $ref: '#/components/schemas/CheckBase'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - custom
+        required:
+        - type
     NotificationEndpointBase:
       type: object
       required:
@@ -3408,311 +3684,14 @@ components:
               $ref: '#/components/schemas/Link'
         type:
           $ref: '#/components/schemas/NotificationEndpointType'
-    GaugeViewProperties:
-      type: object
-      required:
-      - type
-      - queries
-      - colors
-      - shape
-      - note
-      - showNoteWhenEmpty
-      - prefix
-      - tickPrefix
-      - suffix
-      - tickSuffix
-      - decimalPlaces
-      properties:
-        type:
-          type: string
-          enum:
-          - gauge
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        prefix:
-          type: string
-        tickPrefix:
-          type: string
-        suffix:
-          type: string
-        tickSuffix:
-          type: string
-        decimalPlaces:
-          $ref: '#/components/schemas/DecimalPlaces'
-    HTTPNotificationEndpoint:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointBase'
-      - type: object
-        required:
-        - url
-        - authMethod
-        - method
-        properties:
-          url:
-            type: string
-          username:
-            type: string
-          password:
-            type: string
-          token:
-            type: string
-          method:
-            type: string
-            enum:
-            - POST
-            - GET
-            - PUT
-          authMethod:
-            type: string
-            enum:
-            - none
-            - basic
-            - bearer
-          contentTemplate:
-            type: string
-          headers:
-            type: object
-            description: Customized headers.
-            additionalProperties:
-              type: string
-    GeoCircleViewLayer:
-      allOf:
-      - $ref: '#/components/schemas/GeoViewLayerProperties'
-      - type: object
-        required:
-        - radiusField
-        - radiusDimension
-        - colorField
-        - colorDimension
-        - colors
-        properties:
-          radiusField:
-            type: string
-            description: Radius field
-          radiusDimension:
-            $ref: '#/components/schemas/Axis'
-          colorField:
-            type: string
-            description: Circle color field
-          colorDimension:
-            $ref: '#/components/schemas/Axis'
-          colors:
-            description: Colors define color encoding of data into a visualization
-            type: array
-            items:
-              $ref: '#/components/schemas/DashboardColor'
-          radius:
-            description: Maximum radius size in pixels
-            type: integer
-          interpolateColors:
-            description: Interpolate circle color based on displayed value
-            type: boolean
-    TemplateExportByID:
-      type: object
-      properties:
-        stackID:
-          type: string
-        orgIDs:
-          type: array
-          items:
-            type: object
-            properties:
-              orgID:
-                type: string
-              resourceFilters:
-                type: object
-                properties:
-                  byLabel:
-                    type: array
-                    items:
-                      type: string
-                  byResourceKind:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/TemplateKind'
-        resources:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              kind:
-                $ref: '#/components/schemas/TemplateKind'
-              name:
-                type: string
-                description: if defined with id, name is used for resource exported by id. if defined independently, resources strictly matching name are exported
-            required:
-            - id
-            - kind
-    TelegramNotificationEndpoint:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointBase'
-      - type: object
-        required:
-        - token
-        - channel
-        properties:
-          token:
-            description: Specifies the Telegram bot token. See https://core.telegram.org/bots#creating-a-new-bot .
-            type: string
-          channel:
-            description: The ID of the telegram channel; a chat_id in https://core.telegram.org/bots/api#sendmessage .
-            type: string
-    ColorMapping:
-      type: object
-      description: A color mapping is an object that maps time series data to a UI color scheme to allow the UI to render graphs consistent colors across reloads.
-      additionalProperties:
-        type: string
-      example:
-        series_id_1: '#edf529'
-        series_id_2: '#edf529'
-        measurement_birdmigration_europe: '#663cd0'
-        configcat_deployments-autopromotionblocker: '#663cd0'
-    LatLonColumns:
-      description: Object type to define lat/lon columns
-      type: object
-      required:
-      - lat
-      - lon
-      properties:
-        lat:
-          $ref: '#/components/schemas/LatLonColumn'
-        lon:
-          $ref: '#/components/schemas/LatLonColumn'
-    LatLonColumn:
-      description: Object type for key and column definitions
-      type: object
-      required:
-      - key
-      - column
-      properties:
-        key:
-          description: Key to determine whether the column is tag/field
-          type: string
-        column:
-          description: Column to look up Lat/Lon
-          type: string
-    GeoViewProperties:
-      type: object
-      required:
-      - type
-      - shape
-      - queries
-      - note
-      - showNoteWhenEmpty
-      - center
-      - zoom
-      - allowPanAndZoom
-      - detectCoordinateFields
-      - layers
-      properties:
-        type:
-          type: string
-          enum:
-          - geo
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-        shape:
-          type: string
-          enum:
-          - chronograf-v2
-        center:
-          description: Coordinates of the center of the map
-          type: object
-          required:
-          - lat
-          - lon
-          properties:
-            lat:
-              description: Latitude of the center of the map
-              type: number
-              format: double
-            lon:
-              description: Longitude of the center of the map
-              type: number
-              format: double
-        zoom:
-          description: Zoom level used for initial display of the map
-          type: number
-          format: double
-          minimum: 1
-          maximum: 28
-        allowPanAndZoom:
-          description: If true, map zoom and pan controls are enabled on the dashboard view
-          type: boolean
-          default: true
-        detectCoordinateFields:
-          description: If true, search results get automatically regroupped so that lon,lat and value are treated as columns
-          type: boolean
-          default: true
-        useS2CellID:
-          description: If true, S2 column is used to calculate lat/lon
-          type: boolean
-        s2Column:
-          description: String to define the column
-          type: string
-        latLonColumns:
-          $ref: '#/components/schemas/LatLonColumns'
-        mapStyle:
-          description: Define map type - regular, satellite etc.
-          type: string
-        note:
-          type: string
-        showNoteWhenEmpty:
-          description: If true, will display note when empty
-          type: boolean
-        colors:
-          description: Colors define color encoding of data into a visualization
-          type: array
-          items:
-            $ref: '#/components/schemas/DashboardColor'
-        layers:
-          description: List of individual layers shown in the map
-          type: array
-          items:
-            $ref: '#/components/schemas/GeoViewLayer'
-    RetentionRules_2:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
 
         '
-      items:
-        $ref: '#/components/schemas/RetentionRule_2'
     RetentionRule_2:
       type: object
       properties:
@@ -3925,6 +3904,27 @@ components:
                   required:
                   - kind
                   - resourceTemplateName
+    RetentionRules_2:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule_2'
     CheckBase_2:
       properties:
         id:
@@ -4004,16 +4004,6 @@ components:
       - orgID
       - query
   responses:
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -4038,6 +4028,16 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

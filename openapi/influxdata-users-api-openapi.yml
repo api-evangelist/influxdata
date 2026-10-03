@@ -636,83 +636,6 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    Users:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserResponse'
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    User:
-      properties:
-        id:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        status:
-          description: If inactive the user is inactive.
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        role:
-          type: string
-          enum:
-          - owner
-          - member
-        org_id:
-          type: string
-      required:
-      - name
-    PasswordResetBody:
-      properties:
-        password:
-          type: string
-      required:
-      - password
     Error:
       properties:
         code:
@@ -748,6 +671,83 @@ components:
           type: string
       required:
       - code
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    PasswordResetBody:
+      properties:
+        password:
+          type: string
+      required:
+      - password
+    User:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        status:
+          description: If inactive the user is inactive.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        role:
+          type: string
+          enum:
+          - owner
+          - member
+        org_id:
+          type: string
+      required:
+      - name
+    Users:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
     User_2:
       properties:
         id:
@@ -795,16 +795,6 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequestError:
       description: 'Bad request.
 
@@ -827,6 +817,22 @@ components:
               value:
                 code: invalid
                 message: 'failed to decode request body: organization not found'
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -849,12 +855,6 @@ components:
               value:
                 code: not found
                 message: organization not found
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -868,18 +868,6 @@ components:
       required: false
       schema:
         type: string
-    Limit:
-      in: query
-      name: limit
-      required: false
-      description: 'Limits the number of records returned. Default is `20`.
-
-        '
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
     Offset:
       in: query
       name: offset
@@ -895,6 +883,18 @@ components:
       schema:
         type: integer
         minimum: 0
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
     After:
       in: query
       name: after

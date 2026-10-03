@@ -42,6 +42,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Ready:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ready
+        started:
+          type: string
+          format: date-time
+          example: '2019-03-13T10:09:33.891196-04:00'
+        up:
+          type: string
+          example: 14m45.911966424s
     Error:
       properties:
         code:
@@ -77,20 +91,6 @@ components:
           type: string
       required:
       - code
-    Ready:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - ready
-        started:
-          type: string
-          format: date-time
-          example: '2019-03-13T10:09:33.891196-04:00'
-        up:
-          type: string
-          example: 14m45.911966424s
   parameters:
     TraceSpan:
       in: header

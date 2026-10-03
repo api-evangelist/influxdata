@@ -309,13 +309,93 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Label'
-    LabelsResponse:
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Links:
       type: object
+      description: 'URI pointers for additional paged results.
+
+        '
       properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    NotificationEndpoints:
+      properties:
+        notificationEndpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationEndpoint'
         links:
           $ref: '#/components/schemas/Links'
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    HTTPNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - url
+        - authMethod
+        - method
+        properties:
+          url:
+            type: string
+          username:
+            type: string
+          password:
+            type: string
+          token:
+            type: string
+          method:
+            type: string
+            enum:
+            - POST
+            - GET
+            - PUT
+          authMethod:
+            type: string
+            enum:
+            - none
+            - basic
+            - bearer
+          contentTemplate:
+            type: string
+          headers:
+            type: object
+            description: Customized headers.
+            additionalProperties:
+              type: string
     NotificationEndpointType:
       type: string
       enum:
@@ -323,6 +403,51 @@ components:
       - pagerduty
       - http
       - telegram
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    PostNotificationEndpoint:
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointDiscriminator'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
     SlackNotificationEndpoint:
       type: object
       allOf:
@@ -335,6 +460,61 @@ components:
           token:
             description: Specifies the API token string. Specify either `URL` or `Token`.
             type: string
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    PagerDutyNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - routingKey
+        properties:
+          clientURL:
+            type: string
+          routingKey:
+            type: string
+    NotificationEndpointUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+    TelegramNotificationEndpoint:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointBase'
+      - type: object
+        required:
+        - token
+        - channel
+        properties:
+          token:
+            description: Specifies the Telegram bot token. See https://core.telegram.org/bots#creating-a-new-bot .
+            type: string
+          channel:
+            description: The ID of the telegram channel; a chat_id in https://core.telegram.org/bots/api#sendmessage .
+            type: string
+    NotificationEndpoint:
+      allOf:
+      - $ref: '#/components/schemas/NotificationEndpointDiscriminator'
     LabelResponse:
       type: object
       properties:
@@ -412,186 +592,6 @@ components:
               $ref: '#/components/schemas/Link'
         type:
           $ref: '#/components/schemas/NotificationEndpointType'
-    HTTPNotificationEndpoint:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointBase'
-      - type: object
-        required:
-        - url
-        - authMethod
-        - method
-        properties:
-          url:
-            type: string
-          username:
-            type: string
-          password:
-            type: string
-          token:
-            type: string
-          method:
-            type: string
-            enum:
-            - POST
-            - GET
-            - PUT
-          authMethod:
-            type: string
-            enum:
-            - none
-            - basic
-            - bearer
-          contentTemplate:
-            type: string
-          headers:
-            type: object
-            description: Customized headers.
-            additionalProperties:
-              type: string
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    PagerDutyNotificationEndpoint:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointBase'
-      - type: object
-        required:
-        - routingKey
-        properties:
-          clientURL:
-            type: string
-          routingKey:
-            type: string
-    NotificationEndpointUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
-    NotificationEndpoints:
-      properties:
-        notificationEndpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationEndpoint'
-        links:
-          $ref: '#/components/schemas/Links'
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    NotificationEndpoint:
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointDiscriminator'
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    TelegramNotificationEndpoint:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointBase'
-      - type: object
-        required:
-        - token
-        - channel
-        properties:
-          token:
-            description: Specifies the Telegram bot token. See https://core.telegram.org/bots#creating-a-new-bot .
-            type: string
-          channel:
-            description: The ID of the telegram channel; a chat_id in https://core.telegram.org/bots/api#sendmessage .
-            type: string
-    PostNotificationEndpoint:
-      allOf:
-      - $ref: '#/components/schemas/NotificationEndpointDiscriminator'
   parameters:
     TraceSpan:
       in: header

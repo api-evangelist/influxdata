@@ -1538,6 +1538,341 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    TaskUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TaskStatusType'
+        flux:
+          description: Update the Flux script that the task runs.
+          type: string
+        name:
+          description: Update the 'name' option in the flux script.
+          type: string
+        every:
+          description: Update the 'every' option in the flux script.
+          type: string
+        cron:
+          description: Update the 'cron' option in the flux script.
+          type: string
+        offset:
+          description: Update the 'offset' option in the flux script.
+          type: string
+        description:
+          description: Update the description of the task.
+          type: string
+        scriptID:
+          description: Update the 'scriptID' of the task.
+          type: string
+        scriptParameters:
+          description: Update the 'scriptParameters' of the task.
+          type: object
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Runs:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Run'
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    AddResourceMemberRequestBody:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'The ID of the user to add to the resource.
+
+            '
+        name:
+          type: string
+          description: 'The name of the user to add to the resource.
+
+            '
+      required:
+      - id
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    Tasks:
+      type: object
+      properties:
+        links:
+          readOnly: true
+          $ref: '#/components/schemas/Links'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    RunManually:
+      properties:
+        scheduledFor:
+          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)
+
+            used for the run''s `now` option.
+
+            Default is the server _now_ time.
+
+            '
+          type:
+          - string
+          - 'null'
+          format: date-time
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    Logs:
+      type: object
+      properties:
+        events:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/LogEvent'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
+    Run:
+      properties:
+        id:
+          readOnly: true
+          type: string
+        taskID:
+          readOnly: true
+          type: string
+        status:
+          readOnly: true
+          type: string
+          enum:
+          - scheduled
+          - started
+          - failed
+          - success
+          - canceled
+        scheduledFor:
+          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
+          type: string
+          format: date-time
+        log:
+          description: An array of logs associated with the run.
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/LogEvent'
+        flux:
+          description: Flux used for the task
+          type: string
+          readOnly: true
+        startedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        finishedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        requestedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/tasks/1/runs/1
+            task: /api/v2/tasks/1
+            retry: /api/v2/tasks/1/runs/1/retry
+          properties:
+            self:
+              type: string
+              format: uri
+            task:
+              type: string
+              format: uri
+            retry:
+              type: string
+              format: uri
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    LogEvent:
+      type: object
+      properties:
+        time:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        message:
+          readOnly: true
+          description: A description of the event that occurred.
+          type: string
+          example: Halt and catch fire
+        runID:
+          readOnly: true
+          description: The ID of the task run that generated the event.
+          type: string
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
     ResourceOwners:
       type: object
       properties:
@@ -1712,76 +2047,6 @@ components:
       - id
       - name
       - orgID
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    Run:
-      properties:
-        id:
-          readOnly: true
-          type: string
-        taskID:
-          readOnly: true
-          type: string
-        status:
-          readOnly: true
-          type: string
-          enum:
-          - scheduled
-          - started
-          - failed
-          - success
-          - canceled
-        scheduledFor:
-          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
-          type: string
-          format: date-time
-        log:
-          description: An array of logs associated with the run.
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/LogEvent'
-        flux:
-          description: Flux used for the task
-          type: string
-          readOnly: true
-        startedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        finishedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        requestedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/tasks/1/runs/1
-            task: /api/v2/tasks/1
-            retry: /api/v2/tasks/1/runs/1/retry
-          properties:
-            self:
-              type: string
-              format: uri
-            task:
-              type: string
-              format: uri
-            retry:
-              type: string
-              format: uri
     TaskCreateRequest:
       type: object
       properties:
@@ -1848,192 +2113,31 @@ components:
           description: A [duration](https://docs.influxdata.com/flux/v0.x/spec/lexical-elements/#duration-literals) to delay execution of the task after the scheduled time has elapsed. `0` removes the offset.
           type: string
           format: duration
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceMembers:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceMember'
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    Tasks:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Task'
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    TaskStatusType:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
 
         '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    Logs:
-      type: object
-      properties:
-        events:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LogEvent'
-    RunManually:
-      properties:
-        scheduledFor:
-          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339-timestamp)
-
-            used for the run''s `now` option.
-
-            Default is the server _now_ time.
-
-            '
-          type:
-          - string
-          - 'null'
-          format: date-time
-    LogEvent:
-      type: object
-      properties:
-        time:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        message:
-          readOnly: true
-          description: A description of the event that occurred.
-          type: string
-          example: Halt and catch fire
-        runID:
-          readOnly: true
-          description: The ID of the task run that generated the event.
-          type: string
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    TaskUpdateRequest:
+    TaskUpdateRequest_2:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/TaskStatusType'
         flux:
-          description: Update the Flux script that the task runs.
+          description: The Flux script that the task runs.
           type: string
         name:
           description: Update the 'name' option in the flux script.
@@ -2050,87 +2154,104 @@ components:
         description:
           description: Update the description of the task.
           type: string
-        scriptID:
-          description: Update the 'scriptID' of the task.
-          type: string
-        scriptParameters:
-          description: Update the 'scriptParameters' of the task.
-          type: object
-    Label:
-      type: object
+    RunManually_2:
+      properties:
+        scheduledFor:
+          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)
+
+            used for the run''s `now` option.
+
+            Default is the server _now_ time.
+
+            '
+          type:
+          - string
+          - 'null'
+          format: date-time
+    Run_2:
       properties:
         id:
           readOnly: true
           type: string
-        orgID:
+        taskID:
           readOnly: true
           type: string
-        name:
+        status:
+          readOnly: true
           type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    Runs:
-      type: object
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        runs:
+          enum:
+          - scheduled
+          - started
+          - failed
+          - success
+          - canceled
+        scheduledFor:
+          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
+          type: string
+          format: date-time
+        log:
+          description: An array of logs associated with the run.
           type: array
+          readOnly: true
           items:
-            $ref: '#/components/schemas/Run'
-    TaskStatusType:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: '`inactive` cancels scheduled runs and prevents manual runs of the task.
-
-        '
-    AddResourceMemberRequestBody:
+            $ref: '#/components/schemas/LogEvent_2'
+        flux:
+          description: Flux used for the task
+          type: string
+          readOnly: true
+        startedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        finishedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        requestedAt:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
+          type: string
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/tasks/1/runs/1
+            task: /api/v2/tasks/1
+            retry: /api/v2/tasks/1/runs/1/retry
+          properties:
+            self:
+              type: string
+              format: uri
+            task:
+              type: string
+              format: uri
+            retry:
+              type: string
+              format: uri
+    LogEvent_2:
       type: object
       properties:
-        id:
+        time:
+          readOnly: true
+          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
           type: string
-          description: 'The ID of the user to add to the resource.
-
-            '
-        name:
+          format: date-time
+          example: 2006-01-02T15:04:05.999999999Z07:00
+        message:
+          readOnly: true
+          description: A description of the event that occurred.
           type: string
-          description: 'The name of the user to add to the resource.
-
-            '
-      required:
-      - id
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
+          example: Halt and catch fire
+        runID:
+          readOnly: true
+          description: The ID of the task run that generated the event.
+          type: string
     Task_2:
       type: object
       properties:
@@ -2255,72 +2376,6 @@ components:
       - name
       - orgID
       - flux
-    Run_2:
-      properties:
-        id:
-          readOnly: true
-          type: string
-        taskID:
-          readOnly: true
-          type: string
-        status:
-          readOnly: true
-          type: string
-          enum:
-          - scheduled
-          - started
-          - failed
-          - success
-          - canceled
-        scheduledFor:
-          description: The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp) used for the run's `now` option.
-          type: string
-          format: date-time
-        log:
-          description: An array of logs associated with the run.
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/LogEvent_2'
-        flux:
-          description: Flux used for the task
-          type: string
-          readOnly: true
-        startedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run started executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        finishedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://go.dev/src/time/format.go)) the run finished executing.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        requestedAt:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) the run was manually requested.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/tasks/1/runs/1
-            task: /api/v2/tasks/1
-            retry: /api/v2/tasks/1/runs/1/retry
-          properties:
-            self:
-              type: string
-              format: uri
-            task:
-              type: string
-              format: uri
-            retry:
-              type: string
-              format: uri
     TaskCreateRequest_2:
       type: object
       properties:
@@ -2340,62 +2395,45 @@ components:
           type: string
       required:
       - flux
-    RunManually_2:
-      properties:
-        scheduledFor:
-          description: 'The time [RFC3339 date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339-timestamp)
-
-            used for the run''s `now` option.
-
-            Default is the server _now_ time.
-
-            '
-          type:
-          - string
-          - 'null'
-          format: date-time
-    LogEvent_2:
-      type: object
-      properties:
-        time:
-          readOnly: true
-          description: The time ([RFC3339Nano date/time format](https://docs.influxdata.com/influxdb/latest/reference/glossary/#rfc3339nano-timestamp)) that the event occurred.
-          type: string
-          format: date-time
-          example: 2006-01-02T15:04:05.999999999Z07:00
-        message:
-          readOnly: true
-          description: A description of the event that occurred.
-          type: string
-          example: Halt and catch fire
-        runID:
-          readOnly: true
-          description: The ID of the task run that generated the event.
-          type: string
-    TaskUpdateRequest_2:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/TaskStatusType'
-        flux:
-          description: The Flux script that the task runs.
-          type: string
-        name:
-          description: Update the 'name' option in the flux script.
-          type: string
-        every:
-          description: Update the 'every' option in the flux script.
-          type: string
-        cron:
-          description: Update the 'cron' option in the flux script.
-          type: string
-        offset:
-          description: Update the 'offset' option in the flux script.
-          type: string
-        description:
-          description: Update the description of the task.
-          type: string
   responses:
+    BadRequestError:
+      description: 'Bad request.
+
+        The response body contains detail about the error.
+
+
+        #### InfluxDB OSS
+
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -2420,34 +2458,6 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -2470,16 +2480,6 @@ components:
               value:
                 code: not found
                 message: organization not found
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

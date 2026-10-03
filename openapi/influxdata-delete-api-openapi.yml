@@ -216,19 +216,6 @@ paths:
     servers:
     - url: /api/v2
 components:
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
   schemas:
     Error:
       properties:
@@ -348,6 +335,12 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 'Internal server error.
 
@@ -380,12 +373,19 @@ components:
               value:
                 code: not found
                 message: organization not found
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   securitySchemes:
     TokenAuthentication:
       type: apiKey

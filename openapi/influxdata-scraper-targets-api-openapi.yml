@@ -434,68 +434,23 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    ResourceOwners:
+    ScraperTargetResponses:
       type: object
       properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
+        configurations:
           type: array
           items:
-            $ref: '#/components/schemas/ResourceOwner'
+            $ref: '#/components/schemas/ScraperTargetResponse'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
     LabelResponse:
       type: object
       properties:
@@ -503,19 +458,6 @@ components:
           $ref: '#/components/schemas/Label'
         links:
           $ref: '#/components/schemas/Links'
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
     Error:
       properties:
         code:
@@ -551,6 +493,153 @@ components:
           type: string
       required:
       - code
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    ScraperTargetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the scraper target.
+        type:
+          type: string
+          description: The type of the metrics to be parsed.
+          enum:
+          - prometheus
+        url:
+          type: string
+          description: The URL of the metrics endpoint.
+          example: http://localhost:9090/metrics
+        orgID:
+          type: string
+          description: The organization ID.
+        bucketID:
+          type: string
+          description: The ID of the bucket to write to.
+        allowInsecure:
+          type: boolean
+          description: Skip TLS verification on endpoint.
+          default: false
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    AddResourceMemberRequestBody:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'The ID of the user to add to the resource.
+
+            '
+        name:
+          type: string
+          description: 'The name of the user to add to the resource.
+
+            '
+      required:
+      - id
     ScraperTargetResponse:
       type: object
       allOf:
@@ -586,10 +675,6 @@ components:
                 $ref: '#/components/schemas/Link'
               organization:
                 $ref: '#/components/schemas/Link'
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
     LabelsResponse:
       type: object
       properties:
@@ -597,84 +682,6 @@ components:
           $ref: '#/components/schemas/Labels'
         links:
           $ref: '#/components/schemas/Links'
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
-    ScraperTargetRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the scraper target.
-        type:
-          type: string
-          description: The type of the metrics to be parsed.
-          enum:
-          - prometheus
-        url:
-          type: string
-          description: The URL of the metrics endpoint.
-          example: http://localhost:9090/metrics
-        orgID:
-          type: string
-          description: The organization ID.
-        bucketID:
-          type: string
-          description: The ID of the bucket to write to.
-        allowInsecure:
-          type: boolean
-          description: Skip TLS verification on endpoint.
-          default: false
-    ResourceMembers:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceMember'
-    AddResourceMemberRequestBody:
-      type: object
-      properties:
-        id:
-          type: string
-          description: 'The ID of the user to add to the resource.
-
-            '
-        name:
-          type: string
-          description: 'The name of the user to add to the resource.
-
-            '
-      required:
-      - id
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
     Label:
       type: object
       properties:
@@ -698,13 +705,6 @@ components:
           example:
             color: ffb3b3
             description: this is a description
-    ScraperTargetResponses:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScraperTargetResponse'
   parameters:
     TraceSpan:
       in: header

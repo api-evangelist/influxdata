@@ -79,6 +79,13 @@ paths:
           description: unexpected error
           $ref: '#/components/responses/GeneralServerError'
 components:
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       properties:
@@ -115,13 +122,6 @@ components:
           type: string
       required:
       - code
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

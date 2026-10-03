@@ -186,19 +186,6 @@ paths:
         default:
           $ref: '#/components/responses/GeneralServerError'
 components:
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
   schemas:
     Error:
       properties:
@@ -235,14 +222,20 @@ components:
           type: string
       required:
       - code
-    ReplicationUpdateRequest:
+    Replication:
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string
         description:
           type: string
+        orgID:
+          type: string
         remoteID:
+          type: string
+        localBucketID:
           type: string
         remoteBucketID:
           type: string
@@ -251,13 +244,25 @@ components:
         maxQueueSizeBytes:
           type: integer
           format: int64
-          minimum: 33554430
-        dropNonRetryableData:
-          type: boolean
-        maxAgeSeconds:
+        currentQueueSizeBytes:
           type: integer
           format: int64
-          minimum: 0
+        remainingBytesToBeSynced:
+          type: integer
+          format: int64
+        latestResponseCode:
+          type: integer
+        latestErrorMessage:
+          type: string
+        dropNonRetryableData:
+          type: boolean
+      required:
+      - id
+      - name
+      - remoteID
+      - orgID
+      - localBucketID
+      - maxQueueSizeBytes
     ReplicationCreationRequest:
       type: object
       properties:
@@ -302,20 +307,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Replication'
-    Replication:
+    ReplicationUpdateRequest:
       type: object
       properties:
-        id:
-          type: string
         name:
           type: string
         description:
           type: string
-        orgID:
-          type: string
         remoteID:
-          type: string
-        localBucketID:
           type: string
         remoteBucketID:
           type: string
@@ -324,25 +323,26 @@ components:
         maxQueueSizeBytes:
           type: integer
           format: int64
-        currentQueueSizeBytes:
-          type: integer
-          format: int64
-        remainingBytesToBeSynced:
-          type: integer
-          format: int64
-        latestResponseCode:
-          type: integer
-        latestErrorMessage:
-          type: string
+          minimum: 33554430
         dropNonRetryableData:
           type: boolean
-      required:
-      - id
-      - name
-      - remoteID
-      - orgID
-      - localBucketID
-      - maxQueueSizeBytes
+        maxAgeSeconds:
+          type: integer
+          format: int64
+          minimum: 0
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   responses:
     GeneralServerError:
       description: Non 2XX error response from server.

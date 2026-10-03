@@ -279,53 +279,12 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    QueryVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - query
-        values:
-          type: object
-          properties:
-            query:
-              type: string
-            language:
-              type: string
-    Links:
+    VariableProperties:
       type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
+      oneOf:
+      - $ref: '#/components/schemas/QueryVariableProperties'
+      - $ref: '#/components/schemas/ConstantVariableProperties'
+      - $ref: '#/components/schemas/MapVariableProperties'
     MapVariableProperties:
       properties:
         type:
@@ -371,54 +330,46 @@ components:
           type: string
       required:
       - code
+    QueryVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - query
+        values:
+          type: object
+          properties:
+            query:
+              type: string
+            language:
+              type: string
     Labels:
       type: array
       items:
         $ref: '#/components/schemas/Label'
-    Variables:
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    LabelMapping:
       type: object
-      example:
-        variables:
-        - id: '1221432'
-          name: ':ok:'
-          selected:
-          - hello
-          arguments:
-            type: constant
-            values:
-            - howdy
-            - hello
-            - hi
-            - yo
-            - oy
-        - id: '1221432'
-          name: ':ok:'
-          selected:
-          - c
-          arguments:
-            type: map
-            values:
-              a: fdjaklfdjkldsfjlkjdsa
-              b: dfaksjfkljekfajekdljfas
-              c: fdjksajfdkfeawfeea
-        - id: '1221432'
-          name: ':ok:'
-          selected:
-          - host
-          arguments:
-            type: query
-            query: 'from(bucket: "foo") |> showMeasurements()'
-            language: flux
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
       properties:
-        variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/Variable'
-    LabelsResponse:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    LabelResponse:
       type: object
       properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
+        label:
+          $ref: '#/components/schemas/Label'
         links:
           $ref: '#/components/schemas/Links'
     ConstantVariableProperties:
@@ -431,6 +382,27 @@ components:
           type: array
           items:
             type: string
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Variable:
       type: object
       required:
@@ -476,11 +448,45 @@ components:
         updatedAt:
           type: string
           format: date-time
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
+    Variables:
+      type: object
+      example:
+        variables:
+        - id: '1221432'
+          name: ':ok:'
+          selected:
+          - hello
+          arguments:
+            type: constant
+            values:
+            - howdy
+            - hello
+            - hi
+            - yo
+            - oy
+        - id: '1221432'
+          name: ':ok:'
+          selected:
+          - c
+          arguments:
+            type: map
+            values:
+              a: fdjaklfdjkldsfjlkjdsa
+              b: dfaksjfkljekfajekdljfas
+              c: fdjksajfdkfeawfeea
+        - id: '1221432'
+          name: ':ok:'
+          selected:
+          - host
+          arguments:
+            type: query
+            query: 'from(bucket: "foo") |> showMeasurements()'
+            language: flux
+      properties:
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Variable'
     Label:
       type: object
       properties:
@@ -504,12 +510,6 @@ components:
           example:
             color: ffb3b3
             description: this is a description
-    VariableProperties:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/QueryVariableProperties'
-      - $ref: '#/components/schemas/ConstantVariableProperties'
-      - $ref: '#/components/schemas/MapVariableProperties'
     Variable_2:
       type: object
       required:

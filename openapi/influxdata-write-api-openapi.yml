@@ -295,20 +295,14 @@ paths:
     servers:
     - url: /api/v2
 components:
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
   schemas:
+    WritePrecision:
+      type: string
+      enum:
+      - ms
+      - s
+      - us
+      - ns
     Error:
       properties:
         code:
@@ -344,28 +338,6 @@ components:
           type: string
       required:
       - code
-    LineProtocolLengthError:
-      properties:
-        code:
-          description: Code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - invalid
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-      required:
-      - code
-      - message
-    WritePrecision:
-      type: string
-      enum:
-      - ms
-      - s
-      - us
-      - ns
     LineProtocolError:
       properties:
         code:
@@ -398,6 +370,21 @@ components:
           format: int32
       required:
       - code
+    LineProtocolLengthError:
+      properties:
+        code:
+          description: Code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - invalid
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+      required:
+      - code
+      - message
   responses:
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
@@ -423,6 +410,12 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 'Internal server error.
 
@@ -455,12 +448,19 @@ components:
               value:
                 code: not found
                 message: organization not found
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   securitySchemes:
     TokenAuthentication:
       type: apiKey

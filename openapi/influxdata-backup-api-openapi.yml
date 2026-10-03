@@ -154,46 +154,23 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
-    MetadataBackup:
+    ShardManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardManifest'
+    ShardOwners:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardOwner'
+    ShardOwner:
       type: object
       properties:
-        kv:
-          type: string
-          format: binary
-        sql:
-          type: string
-          format: binary
-        buckets:
-          $ref: '#/components/schemas/BucketMetadataManifests'
-      required:
-      - kv
-      - sql
-      - buckets
-    ShardGroupManifest:
-      type: object
-      properties:
-        id:
+        nodeID:
           type: integer
           format: int64
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        deletedAt:
-          type: string
-          format: date-time
-        truncatedAt:
-          type: string
-          format: date-time
-        shards:
-          $ref: '#/components/schemas/ShardManifests'
+          description: The ID of the node that owns the shard.
       required:
-      - id
-      - startTime
-      - endTime
-      - shards
+      - nodeID
     Error:
       properties:
         code:
@@ -229,18 +206,6 @@ components:
           type: string
       required:
       - code
-    RetentionPolicyManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/RetentionPolicyManifest'
-    ShardManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardManifest'
-    ShardOwners:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardOwner'
     BucketMetadataManifest:
       type: object
       properties:
@@ -265,6 +230,69 @@ components:
       - bucketName
       - defaultRetentionPolicy
       - retentionPolicies
+    BucketMetadataManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketMetadataManifest'
+    ShardGroupManifest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+        truncatedAt:
+          type: string
+          format: date-time
+        shards:
+          $ref: '#/components/schemas/ShardManifests'
+      required:
+      - id
+      - startTime
+      - endTime
+      - shards
+    RetentionPolicyManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/RetentionPolicyManifest'
+    SubscriptionManifest:
+      type: object
+      properties:
+        name:
+          type: string
+        mode:
+          type: string
+        destinations:
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      - mode
+      - destinations
+    MetadataBackup:
+      type: object
+      properties:
+        kv:
+          type: string
+          format: binary
+        sql:
+          type: string
+          format: binary
+        buckets:
+          $ref: '#/components/schemas/BucketMetadataManifests'
+      required:
+      - kv
+      - sql
+      - buckets
     RetentionPolicyManifest:
       type: object
       properties:
@@ -289,38 +317,14 @@ components:
       - shardGroupDuration
       - shardGroups
       - subscriptions
-    SubscriptionManifest:
-      type: object
-      properties:
-        name:
-          type: string
-        mode:
-          type: string
-        destinations:
-          type: array
-          items:
-            type: string
-      required:
-      - name
-      - mode
-      - destinations
+    SubscriptionManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/SubscriptionManifest'
     ShardGroupManifests:
       type: array
       items:
         $ref: '#/components/schemas/ShardGroupManifest'
-    ShardOwner:
-      type: object
-      properties:
-        nodeID:
-          type: integer
-          format: int64
-          description: The ID of the node that owns the shard.
-      required:
-      - nodeID
-    BucketMetadataManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketMetadataManifest'
     ShardManifest:
       type: object
       properties:
@@ -332,10 +336,6 @@ components:
       required:
       - id
       - shardOwners
-    SubscriptionManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/SubscriptionManifest'
   parameters:
     TraceSpan:
       in: header

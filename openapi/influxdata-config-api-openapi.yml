@@ -113,6 +113,9 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    Flags:
+      type: object
+      additionalProperties: true
     Error:
       properties:
         code:
@@ -148,9 +151,6 @@ components:
           type: string
       required:
       - code
-    Flags:
-      type: object
-      additionalProperties: true
     Config:
       type: object
       properties:

@@ -417,6 +417,12 @@ paths:
         source: "curl --request PATCH \"INFLUX_URL/api/v2/buckets/BUCKET_ID/schema/measurements \\\n  --header \"Authorization: Token INFLUX_API_TOKEN\" \\\n  --header \"Accept: application/json\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n      \"column\": [\n        {\n          \"type\": \"tag\",\n          \"name\": \"location\"\n        },\n        {\n          \"type\": \"field\",\n          \"name\": \"value\",\n          \"dataType\": \"float\"\n        },\n        {\n          \"type\": \"timestamp\",\n          \"name\": \"time\"\n        }\n      ]\n    }'\n"
 components:
   schemas:
+    ColumnSemanticType:
+      type: string
+      enum:
+      - timestamp
+      - tag
+      - field
     MeasurementSchema:
       description: Definition of a measurement schema.
       type: object
@@ -472,6 +478,36 @@ components:
           type: string
           format: date-time
           readOnly: true
+    MeasurementSchemaList:
+      description: A list of measurement schemas returning summary information
+      example:
+        measurementSchemas:
+        - id: 1a3c5e7f9b0a8642
+          orgID: 0a3c5e7f9b0a0001
+          bucketID: ba3c5e7f9b0a0010
+          name: cpu
+          createdAt: '2021-01-21T00:48:40.993Z'
+          updatedAt: '2021-01-21T00:48:40.993Z'
+        - id: 1a3c5e7f9b0a8643
+          orgID: 0a3c5e7f9b0a0001
+          bucketID: ba3c5e7f9b0a0010
+          name: memory
+          createdAt: '2021-01-21T00:48:40.993Z'
+          updatedAt: '2021-01-21T00:48:40.993Z'
+        - id: 1a3c5e7f9b0a8644
+          orgID: 0a3c5e7f9b0a0001
+          bucketID: ba3c5e7f9b0a0010
+          name: disk
+          createdAt: '2021-01-21T00:48:40.993Z'
+          updatedAt: '2021-01-21T00:48:40.993Z'
+      type: object
+      required:
+      - measurementSchemas
+      properties:
+        measurementSchemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementSchema'
     Error:
       properties:
         code:
@@ -507,85 +543,6 @@ components:
           type: string
       required:
       - code
-    ColumnSemanticType:
-      type: string
-      enum:
-      - timestamp
-      - tag
-      - field
-    MeasurementSchemaList:
-      description: A list of measurement schemas returning summary information
-      example:
-        measurementSchemas:
-        - id: 1a3c5e7f9b0a8642
-          orgID: 0a3c5e7f9b0a0001
-          bucketID: ba3c5e7f9b0a0010
-          name: cpu
-          createdAt: '2021-01-21T00:48:40.993Z'
-          updatedAt: '2021-01-21T00:48:40.993Z'
-        - id: 1a3c5e7f9b0a8643
-          orgID: 0a3c5e7f9b0a0001
-          bucketID: ba3c5e7f9b0a0010
-          name: memory
-          createdAt: '2021-01-21T00:48:40.993Z'
-          updatedAt: '2021-01-21T00:48:40.993Z'
-        - id: 1a3c5e7f9b0a8644
-          orgID: 0a3c5e7f9b0a0001
-          bucketID: ba3c5e7f9b0a0010
-          name: disk
-          createdAt: '2021-01-21T00:48:40.993Z'
-          updatedAt: '2021-01-21T00:48:40.993Z'
-      type: object
-      required:
-      - measurementSchemas
-      properties:
-        measurementSchemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeasurementSchema'
-    MeasurementSchemaUpdateRequest:
-      description: Update an existing measurement schema
-      type: object
-      example:
-        columns:
-        - name: time
-          type: integer
-          format: unix timestamp
-        - name: host
-          type: tag
-        - name: region
-          type: tag
-        - name: usage_user
-          type: field
-          dataType: float
-        - name: usage_user
-          type: field
-          dataType: float
-      required:
-      - columns
-      properties:
-        columns:
-          description: An ordered collection of column definitions
-          type: array
-          items:
-            $ref: '#/components/schemas/MeasurementSchemaColumn'
-    MeasurementSchemaColumn:
-      description: Definition of a measurement schema column.
-      example:
-        name: time
-        type: integer
-        format: unix timestamp
-      type: object
-      required:
-      - name
-      - type
-      properties:
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/ColumnSemanticType'
-        dataType:
-          $ref: '#/components/schemas/ColumnDataType'
     MeasurementSchemaCreateRequest:
       description: Create a new measurement schema.
       type: object
@@ -621,6 +578,49 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementSchemaColumn'
+    MeasurementSchemaColumn:
+      description: Definition of a measurement schema column.
+      example:
+        name: time
+        type: integer
+        format: unix timestamp
+      type: object
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ColumnSemanticType'
+        dataType:
+          $ref: '#/components/schemas/ColumnDataType'
+    MeasurementSchemaUpdateRequest:
+      description: Update an existing measurement schema
+      type: object
+      example:
+        columns:
+        - name: time
+          type: integer
+          format: unix timestamp
+        - name: host
+          type: tag
+        - name: region
+          type: tag
+        - name: usage_user
+          type: field
+          dataType: float
+        - name: usage_user
+          type: field
+          dataType: float
+      required:
+      - columns
+      properties:
+        columns:
+          description: An ordered collection of column definitions
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementSchemaColumn'
     ColumnDataType:
       type: string
       enum:
@@ -630,16 +630,6 @@ components:
       - string
       - unsigned
   responses:
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -664,6 +654,16 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:

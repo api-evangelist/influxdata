@@ -1484,51 +1484,212 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    ResourceOwners:
-      type: object
+    UserResponse:
       properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
         links:
           type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
           properties:
             self:
               type: string
               format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceOwner'
+      required:
+      - name
     Labels:
       type: array
       items:
         $ref: '#/components/schemas/Label'
-    RetentionRules:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    SchemaType:
+      type: string
+      enum:
+      - implicit
+      - explicit
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
 
         '
-      items:
-        $ref: '#/components/schemas/RetentionRule'
-    LabelsResponse:
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    AddResourceMemberRequestBody:
       type: object
       properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
+        id:
+          type: string
+          description: 'The ID of the user to add to the resource.
+
+            '
+        name:
+          type: string
+          description: 'The name of the user to add to the resource.
+
+            '
+      required:
+      - id
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    PostBucketRequest:
+      properties:
+        orgID:
+          description: 'The organization ID.
+
+            Specifies the organization that owns the bucket.
+
+            '
+          type: string
+        name:
+          description: 'The bucket name.
+
+            '
+          type: string
+        description:
+          description: 'A description of the bucket.
+
+            '
+          type: string
+        rp:
+          description: 'The retention policy for the bucket.
+
+            For InfluxDB 1.x, specifies the duration of time that each data point
+
+            in the retention policy persists.
+
+
+            If you need compatibility with InfluxDB 1.x, specify a value for the `rp` property;
+
+            otherwise, see the `retentionRules` property.
+
+
+            [Retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp)
+
+            is an InfluxDB 1.x concept.
+
+            The InfluxDB 2.x and Cloud equivalent is
+
+            [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+            The InfluxDB `/api/v2` API uses `RetentionRules` to configure the retention period.
+
+            '
+          type: string
+          default: '0'
+        retentionRules:
+          $ref: '#/components/schemas/RetentionRules'
+        schemaType:
+          description: 'The schema Type. Default is `implicit`.
+
+
+            #### InfluxDB Cloud
+
+
+            - Use `explicit` to enforce column names, tags, fields, and data types for
+
+            your data.
+
+
+            #### InfluxDB OSS
+
+
+            - Doesn''t support `explicit` bucket schemas.
+
+            '
+          $ref: '#/components/schemas/SchemaType'
+          default: implicit
+      required:
+      - orgID
+      - name
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     ResourceMembers:
       type: object
       properties:
@@ -1542,18 +1703,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceMember'
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    SchemaType:
-      type: string
-      enum:
-      - implicit
-      - explicit
     RetentionRule:
       type: object
       properties:
@@ -1599,55 +1748,55 @@ components:
             '
       required:
       - everySeconds
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    Links:
+    PatchRetentionRule:
       type: object
-      description: 'URI pointers for additional paged results.
-
-        '
       properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The number of seconds to keep data.
+
+            Default duration is `2592000` (30 days).
+
+            `0` represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The [shard group duration](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#shard).
+
+            The number of seconds that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Doesn''t use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+
+            #### Related guides
+
+
+            - InfluxDB [shards and shard groups](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/)
+
+            '
       required:
-      - self
+      - everySeconds
     PatchBucketRequest:
       type: object
       description: 'An object that contains updated bucket properties to apply.
@@ -1666,6 +1815,33 @@ components:
           type: string
         retentionRules:
           $ref: '#/components/schemas/PatchRetentionRules'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
+    Buckets:
+      type: object
+      properties:
+        links:
+          readOnly: true
+          $ref: '#/components/schemas/Links'
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -1679,41 +1855,47 @@ components:
           type: string
       required:
       - labelID
-    Error:
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
+    LabelResponse:
+      type: object
       properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
     PatchRetentionRules:
       type: array
       description: Updates to rules to expire or retain data. No rules means no updates.
@@ -1786,178 +1968,6 @@ components:
       required:
       - name
       - retentionRules
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    Buckets:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        buckets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bucket'
-    PostBucketRequest:
-      properties:
-        orgID:
-          description: 'The organization ID.
-
-            Specifies the organization that owns the bucket.
-
-            '
-          type: string
-        name:
-          description: 'The bucket name.
-
-            '
-          type: string
-        description:
-          description: 'A description of the bucket.
-
-            '
-          type: string
-        rp:
-          description: 'The retention policy for the bucket.
-
-            For InfluxDB 1.x, specifies the duration of time that each data point
-
-            in the retention policy persists.
-
-
-            If you need compatibility with InfluxDB 1.x, specify a value for the `rp` property;
-
-            otherwise, see the `retentionRules` property.
-
-
-            [Retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp)
-
-            is an InfluxDB 1.x concept.
-
-            The InfluxDB 2.x and Cloud equivalent is
-
-            [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
-
-            The InfluxDB `/api/v2` API uses `RetentionRules` to configure the retention period.
-
-            '
-          type: string
-          default: '0'
-        retentionRules:
-          $ref: '#/components/schemas/RetentionRules'
-        schemaType:
-          description: 'The schema Type. Default is `implicit`.
-
-
-            #### InfluxDB Cloud
-
-
-            - Use `explicit` to enforce column names, tags, fields, and data types for
-
-            your data.
-
-
-            #### InfluxDB OSS
-
-
-            - Doesn''t support `explicit` bucket schemas.
-
-            '
-          $ref: '#/components/schemas/SchemaType'
-          default: implicit
-      required:
-      - orgID
-      - name
-    PatchRetentionRule:
-      type: object
-      properties:
-        type:
-          type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The number of seconds to keep data.
-
-            Default duration is `2592000` (30 days).
-
-            `0` represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The [shard group duration](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#shard).
-
-            The number of seconds that each shard group covers.
-
-
-            #### InfluxDB Cloud
-
-
-            - Doesn''t use `shardGroupDurationsSeconds`.
-
-
-            #### InfluxDB OSS
-
-
-            - Default value depends on the [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
-
-
-            #### Related guides
-
-
-            - InfluxDB [shards and shard groups](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/)
-
-            '
-      required:
-      - everySeconds
-    AddResourceMemberRequestBody:
-      type: object
-      properties:
-        id:
-          type: string
-          description: 'The ID of the user to add to the resource.
-
-            '
-        name:
-          type: string
-          description: 'The name of the user to add to the resource.
-
-            '
-      required:
-      - id
     ResourceMember:
       allOf:
       - $ref: '#/components/schemas/UserResponse'
@@ -1968,82 +1978,6 @@ components:
             default: member
             enum:
             - member
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
-    RetentionRules_2:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule_2'
-    RetentionRule_2:
-      type: object
-      properties:
-        type:
-          type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The duration in seconds for how long data will be kept in the database.
-
-            The default duration is 2592000 (30 days).
-
-            0 represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The shard group duration.
-
-            The duration or interval (in seconds) that each shard group covers.
-
-
-            #### InfluxDB Cloud
-
-
-            - Does not use `shardGroupDurationsSeconds`.
-
-
-            #### InfluxDB OSS
-
-
-            - Default value depends on the
-
-            [bucket retention period](https://docs.influxdata.com/influxdb/latest/reference/internals/shards/#shard-group-duration).
-
-            '
-      required:
-      - everySeconds
     PostBucketRequest_2:
       properties:
         orgID:
@@ -2114,6 +2048,51 @@ components:
       required:
       - orgID
       - name
+    RetentionRule_2:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/latest/reference/internals/shards/#shard-group-duration).
+
+            '
+      required:
+      - everySeconds
     PatchRetentionRule_2:
       type: object
       properties:
@@ -2163,7 +2142,60 @@ components:
             '
       required:
       - everySeconds
+    RetentionRules_2:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule_2'
   responses:
+    BadRequestError:
+      description: 'Bad request.
+
+        The response body contains detail about the error.
+
+
+        #### InfluxDB OSS
+
+
+        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            orgProvidedNotFound:
+              summary: The org or orgID passed doesn't own the token passed in the header
+              value:
+                code: invalid
+                message: 'failed to decode request body: organization not found'
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -2188,28 +2220,6 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    BadRequestError:
-      description: 'Bad request.
-
-        The response body contains detail about the error.
-
-
-        #### InfluxDB OSS
-
-
-        - Returns this error if an incorrect value is passed in the `org` parameter or `orgID` parameter.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            orgProvidedNotFound:
-              summary: The org or orgID passed doesn't own the token passed in the header
-              value:
-                code: invalid
-                message: 'failed to decode request body: organization not found'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -2232,16 +2242,6 @@ components:
               value:
                 code: not found
                 message: organization not found
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -2267,6 +2267,21 @@ components:
         minimum: 1
         maximum: 100
         default: 20
+    Offset:
+      in: query
+      name: offset
+      required: false
+      description: 'The offset for pagination.
+
+        The number of records to skip.
+
+
+        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
     After:
       in: query
       name: after
@@ -2285,7 +2300,7 @@ components:
         For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).
 
         '
-    Offset:
+    Offset_2:
       in: query
       name: offset
       required: false
@@ -2294,7 +2309,7 @@ components:
         The number of records to skip.
 
 
-        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/cloud/api/#tag/Pagination).
+        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
 
         '
       schema:
@@ -2318,21 +2333,6 @@ components:
         For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
 
         '
-    Offset_2:
-      in: query
-      name: offset
-      required: false
-      description: 'The offset for pagination.
-
-        The number of records to skip.
-
-
-        For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
-
-        '
-      schema:
-        type: integer
-        minimum: 0
   securitySchemes:
     TokenAuthentication:
       type: apiKey
