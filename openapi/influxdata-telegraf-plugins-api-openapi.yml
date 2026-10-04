@@ -43,17 +43,6 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    TelegrafPlugins:
-      type: object
-      properties:
-        version:
-          type: string
-        os:
-          type: string
-        plugins:
-          type: array
-          items:
-            $ref: '#/components/schemas/TelegrafPlugin'
     TelegrafPlugin:
       type: object
       properties:
@@ -65,6 +54,17 @@ components:
           type: string
         config:
           type: string
+    TelegrafPlugins:
+      type: object
+      properties:
+        version:
+          type: string
+        os:
+          type: string
+        plugins:
+          type: array
+          items:
+            $ref: '#/components/schemas/TelegrafPlugin'
     Error:
       properties:
         code:

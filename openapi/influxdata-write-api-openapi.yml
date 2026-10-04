@@ -296,13 +296,21 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    WritePrecision:
-      type: string
-      enum:
-      - ms
-      - s
-      - us
-      - ns
+    LineProtocolLengthError:
+      properties:
+        code:
+          description: Code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - invalid
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+      required:
+      - code
+      - message
     Error:
       properties:
         code:
@@ -338,6 +346,13 @@ components:
           type: string
       required:
       - code
+    WritePrecision:
+      type: string
+      enum:
+      - ms
+      - s
+      - us
+      - ns
     LineProtocolError:
       properties:
         code:
@@ -370,22 +385,13 @@ components:
           format: int32
       required:
       - code
-    LineProtocolLengthError:
-      properties:
-        code:
-          description: Code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - invalid
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-      required:
-      - code
-      - message
   responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -410,22 +416,6 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -448,6 +438,16 @@ components:
               value:
                 code: not found
                 message: organization not found
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

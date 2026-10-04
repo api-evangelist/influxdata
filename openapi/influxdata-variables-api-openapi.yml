@@ -279,12 +279,13 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    VariableProperties:
+    LabelResponse:
       type: object
-      oneOf:
-      - $ref: '#/components/schemas/QueryVariableProperties'
-      - $ref: '#/components/schemas/ConstantVariableProperties'
-      - $ref: '#/components/schemas/MapVariableProperties'
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
     MapVariableProperties:
       properties:
         type:
@@ -295,100 +296,11 @@ components:
           type: object
           additionalProperties:
             type: string
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    QueryVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - query
-        values:
-          type: object
-          properties:
-            query:
-              type: string
-            language:
-              type: string
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
-    LabelMapping:
-      type: object
-      description: A _label mapping_ contains a `label` ID to attach to a resource.
-      properties:
-        labelID:
-          description: 'A label ID.
-
-            Specifies the label to attach.
-
-            '
-          type: string
-      required:
-      - labelID
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    ConstantVariableProperties:
-      properties:
-        type:
-          type: string
-          enum:
-          - constant
-        values:
-          type: array
-          items:
-            type: string
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
     Links:
       type: object
       description: 'URI pointers for additional paged results.
@@ -448,6 +360,74 @@ components:
         updatedAt:
           type: string
           format: date-time
+    VariableProperties:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/QueryVariableProperties'
+      - $ref: '#/components/schemas/ConstantVariableProperties'
+      - $ref: '#/components/schemas/MapVariableProperties'
+    ConstantVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - constant
+        values:
+          type: array
+          items:
+            type: string
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    LabelMapping:
+      type: object
+      description: A _label mapping_ contains a `label` ID to attach to a resource.
+      properties:
+        labelID:
+          description: 'A label ID.
+
+            Specifies the label to attach.
+
+            '
+          type: string
+      required:
+      - labelID
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
     Variables:
       type: object
       example:
@@ -487,6 +467,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Variable'
+    QueryVariableProperties:
+      properties:
+        type:
+          type: string
+          enum:
+          - query
+        values:
+          type: object
+          properties:
+            query:
+              type: string
+            language:
+              type: string
     Label:
       type: object
       properties:
@@ -510,6 +503,13 @@ components:
           example:
             color: ffb3b3
             description: this is a description
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
     Variable_2:
       type: object
       required:
@@ -553,6 +553,13 @@ components:
         updatedAt:
           type: string
           format: date-time
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -566,13 +573,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

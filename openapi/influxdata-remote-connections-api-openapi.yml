@@ -145,6 +145,55 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
+    RemoteConnectionCreationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        remoteURL:
+          type: string
+          format: uri
+        remoteAPIToken:
+          type: string
+        remoteOrgID:
+          type: string
+        allowInsecureTLS:
+          type: boolean
+          default: false
+      required:
+      - name
+      - orgID
+      - remoteURL
+      - remoteAPIToken
+      - allowInsecureTLS
+    RemoteConnectionUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        remoteURL:
+          type: string
+          format: uri
+        remoteAPIToken:
+          type: string
+        remoteOrgID:
+          type: string
+        allowInsecureTLS:
+          type: boolean
+          default: false
+    RemoteConnections:
+      type: object
+      properties:
+        remotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RemoteConnection'
     Error:
       properties:
         code:
@@ -180,55 +229,6 @@ components:
           type: string
       required:
       - code
-    RemoteConnectionUpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        remoteURL:
-          type: string
-          format: uri
-        remoteAPIToken:
-          type: string
-        remoteOrgID:
-          type: string
-        allowInsecureTLS:
-          type: boolean
-          default: false
-    RemoteConnectionCreationRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        orgID:
-          type: string
-        remoteURL:
-          type: string
-          format: uri
-        remoteAPIToken:
-          type: string
-        remoteOrgID:
-          type: string
-        allowInsecureTLS:
-          type: boolean
-          default: false
-      required:
-      - name
-      - orgID
-      - remoteURL
-      - remoteAPIToken
-      - allowInsecureTLS
-    RemoteConnections:
-      type: object
-      properties:
-        remotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/RemoteConnection'
     RemoteConnection:
       type: object
       properties:
@@ -254,6 +254,13 @@ components:
       - orgID
       - remoteURL
       - allowInsecureTLS
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -267,13 +274,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

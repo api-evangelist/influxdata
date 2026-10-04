@@ -226,37 +226,41 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
+    BucketShardMapping:
+      type: object
+      properties:
+        oldId:
+          type: integer
+          format: int64
+        newId:
+          type: integer
+          format: int64
+      required:
+      - oldId
+      - newId
     ShardManifests:
       type: array
       items:
         $ref: '#/components/schemas/ShardManifest'
-    RestoredBucketMappings:
-      type: object
-      properties:
-        id:
-          description: New ID of the restored bucket
-          type: string
-        name:
-          type: string
-        shardMappings:
-          $ref: '#/components/schemas/BucketShardMappings'
-      required:
-      - id
-      - name
-      - shardMappings
     ShardOwners:
       type: array
       items:
         $ref: '#/components/schemas/ShardOwner'
-    ShardOwner:
+    SubscriptionManifest:
       type: object
       properties:
-        nodeID:
-          type: integer
-          format: int64
-          description: The ID of the node that owns the shard.
+        name:
+          type: string
+        mode:
+          type: string
+        destinations:
+          type: array
+          items:
+            type: string
       required:
-      - nodeID
+      - name
+      - mode
+      - destinations
     ShardGroupManifest:
       type: object
       properties:
@@ -282,30 +286,34 @@ components:
       - startTime
       - endTime
       - shards
-    BucketMetadataManifest:
+    BucketShardMappings:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketShardMapping'
+    RetentionPolicyManifest:
       type: object
       properties:
-        organizationID:
+        name:
           type: string
-        organizationName:
-          type: string
-        bucketID:
-          type: string
-        bucketName:
-          type: string
-        description:
-          type: string
-        defaultRetentionPolicy:
-          type: string
-        retentionPolicies:
-          $ref: '#/components/schemas/RetentionPolicyManifests'
+        replicaN:
+          type: integer
+        duration:
+          type: integer
+          format: int64
+        shardGroupDuration:
+          type: integer
+          format: int64
+        shardGroups:
+          $ref: '#/components/schemas/ShardGroupManifests'
+        subscriptions:
+          $ref: '#/components/schemas/SubscriptionManifests'
       required:
-      - organizationID
-      - organizationName
-      - bucketID
-      - bucketName
-      - defaultRetentionPolicy
-      - retentionPolicies
+      - name
+      - replicaN
+      - duration
+      - shardGroupDuration
+      - shardGroups
+      - subscriptions
     Error:
       properties:
         code:
@@ -341,73 +349,6 @@ components:
           type: string
       required:
       - code
-    RetentionPolicyManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/RetentionPolicyManifest'
-    SubscriptionManifest:
-      type: object
-      properties:
-        name:
-          type: string
-        mode:
-          type: string
-        destinations:
-          type: array
-          items:
-            type: string
-      required:
-      - name
-      - mode
-      - destinations
-    RetentionPolicyManifest:
-      type: object
-      properties:
-        name:
-          type: string
-        replicaN:
-          type: integer
-        duration:
-          type: integer
-          format: int64
-        shardGroupDuration:
-          type: integer
-          format: int64
-        shardGroups:
-          $ref: '#/components/schemas/ShardGroupManifests'
-        subscriptions:
-          $ref: '#/components/schemas/SubscriptionManifests'
-      required:
-      - name
-      - replicaN
-      - duration
-      - shardGroupDuration
-      - shardGroups
-      - subscriptions
-    BucketShardMappings:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketShardMapping'
-    SubscriptionManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/SubscriptionManifest'
-    ShardGroupManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardGroupManifest'
-    BucketShardMapping:
-      type: object
-      properties:
-        oldId:
-          type: integer
-          format: int64
-        newId:
-          type: integer
-          format: int64
-      required:
-      - oldId
-      - newId
     ShardManifest:
       type: object
       properties:
@@ -419,6 +360,72 @@ components:
       required:
       - id
       - shardOwners
+    SubscriptionManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/SubscriptionManifest'
+    RestoredBucketMappings:
+      type: object
+      properties:
+        id:
+          description: New ID of the restored bucket
+          type: string
+        name:
+          type: string
+        shardMappings:
+          $ref: '#/components/schemas/BucketShardMappings'
+      required:
+      - id
+      - name
+      - shardMappings
+    ShardOwner:
+      type: object
+      properties:
+        nodeID:
+          type: integer
+          format: int64
+          description: The ID of the node that owns the shard.
+      required:
+      - nodeID
+    ShardGroupManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardGroupManifest'
+    RetentionPolicyManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/RetentionPolicyManifest'
+    BucketMetadataManifest:
+      type: object
+      properties:
+        organizationID:
+          type: string
+        organizationName:
+          type: string
+        bucketID:
+          type: string
+        bucketName:
+          type: string
+        description:
+          type: string
+        defaultRetentionPolicy:
+          type: string
+        retentionPolicies:
+          $ref: '#/components/schemas/RetentionPolicyManifests'
+      required:
+      - organizationID
+      - organizationName
+      - bucketID
+      - bucketName
+      - defaultRetentionPolicy
+      - retentionPolicies
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -432,13 +439,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

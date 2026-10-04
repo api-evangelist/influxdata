@@ -390,6 +390,94 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    Permission:
+      required:
+      - action
+      - resource
+      properties:
+        action:
+          type: string
+          enum:
+          - read
+          - write
+        resource:
+          $ref: '#/components/schemas/Resource'
+    Authorizations:
+      type: object
+      properties:
+        links:
+          readOnly: true
+          $ref: '#/components/schemas/Links'
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Authorization'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
+    AuthorizationUpdateRequest:
+      properties:
+        status:
+          description: Status of the token. If `inactive`, InfluxDB rejects requests that use the token.
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        description:
+          type: string
+          description: A description of the token.
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     Authorization:
       required:
       - orgID
@@ -482,80 +570,6 @@ components:
               user:
                 readOnly: true
                 $ref: '#/components/schemas/Link'
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    Permission:
-      required:
-      - action
-      - resource
-      properties:
-        action:
-          type: string
-          enum:
-          - read
-          - write
-        resource:
-          $ref: '#/components/schemas/Resource'
-    Authorizations:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        authorizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Authorization'
-    AuthorizationUpdateRequest:
-      properties:
-        status:
-          description: Status of the token. If `inactive`, InfluxDB rejects requests that use the token.
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        description:
-          type: string
-          description: A description of the token.
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
     AuthorizationPostRequest:
       required:
       - orgID
@@ -604,20 +618,6 @@ components:
               '
             items:
               $ref: '#/components/schemas/Permission'
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
     Resource:
       type: object
       required:
@@ -777,6 +777,47 @@ components:
               user:
                 readOnly: true
                 $ref: '#/components/schemas/Link'
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    AuthorizationError:
+      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'The HTTP status code description. Default is `unauthorized`.
+
+                  '
+                readOnly: true
+                type: string
+                enum:
+                - unauthorized
+              message:
+                readOnly: true
+                description: A human-readable message that may contain detail about the error.
+                type: string
+          examples:
+            tokenNotAuthorized:
+              summary: Token is not authorized to access a resource
+              value:
+                code: unauthorized
+                message: unauthorized access
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   examples:
     AuthorizationWithUserPostRequest:
       summary: An authorization scoped to a user
@@ -811,47 +852,6 @@ components:
         - action: read
           resource:
             type: buckets
-  responses:
-    AuthorizationError:
-      description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
-      content:
-        application/json:
-          schema:
-            properties:
-              code:
-                description: 'The HTTP status code description. Default is `unauthorized`.
-
-                  '
-                readOnly: true
-                type: string
-                enum:
-                - unauthorized
-              message:
-                readOnly: true
-                description: A human-readable message that may contain detail about the error.
-                type: string
-          examples:
-            tokenNotAuthorized:
-              summary: Token is not authorized to access a resource
-              value:
-                code: unauthorized
-                message: unauthorized access
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header

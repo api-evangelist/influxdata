@@ -48,6 +48,19 @@ paths:
     servers:
     - url: /api/v2
 components:
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   schemas:
     Routes:
       properties:
@@ -129,19 +142,6 @@ components:
         write:
           type: string
           format: uri
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
   securitySchemes:
     TokenAuthentication:
       type: apiKey

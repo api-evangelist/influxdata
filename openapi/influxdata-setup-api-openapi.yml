@@ -83,68 +83,87 @@ paths:
     servers:
     - url: /api/v2
 components:
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Permission:
-      required:
-      - action
-      - resource
-      properties:
-        action:
-          type: string
-          enum:
-          - read
-          - write
-        resource:
-          $ref: '#/components/schemas/Resource'
-    UserResponse:
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
-        name:
-          type: string
-          description: 'The user name.
-
-            '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
-          type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
-      required:
-      - name
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
     Link:
       type: string
       format: uri
       readOnly: true
       description: URI of resource.
-    SchemaType:
-      type: string
-      enum:
-      - implicit
-      - explicit
+    RetentionRule:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+            '
+      required:
+      - everySeconds
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
     Organization:
       properties:
         links:
@@ -206,6 +225,63 @@ components:
           - inactive
       required:
       - name
+    IsOnboarding:
+      type: object
+      properties:
+        allowed:
+          description: 'If `true`, the InfluxDB instance hasn''t had initial setup;
+
+            `false` otherwise.
+
+            '
+          type: boolean
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
+    OnboardingRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        org:
+          type: string
+        bucket:
+          type: string
+        retentionPeriodHrs:
+          type: integer
+          deprecated: true
+        retentionPeriodSeconds:
+          type: integer
+        limit:
+          $ref: '#/components/schemas/Limit'
+      required:
+      - username
+      - org
+      - bucket
     Resource:
       type: object
       required:
@@ -273,109 +349,6 @@ components:
             The organization that owns the resource.
 
             '
-    Label:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
-        name:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    RetentionRule:
-      type: object
-      properties:
-        type:
-          type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The duration in seconds for how long data will be kept in the database.
-
-            The default duration is 2592000 (30 days).
-
-            0 represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The shard group duration.
-
-            The duration or interval (in seconds) that each shard group covers.
-
-
-            #### InfluxDB Cloud
-
-
-            - Does not use `shardGroupDurationsSeconds`.
-
-
-            #### InfluxDB OSS
-
-
-            - Default value depends on the
-
-            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
-
-            '
-      required:
-      - everySeconds
     Limit:
       type: object
       description: These are org limits similar to those configured in/by quartz.
@@ -510,39 +483,58 @@ components:
       - check
       - notificationRule
       - notificationEndpoint
-    OnboardingResponse:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/UserResponse'
-        org:
-          $ref: '#/components/schemas/Organization'
-        bucket:
-          $ref: '#/components/schemas/Bucket'
-        auth:
-          $ref: '#/components/schemas/Authorization'
-    OnboardingRequest:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-        org:
-          type: string
-        bucket:
-          type: string
-        retentionPeriodHrs:
-          type: integer
-          deprecated: true
-        retentionPeriodSeconds:
-          type: integer
-        limit:
-          $ref: '#/components/schemas/Limit'
+    Permission:
       required:
-      - username
-      - org
-      - bucket
+      - action
+      - resource
+      properties:
+        action:
+          type: string
+          enum:
+          - read
+          - write
+        resource:
+          $ref: '#/components/schemas/Resource'
+    SchemaType:
+      type: string
+      enum:
+      - implicit
+      - explicit
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
     AuthorizationUpdateRequest:
       properties:
         status:
@@ -555,6 +547,119 @@ components:
         description:
           type: string
           description: A description of the token.
+    OnboardingResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserResponse'
+        org:
+          $ref: '#/components/schemas/Organization'
+        bucket:
+          $ref: '#/components/schemas/Bucket'
+        auth:
+          $ref: '#/components/schemas/Authorization'
+    Bucket:
+      properties:
+        links:
+          type: object
+          readOnly: true
+          example:
+            labels: /api/v2/buckets/1/labels
+            members: /api/v2/buckets/1/members
+            org: /api/v2/orgs/2
+            owners: /api/v2/buckets/1/owners
+            self: /api/v2/buckets/1
+            write: /api/v2/write?org=2&bucket=1
+          properties:
+            labels:
+              description: The URL to retrieve labels for this bucket.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members that can read this bucket.
+              $ref: '#/components/schemas/Link'
+            org:
+              description: The URL to retrieve parent organization for this bucket.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners that can read and write to this bucket.
+              $ref: '#/components/schemas/Link'
+            self:
+              description: The URL for this bucket.
+              $ref: '#/components/schemas/Link'
+            write:
+              description: The URL to write line protocol to this bucket.
+              $ref: '#/components/schemas/Link'
+        id:
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+          default: user
+          enum:
+          - user
+          - system
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        rp:
+          type: string
+        schemaType:
+          $ref: '#/components/schemas/SchemaType'
+          default: implicit
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        retentionRules:
+          $ref: '#/components/schemas/RetentionRules'
+        labels:
+          $ref: '#/components/schemas/Labels'
+      required:
+      - name
+      - retentionRules
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     Authorization:
       required:
       - orgID
@@ -647,104 +752,6 @@ components:
               user:
                 readOnly: true
                 $ref: '#/components/schemas/Link'
-    RetentionRules:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule'
-    Bucket:
-      properties:
-        links:
-          type: object
-          readOnly: true
-          example:
-            labels: /api/v2/buckets/1/labels
-            members: /api/v2/buckets/1/members
-            org: /api/v2/orgs/2
-            owners: /api/v2/buckets/1/owners
-            self: /api/v2/buckets/1
-            write: /api/v2/write?org=2&bucket=1
-          properties:
-            labels:
-              description: The URL to retrieve labels for this bucket.
-              $ref: '#/components/schemas/Link'
-            members:
-              description: The URL to retrieve members that can read this bucket.
-              $ref: '#/components/schemas/Link'
-            org:
-              description: The URL to retrieve parent organization for this bucket.
-              $ref: '#/components/schemas/Link'
-            owners:
-              description: The URL to retrieve owners that can read and write to this bucket.
-              $ref: '#/components/schemas/Link'
-            self:
-              description: The URL for this bucket.
-              $ref: '#/components/schemas/Link'
-            write:
-              description: The URL to write line protocol to this bucket.
-              $ref: '#/components/schemas/Link'
-        id:
-          readOnly: true
-          type: string
-        type:
-          readOnly: true
-          type: string
-          default: user
-          enum:
-          - user
-          - system
-        name:
-          type: string
-        description:
-          type: string
-        orgID:
-          type: string
-        rp:
-          type: string
-        schemaType:
-          $ref: '#/components/schemas/SchemaType'
-          default: implicit
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        retentionRules:
-          $ref: '#/components/schemas/RetentionRules'
-        labels:
-          $ref: '#/components/schemas/Labels'
-      required:
-      - name
-      - retentionRules
-    IsOnboarding:
-      type: object
-      properties:
-        allowed:
-          description: 'If `true`, the InfluxDB instance hasn''t had initial setup;
-
-            `false` otherwise.
-
-            '
-          type: boolean
     RetentionRule_2:
       type: object
       properties:
@@ -790,6 +797,27 @@ components:
             '
       required:
       - everySeconds
+    RetentionRules_2:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule_2'
     OnboardingRequest_2:
       type: object
       properties:
@@ -911,27 +939,6 @@ components:
               user:
                 readOnly: true
                 $ref: '#/components/schemas/Link'
-    RetentionRules_2:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule_2'
   parameters:
     TraceSpan:
       in: header
@@ -945,13 +952,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

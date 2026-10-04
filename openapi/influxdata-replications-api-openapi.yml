@@ -187,41 +187,66 @@ paths:
           $ref: '#/components/responses/GeneralServerError'
 components:
   schemas:
-    Error:
+    ReplicationUpdateRequest:
+      type: object
       properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
+        name:
           type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
+        description:
           type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
+        remoteID:
           type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+        remoteBucketID:
           type: string
+        remoteBucketName:
+          type: string
+        maxQueueSizeBytes:
+          type: integer
+          format: int64
+          minimum: 33554430
+        dropNonRetryableData:
+          type: boolean
+        maxAgeSeconds:
+          type: integer
+          format: int64
+          minimum: 0
+    ReplicationCreationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        remoteID:
+          type: string
+        localBucketID:
+          type: string
+        remoteBucketID:
+          type: string
+        remoteBucketName:
+          type: string
+        maxQueueSizeBytes:
+          type: integer
+          format: int64
+          minimum: 33554430
+          default: 67108860
+        dropNonRetryableData:
+          type: boolean
+          default: false
+        maxAgeSeconds:
+          type: integer
+          format: int64
+          minimum: 0
+          default: 604800
       required:
-      - code
+      - name
+      - orgID
+      - remoteID
+      - localBucketID
+      - maxQueueSizeBytes
+      - maxAgeSeconds
     Replication:
       type: object
       properties:
@@ -263,43 +288,41 @@ components:
       - orgID
       - localBucketID
       - maxQueueSizeBytes
-    ReplicationCreationRequest:
-      type: object
+    Error:
       properties:
-        name:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
           type: string
-        description:
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
           type: string
-        orgID:
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
           type: string
-        remoteID:
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
           type: string
-        localBucketID:
-          type: string
-        remoteBucketID:
-          type: string
-        remoteBucketName:
-          type: string
-        maxQueueSizeBytes:
-          type: integer
-          format: int64
-          minimum: 33554430
-          default: 67108860
-        dropNonRetryableData:
-          type: boolean
-          default: false
-        maxAgeSeconds:
-          type: integer
-          format: int64
-          minimum: 0
-          default: 604800
       required:
-      - name
-      - orgID
-      - remoteID
-      - localBucketID
-      - maxQueueSizeBytes
-      - maxAgeSeconds
+      - code
     Replications:
       type: object
       properties:
@@ -307,29 +330,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Replication'
-    ReplicationUpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        remoteID:
-          type: string
-        remoteBucketID:
-          type: string
-        remoteBucketName:
-          type: string
-        maxQueueSizeBytes:
-          type: integer
-          format: int64
-          minimum: 33554430
-        dropNonRetryableData:
-          type: boolean
-        maxAgeSeconds:
-          type: integer
-          format: int64
-          minimum: 0
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -343,13 +350,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

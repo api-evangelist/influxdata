@@ -1163,6 +1163,41 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
     Routes:
       properties:
         authorizations:
@@ -1243,41 +1278,20 @@ components:
         write:
           type: string
           format: uri
-    Error:
+    Ready:
+      type: object
       properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
+        status:
           type: string
           enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
+          - ready
+        started:
           type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          format: date-time
+          example: '2019-03-13T10:09:33.891196-04:00'
+        up:
           type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
+          example: 14m45.911966424s
     Config:
       type: object
       properties:
@@ -1306,20 +1320,6 @@ components:
           type: string
         commit:
           type: string
-    Ready:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - ready
-        started:
-          type: string
-          format: date-time
-          example: '2019-03-13T10:09:33.891196-04:00'
-        up:
-          type: string
-          example: 14m45.911966424s
   parameters:
     TraceSpan:
       in: header

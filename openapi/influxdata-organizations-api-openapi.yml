@@ -981,39 +981,29 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    UserResponse:
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    PostOrganizationRequest:
+      type: object
       properties:
-        id:
-          readOnly: true
-          type: string
-          description: 'The user ID.
-
-            '
         name:
           type: string
-          description: 'The user name.
+          description: 'The name of the organization.
 
             '
-        status:
-          description: 'The status of a user.
-
-            An inactive user can''t read or write resources.
-
-            '
-          default: active
+        description:
           type: string
-          enum:
-          - active
-          - inactive
-        links:
-          type: object
-          readOnly: true
-          example:
-            self: /api/v2/users/1
-          properties:
-            self:
-              type: string
-              format: uri
+          description: 'The description of the organization.
+
+            '
       required:
       - name
     Link:
@@ -1021,20 +1011,29 @@ components:
       format: uri
       readOnly: true
       description: URI of resource.
-    Links:
+    ResourceOwners:
       type: object
-      description: 'URI pointers for additional paged results.
-
-        '
       properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
     Organization:
       properties:
         links:
@@ -1096,6 +1095,79 @@ components:
           - inactive
       required:
       - name
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    PatchOrganizationRequest:
+      type: object
+      description: 'An object that contains updated organization properties to apply.
+
+        '
+      properties:
+        name:
+          type: string
+          description: 'The name of the organization.
+
+            '
+        description:
+          type: string
+          description: 'The description of the organization.
+
+            '
+    Organizations:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        orgs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+    UserResponse:
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: 'The user ID.
+
+            '
+        name:
+          type: string
+          description: 'The user name.
+
+            '
+        status:
+          description: 'The status of a user.
+
+            An inactive user can''t read or write resources.
+
+            '
+          default: active
+          type: string
+          enum:
+          - active
+          - inactive
+        links:
+          type: object
+          readOnly: true
+          example:
+            self: /api/v2/users/1
+          properties:
+            self:
+              type: string
+              format: uri
+      required:
+      - name
     AddResourceMemberRequestBody:
       type: object
       properties:
@@ -1111,6 +1183,20 @@ components:
             '
       required:
       - id
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Error:
       properties:
         code:
@@ -1146,93 +1232,23 @@ components:
           type: string
       required:
       - code
-    ResourceMembers:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceMember'
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
-    Organizations:
-      type: object
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        orgs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Organization'
-    PostOrganizationRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'The name of the organization.
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 'Internal server error.
 
-            '
-        description:
-          type: string
-          description: 'The description of the organization.
-
-            '
-      required:
-      - name
-    ResourceOwners:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceOwner'
-    PatchOrganizationRequest:
-      type: object
-      description: 'An object that contains updated organization properties to apply.
+        The server encountered an unexpected situation.
 
         '
-      properties:
-        name:
-          type: string
-          description: 'The name of the organization.
-
-            '
-        description:
-          type: string
-          description: 'The description of the organization.
-
-            '
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
-  responses:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequestError:
       description: 'Bad request.
 
@@ -1255,22 +1271,28 @@ components:
               value:
                 code: invalid
                 message: 'failed to decode request body: organization not found'
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -1295,48 +1317,7 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
   parameters:
-    Descending:
-      in: query
-      name: descending
-      required: false
-      schema:
-        type: boolean
-        default: false
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
     Limit:
       in: query
       name: limit
@@ -1349,6 +1330,18 @@ components:
         minimum: 1
         maximum: 100
         default: 20
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
     Offset:
       in: query
       name: offset
@@ -1364,6 +1357,13 @@ components:
       schema:
         type: integer
         minimum: 0
+    Descending:
+      in: query
+      name: descending
+      required: false
+      schema:
+        type: boolean
+        default: false
     Offset_2:
       in: query
       name: offset

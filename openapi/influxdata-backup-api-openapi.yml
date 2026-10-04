@@ -162,78 +162,21 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ShardOwner'
-    ShardOwner:
+    SubscriptionManifest:
       type: object
       properties:
-        nodeID:
-          type: integer
-          format: int64
-          description: The ID of the node that owns the shard.
+        name:
+          type: string
+        mode:
+          type: string
+        destinations:
+          type: array
+          items:
+            type: string
       required:
-      - nodeID
-    Error:
-      properties:
-        code:
-          description: code is the machine-readable error code.
-          readOnly: true
-          type: string
-          enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
-          type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
-          type: string
-      required:
-      - code
-    BucketMetadataManifest:
-      type: object
-      properties:
-        organizationID:
-          type: string
-        organizationName:
-          type: string
-        bucketID:
-          type: string
-        bucketName:
-          type: string
-        description:
-          type: string
-        defaultRetentionPolicy:
-          type: string
-        retentionPolicies:
-          $ref: '#/components/schemas/RetentionPolicyManifests'
-      required:
-      - organizationID
-      - organizationName
-      - bucketID
-      - bucketName
-      - defaultRetentionPolicy
-      - retentionPolicies
-    BucketMetadataManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketMetadataManifest'
+      - name
+      - mode
+      - destinations
     ShardGroupManifest:
       type: object
       properties:
@@ -259,25 +202,6 @@ components:
       - startTime
       - endTime
       - shards
-    RetentionPolicyManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/RetentionPolicyManifest'
-    SubscriptionManifest:
-      type: object
-      properties:
-        name:
-          type: string
-        mode:
-          type: string
-        destinations:
-          type: array
-          items:
-            type: string
-      required:
-      - name
-      - mode
-      - destinations
     MetadataBackup:
       type: object
       properties:
@@ -317,14 +241,49 @@ components:
       - shardGroupDuration
       - shardGroups
       - subscriptions
+    Error:
+      properties:
+        code:
+          description: code is the machine-readable error code.
+          readOnly: true
+          type: string
+          enum:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
+          type: string
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          type: string
+      required:
+      - code
+    BucketMetadataManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketMetadataManifest'
     SubscriptionManifests:
       type: array
       items:
         $ref: '#/components/schemas/SubscriptionManifest'
-    ShardGroupManifests:
-      type: array
-      items:
-        $ref: '#/components/schemas/ShardGroupManifest'
     ShardManifest:
       type: object
       properties:
@@ -336,6 +295,54 @@ components:
       required:
       - id
       - shardOwners
+    ShardOwner:
+      type: object
+      properties:
+        nodeID:
+          type: integer
+          format: int64
+          description: The ID of the node that owns the shard.
+      required:
+      - nodeID
+    ShardGroupManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/ShardGroupManifest'
+    RetentionPolicyManifests:
+      type: array
+      items:
+        $ref: '#/components/schemas/RetentionPolicyManifest'
+    BucketMetadataManifest:
+      type: object
+      properties:
+        organizationID:
+          type: string
+        organizationName:
+          type: string
+        bucketID:
+          type: string
+        bucketName:
+          type: string
+        description:
+          type: string
+        defaultRetentionPolicy:
+          type: string
+        retentionPolicies:
+          $ref: '#/components/schemas/RetentionPolicyManifests'
+      required:
+      - organizationID
+      - organizationName
+      - bucketID
+      - bucketName
+      - defaultRetentionPolicy
+      - retentionPolicies
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -349,13 +356,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey

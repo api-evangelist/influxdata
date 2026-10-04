@@ -41,21 +41,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
   schemas:
-    Ready:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - ready
-        started:
-          type: string
-          format: date-time
-          example: '2019-03-13T10:09:33.891196-04:00'
-        up:
-          type: string
-          example: 14m45.911966424s
     Error:
       properties:
         code:
@@ -91,19 +90,20 @@ components:
           type: string
       required:
       - code
-  parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
+    Ready:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ready
+        started:
+          type: string
+          format: date-time
+          example: '2019-03-13T10:09:33.891196-04:00'
+        up:
+          type: string
+          example: 14m45.911966424s
   securitySchemes:
     TokenAuthentication:
       type: apiKey

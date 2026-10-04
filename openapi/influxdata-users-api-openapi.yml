@@ -636,41 +636,29 @@ paths:
     - url: /api/v2
 components:
   schemas:
-    Error:
+    User:
       properties:
-        code:
-          description: code is the machine-readable error code.
+        id:
           readOnly: true
+          type: string
+        name:
+          type: string
+        status:
+          description: If inactive the user is inactive.
+          default: active
           type: string
           enum:
-          - internal error
-          - not implemented
-          - not found
-          - conflict
-          - invalid
-          - unprocessable entity
-          - empty value
-          - unavailable
-          - forbidden
-          - too many requests
-          - unauthorized
-          - method not allowed
-          - request too large
-          - unsupported media type
-        message:
-          readOnly: true
-          description: Human-readable message.
+          - active
+          - inactive
+        role:
           type: string
-        op:
-          readOnly: true
-          description: Describes the logical code operation when the error occurred. Useful for debugging.
-          type: string
-        err:
-          readOnly: true
-          description: Stack of errors that occurred during processing of the request. Useful for debugging.
+          enum:
+          - owner
+          - member
+        org_id:
           type: string
       required:
-      - code
+      - name
     UserResponse:
       properties:
         id:
@@ -712,29 +700,41 @@ components:
           type: string
       required:
       - password
-    User:
+    Error:
       properties:
-        id:
+        code:
+          description: code is the machine-readable error code.
           readOnly: true
           type: string
-        name:
-          type: string
-        status:
-          description: If inactive the user is inactive.
-          default: active
-          type: string
           enum:
-          - active
-          - inactive
-        role:
+          - internal error
+          - not implemented
+          - not found
+          - conflict
+          - invalid
+          - unprocessable entity
+          - empty value
+          - unavailable
+          - forbidden
+          - too many requests
+          - unauthorized
+          - method not allowed
+          - request too large
+          - unsupported media type
+        message:
+          readOnly: true
+          description: Human-readable message.
           type: string
-          enum:
-          - owner
-          - member
-        org_id:
+        op:
+          readOnly: true
+          description: Describes the logical code operation when the error occurred. Useful for debugging.
+          type: string
+        err:
+          readOnly: true
+          description: Stack of errors that occurred during processing of the request. Useful for debugging.
           type: string
       required:
-      - name
+      - code
     Users:
       type: object
       properties:
@@ -771,6 +771,12 @@ components:
       required:
       - name
   responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -817,22 +823,6 @@ components:
               value:
                 code: invalid
                 message: 'failed to decode request body: organization not found'
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     ResourceNotFoundError:
       description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
@@ -855,6 +845,16 @@ components:
               value:
                 code: not found
                 message: organization not found
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TraceSpan:
       in: header
@@ -883,18 +883,6 @@ components:
       schema:
         type: integer
         minimum: 0
-    Limit:
-      in: query
-      name: limit
-      required: false
-      description: 'Limits the number of records returned. Default is `20`.
-
-        '
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
     After:
       in: query
       name: after
@@ -913,6 +901,18 @@ components:
         For more information about pagination parameters, see [Pagination](https://docs.influxdata.com/influxdb/latest/api/#tag/Pagination).
 
         '
+    Limit:
+      in: query
+      name: limit
+      required: false
+      description: 'Limits the number of records returned. Default is `20`.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
   securitySchemes:
     TokenAuthentication:
       type: apiKey

@@ -461,6 +461,134 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    Telegraf:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TelegrafRequest'
+      - type: object
+        properties:
+          id:
+            type: string
+            readOnly: true
+          links:
+            type: object
+            readOnly: true
+            example:
+              self: /api/v2/telegrafs/1
+              lables: /api/v2/telegrafs/1/labels
+              owners: /api/v2/telegrafs/1/owners
+              members: /api/v2/telegrafs/1/members
+            properties:
+              self:
+                $ref: '#/components/schemas/Link'
+              labels:
+                $ref: '#/components/schemas/Link'
+              members:
+                $ref: '#/components/schemas/Link'
+              owners:
+                $ref: '#/components/schemas/Link'
+          labels:
+            readOnly: true
+            $ref: '#/components/schemas/Labels'
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    Telegrafs:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Telegraf'
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
     UserResponse:
       properties:
         id:
@@ -496,36 +624,28 @@ components:
               format: uri
       required:
       - name
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
-    TelegrafRequest:
+    TelegrafPluginRequest:
       type: object
       properties:
         name:
           type: string
         description:
           type: string
+        plugins:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              name:
+                type: string
+              alias:
+                type: string
+              description:
+                type: string
+              config:
+                type: string
         metadata:
           type: object
           properties:
@@ -552,29 +672,38 @@ components:
             '
       required:
       - id
-    Label:
+    TelegrafRequest:
       type: object
       properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
         name:
           type: string
-        properties:
+        description:
+          type: string
+        metadata:
           type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
+          properties:
+            buckets:
+              type: array
+              items:
+                type: string
+        config:
+          type: string
+        orgID:
+          type: string
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
 
-            To remove a property, send an update with an empty value (`""`) for the key.
-
-            '
-          example:
-            color: ffb3b3
-            description: this is a description
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Error:
       properties:
         code:
@@ -610,65 +739,6 @@ components:
           type: string
       required:
       - code
-    ResourceMembers:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceMember'
-    Telegraf:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/TelegrafRequest'
-      - type: object
-        properties:
-          id:
-            type: string
-            readOnly: true
-          links:
-            type: object
-            readOnly: true
-            example:
-              self: /api/v2/telegrafs/1
-              lables: /api/v2/telegrafs/1/labels
-              owners: /api/v2/telegrafs/1/owners
-              members: /api/v2/telegrafs/1/members
-            properties:
-              self:
-                $ref: '#/components/schemas/Link'
-              labels:
-                $ref: '#/components/schemas/Link'
-              members:
-                $ref: '#/components/schemas/Link'
-              owners:
-                $ref: '#/components/schemas/Link'
-          labels:
-            readOnly: true
-            $ref: '#/components/schemas/Labels'
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -682,76 +752,6 @@ components:
           type: string
       required:
       - labelID
-    TelegrafPluginRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        plugins:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              name:
-                type: string
-              alias:
-                type: string
-              description:
-                type: string
-              config:
-                type: string
-        metadata:
-          type: object
-          properties:
-            buckets:
-              type: array
-              items:
-                type: string
-        config:
-          type: string
-        orgID:
-          type: string
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceOwners:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceOwner'
-    Telegrafs:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Telegraf'
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
   parameters:
     TraceSpan:
       in: header

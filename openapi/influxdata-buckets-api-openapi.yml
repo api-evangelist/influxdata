@@ -1484,6 +1484,218 @@ paths:
     - url: /api/v2
 components:
   schemas:
+    ResourceMember:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: member
+            enum:
+            - member
+    LabelResponse:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/Label'
+        links:
+          $ref: '#/components/schemas/Links'
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    ResourceOwners:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceOwner'
+    RetentionRule:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The duration in seconds for how long data will be kept in the database.
+
+            The default duration is 2592000 (30 days).
+
+            0 represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The shard group duration.
+
+            The duration or interval (in seconds) that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Does not use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the
+
+            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+            '
+      required:
+      - everySeconds
+    Label:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        orgID:
+          readOnly: true
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key-value pairs associated with this label.
+
+            To remove a property, send an update with an empty value (`""`) for the key.
+
+            '
+          example:
+            color: ffb3b3
+            description: this is a description
+    ResourceOwner:
+      allOf:
+      - $ref: '#/components/schemas/UserResponse'
+      - type: object
+        properties:
+          role:
+            type: string
+            default: owner
+            enum:
+            - owner
+    ResourceMembers:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceMember'
+    PatchRetentionRule:
+      type: object
+      properties:
+        type:
+          type: string
+          default: expire
+          enum:
+          - expire
+        everySeconds:
+          type: integer
+          format: int64
+          description: 'The number of seconds to keep data.
+
+            Default duration is `2592000` (30 days).
+
+            `0` represents infinite retention.
+
+            '
+          example: 86400
+          default: 2592000
+          minimum: 0
+        shardGroupDurationSeconds:
+          type: integer
+          format: int64
+          description: 'The [shard group duration](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#shard).
+
+            The number of seconds that each shard group covers.
+
+
+            #### InfluxDB Cloud
+
+
+            - Doesn''t use `shardGroupDurationsSeconds`.
+
+
+            #### InfluxDB OSS
+
+
+            - Default value depends on the [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
+
+
+            #### Related guides
+
+
+            - InfluxDB [shards and shard groups](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/)
+
+            '
+      required:
+      - everySeconds
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    RetentionRules:
+      type: array
+      description: 'Retention rules to expire or retain data.
+
+        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
+
+
+        #### InfluxDB Cloud
+
+
+        - `retentionRules` is required.
+
+
+        #### InfluxDB OSS
+
+
+        - `retentionRules` isn''t required.
+
+        '
+      items:
+        $ref: '#/components/schemas/RetentionRule'
+    LabelsResponse:
+      type: object
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        links:
+          $ref: '#/components/schemas/Links'
+    SchemaType:
+      type: string
+      enum:
+      - implicit
+      - explicit
     UserResponse:
       properties:
         id:
@@ -1519,34 +1731,73 @@ components:
               format: uri
       required:
       - name
-    Labels:
-      type: array
-      items:
-        $ref: '#/components/schemas/Label'
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    SchemaType:
-      type: string
-      enum:
-      - implicit
-      - explicit
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
+    Bucket:
       properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
+        links:
+          type: object
+          readOnly: true
+          example:
+            labels: /api/v2/buckets/1/labels
+            members: /api/v2/buckets/1/members
+            org: /api/v2/orgs/2
+            owners: /api/v2/buckets/1/owners
+            self: /api/v2/buckets/1
+            write: /api/v2/write?org=2&bucket=1
+          properties:
+            labels:
+              description: The URL to retrieve labels for this bucket.
+              $ref: '#/components/schemas/Link'
+            members:
+              description: The URL to retrieve members that can read this bucket.
+              $ref: '#/components/schemas/Link'
+            org:
+              description: The URL to retrieve parent organization for this bucket.
+              $ref: '#/components/schemas/Link'
+            owners:
+              description: The URL to retrieve owners that can read and write to this bucket.
+              $ref: '#/components/schemas/Link'
+            self:
+              description: The URL for this bucket.
+              $ref: '#/components/schemas/Link'
+            write:
+              description: The URL to write line protocol to this bucket.
+              $ref: '#/components/schemas/Link'
+        id:
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+          default: user
+          enum:
+          - user
+          - system
+        name:
+          type: string
+        description:
+          type: string
+        orgID:
+          type: string
+        rp:
+          type: string
+        schemaType:
+          $ref: '#/components/schemas/SchemaType'
+          default: implicit
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        retentionRules:
+          $ref: '#/components/schemas/RetentionRules'
+        labels:
+          $ref: '#/components/schemas/Labels'
       required:
-      - self
+      - name
+      - retentionRules
     AddResourceMemberRequestBody:
       type: object
       properties:
@@ -1562,29 +1813,39 @@ components:
             '
       required:
       - id
-    Label:
+    PatchBucketRequest:
       type: object
+      description: 'An object that contains updated bucket properties to apply.
+
+        '
       properties:
-        id:
-          readOnly: true
-          type: string
-        orgID:
-          readOnly: true
-          type: string
         name:
           type: string
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key-value pairs associated with this label.
-
-            To remove a property, send an update with an empty value (`""`) for the key.
+          description: 'The name of the bucket.
 
             '
-          example:
-            color: ffb3b3
-            description: this is a description
+        description:
+          description: 'A description of the bucket.
+
+            '
+          type: string
+        retentionRules:
+          $ref: '#/components/schemas/PatchRetentionRules'
+    PatchRetentionRules:
+      type: array
+      description: Updates to rules to expire or retain data. No rules means no updates.
+      items:
+        $ref: '#/components/schemas/PatchRetentionRule'
+    Buckets:
+      type: object
+      properties:
+        links:
+          readOnly: true
+          $ref: '#/components/schemas/Links'
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
     PostBucketRequest:
       properties:
         orgID:
@@ -1655,6 +1916,20 @@ components:
       required:
       - orgID
       - name
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Error:
       properties:
         code:
@@ -1690,158 +1965,6 @@ components:
           type: string
       required:
       - code
-    ResourceMembers:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceMember'
-    RetentionRule:
-      type: object
-      properties:
-        type:
-          type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The duration in seconds for how long data will be kept in the database.
-
-            The default duration is 2592000 (30 days).
-
-            0 represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The shard group duration.
-
-            The duration or interval (in seconds) that each shard group covers.
-
-
-            #### InfluxDB Cloud
-
-
-            - Does not use `shardGroupDurationsSeconds`.
-
-
-            #### InfluxDB OSS
-
-
-            - Default value depends on the
-
-            [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
-
-            '
-      required:
-      - everySeconds
-    PatchRetentionRule:
-      type: object
-      properties:
-        type:
-          type: string
-          default: expire
-          enum:
-          - expire
-        everySeconds:
-          type: integer
-          format: int64
-          description: 'The number of seconds to keep data.
-
-            Default duration is `2592000` (30 days).
-
-            `0` represents infinite retention.
-
-            '
-          example: 86400
-          default: 2592000
-          minimum: 0
-        shardGroupDurationSeconds:
-          type: integer
-          format: int64
-          description: 'The [shard group duration](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#shard).
-
-            The number of seconds that each shard group covers.
-
-
-            #### InfluxDB Cloud
-
-
-            - Doesn''t use `shardGroupDurationsSeconds`.
-
-
-            #### InfluxDB OSS
-
-
-            - Default value depends on the [bucket retention period](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/#shard-group-duration).
-
-
-            #### Related guides
-
-
-            - InfluxDB [shards and shard groups](https://docs.influxdata.com/influxdb/cloud/reference/internals/shards/)
-
-            '
-      required:
-      - everySeconds
-    PatchBucketRequest:
-      type: object
-      description: 'An object that contains updated bucket properties to apply.
-
-        '
-      properties:
-        name:
-          type: string
-          description: 'The name of the bucket.
-
-            '
-        description:
-          description: 'A description of the bucket.
-
-            '
-          type: string
-        retentionRules:
-          $ref: '#/components/schemas/PatchRetentionRules'
-    LabelsResponse:
-      type: object
-      properties:
-        labels:
-          $ref: '#/components/schemas/Labels'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceOwner:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: owner
-            enum:
-            - owner
-    Buckets:
-      type: object
-      properties:
-        links:
-          readOnly: true
-          $ref: '#/components/schemas/Links'
-        buckets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bucket'
     LabelMapping:
       type: object
       description: A _label mapping_ contains a `label` ID to attach to a resource.
@@ -1855,199 +1978,6 @@ components:
           type: string
       required:
       - labelID
-    RetentionRules:
-      type: array
-      description: 'Retention rules to expire or retain data.
-
-        The InfluxDB `/api/v2` API uses `RetentionRules` to configure the [retention period](https://docs.influxdata.com/influxdb/cloud/reference/glossary/#retention-period).
-
-
-        #### InfluxDB Cloud
-
-
-        - `retentionRules` is required.
-
-
-        #### InfluxDB OSS
-
-
-        - `retentionRules` isn''t required.
-
-        '
-      items:
-        $ref: '#/components/schemas/RetentionRule'
-    LabelResponse:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/Label'
-        links:
-          $ref: '#/components/schemas/Links'
-    ResourceOwners:
-      type: object
-      properties:
-        links:
-          type: object
-          properties:
-            self:
-              type: string
-              format: uri
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceOwner'
-    PatchRetentionRules:
-      type: array
-      description: Updates to rules to expire or retain data. No rules means no updates.
-      items:
-        $ref: '#/components/schemas/PatchRetentionRule'
-    Bucket:
-      properties:
-        links:
-          type: object
-          readOnly: true
-          example:
-            labels: /api/v2/buckets/1/labels
-            members: /api/v2/buckets/1/members
-            org: /api/v2/orgs/2
-            owners: /api/v2/buckets/1/owners
-            self: /api/v2/buckets/1
-            write: /api/v2/write?org=2&bucket=1
-          properties:
-            labels:
-              description: The URL to retrieve labels for this bucket.
-              $ref: '#/components/schemas/Link'
-            members:
-              description: The URL to retrieve members that can read this bucket.
-              $ref: '#/components/schemas/Link'
-            org:
-              description: The URL to retrieve parent organization for this bucket.
-              $ref: '#/components/schemas/Link'
-            owners:
-              description: The URL to retrieve owners that can read and write to this bucket.
-              $ref: '#/components/schemas/Link'
-            self:
-              description: The URL for this bucket.
-              $ref: '#/components/schemas/Link'
-            write:
-              description: The URL to write line protocol to this bucket.
-              $ref: '#/components/schemas/Link'
-        id:
-          readOnly: true
-          type: string
-        type:
-          readOnly: true
-          type: string
-          default: user
-          enum:
-          - user
-          - system
-        name:
-          type: string
-        description:
-          type: string
-        orgID:
-          type: string
-        rp:
-          type: string
-        schemaType:
-          $ref: '#/components/schemas/SchemaType'
-          default: implicit
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        retentionRules:
-          $ref: '#/components/schemas/RetentionRules'
-        labels:
-          $ref: '#/components/schemas/Labels'
-      required:
-      - name
-      - retentionRules
-    ResourceMember:
-      allOf:
-      - $ref: '#/components/schemas/UserResponse'
-      - type: object
-        properties:
-          role:
-            type: string
-            default: member
-            enum:
-            - member
-    PostBucketRequest_2:
-      properties:
-        orgID:
-          description: 'The organization ID.
-
-            Specifies the organization that owns the bucket.
-
-            '
-          type: string
-        name:
-          description: 'The bucket name.
-
-            '
-          type: string
-        description:
-          description: 'A description of the bucket.
-
-            '
-          type: string
-        rp:
-          description: 'The retention policy for the bucket.
-
-            For InfluxDB 1.x, specifies the duration of time that each data point
-
-            in the retention policy persists.
-
-
-            If you need compatibility with InfluxDB 1.x, specify a value for the `rp` property;
-
-            otherwise, see the `retentionRules` property.
-
-
-            [Retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp)
-
-            is an InfluxDB 1.x concept.
-
-            The InfluxDB 2.x and Cloud equivalent is
-
-            [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
-
-            The InfluxDB `/api/v2` API uses `RetentionRules` to configure the retention period.
-
-            '
-          type: string
-          default: '0'
-        retentionRules:
-          $ref: '#/components/schemas/RetentionRules_2'
-        schemaType:
-          description: 'The schema Type. Default is `implicit`.
-
-
-            #### InfluxDB Cloud
-
-
-            - Use `explicit` to enforce column names, tags, fields, and data types for
-
-            your data.
-
-
-            #### InfluxDB OSS
-
-
-            - Doesn''t support `explicit` bucket schemas.
-
-            '
-          $ref: '#/components/schemas/SchemaType'
-          default: implicit
-      required:
-      - orgID
-      - name
     RetentionRule_2:
       type: object
       properties:
@@ -2163,7 +2093,87 @@ components:
         '
       items:
         $ref: '#/components/schemas/RetentionRule_2'
+    PostBucketRequest_2:
+      properties:
+        orgID:
+          description: 'The organization ID.
+
+            Specifies the organization that owns the bucket.
+
+            '
+          type: string
+        name:
+          description: 'The bucket name.
+
+            '
+          type: string
+        description:
+          description: 'A description of the bucket.
+
+            '
+          type: string
+        rp:
+          description: 'The retention policy for the bucket.
+
+            For InfluxDB 1.x, specifies the duration of time that each data point
+
+            in the retention policy persists.
+
+
+            If you need compatibility with InfluxDB 1.x, specify a value for the `rp` property;
+
+            otherwise, see the `retentionRules` property.
+
+
+            [Retention policy](https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/#retention-policy-rp)
+
+            is an InfluxDB 1.x concept.
+
+            The InfluxDB 2.x and Cloud equivalent is
+
+            [retention period](https://docs.influxdata.com/influxdb/latest/reference/glossary/#retention-period).
+
+            The InfluxDB `/api/v2` API uses `RetentionRules` to configure the retention period.
+
+            '
+          type: string
+          default: '0'
+        retentionRules:
+          $ref: '#/components/schemas/RetentionRules_2'
+        schemaType:
+          description: 'The schema Type. Default is `implicit`.
+
+
+            #### InfluxDB Cloud
+
+
+            - Use `explicit` to enforce column names, tags, fields, and data types for
+
+            your data.
+
+
+            #### InfluxDB OSS
+
+
+            - Doesn''t support `explicit` bucket schemas.
+
+            '
+          $ref: '#/components/schemas/SchemaType'
+          default: implicit
+      required:
+      - orgID
+      - name
   responses:
+    InternalServerError:
+      description: 'Internal server error.
+
+        The server encountered an unexpected situation.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequestError:
       description: 'Bad request.
 
@@ -2186,16 +2196,28 @@ components:
               value:
                 code: invalid
                 message: 'failed to decode request body: organization not found'
-    InternalServerError:
-      description: 'Internal server error.
-
-        The server encountered an unexpected situation.
-
-        '
+    ResourceNotFoundError:
+      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            org-not-found:
+              summary: Organization name not found
+              value:
+                code: not found
+                message: organization name "my-org" not found
+            bucket-not-found:
+              summary: Bucket name not found
+              value:
+                code: not found
+                message: bucket "air_sensor" not found
+            orgID-not-found:
+              summary: Organization ID not found
+              value:
+                code: not found
+                message: organization not found
     AuthorizationError:
       description: "Unauthorized. The error may indicate one of the following:\n\n  * The `Authorization: Token` header is missing or malformed.\n  * The API token value is missing from the header.\n  * The token doesn't have sufficient permissions to write to this organization and bucket.\n"
       content:
@@ -2220,41 +2242,7 @@ components:
               value:
                 code: unauthorized
                 message: unauthorized access
-    ResourceNotFoundError:
-      description: "Not found.\nA requested resource was not found.\nThe response body contains the requested resource type and the name value\n(if you passed it)--for example:\n\n- `\"organization name \\\"my-org\\\" not found\"`\n- `\"organization not found\"`: indicates you passed an ID that did not match\n   an organization.\n"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            org-not-found:
-              summary: Organization name not found
-              value:
-                code: not found
-                message: organization name "my-org" not found
-            bucket-not-found:
-              summary: Bucket name not found
-              value:
-                code: not found
-                message: bucket "air_sensor" not found
-            orgID-not-found:
-              summary: Organization ID not found
-              value:
-                code: not found
-                message: organization not found
   parameters:
-    TraceSpan:
-      in: header
-      name: Zap-Trace-Span
-      description: OpenTracing span context
-      example:
-        trace_id: '1'
-        span_id: '1'
-        baggage:
-          key: value
-      required: false
-      schema:
-        type: string
     Limit:
       in: query
       name: limit
@@ -2267,6 +2255,18 @@ components:
         minimum: 1
         maximum: 100
         default: 20
+    TraceSpan:
+      in: header
+      name: Zap-Trace-Span
+      description: OpenTracing span context
+      example:
+        trace_id: '1'
+        span_id: '1'
+        baggage:
+          key: value
+      required: false
+      schema:
+        type: string
     Offset:
       in: query
       name: offset

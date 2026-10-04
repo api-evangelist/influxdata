@@ -43,7 +43,33 @@ paths:
           description: unexpected error
           $ref: '#/components/responses/GeneralServerError'
 components:
+  responses:
+    GeneralServerError:
+      description: Non 2XX error response from server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Link:
+      type: string
+      format: uri
+      readOnly: true
+      description: URI of resource.
+    Links:
+      type: object
+      description: 'URI pointers for additional paged results.
+
+        '
+      properties:
+        next:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+        prev:
+          $ref: '#/components/schemas/Link'
+      required:
+      - self
     Error:
       properties:
         code:
@@ -79,25 +105,6 @@ components:
           type: string
       required:
       - code
-    Link:
-      type: string
-      format: uri
-      readOnly: true
-      description: URI of resource.
-    Links:
-      type: object
-      description: 'URI pointers for additional paged results.
-
-        '
-      properties:
-        next:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-        prev:
-          $ref: '#/components/schemas/Link'
-      required:
-      - self
     Limit:
       type: object
       description: These are org limits similar to those configured in/by quartz.
@@ -232,13 +239,6 @@ components:
       - check
       - notificationRule
       - notificationEndpoint
-  responses:
-    GeneralServerError:
-      description: Non 2XX error response from server.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuthentication:
       type: apiKey
