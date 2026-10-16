@@ -2,22 +2,21 @@
   "repo": "influxdata",
   "feeds": [
     {
-      "source": "https://community.influxdata.com/",
-      "feed_url": "https://community.influxdata.com/posts.rss",
+      "source": "https://www.influxdata.com/blog/",
+      "feed_url": "https://www.influxdata.com/blog/feed/",
       "title": "",
-      "saved": 0,
+      "saved": 2,
       "method": "discovered"
     },
     {
       "source": "https://community.influxdata.com/posts.rss",
-      "feed_url": "https://community.influxdata.com/posts.rss",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "feed"
+      "skipped": "community-shaped; a vendor feed already saved this run (roadmap#239)"
     }
   ],
-  "post_count": 59,
-  "fetched": "2026-10-03T12:30:02Z",
+  "post_count": 62,
+  "fetched": "2026-10-10T13:15:00Z",
   "feed_nature": "support-community",
   "feed_nature_basis": "discourse_topic",
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined.",
