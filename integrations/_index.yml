@@ -37,3 +37,95 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: influxdata-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/influxdata/influxdb-client-go/v2
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/influxdata/influxdb-client-go/v2
+      version: v2.14.0
+      released: '2024-08-12'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/influxdata/influxdb-client-go/v2
+      repo_leg: github-org:influxdata
+      publisher_leg: org:influxdata
+      matched_by: github-org
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: influxdata-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@influxdata/influxdb-client
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@influxdata/influxdb-client'
+      version: 1.35.0
+      released: '2026-09-02'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@influxdata/influxdb-client
+      repo_leg: github-org:influxdata
+      publisher_leg: email:influxdata.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: influxdata-nuget-gallery
+  label: NuGet Gallery
+  partner: nuget
+  partner_name: NuGet Gallery
+  category: official SDK (.NET)
+  type: register
+  channel: package-registry
+  evidence: https://www.nuget.org/packages/InfluxDB.Client
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: NuGet Gallery (public registry JSON)
+    spec_file: null
+    language: .NET
+    packages:
+    - name: InfluxDB.Client
+      version: 5.1.0
+      released: '2026-06-10'
+      released_field: published
+      lapsed: false
+      page: https://www.nuget.org/packages/InfluxDB.Client
+      repo_leg: github-org:influxdata
+      publisher_leg: org:influxdata
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
